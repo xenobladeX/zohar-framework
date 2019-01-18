@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:test
+    username : sa
+    password :
+    type: com.zaxxer.hikari.HikariDataSource
+
+# mybatis-plus
+mybatis-plus:
+  type-aliases-package: com.xenoblade.zohar.framework.starter.spring.boot.dao.entry
+  configuration:
+    auto-mapping-unknown-column-behavior: failing
+#  global-config:
+#    db-config:
+#      id-type: auto
+  mapper-locations: classpath:mapper/*Mapper.xml
