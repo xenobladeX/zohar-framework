@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xenoblade.zohar.sample.baal.mapper.UserMapper">
+    <resultMap id="UserResultMap" type="UserEntity">
+        <id property="id" column="id" javaType="Long" jdbcType="BIGINT"/>
+        <result property="name" column="name" javaType="String" jdbcType="VARCHAR"/>
+        <result property="age" column="age" javaType="String" jdbcType="VARCHAR"/>
+        <result property="email" column="email" javaType="String" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <delete id="deleteByPk" parameterType="Long">
+        delete from s_user where id = #{id}
+    </delete>
+
+
+
+</mapper>
