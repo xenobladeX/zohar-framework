@@ -1,7 +1,7 @@
 
 spring:
   application:
-    name: zohar-sample-baal
+    name: zohar-sample-agares
   flyway:
     clean-disabled: true
     enabled: true
@@ -78,7 +78,7 @@ zohar:
             init-connection-sqls: SET SCHEMA zohar_demo
 
 mybatis-plus:
-  type-aliases-package: com.xenoblade.zohar.sample.baal.entity
+  type-aliases-package: com.xenoblade.zohar.sample.agares.entity
 #  configuration:
 #    auto-mapping-unknown-column-behavior: failing
 ##  global-config:
@@ -93,9 +93,9 @@ logging:
 
 
 server:
-  port: 8081
+  port: 8082
   servlet:
-    context-path: /baal
+    context-path: /agares
   # 下面是配置undertow作为服务器的参数
   undertow:
     # 设置IO线程数, 它主要执行非阻塞的任务,它们会负责多个连接, 默认设置每个CPU核心一个线程

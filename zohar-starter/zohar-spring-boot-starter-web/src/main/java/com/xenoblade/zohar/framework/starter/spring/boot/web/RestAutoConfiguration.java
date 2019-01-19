@@ -27,7 +27,6 @@ import io.undertow.Undertow;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -47,18 +46,17 @@ import java.util.List;
  * @since 1.0.0
  */
 @Configuration
-@ComponentScan("com.xenoblade.zohar.framework.starter.spring.boot.web")
 public class RestAutoConfiguration implements WebMvcConfigurer {
 
     /**
      * Undertow服务器配置
      * @return
      */
-    @Bean
-    @ConditionalOnClass(Undertow.class)
-    public UndertowServerFactoryCustomizer undertowServerFactoryCustomizer() {
-        return new UndertowServerFactoryCustomizer();
-    }
+//    @Bean
+//    @ConditionalOnClass(Undertow.class)
+//    public UndertowServerFactoryCustomizer undertowServerFactoryCustomizer() {
+//        return new UndertowServerFactoryCustomizer();
+//    }
 
 
     /**
@@ -113,9 +111,9 @@ public class RestAutoConfiguration implements WebMvcConfigurer {
         return new HttpAccessLoggerParser();
     }
 
-//    @Bean
-//    public RestControllerExceptionTranslator restControllerExceptionTranslator() {
-//        return new RestControllerExceptionTranslator();
-//    }
+    @Bean
+    public RestControllerExceptionTranslator restControllerExceptionTranslator() {
+        return new RestControllerExceptionTranslator();
+    }
 
 }

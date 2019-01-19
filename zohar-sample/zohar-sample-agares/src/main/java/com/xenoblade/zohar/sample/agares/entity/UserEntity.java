@@ -14,22 +14,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.sample.baal;
+package com.xenoblade.zohar.sample.agares.entity;
 
-import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure;
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
 /**
- * DemoApplication
+ * UserEntity
  * @author xenoblade
  * @since 1.0.0
  */
-@SpringBootApplication(exclude = DruidDataSourceAutoConfigure.class)
-@MapperScan("com.xenoblade.zohar.sample.baal.mapper")
-public class DemoApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(DemoApplication.class, args);
-    }
+@Data
+@TableName("s_user")
+public class UserEntity {
+
+    @TableId(type = IdType.ID_WORKER)
+    private Long id;
+
+    private String name;
+
+    private Integer age;
+
+    private String email;
+
 }

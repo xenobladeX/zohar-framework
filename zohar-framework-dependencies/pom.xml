@@ -22,6 +22,7 @@
         <spring-cloud.version>Greenwich.SR2</spring-cloud.version>
         <swagger.version>2.0.6</swagger.version>
         <mybatis-plus.version>3.0.6</mybatis-plus.version>
+        <dubbo.version>2.6.5</dubbo.version>
         <github.path>${project.artifactId}</github.path>
         <!-- Plugins Version -->
         <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
@@ -68,6 +69,12 @@
                 <version>${project.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.xenoblade</groupId>
+                <artifactId>zohar-spring-boot-starter-dubbo</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
 
             <!--third party -->
 
@@ -83,7 +90,6 @@
                 <version>${mybatis-plus.version}</version>
             </dependency>
 
-
             <!-- declare Spring boot dependencies-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -92,6 +98,15 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+            <!--<dependency>-->
+                <!--<groupId>com.alibaba</groupId>-->
+                <!--<artifactId>dubbo-dependencies-bom</artifactId>-->
+                <!--<version>${dubbo.version}</version>-->
+                <!--<type>pom</type>-->
+                <!--<scope>import</scope>-->
+            <!--</dependency>-->
+
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
@@ -104,6 +119,14 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+
+            <!--<dependency>-->
+            <!--<groupId>org.springframework.cloud</groupId>-->
+            <!--<artifactId>spring-cloud-dependencies</artifactId>-->
+            <!--<version>${spring-cloud.version}</version>-->
+            <!--<type>pom</type>-->
+            <!--<scope>import</scope>-->
+            <!--</dependency>-->
 
             <!--for test -->
             <dependency>
@@ -137,13 +160,6 @@
                 <scope>provided</scope>
             </dependency>
 
-            <!--<dependency>-->
-            <!--<groupId>org.springframework.cloud</groupId>-->
-            <!--<artifactId>spring-cloud-dependencies</artifactId>-->
-            <!--<version>${spring-cloud.version}</version>-->
-            <!--<type>pom</type>-->
-            <!--<scope>import</scope>-->
-            <!--</dependency>-->
 
 
         </dependencies>

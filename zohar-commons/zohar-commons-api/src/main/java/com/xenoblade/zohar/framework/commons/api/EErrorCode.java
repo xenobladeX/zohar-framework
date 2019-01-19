@@ -94,7 +94,7 @@ public enum EErrorCode {
     public static EErrorCode CodeOf(Integer code) throws ZoharException{
         EErrorCode errorCode = (EErrorCode) map.get(code);
         return Optional.ofNullable(errorCode).orElseThrow(() ->
-                new ZoharException("Code 转枚举失败", EErrorCode.ENUM_PARSE_ERROR)
+                new ZoharException(String.format("Code%d转枚举失败", code), EErrorCode.ENUM_PARSE_ERROR)
         );
     }
 

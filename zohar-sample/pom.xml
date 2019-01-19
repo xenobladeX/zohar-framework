@@ -18,7 +18,9 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>zohar-sample-api</module>
         <module>zohar-sample-baal</module>
+        <module>zohar-sample-agares</module>
     </modules>
 
     <properties>

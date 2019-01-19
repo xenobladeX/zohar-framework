@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package zohar.sample;
+
+import "zohar/sample/enum.proto";
+
+option java_multiple_files = false;
+option java_package = "com.xenoblade.zohar.sample.agares.api";
+option java_outer_classname = "Agares";
+
+
+message HelloAgaresRequest {
+
+}
+
+message HelloAgaresResponse {
+    string response = 1;
+    int32 errorcode = 2;
+}
+
+
+service AgaresService {
+
+    rpc HelloAgares (HelloAgaresRequest) returns (HelloAgaresResponse);
+
+}
