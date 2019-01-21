@@ -13,6 +13,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
+import com.hubspot.jackson.datatype.protobuf.ProtobufModule;
 import com.xenoblade.zohar.framework.commons.api.exception.ZoharException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -90,6 +91,10 @@ public abstract class JacksonUtils {
         simpleModule.addSerializer(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern("HH:mm:ss")));
         simpleModule.addSerializer(Long.class, ToStringSerializer.instance);
         objectMapper.registerModule(simpleModule);
+
+        // Jackson protobuf format
+        objectMapper.registerModule(new ProtobufModule());
+
         return objectMapper;
     }
 

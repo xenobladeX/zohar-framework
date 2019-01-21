@@ -17,10 +17,13 @@
 package com.xenoblade.zohar.sample.baal.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.google.protobuf.ServiceException;
 import com.xenoblade.zohar.framework.commons.spring.log.api.AccessLogger;
+import com.xenoblade.zohar.framework.commons.web.message.ResponseMessage;
 import com.xenoblade.zohar.sample.agares.api.Agares.AgaresService;
 import com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresRequest;
 import com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresResponse;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,13 +47,11 @@ public class BaalController {
 
 
     @PostMapping("/hello")
-    public void helloAgares() {
-        try {
-            HelloAgaresResponse response = agaresService.helloAgares(null, HelloAgaresRequest.newBuilder().build());
-            log.info("response: {}", response);
-        } catch (Exception ex) {
-            log.error("rpc call agares failed: ", ex);
-        }
+    @SneakyThrows(ServiceException.class)
+    public ResponseMessage<HelloAgaresResponse> helloAgares() {
+        HelloAgaresResponse response = agaresService.helloAgares(null, HelloAgaresRequest.newBuilder().build());
+        log.info("response: {}", response);
+        return ResponseMessage.ok(response);
     }
 
 }

@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
+import com.hubspot.jackson.datatype.protobuf.ProtobufModule;
 import com.xenoblade.zohar.framework.commons.spring.log.AccessLoggerParser;
 import com.xenoblade.zohar.framework.commons.web.log.HttpAccessLoggerParser;
 import io.undertow.Undertow;
@@ -30,6 +31,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.converter.protobuf.ProtobufHttpMessageConverter;
 import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -84,6 +86,9 @@ public class RestAutoConfiguration implements WebMvcConfigurer {
                 simpleModule.addSerializer(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern("HH:mm:ss")));
                 simpleModule.addSerializer(Long.class, ToStringSerializer.instance);
                 converter.getObjectMapper().registerModule(simpleModule);
+
+                // Jackson protobuf format
+                converter.getObjectMapper().registerModule(new ProtobufModule());
             }
         });
     }
