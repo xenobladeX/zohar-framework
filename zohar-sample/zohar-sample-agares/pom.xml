@@ -64,4 +64,24 @@
 
     </dependencies>
 
+
+    <build>
+
+        <!--打包源码中MyBatis自动生成的XML-->
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+
+
+
+    </build>
+
+
 </project>

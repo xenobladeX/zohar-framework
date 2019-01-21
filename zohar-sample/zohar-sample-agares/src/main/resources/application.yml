@@ -84,7 +84,7 @@ mybatis-plus:
 ##  global-config:
 ##    db-config:
 ##      id-type: auto
-  mapper-locations: classpath:mapper/*Mapper.xml
+#  mapper-locations: classpath:mapper/*Mapper.xml
 
 
 logging:
