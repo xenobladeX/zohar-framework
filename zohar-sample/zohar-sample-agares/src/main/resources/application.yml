@@ -116,5 +116,6 @@ dubbo:
     port: 12345
     serialization: protostuff
     server: netty4
+    client: netty4
   registry:
     address: N/A

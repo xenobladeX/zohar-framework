@@ -16,7 +16,6 @@
 
     <modules>
         <module>zohar-commons-dubbo-serialization-protostuff</module>
-        <module>zohar-commons-dubbo-remoting-netty4</module>
     </modules>
 
 
