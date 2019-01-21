@@ -23,6 +23,7 @@
         <module>zohar-commons-spring</module>
         <module>zohar-commons-web</module>
         <module>zohar-commons-dao</module>
+        <module>zohar-commons-dubbo</module>
     </modules>
 
     <dependencyManagement>

@@ -23,6 +23,8 @@
         <swagger.version>2.0.6</swagger.version>
         <mybatis-plus.version>3.0.6</mybatis-plus.version>
         <dubbo.version>2.6.5</dubbo.version>
+        <protostuff.version>1.5.9</protostuff.version>
+        <netty.version>4.1.32.Final</netty.version>
         <github.path>${project.artifactId}</github.path>
         <!-- Plugins Version -->
         <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
@@ -127,6 +129,18 @@
             <!--<type>pom</type>-->
             <!--<scope>import</scope>-->
             <!--</dependency>-->
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>dubbo</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>${netty.version}</version>
+            </dependency>
 
             <!--for test -->
             <dependency>

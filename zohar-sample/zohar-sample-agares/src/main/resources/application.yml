@@ -107,3 +107,14 @@ server:
     buffer-size: 1024
     # 是否分配的直接内存
     direct-buffers: true
+
+dubbo:
+  scan:
+    base-packages: com.xenoblade.zohar.sample.agares.service.dubbo
+  protocol:
+    name: dubbo
+    port: 12345
+    serialization: protostuff
+    server: netty4
+  registry:
+    address: N/A

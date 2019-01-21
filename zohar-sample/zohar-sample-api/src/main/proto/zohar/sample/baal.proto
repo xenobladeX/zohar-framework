@@ -5,6 +5,7 @@ package zohar.sample;
 import "zohar/sample/enum.proto";
 
 option java_multiple_files = false;
+option java_generic_services = true;
 option java_package = "com.xenoblade.zohar.sample.baal.api";
 option java_outer_classname = "Baal";
 
@@ -21,6 +22,6 @@ message HelloBaalResponse {
 
 service BaalService {
 
-    rpc HelloBaal (HelloBaalRequest) returns (HelloBaalResponse);
+    rpc HelloBaal (HelloBaalRequest) returns (HelloBaalResponse) {};
 
 }

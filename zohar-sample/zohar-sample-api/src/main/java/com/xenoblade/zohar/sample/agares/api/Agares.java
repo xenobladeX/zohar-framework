@@ -80,7 +80,6 @@ public final class Agares {
       return com.xenoblade.zohar.sample.agares.api.Agares.internal_static_zohar_sample_HelloAgaresRequest_descriptor;
     }
 
-    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.xenoblade.zohar.sample.agares.api.Agares.internal_static_zohar_sample_HelloAgaresRequest_fieldAccessorTable
@@ -89,7 +88,6 @@ public final class Agares {
     }
 
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -99,13 +97,11 @@ public final class Agares {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -213,7 +209,6 @@ public final class Agares {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -221,7 +216,6 @@ public final class Agares {
     public static Builder newBuilder(com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresRequest prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -245,7 +239,6 @@ public final class Agares {
         return com.xenoblade.zohar.sample.agares.api.Agares.internal_static_zohar_sample_HelloAgaresRequest_descriptor;
       }
 
-      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.xenoblade.zohar.sample.agares.api.Agares.internal_static_zohar_sample_HelloAgaresRequest_fieldAccessorTable
@@ -268,24 +261,20 @@ public final class Agares {
                 .alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
       public Builder clear() {
         super.clear();
         return this;
       }
 
-      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return com.xenoblade.zohar.sample.agares.api.Agares.internal_static_zohar_sample_HelloAgaresRequest_descriptor;
       }
 
-      @java.lang.Override
       public com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresRequest getDefaultInstanceForType() {
         return com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresRequest.getDefaultInstance();
       }
 
-      @java.lang.Override
       public com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresRequest build() {
         com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresRequest result = buildPartial();
         if (!result.isInitialized()) {
@@ -294,46 +283,38 @@ public final class Agares {
         return result;
       }
 
-      @java.lang.Override
       public com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresRequest buildPartial() {
         com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresRequest result = new com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresRequest(this);
         onBuilt();
         return result;
       }
 
-      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
-      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
-      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresRequest) {
           return mergeFrom((com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresRequest)other);
@@ -350,12 +331,10 @@ public final class Agares {
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -373,13 +352,11 @@ public final class Agares {
         }
         return this;
       }
-      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFieldsProto3(unknownFields);
       }
 
-      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -401,7 +378,6 @@ public final class Agares {
 
     private static final com.google.protobuf.Parser<HelloAgaresRequest>
         PARSER = new com.google.protobuf.AbstractParser<HelloAgaresRequest>() {
-      @java.lang.Override
       public HelloAgaresRequest parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -419,7 +395,6 @@ public final class Agares {
       return PARSER;
     }
 
-    @java.lang.Override
     public com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresRequest getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -486,6 +461,13 @@ public final class Agares {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 10: {
               java.lang.String s = input.readStringRequireUtf8();
 
@@ -495,13 +477,6 @@ public final class Agares {
             case 16: {
 
               errorcode_ = input.readInt32();
-              break;
-            }
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
               break;
             }
           }
@@ -521,7 +496,6 @@ public final class Agares {
       return com.xenoblade.zohar.sample.agares.api.Agares.internal_static_zohar_sample_HelloAgaresResponse_descriptor;
     }
 
-    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.xenoblade.zohar.sample.agares.api.Agares.internal_static_zohar_sample_HelloAgaresResponse_fieldAccessorTable
@@ -573,7 +547,6 @@ public final class Agares {
     }
 
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -583,7 +556,6 @@ public final class Agares {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (!getResponseBytes().isEmpty()) {
@@ -595,7 +567,6 @@ public final class Agares {
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -718,7 +689,6 @@ public final class Agares {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -726,7 +696,6 @@ public final class Agares {
     public static Builder newBuilder(com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -750,7 +719,6 @@ public final class Agares {
         return com.xenoblade.zohar.sample.agares.api.Agares.internal_static_zohar_sample_HelloAgaresResponse_descriptor;
       }
 
-      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.xenoblade.zohar.sample.agares.api.Agares.internal_static_zohar_sample_HelloAgaresResponse_fieldAccessorTable
@@ -773,7 +741,6 @@ public final class Agares {
                 .alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
       public Builder clear() {
         super.clear();
         response_ = "";
@@ -783,18 +750,15 @@ public final class Agares {
         return this;
       }
 
-      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return com.xenoblade.zohar.sample.agares.api.Agares.internal_static_zohar_sample_HelloAgaresResponse_descriptor;
       }
 
-      @java.lang.Override
       public com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresResponse getDefaultInstanceForType() {
         return com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresResponse.getDefaultInstance();
       }
 
-      @java.lang.Override
       public com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresResponse build() {
         com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresResponse result = buildPartial();
         if (!result.isInitialized()) {
@@ -803,7 +767,6 @@ public final class Agares {
         return result;
       }
 
-      @java.lang.Override
       public com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresResponse buildPartial() {
         com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresResponse result = new com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresResponse(this);
         result.response_ = response_;
@@ -812,39 +775,32 @@ public final class Agares {
         return result;
       }
 
-      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
-      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
-      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresResponse) {
           return mergeFrom((com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresResponse)other);
@@ -868,12 +824,10 @@ public final class Agares {
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -986,13 +940,11 @@ public final class Agares {
         onChanged();
         return this;
       }
-      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFieldsProto3(unknownFields);
       }
 
-      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -1014,7 +966,6 @@ public final class Agares {
 
     private static final com.google.protobuf.Parser<HelloAgaresResponse>
         PARSER = new com.google.protobuf.AbstractParser<HelloAgaresResponse>() {
-      @java.lang.Override
       public HelloAgaresResponse parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1032,11 +983,242 @@ public final class Agares {
       return PARSER;
     }
 
-    @java.lang.Override
     public com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresResponse getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
+  }
+
+  /**
+   * Protobuf service {@code zohar.sample.AgaresService}
+   */
+  public static abstract class AgaresService
+      implements com.google.protobuf.Service {
+    protected AgaresService() {}
+
+    public interface Interface {
+      /**
+       * <code>rpc HelloAgares(.zohar.sample.HelloAgaresRequest) returns (.zohar.sample.HelloAgaresResponse);</code>
+       */
+      public abstract void helloAgares(
+          com.google.protobuf.RpcController controller,
+          com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresRequest request,
+          com.google.protobuf.RpcCallback<com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresResponse> done);
+
+    }
+
+    public static com.google.protobuf.Service newReflectiveService(
+        final Interface impl) {
+      return new AgaresService() {
+        @java.lang.Override
+        public  void helloAgares(
+            com.google.protobuf.RpcController controller,
+            com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresRequest request,
+            com.google.protobuf.RpcCallback<com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresResponse> done) {
+          impl.helloAgares(controller, request, done);
+        }
+
+      };
+    }
+
+    public static com.google.protobuf.BlockingService
+        newReflectiveBlockingService(final BlockingInterface impl) {
+      return new com.google.protobuf.BlockingService() {
+        public final com.google.protobuf.Descriptors.ServiceDescriptor
+            getDescriptorForType() {
+          return getDescriptor();
+        }
+
+        public final com.google.protobuf.Message callBlockingMethod(
+            com.google.protobuf.Descriptors.MethodDescriptor method,
+            com.google.protobuf.RpcController controller,
+            com.google.protobuf.Message request)
+            throws com.google.protobuf.ServiceException {
+          if (method.getService() != getDescriptor()) {
+            throw new java.lang.IllegalArgumentException(
+              "Service.callBlockingMethod() given method descriptor for " +
+              "wrong service type.");
+          }
+          switch(method.getIndex()) {
+            case 0:
+              return impl.helloAgares(controller, (com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresRequest)request);
+            default:
+              throw new java.lang.AssertionError("Can't get here.");
+          }
+        }
+
+        public final com.google.protobuf.Message
+            getRequestPrototype(
+            com.google.protobuf.Descriptors.MethodDescriptor method) {
+          if (method.getService() != getDescriptor()) {
+            throw new java.lang.IllegalArgumentException(
+              "Service.getRequestPrototype() given method " +
+              "descriptor for wrong service type.");
+          }
+          switch(method.getIndex()) {
+            case 0:
+              return com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresRequest.getDefaultInstance();
+            default:
+              throw new java.lang.AssertionError("Can't get here.");
+          }
+        }
+
+        public final com.google.protobuf.Message
+            getResponsePrototype(
+            com.google.protobuf.Descriptors.MethodDescriptor method) {
+          if (method.getService() != getDescriptor()) {
+            throw new java.lang.IllegalArgumentException(
+              "Service.getResponsePrototype() given method " +
+              "descriptor for wrong service type.");
+          }
+          switch(method.getIndex()) {
+            case 0:
+              return com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresResponse.getDefaultInstance();
+            default:
+              throw new java.lang.AssertionError("Can't get here.");
+          }
+        }
+
+      };
+    }
+
+    /**
+     * <code>rpc HelloAgares(.zohar.sample.HelloAgaresRequest) returns (.zohar.sample.HelloAgaresResponse);</code>
+     */
+    public abstract void helloAgares(
+        com.google.protobuf.RpcController controller,
+        com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresRequest request,
+        com.google.protobuf.RpcCallback<com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresResponse> done);
+
+    public static final
+        com.google.protobuf.Descriptors.ServiceDescriptor
+        getDescriptor() {
+      return com.xenoblade.zohar.sample.agares.api.Agares.getDescriptor().getServices().get(0);
+    }
+    public final com.google.protobuf.Descriptors.ServiceDescriptor
+        getDescriptorForType() {
+      return getDescriptor();
+    }
+
+    public final void callMethod(
+        com.google.protobuf.Descriptors.MethodDescriptor method,
+        com.google.protobuf.RpcController controller,
+        com.google.protobuf.Message request,
+        com.google.protobuf.RpcCallback<
+          com.google.protobuf.Message> done) {
+      if (method.getService() != getDescriptor()) {
+        throw new java.lang.IllegalArgumentException(
+          "Service.callMethod() given method descriptor for wrong " +
+          "service type.");
+      }
+      switch(method.getIndex()) {
+        case 0:
+          this.helloAgares(controller, (com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresRequest)request,
+            com.google.protobuf.RpcUtil.<com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresResponse>specializeCallback(
+              done));
+          return;
+        default:
+          throw new java.lang.AssertionError("Can't get here.");
+      }
+    }
+
+    public final com.google.protobuf.Message
+        getRequestPrototype(
+        com.google.protobuf.Descriptors.MethodDescriptor method) {
+      if (method.getService() != getDescriptor()) {
+        throw new java.lang.IllegalArgumentException(
+          "Service.getRequestPrototype() given method " +
+          "descriptor for wrong service type.");
+      }
+      switch(method.getIndex()) {
+        case 0:
+          return com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresRequest.getDefaultInstance();
+        default:
+          throw new java.lang.AssertionError("Can't get here.");
+      }
+    }
+
+    public final com.google.protobuf.Message
+        getResponsePrototype(
+        com.google.protobuf.Descriptors.MethodDescriptor method) {
+      if (method.getService() != getDescriptor()) {
+        throw new java.lang.IllegalArgumentException(
+          "Service.getResponsePrototype() given method " +
+          "descriptor for wrong service type.");
+      }
+      switch(method.getIndex()) {
+        case 0:
+          return com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresResponse.getDefaultInstance();
+        default:
+          throw new java.lang.AssertionError("Can't get here.");
+      }
+    }
+
+    public static Stub newStub(
+        com.google.protobuf.RpcChannel channel) {
+      return new Stub(channel);
+    }
+
+    public static final class Stub extends com.xenoblade.zohar.sample.agares.api.Agares.AgaresService implements Interface {
+      private Stub(com.google.protobuf.RpcChannel channel) {
+        this.channel = channel;
+      }
+
+      private final com.google.protobuf.RpcChannel channel;
+
+      public com.google.protobuf.RpcChannel getChannel() {
+        return channel;
+      }
+
+      public  void helloAgares(
+          com.google.protobuf.RpcController controller,
+          com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresRequest request,
+          com.google.protobuf.RpcCallback<com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresResponse> done) {
+        channel.callMethod(
+          getDescriptor().getMethods().get(0),
+          controller,
+          request,
+          com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresResponse.getDefaultInstance(),
+          com.google.protobuf.RpcUtil.generalizeCallback(
+            done,
+            com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresResponse.class,
+            com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresResponse.getDefaultInstance()));
+      }
+    }
+
+    public static BlockingInterface newBlockingStub(
+        com.google.protobuf.BlockingRpcChannel channel) {
+      return new BlockingStub(channel);
+    }
+
+    public interface BlockingInterface {
+      public com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresResponse helloAgares(
+          com.google.protobuf.RpcController controller,
+          com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresRequest request)
+          throws com.google.protobuf.ServiceException;
+    }
+
+    private static final class BlockingStub implements BlockingInterface {
+      private BlockingStub(com.google.protobuf.BlockingRpcChannel channel) {
+        this.channel = channel;
+      }
+
+      private final com.google.protobuf.BlockingRpcChannel channel;
+
+      public com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresResponse helloAgares(
+          com.google.protobuf.RpcController controller,
+          com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresRequest request)
+          throws com.google.protobuf.ServiceException {
+        return (com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresResponse) channel.callBlockingMethod(
+          getDescriptor().getMethods().get(0),
+          controller,
+          request,
+          com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresResponse.getDefaultInstance());
+      }
+
+    }
+
+    // @@protoc_insertion_point(class_scope:zohar.sample.AgaresService)
   }
 
   private static final com.google.protobuf.Descriptors.Descriptor
@@ -1061,11 +1243,11 @@ public final class Agares {
       "\n\031zohar/sample/agares.proto\022\014zohar.sampl" +
       "e\032\027zohar/sample/enum.proto\"\024\n\022HelloAgare" +
       "sRequest\":\n\023HelloAgaresResponse\022\020\n\010respo" +
-      "nse\030\001 \001(\t\022\021\n\terrorcode\030\002 \001(\0052c\n\rAgaresSe" +
-      "rvice\022R\n\013HelloAgares\022 .zohar.sample.Hell" +
+      "nse\030\001 \001(\t\022\021\n\terrorcode\030\002 \001(\0052e\n\rAgaresSe" +
+      "rvice\022T\n\013HelloAgares\022 .zohar.sample.Hell" +
       "oAgaresRequest\032!.zohar.sample.HelloAgare" +
-      "sResponseB1\n%com.xenoblade.zohar.sample." +
-      "agares.apiB\006AgaresP\000b\006proto3"
+      "sResponse\"\000B4\n%com.xenoblade.zohar.sampl" +
+      "e.agares.apiB\006AgaresP\000\210\001\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
