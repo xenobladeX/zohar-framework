@@ -64,6 +64,70 @@
 
     </dependencies>
 
+
+    <profiles>
+
+        <profile>
+            <!-- development -->
+            <id>dev</id>
+            <properties>
+                <package.environment>zohar</package.environment>
+            </properties>
+        </profile>
+        <profile>
+            <!-- docker -->
+            <id>docker</id>
+            <properties>
+                <package.environment>zohar</package.environment>
+            </properties>
+        </profile>
+        <profile>
+            <!-- local -->
+            <id>local</id>
+            <properties>
+                <package.environment>zohar</package.environment>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <!--production -->
+            <id>prod</id>
+            <properties>
+                <package.environment>zohar</package.environment>
+            </properties>
+        </profile>
+
+        <profile>
+            <!-- for open source usage -->
+            <id>github</id>
+            <properties>
+                <package.environment>github</package.environment>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+    </profiles>
+
     <build>
 
         <!--打包源码中MyBatis自动生成的XML-->

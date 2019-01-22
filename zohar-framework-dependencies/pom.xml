@@ -14,10 +14,19 @@
     <artifactId>zohar-framework-dependencies</artifactId>
     <name>Zohar Framework Dependencies</name>
     <packaging>pom</packaging>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
 
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <github.path>${project.artifactId}</github.path>
+
+        <!-- Dependency Version -->
         <spring-boot.version>2.1.1.RELEASE</spring-boot.version>
         <spring-cloud.version>Greenwich.SR2</spring-cloud.version>
         <swagger.version>2.0.6</swagger.version>
@@ -25,7 +34,21 @@
         <dubbo.version>2.6.5</dubbo.version>
         <protostuff.version>1.5.9</protostuff.version>
         <netty.version>4.1.32.Final</netty.version>
-        <github.path>${project.artifactId}</github.path>
+        <pinyin4j.version>2.5.1</pinyin4j.version>
+        <commons-text.version>1.6</commons-text.version>
+        <commons-collections4.version>4.2</commons-collections4.version>
+        <commons-io.version>2.6</commons-io.version>
+        <commons-compress.version>1.18</commons-compress.version>
+        <commons-beanutils.version>1.9.3</commons-beanutils.version>
+        <commons-cli.version>1.4</commons-cli.version>
+        <guava.version>27.0.1-jre</guava.version>
+        <bcprov-jdk15on.version>1.60</bcprov-jdk15on.version>
+        <jackson-datatype-protobuf.version>0.9.10-jackson2.9-proto3</jackson-datatype-protobuf.version>
+        <shiro.version>1.4.0</shiro.version>
+        <p6spy.version>3.8.0</p6spy.version>
+        <dubbo-spring-boot-starter.version>0.2.1-SNAPSHOT</dubbo-spring-boot-starter.version>
+
+
         <!-- Plugins Version -->
         <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
@@ -92,6 +115,121 @@
                 <version>${mybatis-plus.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.belerweb</groupId>
+                <artifactId>pinyin4j</artifactId>
+                <version>${pinyin4j.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-text</artifactId>
+                <version>${commons-text.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>${commons-collections4.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-compress</artifactId>
+                <version>${commons-compress.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>${commons-beanutils.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-cli</groupId>
+                <artifactId>commons-cli</artifactId>
+                <version>${commons-cli.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcprov-jdk15on</artifactId>
+                <version>${bcprov-jdk15on.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.hubspot.jackson</groupId>
+                <artifactId>jackson-datatype-protobuf</artifactId>
+                <version>${jackson-datatype-protobuf.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-core</artifactId>
+                <version>${shiro.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-spring</artifactId>
+                <version>${shiro.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>p6spy</groupId>
+                <artifactId>p6spy</artifactId>
+                <version>${p6spy.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.protostuff</groupId>
+                <artifactId>protostuff-core</artifactId>
+                <version>${protostuff.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.protostuff</groupId>
+                <artifactId>protostuff-runtime</artifactId>
+                <version>${protostuff.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>dubbo</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>${netty.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.alibaba.boot</groupId>
+                <artifactId>dubbo-spring-boot-starter</artifactId>
+                <version>${dubbo-spring-boot-starter.version}</version>
+            </dependency>
+
+
             <!-- declare Spring boot dependencies-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -100,14 +238,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
-            <!--<dependency>-->
-                <!--<groupId>com.alibaba</groupId>-->
-                <!--<artifactId>dubbo-dependencies-bom</artifactId>-->
-                <!--<version>${dubbo.version}</version>-->
-                <!--<type>pom</type>-->
-                <!--<scope>import</scope>-->
-            <!--</dependency>-->
 
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -130,18 +260,6 @@
             <!--<scope>import</scope>-->
             <!--</dependency>-->
 
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>dubbo</artifactId>
-                <version>${dubbo.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.netty</groupId>
-                <artifactId>netty-all</artifactId>
-                <version>${netty.version}</version>
-            </dependency>
-
             <!--for test -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -155,26 +273,6 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-            <dependency>
-                <groupId>com.h2database</groupId>
-                <artifactId>h2</artifactId>
-                <version>1.4.197</version>
-            </dependency>
-            <!-- stick with mockito 1.x -->
-            <dependency>
-                <groupId>org.mockito</groupId>
-                <artifactId>mockito-core</artifactId>
-                <version>1.10.19</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>1.18.4</version>
-                <scope>provided</scope>
-            </dependency>
-
-
 
         </dependencies>
     </dependencyManagement>
@@ -286,6 +384,7 @@
                         </execution>
                     </executions>
                 </plugin>
+                <!--spring boot 打包-->
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>

@@ -14,7 +14,6 @@
 
     <properties>
         <github.path>${project.artifactId}</github.path>
-        <shiro.version>1.4.0</shiro.version>
     </properties>
 
     <modules>
@@ -29,11 +28,7 @@
     <dependencyManagement>
         <dependencies>
 
-            <dependency>
-                <groupId>org.apache.shiro</groupId>
-                <artifactId>shiro-core</artifactId>
-                <version>${shiro.version}</version>
-            </dependency>
+
 
 
         </dependencies>
@@ -41,7 +36,23 @@
 
     <dependencies>
 
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
 
+
+        <!-- log start -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!-- log end -->
 
     </dependencies>
 
