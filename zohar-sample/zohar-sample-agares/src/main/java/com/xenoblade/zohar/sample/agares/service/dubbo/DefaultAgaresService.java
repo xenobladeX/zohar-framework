@@ -18,13 +18,10 @@ package com.xenoblade.zohar.sample.agares.service.dubbo;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.google.protobuf.RpcController;
-import com.google.protobuf.ServiceException;
 import com.xenoblade.zohar.framework.commons.api.EErrorCode;
-import com.xenoblade.zohar.framework.commons.spring.log.api.AccessLogger;
 import com.xenoblade.zohar.sample.agares.api.Agares.AgaresService;
 import com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresRequest;
 import com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresResponse;
-import com.xenoblade.zohar.sample.agares.api.AgaresService;
 
 /**
  * DefaultAgaresService

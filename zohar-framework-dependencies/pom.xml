@@ -104,6 +104,12 @@
                 <groupId>com.xenoblade</groupId>
                 <artifactId>zohar-spring-boot-starter-dubbo</artifactId>
                 <version>${project.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
 
