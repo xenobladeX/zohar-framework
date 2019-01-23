@@ -47,7 +47,8 @@
         <shiro.version>1.4.0</shiro.version>
         <p6spy.version>3.8.0</p6spy.version>
         <dubbo-spring-boot-starter.version>0.2.1-SNAPSHOT</dubbo-spring-boot-starter.version>
-
+        <grpc.version>1.18.0</grpc.version>
+        <protobuf-java.version>3.5.1</protobuf-java.version>
 
         <!-- Plugins Version -->
         <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
@@ -60,7 +61,10 @@
         <maven-javadoc-plugin.version>3.0.1</maven-javadoc-plugin.version>
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
         <dockerfile-maven-plugin.version>1.3.6</dockerfile-maven-plugin.version>
-
+        <findbugs-maven-plugin.version>3.0.3</findbugs-maven-plugin.version>
+        <cobertura-maven-plugin.version>2.7</cobertura-maven-plugin.version>
+        <maven-assembly-plugin.version>2.6</maven-assembly-plugin.version>
+        <versions-maven-plugin.version>2.2</versions-maven-plugin.version>
     </properties>
 
 
@@ -222,6 +226,27 @@
                 <version>${netty.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.google.protobuf</groupId>
+                <artifactId>protobuf-java</artifactId>
+                <version>${protobuf-java.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-netty-shaded</artifactId>
+                <version>${grpc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-protobuf</artifactId>
+                <version>${grpc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-stub</artifactId>
+                <version>${grpc.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>com.alibaba.boot</groupId>
@@ -401,7 +426,7 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>findbugs-maven-plugin</artifactId>
-                    <version>3.0.3</version>
+                    <version>${findbugs-maven-plugin.version}</version>
                     <configuration>
                         <xmlOutput>true</xmlOutput>
                         <effort>Max</effort>
@@ -413,7 +438,7 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>cobertura-maven-plugin</artifactId>
-                    <version>2.7</version>
+                    <version>${cobertura-maven-plugin.version}</version>
                     <dependencies>
                         <dependency>
                             <groupId>ch.qos.logback</groupId>
@@ -426,13 +451,13 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>
-                    <version>2.6</version>
+                    <version>${maven-assembly-plugin.version}</version>
                 </plugin>
                 <!--批量修改项目各模块的版本号-->
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>versions-maven-plugin</artifactId>
-                    <version>2.2</version>
+                    <version>${versions-maven-plugin.version}</version>
                 </plugin>
                 <!-- Need to set releases.repo and snapshots.repo properties in your .m2/settings.xml -->
 
