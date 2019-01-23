@@ -49,8 +49,7 @@ public class BaalController {
     @PostMapping("/hello")
     @SneakyThrows(ServiceException.class)
     public ResponseMessage<HelloAgaresResponse> helloAgares() {
-        HelloAgaresResponse response = agaresService.helloAgares(null, HelloAgaresRequest.newBuilder().build());
-        log.info("response: {}", response);
+        HelloAgaresResponse response = agaresService.helloAgares(null, HelloAgaresRequest.newBuilder().setRequest("Hello, Agares").build());
         return ResponseMessage.ok(response);
     }
 

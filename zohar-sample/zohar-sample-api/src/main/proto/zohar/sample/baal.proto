@@ -11,7 +11,7 @@ option java_outer_classname = "Baal";
 
 
 message HelloBaalRequest {
-
+    string request = 1;
 }
 
 message HelloBaalResponse {

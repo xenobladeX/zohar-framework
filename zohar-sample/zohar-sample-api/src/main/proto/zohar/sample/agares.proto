@@ -11,7 +11,7 @@ option java_outer_classname = "Agares";
 
 
 message HelloAgaresRequest {
-
+    string request = 1;
 }
 
 message HelloAgaresResponse {

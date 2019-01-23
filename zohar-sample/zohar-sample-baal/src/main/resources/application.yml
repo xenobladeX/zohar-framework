@@ -1,7 +1,7 @@
 
 spring:
   application:
-    name: zohar-sample-baal
+    name: &appName zohar-sample-baal
   flyway:
     clean-disabled: true
     enabled: true
@@ -110,15 +110,19 @@ server:
 
 dubbo:
   application:
-    name: baal-client
-  scan:
-    base-packages: com.xenoblade.zohar.sample.baal.service.dubbo
+    name: *appName
+    qos-enable: false
+  consumer:
+    check: false
+  registry:
+    address: N/A
+#  scan:
+#    base-packages: com.xenoblade.zohar.sample.baal.service.dubbo
   protocol:
     name: dubbo
     port: 12346
-    serialization: protostuff
+    serialization: protobufmix
+#    serialization: protostuff
     server: netty4
     client: netty4
-  registry:
-    address: N/A
 

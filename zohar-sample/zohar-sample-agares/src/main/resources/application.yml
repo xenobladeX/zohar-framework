@@ -1,7 +1,7 @@
 
 spring:
   application:
-    name: zohar-sample-agares
+    name: &appName zohar-sample-agares
   flyway:
     clean-disabled: true
     enabled: true
@@ -109,12 +109,18 @@ server:
     direct-buffers: true
 
 dubbo:
+  application:
+    name: *appName
+    qos-enable: false
+  consumer:
+    check: false
   scan:
     base-packages: com.xenoblade.zohar.sample.agares.service.dubbo
   protocol:
     name: dubbo
     port: 12345
-    serialization: protostuff
+    serialization: protobufmix
+#    serialization: protostuff
     server: netty4
     client: netty4
   registry:

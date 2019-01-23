@@ -22,6 +22,8 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 /**
  * ExceptionSerizlizer
@@ -32,7 +34,9 @@ public class ExceptionSerizlizer extends JsonSerializer<Exception> {
 
     @Override public void serialize(Exception e, JsonGenerator jsonGenerator,
                                     SerializerProvider serializerProvider) throws IOException{
-        jsonGenerator.writeString(e.toString());
+        StringWriter errors = new StringWriter();
+        e.printStackTrace(new PrintWriter(errors));
+        jsonGenerator.writeString(errors.toString());
     }
 
     @Override public void serializeWithType(Exception value, JsonGenerator gen,

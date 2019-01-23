@@ -18,11 +18,13 @@ package com.xenoblade.zohar.sample.agares.service.dubbo;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.google.protobuf.RpcController;
+import com.google.protobuf.ServiceException;
 import com.xenoblade.zohar.framework.commons.api.EErrorCode;
 import com.xenoblade.zohar.framework.commons.spring.log.api.AccessLogger;
 import com.xenoblade.zohar.sample.agares.api.Agares.AgaresService;
 import com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresRequest;
 import com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresResponse;
+import com.xenoblade.zohar.sample.agares.api.AgaresService;
 
 /**
  * DefaultAgaresService
@@ -30,14 +32,11 @@ import com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresResponse;
  * @since 1.0.0
  */
 @Service
-@AccessLogger
-public class DefaultAgaresService implements AgaresService.BlockingInterface{
+public class DefaultAgaresService implements AgaresService.BlockingInterface {
 
     @Override public HelloAgaresResponse helloAgares(RpcController controller,
                                                      HelloAgaresRequest request) {
-        return HelloAgaresResponse.newBuilder()
-                .setResponse("response from Agares")
-                .setErrorcode(EErrorCode.OK.getCode())
-                .build();
+        return HelloAgaresResponse.newBuilder().setResponse("response from Agares")
+                .setErrorcode(EErrorCode.OK.getCode()).build();
     }
 }

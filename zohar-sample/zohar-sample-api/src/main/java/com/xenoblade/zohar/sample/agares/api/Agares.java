@@ -17,6 +17,16 @@ public final class Agares {
   public interface HelloAgaresRequestOrBuilder extends
       // @@protoc_insertion_point(interface_extends:zohar.sample.HelloAgaresRequest)
       com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>string request = 1;</code>
+     */
+    java.lang.String getRequest();
+    /**
+     * <code>string request = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getRequestBytes();
   }
   /**
    * Protobuf type {@code zohar.sample.HelloAgaresRequest}
@@ -31,6 +41,7 @@ public final class Agares {
       super(builder);
     }
     private HelloAgaresRequest() {
+      request_ = "";
     }
 
     @java.lang.Override
@@ -46,6 +57,7 @@ public final class Agares {
       if (extensionRegistry == null) {
         throw new java.lang.NullPointerException();
       }
+      int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -61,6 +73,12 @@ public final class Agares {
                   input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
+              break;
+            }
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              request_ = s;
               break;
             }
           }
@@ -87,6 +105,40 @@ public final class Agares {
               com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresRequest.class, com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresRequest.Builder.class);
     }
 
+    public static final int REQUEST_FIELD_NUMBER = 1;
+    private volatile java.lang.Object request_;
+    /**
+     * <code>string request = 1;</code>
+     */
+    public java.lang.String getRequest() {
+      java.lang.Object ref = request_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        request_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string request = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getRequestBytes() {
+      java.lang.Object ref = request_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        request_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -99,6 +151,9 @@ public final class Agares {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      if (!getRequestBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, request_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -107,6 +162,9 @@ public final class Agares {
       if (size != -1) return size;
 
       size = 0;
+      if (!getRequestBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, request_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -123,6 +181,8 @@ public final class Agares {
       com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresRequest other = (com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresRequest) obj;
 
       boolean result = true;
+      result = result && getRequest()
+          .equals(other.getRequest());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -134,6 +194,8 @@ public final class Agares {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + REQUEST_FIELD_NUMBER;
+      hash = (53 * hash) + getRequest().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -263,6 +325,8 @@ public final class Agares {
       }
       public Builder clear() {
         super.clear();
+        request_ = "";
+
         return this;
       }
 
@@ -285,6 +349,7 @@ public final class Agares {
 
       public com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresRequest buildPartial() {
         com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresRequest result = new com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresRequest(this);
+        result.request_ = request_;
         onBuilt();
         return result;
       }
@@ -326,6 +391,10 @@ public final class Agares {
 
       public Builder mergeFrom(com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresRequest other) {
         if (other == com.xenoblade.zohar.sample.agares.api.Agares.HelloAgaresRequest.getDefaultInstance()) return this;
+        if (!other.getRequest().isEmpty()) {
+          request_ = other.request_;
+          onChanged();
+        }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
@@ -350,6 +419,75 @@ public final class Agares {
             mergeFrom(parsedMessage);
           }
         }
+        return this;
+      }
+
+      private java.lang.Object request_ = "";
+      /**
+       * <code>string request = 1;</code>
+       */
+      public java.lang.String getRequest() {
+        java.lang.Object ref = request_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          request_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string request = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getRequestBytes() {
+        java.lang.Object ref = request_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          request_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string request = 1;</code>
+       */
+      public Builder setRequest(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        request_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string request = 1;</code>
+       */
+      public Builder clearRequest() {
+        
+        request_ = getDefaultInstance().getRequest();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string request = 1;</code>
+       */
+      public Builder setRequestBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        request_ = value;
+        onChanged();
         return this;
       }
       public final Builder setUnknownFields(
@@ -1241,13 +1379,14 @@ public final class Agares {
   static {
     java.lang.String[] descriptorData = {
       "\n\031zohar/sample/agares.proto\022\014zohar.sampl" +
-      "e\032\027zohar/sample/enum.proto\"\024\n\022HelloAgare" +
-      "sRequest\":\n\023HelloAgaresResponse\022\020\n\010respo" +
-      "nse\030\001 \001(\t\022\021\n\terrorcode\030\002 \001(\0052e\n\rAgaresSe" +
-      "rvice\022T\n\013HelloAgares\022 .zohar.sample.Hell" +
-      "oAgaresRequest\032!.zohar.sample.HelloAgare" +
-      "sResponse\"\000B4\n%com.xenoblade.zohar.sampl" +
-      "e.agares.apiB\006AgaresP\000\210\001\001b\006proto3"
+      "e\032\027zohar/sample/enum.proto\"%\n\022HelloAgare" +
+      "sRequest\022\017\n\007request\030\001 \001(\t\":\n\023HelloAgares" +
+      "Response\022\020\n\010response\030\001 \001(\t\022\021\n\terrorcode\030" +
+      "\002 \001(\0052e\n\rAgaresService\022T\n\013HelloAgares\022 ." +
+      "zohar.sample.HelloAgaresRequest\032!.zohar." +
+      "sample.HelloAgaresResponse\"\000B4\n%com.xeno" +
+      "blade.zohar.sample.agares.apiB\006AgaresP\000\210" +
+      "\001\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -1267,7 +1406,7 @@ public final class Agares {
     internal_static_zohar_sample_HelloAgaresRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_zohar_sample_HelloAgaresRequest_descriptor,
-        new java.lang.String[] { });
+        new java.lang.String[] { "Request", });
     internal_static_zohar_sample_HelloAgaresResponse_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_zohar_sample_HelloAgaresResponse_fieldAccessorTable = new
