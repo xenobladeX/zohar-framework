@@ -78,6 +78,12 @@
 
             <dependency>
                 <groupId>com.xenoblade</groupId>
+                <artifactId>zohar-commons-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.xenoblade</groupId>
                 <artifactId>zohar-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>

@@ -18,23 +18,26 @@ package com.xenoblade.zohar.framework.commons.api.exception;
 
 import com.xenoblade.zohar.framework.commons.api.EErrorCode;
 import lombok.Getter;
-
+import lombok.Setter;
 
 /**
  * ZoharException
  * @author xenoblade
  * @since 1.0.0
  */
+@Getter
+@Setter
 public class ZoharException extends RuntimeException{
 
     private static final long serialVersionUID = -5901014228840933934L;
 
-    @Getter
-    private EErrorCode errorCode = EErrorCode.INVALID;
+    private String code;
+
+    private Integer status;
 
     public ZoharException(Throwable throwable) {
         super(throwable);
-        this.errorCode = EErrorCode.INNER_ERROR;
+        this.errorCode(EErrorCode.INNER_ERROR);
     }
 
     public ZoharException(String message) {
@@ -48,29 +51,23 @@ public class ZoharException extends RuntimeException{
 
     public ZoharException(String message, EErrorCode errorCode) {
         super(message);
-        this.errorCode = errorCode;
+        this.errorCode(errorCode);
     }
 
-
-    public ZoharException(String message, Throwable cause) {
-        this(message, cause, EErrorCode.INNER_ERROR);
+    public ZoharException errorCode(EErrorCode errorCode) {
+        this.status = errorCode.getCode();
+        this.code = errorCode.name();
+        return this;
     }
 
-    public ZoharException(String message, Throwable cause, int status) {
-        this(message, cause, EErrorCode.CodeOf(status));
+    public ZoharException code(String code) {
+        this.code = code;
+        return this;
     }
 
-    public ZoharException(String message, Throwable cause, EErrorCode errorCode) {
-        super(message, cause);
-        this.errorCode = errorCode;
-    }
-
-    public String getCode() {
-        return errorCode.name();
-    }
-
-    public Integer getStatus() {
-        return errorCode.getCode();
+    public ZoharException status(Integer status) {
+        this.status = status;
+        return this;
     }
 
 

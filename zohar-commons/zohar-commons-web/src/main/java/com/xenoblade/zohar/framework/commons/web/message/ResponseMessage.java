@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xenoblade.zohar.framework.commons.api.EErrorCode;
+import com.xenoblade.zohar.framework.commons.api.exception.ZoharException;
 import lombok.SneakyThrows;
 
 import java.io.Serializable;
@@ -49,21 +50,21 @@ public class ResponseMessage<T> implements Serializable {
 
     private Long timestamp;
 
-    @JsonIgnore
-    private EErrorCode errorCode;
+    private Integer status;
+
+    private String code;
+
 
     public String getMessage() {
         return message;
     }
 
-    @JsonProperty
     public int getStatus() {
-        return errorCode.getCode();
+        return status;
     }
 
-    @JsonProperty
     public String getCode() {
-        return errorCode.name();
+        return code;
     }
 
     public T getResult() {
@@ -86,7 +87,15 @@ public class ResponseMessage<T> implements Serializable {
     public static <T> ResponseMessage<T> error(EErrorCode errorCode, String message) {
         ResponseMessage<T> msg = new ResponseMessage<>();
         msg.message = message;
-        msg.errorCode = errorCode;
+        msg.errorCode(errorCode);
+        return msg.putTimeStamp();
+    }
+
+    public static <T> ResponseMessage<T> error(ZoharException ex) {
+        ResponseMessage<T> msg = new ResponseMessage<>();
+        msg.message = ex.getMessage();
+        msg.status = ex.getStatus();
+        msg.code = ex.getCode();
         return msg.putTimeStamp();
     }
 
@@ -111,11 +120,12 @@ public class ResponseMessage<T> implements Serializable {
         return this;
     }
 
-
     public ResponseMessage<T> errorCode(EErrorCode errorCode) {
-        this.errorCode = errorCode;
+        this.status = errorCode.getCode();
+        this.code = errorCode.getErrorDescription();
         return this;
     }
+
 
     /**
      * 过滤字段：指定需要序列化的字段
