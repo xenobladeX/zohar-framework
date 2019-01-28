@@ -19,6 +19,7 @@ package com.xenoblade.zohar.framework.commons.spring.log.api;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.xenoblade.zohar.framework.commons.api.bean.Bean;
 import lombok.Data;
 
 import java.lang.reflect.Method;
@@ -32,8 +33,9 @@ import java.util.StringJoiner;
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class AccessLoggerInfo {
+public class AccessLoggerInfo implements Bean{
 
+    private static final long serialVersionUID = 878023858711485931L;
     /**
      * 日志id
      */

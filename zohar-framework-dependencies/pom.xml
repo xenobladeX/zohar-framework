@@ -120,6 +120,18 @@
                 </exclusions>
             </dependency>
 
+            <dependency>
+                <groupId>com.xenoblade</groupId>
+                <artifactId>zohar-spring-boot-starter-cache-lettuce</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.xenoblade</groupId>
+                <artifactId>zohar-spring-boot-starter-cache-redisson</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
 
             <!--third party -->
 
@@ -292,6 +304,12 @@
             <dependency>
                 <groupId>org.redisson</groupId>
                 <artifactId>redisson</artifactId>
+                <version>${redisson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-data-18</artifactId>
                 <version>${redisson.version}</version>
             </dependency>
 
