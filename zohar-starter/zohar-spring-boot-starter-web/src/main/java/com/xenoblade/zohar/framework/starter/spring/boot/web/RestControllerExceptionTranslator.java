@@ -20,6 +20,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.xenoblade.zohar.framework.commons.api.EErrorCode;
 import com.xenoblade.zohar.framework.commons.api.exception.NotFoundException;
+import com.xenoblade.zohar.framework.commons.api.exception.UnauthorizedException;
 import com.xenoblade.zohar.framework.commons.api.exception.ZoharException;
 import com.xenoblade.zohar.framework.commons.spring.validate.SimpleValidateResults;
 import com.xenoblade.zohar.framework.commons.spring.validate.ValidateResults;
@@ -86,6 +87,13 @@ public class RestControllerExceptionTranslator extends ResponseEntityExceptionHa
     public ResponseEntity<ResponseMessage> handleNotFoundException(HttpServletRequest request, final NotFoundException ex, HttpServletResponse response) {
         ResponseMessage responseMessage = ResponseMessage.error(ex);
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(responseMessage);
+    }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<ResponseMessage> handleNotFoundException(HttpServletRequest request, final UnauthorizedException ex, HttpServletResponse response) {
+        ResponseMessage responseMessage = ResponseMessage.error(ex);
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(responseMessage);
     }
 
