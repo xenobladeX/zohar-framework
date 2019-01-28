@@ -14,18 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.api.exception;
+package com.xeonblade.zohar.framework.commons.authorization.api.token;
 
 /**
- * NotFoundException
+ * AuthorizedToken
  * @author xenoblade
  * @since 1.0.0
  */
-public class NotFoundException extends ZoharException{
+public interface AuthorizedToken extends ParsedToken {
 
-    public NotFoundException(String message, String code, Integer status) {
-        super(message);
-        this.code(code).status(status);
+    /**
+     * @return 令牌绑定的用户id
+     */
+    String getUserId();
+
+    /**
+     * @return 令牌有效期，单位毫秒，-1为长期有效
+     */
+    default long getMaxInactiveInterval() {
+        return -1;
     }
 
 }

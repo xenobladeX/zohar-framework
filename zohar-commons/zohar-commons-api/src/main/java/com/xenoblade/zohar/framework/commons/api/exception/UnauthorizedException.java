@@ -17,13 +17,13 @@
 package com.xenoblade.zohar.framework.commons.api.exception;
 
 /**
- * NotFoundException
+ * UnauthorizedException
  * @author xenoblade
  * @since 1.0.0
  */
-public class NotFoundException extends ZoharException{
+public class UnauthorizedException extends ZoharException{
 
-    public NotFoundException(String message, String code, Integer status) {
+    public UnauthorizedException(String message, String code, Integer status) {
         super(message);
         this.code(code).status(status);
     }

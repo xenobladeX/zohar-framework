@@ -44,6 +44,7 @@ public enum EErrorCode {
 
 
     BAD_REQUEST(400, "错误的请求"),
+    UNAUTHORIZED(401, "未授权"),
 
 
     NOT_FOUND(404, "找不到"),

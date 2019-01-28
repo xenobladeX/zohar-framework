@@ -3,25 +3,21 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
         <groupId>com.xenoblade</groupId>
-        <artifactId>zohar-framework-parent</artifactId>
+        <artifactId>zohar-commons</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../zohar-framework-parent</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>zohar-starter</artifactId>
-    <name>Zohar Starter</name>
+    <artifactId>zohar-commons-authorization</artifactId>
+    <name>Zohar Common Authorization</name>
     <packaging>pom</packaging>
+
     <properties>
         <github.path>${project.artifactId}</github.path>
     </properties>
 
+
     <modules>
-        <module>zohar-spring-boot-starter</module>
-        <module>zohar-spring-boot-starter-web</module>
-        <module>zohar-spring-boot-starter-cache</module>
-        <module>zohar-spring-boot-starter-database</module>
-        <module>zohar-spring-boot-starter-rpc</module>
-        <module>zohar-spring-boot-starter-authorization</module>
+        <module>zohar-commons-authorization-api</module>
     </modules>
 
     <dependencies>

@@ -14,18 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.api.exception;
+package com.xeonblade.zohar.framework.commons.authorization.api.token;
 
 /**
- * NotFoundException
+ * TokenParser
  * @author xenoblade
  * @since 1.0.0
  */
-public class NotFoundException extends ZoharException{
+public interface TokenParser {
 
-    public NotFoundException(String message, String code, Integer status) {
-        super(message);
-        this.code(code).status(status);
-    }
+    ParsedToken parseToken(String token);
 
 }

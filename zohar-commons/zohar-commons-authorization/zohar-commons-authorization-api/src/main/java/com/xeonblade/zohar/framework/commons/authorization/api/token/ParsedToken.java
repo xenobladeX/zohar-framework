@@ -14,18 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.api.exception;
+package com.xeonblade.zohar.framework.commons.authorization.api.token;
+
+import com.xenoblade.zohar.framework.commons.api.bean.Bean;
 
 /**
- * NotFoundException
+ * 令牌解析结果
  * @author xenoblade
  * @since 1.0.0
  */
-public class NotFoundException extends ZoharException{
+public interface ParsedToken extends Bean{
 
-    public NotFoundException(String message, String code, Integer status) {
-        super(message);
-        this.code(code).status(status);
-    }
+    /**
+     * @return 令牌
+     */
+    String getToken();
+
+    /**
+     * @return 令牌类型
+     */
+    String getType();
 
 }

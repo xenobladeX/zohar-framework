@@ -54,6 +54,12 @@ public class ZoharException extends RuntimeException{
         this.errorCode(errorCode);
     }
 
+    public ZoharException(EErrorCode errorCode) {
+        super(errorCode.getErrorDescription());
+        this.errorCode(errorCode);
+    }
+
+
     public ZoharException errorCode(EErrorCode errorCode) {
         this.status = errorCode.getCode();
         this.code = errorCode.name();

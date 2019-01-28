@@ -14,18 +14,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.api.exception;
+package com.xeonblade.zohar.framework.commons.authorization.api.token;
+
+import com.xenoblade.zohar.framework.commons.api.bean.Bean;
+
+import java.util.Map;
 
 /**
- * NotFoundException
+ * 生成好的令牌信息
  * @author xenoblade
  * @since 1.0.0
  */
-public class NotFoundException extends ZoharException{
+public interface GeneratedToken extends Bean{
 
-    public NotFoundException(String message, String code, Integer status) {
-        super(message);
-        this.code(code).status(status);
-    }
+    /**
+     * 要响应的数据,可自定义想要的数据给调用者
+     *
+     * @return {@link Map}
+     */
+    Map<String, Object> getResponse();
+
+    /**
+     * @return 令牌字符串, 令牌具有唯一性, 不可逆, 不包含敏感信息
+     */
+    String getToken();
+
+    /**
+     * @return 令牌类型
+     */
+    String getType();
+
+    /**
+     * @return 令牌有效期（单位毫秒）
+     */
+    int getTimeout();
+
 
 }
