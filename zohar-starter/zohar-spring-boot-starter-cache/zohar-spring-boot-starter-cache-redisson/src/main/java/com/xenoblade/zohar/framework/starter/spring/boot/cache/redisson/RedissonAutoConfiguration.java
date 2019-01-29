@@ -22,8 +22,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
-import org.redisson.spring.cache.CacheConfig;
-import org.redisson.spring.cache.RedissonSpringCacheManager;
 import org.redisson.spring.data.connection.RedissonConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
@@ -33,13 +31,10 @@ import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties.Sentinel;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.cache.CacheManager;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
-import org.springframework.data.redis.cache.RedisCacheConfiguration;
-import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -52,12 +47,9 @@ import org.springframework.util.ReflectionUtils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * RedissonAutoConfiguration
@@ -90,33 +82,33 @@ public class RedissonAutoConfiguration {
 
 //    @Bean
 //    @ConditionalOnMissingBean(name = "redisTemplate")
-//    public RedisTemplate redisTemplate(RedisConnectionFactory factory) {
-//        StringRedisTemplate template = new StringRedisTemplate(factory);
-//
-//        RedisSerializer keySerializer = new StringRedisSerializer(); // 设置key序列化类，否则key前面会多了一些乱码
-//        template.setKeySerializer(keySerializer);
-//        setValueSerializer(template);//设置value序列化
-//        template.afterPropertiesSet();
-//        template.setEnableTransactionSupport(true);
-//        return template;
-//    }
-//
-//    private void setValueSerializer(StringRedisTemplate template) {
-//        @SuppressWarnings({"rawtypes", "unchecked"}) Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
-//        ObjectMapper om = new ObjectMapper();
-//        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-//        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-//        jackson2JsonRedisSerializer.setObjectMapper(om);
-//        template.setValueSerializer(jackson2JsonRedisSerializer);
-//    }
-
-//    @Bean
-//    @ConditionalOnMissingBean(name = "redisTemplate")
 //    public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
 //        RedisTemplate<Object, Object> template = new RedisTemplate<Object, Object>();
 //        template.setConnectionFactory(redisConnectionFactory);
 //        return template;
 //    }
+
+    @Bean
+    @ConditionalOnMissingBean(name = "redisTemplate")
+    public RedisTemplate redisTemplate(RedisConnectionFactory factory) {
+        StringRedisTemplate template = new StringRedisTemplate(factory);
+
+        RedisSerializer keySerializer = new StringRedisSerializer(); // 设置key序列化类，否则key前面会多了一些乱码
+        template.setKeySerializer(keySerializer);
+        setValueSerializer(template);//设置value序列化
+        template.afterPropertiesSet();
+        template.setEnableTransactionSupport(true);
+        return template;
+    }
+
+    private void setValueSerializer(StringRedisTemplate template) {
+        @SuppressWarnings({"rawtypes", "unchecked"}) Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
+        ObjectMapper om = new ObjectMapper();
+        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+        jackson2JsonRedisSerializer.setObjectMapper(om);
+        template.setValueSerializer(jackson2JsonRedisSerializer);
+    }
 
 
     @Bean

@@ -122,7 +122,7 @@ public class ResponseMessage<T> implements Serializable {
 
     public ResponseMessage<T> errorCode(EErrorCode errorCode) {
         this.status = errorCode.getCode();
-        this.code = errorCode.getErrorDescription();
+        this.code = errorCode.name();
         return this;
     }
 

@@ -309,7 +309,7 @@
 
             <dependency>
                 <groupId>org.redisson</groupId>
-                <artifactId>redisson-spring-data-18</artifactId>
+                <artifactId>redisson-spring-data-21</artifactId>
                 <version>${redisson.version}</version>
             </dependency>
 
