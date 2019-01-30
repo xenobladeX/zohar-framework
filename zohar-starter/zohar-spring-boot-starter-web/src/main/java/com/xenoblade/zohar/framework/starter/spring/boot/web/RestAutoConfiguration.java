@@ -16,6 +16,7 @@
  */
 package com.xenoblade.zohar.framework.starter.spring.boot.web;
 
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
@@ -89,6 +90,9 @@ public class RestAutoConfiguration implements WebMvcConfigurer {
 
                 // Jackson protobuf format
                 converter.getObjectMapper().registerModule(new ProtobufModule());
+
+                // Ignore NULL fields
+                converter.getObjectMapper().setSerializationInclusion(Include.NON_NULL);
             }
         });
     }

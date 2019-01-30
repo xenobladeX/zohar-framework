@@ -39,6 +39,8 @@ public enum EErrorCode {
     JSON_FORMAT_ERROR("JSON格式错误"),
     TYPE_MISMATCH("类型不匹配"),
     METHOD_ARGUMENT_NOT_VALID("方法参数不合法"),
+    ENCRYPTION_ERROR("加密错误"),
+    DECRYPTION_ERROR("解密错误"),
 
     OK(200, "成功"),
 
