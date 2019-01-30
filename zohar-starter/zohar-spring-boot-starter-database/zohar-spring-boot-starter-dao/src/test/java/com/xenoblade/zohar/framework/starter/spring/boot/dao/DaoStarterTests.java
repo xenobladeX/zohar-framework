@@ -29,6 +29,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.DigestUtils;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -89,7 +90,12 @@ public class DaoStarterTests {
         userService.selectUserFromDsGroup();
     }
 
-
+    @Test
+    public void test() {
+            String test = "dsjklg3uisdjfk32luy7";
+            String md5 = DigestUtils.md5DigestAsHex(test.getBytes());
+            log.info("md5: {}", md5);
+    }
 
 
 
