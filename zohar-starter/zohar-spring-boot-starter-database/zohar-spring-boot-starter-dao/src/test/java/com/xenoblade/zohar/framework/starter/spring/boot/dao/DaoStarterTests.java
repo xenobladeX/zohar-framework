@@ -90,12 +90,6 @@ public class DaoStarterTests {
         userService.selectUserFromDsGroup();
     }
 
-    @Test
-    public void test() {
-            String test = "dsjklg3uisdjfk32luy7";
-            String md5 = DigestUtils.md5DigestAsHex(test.getBytes());
-            log.info("md5: {}", md5);
-    }
 
 
 

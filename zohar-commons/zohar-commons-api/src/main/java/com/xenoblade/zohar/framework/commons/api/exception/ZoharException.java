@@ -76,5 +76,9 @@ public class ZoharException extends RuntimeException{
         return this;
     }
 
+    public ZoharException clearStackTrace() {
+        this.setStackTrace(new StackTraceElement[]{});
+        return this;
+    }
 
 }
