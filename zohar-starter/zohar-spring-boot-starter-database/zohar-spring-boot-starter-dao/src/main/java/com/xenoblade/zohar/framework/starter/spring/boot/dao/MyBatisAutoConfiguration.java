@@ -21,10 +21,19 @@ import com.baomidou.mybatisplus.extension.injector.LogicSqlInjector;
 import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.TransactionIsolationLevel;
+import org.apache.ibatis.transaction.Transaction;
+import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.transaction.SpringManagedTransactionFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.util.StringUtils;
+
+import javax.sql.DataSource;
 
 /**
  * MyBatisAutoConfiguration
@@ -72,7 +81,61 @@ public class MyBatisAutoConfiguration {
         return new OptimisticLockerInterceptor();
     }
 
-
-
+    // TODO: sqlSessionFactory
+//    @Bean(name = "sqlSessionFactory")
+//    @Primary
+//    public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
+//        SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
+//        MybatisProperties mybatisProperties = this.mybatisProperties();
+//        if (null != entityFactory) {
+//            factory.setObjectFactory(new MybatisEntityFactory(entityFactory));
+//        }
+//        factory.setVfs(SpringBootVFS.class);
+//        if (mybatisProperties().isDynamicDatasource()) {
+//            factory.setSqlSessionFactoryBuilder(new DynamicDataSourceSqlSessionFactoryBuilder());
+//            factory.setTransactionFactory(new SpringManagedTransactionFactory() {
+//                @Override
+//                public Transaction newTransaction(DataSource dataSource, TransactionIsolationLevel level, boolean autoCommit) {
+//                    return new DynamicSpringManagedTransaction();
+//                }
+//            });
+//        }
+//        factory.setDataSource(dataSource);
+//        if (StringUtils.hasText(mybatisProperties.getConfigLocation())) {
+//            factory.setConfigLocation(this.resourceLoader.getResource(mybatisProperties
+//                    .getConfigLocation()));
+//        }
+//        if (mybatisProperties.getConfiguration() != null) {
+//            factory.setConfiguration(mybatisProperties.getConfiguration());
+//        }
+//        if (this.interceptors != null && this.interceptors.length > 0) {
+//            factory.setPlugins(this.interceptors);
+//        }
+//        if (this.databaseIdProvider != null) {
+//            factory.setDatabaseIdProvider(this.databaseIdProvider);
+//        }
+//        factory.setTypeAliasesPackage(mybatisProperties.getTypeAliasesPackage());
+//        String typeHandlers = "com.cmcc.videopp.mainas.vacon.commons.dao.mybatis.handler";
+//        if (mybatisProperties.getTypeHandlersPackage() != null) {
+//            typeHandlers = typeHandlers + ";" + mybatisProperties.getTypeHandlersPackage();
+//        }
+//        factory.setTypeHandlersPackage(typeHandlers);
+//        factory.setMapperLocations(mybatisProperties.resolveMapperLocations());
+//
+//        SqlSessionFactory sqlSessionFactory = factory.getObject();
+//        MybatisUtils.sqlSession = sqlSessionFactory;
+//
+//        EnumDictHandlerRegister.typeHandlerRegistry = sqlSessionFactory.getConfiguration().getTypeHandlerRegistry();
+//        EnumDictHandlerRegister.register("com.cmcc.videopp.mainas.vacon.commons;" + mybatisProperties.getTypeHandlersPackage());
+//
+//        try {
+//            Class.forName("javax.persistence.Table");
+//            EasyOrmSqlBuilder.getInstance().useJpa = mybatisProperties.isUseJpa();
+//        } catch (@SuppressWarnings("all") Exception ignore) {
+//        }
+//        EasyOrmSqlBuilder.getInstance().entityFactory = entityFactory;
+//
+//        return sqlSessionFactory;
+//    }
 
 }

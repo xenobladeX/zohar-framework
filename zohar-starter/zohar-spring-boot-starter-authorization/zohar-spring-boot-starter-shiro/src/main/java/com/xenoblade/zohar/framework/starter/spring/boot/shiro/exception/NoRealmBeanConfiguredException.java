@@ -14,15 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeonblade.zohar.framework.commons.authorization.api.token;
+package com.xenoblade.zohar.framework.starter.spring.boot.shiro.exception;
+
+import com.xenoblade.zohar.framework.commons.api.EErrorCode;
+import com.xenoblade.zohar.framework.commons.api.exception.ZoharException;
 
 /**
- * TokenParser
+ * NoRealmBeanConfiguredException
  * @author xenoblade
  * @since 1.0.0
  */
-public interface TokenParser {
+public class NoRealmBeanConfiguredException extends ZoharException{
 
-    ParsedToken parseToken(String token);
+    public NoRealmBeanConfiguredException() {
+        super("Shiro: no realm bean configuration found");
+        this.errorCode(EErrorCode.INNER_ERROR);
+    }
 
 }

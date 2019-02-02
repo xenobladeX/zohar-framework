@@ -11,6 +11,11 @@
     <name>Zohar Spring Boot Authorization Starter</name>
     <packaging>pom</packaging>
 
+    <modules>
+        <module>zohar-spring-boot-starter-shiro</module>
+        <module>zohar-spring-boot-starter-shiro-web</module>
+    </modules>
+
     <properties>
         <github.path>${project.artifactId}</github.path>
     </properties>
