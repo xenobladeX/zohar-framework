@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration = \
+  com.xenoblade.zohar.framework.starter.spring.boot.shiro.web.ShiroWebAutoConfiguration,\
+  com.xenoblade.zohar.framework.starter.spring.boot.shiro.web.ShiroWebFilterConfiguration
