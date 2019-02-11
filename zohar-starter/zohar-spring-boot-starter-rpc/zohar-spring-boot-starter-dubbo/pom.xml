@@ -29,6 +29,12 @@
         <dependency>
             <groupId>com.xenoblade</groupId>
             <artifactId>zohar-commons-dubbo-serialization-protobufmix</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.alibaba</groupId>
+                    <artifactId>dubbo-common</artifactId>
+                </exclusion>
+            </exclusions>
             <version>${project.version}</version>
         </dependency>
 

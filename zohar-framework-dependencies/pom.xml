@@ -141,6 +141,12 @@
                 <version>${project.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.xenoblade</groupId>
+                <artifactId>zohar-spring-boot-starter-shiro-web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <!--third party -->
 
             <dependency>
