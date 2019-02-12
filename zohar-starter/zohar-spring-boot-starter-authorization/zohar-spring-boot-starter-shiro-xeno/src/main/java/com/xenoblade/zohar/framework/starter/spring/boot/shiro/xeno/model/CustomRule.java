@@ -14,20 +14,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.api.exception;
+package com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.model;
+
+import com.google.common.base.Strings;
 
 /**
- * NotFoundException
+ * 自由定制的权限验证规则
  * @author xenoblade
  * @since 1.0.0
  */
-public class NotFoundException extends ZoharException{
+public class CustomRule extends AuthorizeRule{
 
-    private static final long serialVersionUID = 4335447221487758513L;
+    private static final long serialVersionUID = 1L;
 
-    public NotFoundException(String message, String code, Integer status) {
-        super(message);
-        this.code(code).status(status);
+    private String url;// 资源URL
+    private String rule;// 过滤规则
+
+    public String getUrl() {
+        return url;
+    }
+    public void setUrl(String url) {
+        this.url = url;
+    }
+    public String getRule() {
+        return rule;
+    }
+    public void setRule(String rule) {
+        this.rule = rule;
+    }
+
+    @Override
+    public StringBuilder toFilterChain() {
+        if(Strings.isNullOrEmpty(this.getUrl())) return null;
+        if(Strings.isNullOrEmpty(this.getRule())) return null;
+        return new StringBuilder(this.getRule());
     }
 
 }

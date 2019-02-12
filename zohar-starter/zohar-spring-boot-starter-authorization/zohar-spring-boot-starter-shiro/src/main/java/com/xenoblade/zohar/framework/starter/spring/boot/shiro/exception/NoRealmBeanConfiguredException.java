@@ -26,6 +26,8 @@ import com.xenoblade.zohar.framework.commons.api.exception.ZoharException;
  */
 public class NoRealmBeanConfiguredException extends ZoharException{
 
+    private static final long serialVersionUID = 9143073814462585175L;
+
     public NoRealmBeanConfiguredException() {
         super("Shiro: no realm bean configuration found");
         this.errorCode(EErrorCode.INNER_ERROR);

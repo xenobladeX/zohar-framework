@@ -14,20 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.api.exception;
+package com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.handler;
 
 /**
- * NotFoundException
+ * 密码连续错误次数超限处理器接口
  * @author xenoblade
  * @since 1.0.0
  */
-public class NotFoundException extends ZoharException{
+public interface PasswdRetryLimitHandler {
 
-    private static final long serialVersionUID = 4335447221487758513L;
-
-    public NotFoundException(String message, String code, Integer status) {
-        super(message);
-        this.code(code).status(status);
-    }
+    public void handle(String account);
 
 }

@@ -14,6 +14,7 @@
     <modules>
         <module>zohar-spring-boot-starter-shiro</module>
         <module>zohar-spring-boot-starter-shiro-web</module>
+        <module>zohar-spring-boot-starter-shiro-xeno</module>
     </modules>
 
     <properties>

@@ -14,20 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.api.exception;
+package com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.model;
+
+import com.xenoblade.zohar.framework.commons.api.bean.Bean;
 
 /**
- * NotFoundException
+ * 账号的抽象，应用中的用户实体要实现这个接口
  * @author xenoblade
  * @since 1.0.0
  */
-public class NotFoundException extends ZoharException{
-
-    private static final long serialVersionUID = 4335447221487758513L;
-
-    public NotFoundException(String message, String code, Integer status) {
-        super(message);
-        this.code(code).status(status);
-    }
-
+public interface Account extends Bean{
+    /**
+     * 获取用户名
+     */
+    public String getAccount();
+    /**
+     * 获取登陆口令
+     */
+    public String getPassword();
 }

@@ -23,6 +23,8 @@ package com.xenoblade.zohar.framework.commons.api.exception;
  */
 public class UnauthorizedException extends ZoharException{
 
+    private static final long serialVersionUID = 3459037880834678267L;
+
     public UnauthorizedException(String message, String code, Integer status) {
         super(message);
         this.code(code).status(status);

@@ -14,20 +14,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.api.exception;
+package com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.token;
 
 /**
- * NotFoundException
+ * JWT(json web token)令牌
  * @author xenoblade
  * @since 1.0.0
  */
-public class NotFoundException extends ZoharException{
+public class JwtToken extends StatelessToken{
 
-    private static final long serialVersionUID = 4335447221487758513L;
+    private static final long serialVersionUID = -8184967331611253722L;
 
-    public NotFoundException(String message, String code, Integer status) {
-        super(message);
-        this.code(code).status(status);
+    private String jwt;
+
+    public JwtToken(String host,String jwt){
+        super(host);
+        this.jwt = jwt;
     }
 
+    @Override
+    public Object getPrincipal() {
+        return this.jwt;
+    }
+
+    @Override
+    public Object getCredentials() {
+        return Boolean.TRUE;
+    }
+
+    public String getJwt() {
+        return jwt;
+    }
+
+    public void setJwt(String jwt) {
+        this.jwt = jwt;
+    }
 }

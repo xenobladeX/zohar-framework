@@ -14,20 +14,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.api.exception;
+package com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.token;
+
+import org.apache.shiro.authc.AuthenticationToken;
 
 /**
- * NotFoundException
+ * 无状态令牌抽象
  * @author xenoblade
  * @since 1.0.0
  */
-public class NotFoundException extends ZoharException{
+public abstract class StatelessToken implements AuthenticationToken {
 
-    private static final long serialVersionUID = 4335447221487758513L;
+    private static final long serialVersionUID = 6910875527938756080L;
 
-    public NotFoundException(String message, String code, Integer status) {
-        super(message);
-        this.code(code).status(status);
+    private String host;// 客户IP
+
+    public StatelessToken(String host){
+        this.host = host;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
     }
 
 }

@@ -14,20 +14,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.api.exception;
+package com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.exception;
+
+import com.xenoblade.zohar.framework.commons.api.EErrorCode;
+import com.xenoblade.zohar.framework.commons.api.exception.ZoharException;
 
 /**
- * NotFoundException
+ * IllegalConfigException
  * @author xenoblade
  * @since 1.0.0
  */
-public class NotFoundException extends ZoharException{
+public class IllegalConfigException extends ZoharException{
 
-    private static final long serialVersionUID = 4335447221487758513L;
+    private static final long serialVersionUID = -5277150118064872759L;
 
-    public NotFoundException(String message, String code, Integer status) {
-        super(message);
-        this.code(code).status(status);
+    public IllegalConfigException(Throwable throwable) {
+        super(throwable);
+        this.errorCode(EErrorCode.INNER_ERROR);
+    }
+
+    public IllegalConfigException(String message) {
+        super(message, EErrorCode.INNER_ERROR);
+
     }
 
 }

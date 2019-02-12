@@ -18,6 +18,7 @@ import com.xenoblade.zohar.framework.commons.api.exception.ZoharException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -85,12 +86,19 @@ public abstract class JacksonUtils {
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         //忽略transient
         objectMapper.configure(MapperFeature.PROPAGATE_TRANSIENT_MARKER, true);
-        SimpleModule simpleModule = new SimpleModule();
-        simpleModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-        simpleModule.addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        simpleModule.addSerializer(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern("HH:mm:ss")));
-        simpleModule.addSerializer(Long.class, ToStringSerializer.instance);
-        objectMapper.registerModule(simpleModule);
+
+        // 设置时间格式
+        SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        objectMapper.setDateFormat(myDateFormat);
+
+        // 自定义序列化方式
+//        SimpleModule simpleModule = new SimpleModule();
+//        simpleModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+//        simpleModule.addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+//        simpleModule.addSerializer(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern("HH:mm:ss")));
+//        // TODO 是否应该将 Long 类型序列化成 String 类型???
+//        simpleModule.addSerializer(Long.class, ToStringSerializer.instance);
+//        objectMapper.registerModule(simpleModule);
 
         // Jackson protobuf format
         objectMapper.registerModule(new ProtobufModule());

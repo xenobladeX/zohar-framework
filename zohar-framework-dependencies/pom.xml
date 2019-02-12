@@ -53,8 +53,8 @@
         <alibaba.spring-context-support.version>1.0.2</alibaba.spring-context-support.version>
         <redisson.version>3.10.0</redisson.version>
         <groovy.version>2.4.7</groovy.version>
-
-
+        <jjwt.version>0.9.1</jjwt.version>
+        <jcaptcha.version>1.0</jcaptcha.version>
 
         <!-- Plugins Version -->
         <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
@@ -144,6 +144,12 @@
             <dependency>
                 <groupId>com.xenoblade</groupId>
                 <artifactId>zohar-spring-boot-starter-shiro-web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.xenoblade</groupId>
+                <artifactId>zohar-spring-boot-starter-shiro-xeno</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -319,6 +325,18 @@
                 <groupId>org.redisson</groupId>
                 <artifactId>redisson-spring-data-21</artifactId>
                 <version>${redisson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.octo.captcha</groupId>
+                <artifactId>jcaptcha</artifactId>
+                <version>${jcaptcha.version}</version>
             </dependency>
 
             <!-- declare Spring boot dependencies-->

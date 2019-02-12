@@ -14,20 +14,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.api.exception;
+package com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.config;
+
+import org.springframework.context.annotation.Import;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * NotFoundException
+ * xeno-shiro自动配置注解
  * @author xenoblade
  * @since 1.0.0
  */
-public class NotFoundException extends ZoharException{
-
-    private static final long serialVersionUID = 4335447221487758513L;
-
-    public NotFoundException(String message, String code, Integer status) {
-        super(message);
-        this.code(code).status(status);
-    }
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Import(XenoShiroAutoConfiguration.class)
+public @interface EnableXenoShiro {
 
 }
+
+

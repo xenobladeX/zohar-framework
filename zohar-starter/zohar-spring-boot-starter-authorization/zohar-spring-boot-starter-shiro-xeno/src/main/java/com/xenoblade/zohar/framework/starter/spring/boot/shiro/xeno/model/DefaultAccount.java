@@ -14,20 +14,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.api.exception;
+package com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.model;
 
 /**
- * NotFoundException
+ * 默认账号实现
  * @author xenoblade
  * @since 1.0.0
  */
-public class NotFoundException extends ZoharException{
+public class DefaultAccount implements Account{
 
-    private static final long serialVersionUID = 4335447221487758513L;
+    private static final long serialVersionUID = 1475024565685182131L;
 
-    public NotFoundException(String message, String code, Integer status) {
-        super(message);
-        this.code(code).status(status);
+    private String account;
+    private String password;
+
+    public DefaultAccount(String account,String password){
+        this.account = account;
+        this.password = password;
     }
 
+    @Override
+    public String getAccount() {
+        return account;
+    }
+    public void setAccount(String account) {
+        this.account = account;
+    }
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    @Override
+    public String getPassword() {
+        return password;
+    }
 }

@@ -23,6 +23,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xenoblade.zohar.framework.commons.api.EErrorCode;
 import com.xenoblade.zohar.framework.commons.api.exception.ZoharException;
+import com.xenoblade.zohar.framework.commons.utils.JacksonUtils;
 import lombok.SneakyThrows;
 
 import java.io.Serializable;
@@ -246,11 +247,7 @@ public class ResponseMessage<T> implements Serializable {
     @Override
     @SneakyThrows(JsonProcessingException.class)
     public String toString() {
-        ObjectMapper mapper = new ObjectMapper();
-        //设置JSON时间格式
-        SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        mapper.setDateFormat(myDateFormat);
-        return mapper.writeValueAsString(this);
+        return JacksonUtils.getObjectMapper().writeValueAsString(this);
     }
 
     public Map<Class<?>, Set<String>> getExcludes() {
