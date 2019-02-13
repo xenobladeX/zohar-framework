@@ -23,6 +23,7 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.AbstractCachingConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -38,6 +39,7 @@ import org.springframework.context.annotation.Import;
 @EnableConfigurationProperties(ShiroProperties.class)
 @Import(DefaultShiroConfiguration.class)
 @AutoConfigureAfter(AbstractCachingConfiguration.class)
+@ConditionalOnProperty(prefix = "zohar.shiro.xeno", name = "enable", havingValue = "true", matchIfMissing = true)
 public class XenoShiroAutoConfiguration {
 
     @Autowired

@@ -82,8 +82,6 @@ public class ShiroProperties {
     public static final String PARAM_HMAC_DIGEST = "hmac_digest";
     public static final String PARAM_JWT = "jwt";
 
-
-
     public static final List<String> DEFAULT_IGNORED = Arrays.asList(
             "/**/favicon.ico"
             ,"/css/**"
@@ -92,6 +90,8 @@ public class ShiroProperties {
             ,"/webjars/**"
             ,"/jcaptcha.jpg");
 
+
+    private boolean enable = Boolean.TRUE;  // 是否启用
     private boolean jcaptchaEnable = Boolean.FALSE; // 是否启用验证码
     private boolean keepOneEnabled = Boolean.FALSE; // 是否启用账号唯一用户登陆
     private boolean forceLogoutEnable = Boolean.FALSE; // 是否启用强制用户下线
@@ -123,6 +123,6 @@ public class ShiroProperties {
     private String hmacSecretKey;// HMAC秘钥
     private Integer hmacPeriod = DEFAULT_HMAC_PERIOD;// HMAC签名有效时间
     private String jwtSecretKey;// JWT秘钥
-    private List<String> filteRules = new LinkedList<String>();// 过滤规则
+    private List<String> filterRules = new LinkedList<String>();// 过滤规则
 
 }

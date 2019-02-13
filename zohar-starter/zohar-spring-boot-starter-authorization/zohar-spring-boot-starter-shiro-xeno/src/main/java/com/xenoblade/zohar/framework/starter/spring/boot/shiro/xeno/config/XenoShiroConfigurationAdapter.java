@@ -53,7 +53,7 @@ public abstract class XenoShiroConfigurationAdapter {
     /**
      *   设置、定制过滤器链
      *  <br>主要方法：
-     * 	<br>filterChainConfig.setShiroFilteRulesProvider(shiroFilteRulesProvider) 设置动态过滤规则提供者
+     * 	<br>filterChainConfig.setShiroFilterRulesProvider(shiroFilteRulesProvider) 设置动态过滤规则提供者
      *  <br>其他方法{@link FilterChainConfig}
      *  <br>
      */

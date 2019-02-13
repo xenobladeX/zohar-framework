@@ -19,7 +19,7 @@ package com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.config;
 import java.util.Map;
 import javax.servlet.Filter;
 import com.google.common.collect.Maps;
-import com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.service.ShiroFilteRulesProvider;
+import com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.service.ShiroFilterRulesProvider;
 
 /**
  * shiro 过滤器链配置
@@ -29,18 +29,18 @@ import com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.service.Shir
 public class FilterChainConfig {
 
     private final Map<String, Filter> filters = Maps.newLinkedHashMap();
-    private ShiroFilteRulesProvider shiroFilteRulesProvider;
+    private ShiroFilterRulesProvider shiroFilterRulesProvider;
 
     protected FilterChainConfig(){};
 
     /**
      *  设置过滤规则提供者，实现动态URL鉴权过滤
      *
-     *  @param shiroFilteRulesProvider
-     *  @see ShiroFilteRulesProvider
+     *  @param shiroFilterRulesProvider
+     *  @see ShiroFilterRulesProvider
      */
-    public void setShiroFilteRulesProvider(ShiroFilteRulesProvider shiroFilteRulesProvider) {
-        this.shiroFilteRulesProvider = shiroFilteRulesProvider;
+    public void setShiroFilterRulesProvider(ShiroFilterRulesProvider shiroFilterRulesProvider) {
+        this.shiroFilterRulesProvider = shiroFilterRulesProvider;
     }
     /**
      *  添加鉴权过滤
@@ -62,8 +62,8 @@ public class FilterChainConfig {
     public void addFilter(String name,Filter filter) {
         this.filters.put(name, filter);
     }
-    public ShiroFilteRulesProvider getShiroFilteRulesProvider() {
-        return shiroFilteRulesProvider;
+    public ShiroFilterRulesProvider getShiroFilterRulesProvider() {
+        return shiroFilterRulesProvider;
     }
     public Map<String, Filter> getFilters() {
         return filters;

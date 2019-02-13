@@ -26,7 +26,7 @@ import java.util.List;
  * @author xenoblade
  * @since 1.0.0
  */
-public interface ShiroFilteRulesProvider  {
+public interface ShiroFilterRulesProvider {
     /**
      * 加载基于角色/资源的过滤规则
      * <br>大部分系统的安全体系都是RBAC(基于角色的权限访问控制)授权模型。

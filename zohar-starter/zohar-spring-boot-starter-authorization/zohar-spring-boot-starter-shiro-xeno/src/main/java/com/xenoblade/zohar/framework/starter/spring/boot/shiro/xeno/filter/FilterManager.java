@@ -27,7 +27,7 @@ import com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.model.Author
 import com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.model.CustomRule;
 import com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.model.RolePermRule;
 import com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.service.ShiroAccountProvider;
-import com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.service.ShiroFilteRulesProvider;
+import com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.service.ShiroFilterRulesProvider;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -59,7 +59,7 @@ public class FilterManager {
     private CacheDelegator cacheDelegator;
     private MessageConfig messages;
     private ShiroAccountProvider accountProvider;
-    private ShiroFilteRulesProvider rulesProvider;
+    private ShiroFilterRulesProvider rulesProvider;
     private Map<String, Filter> customFilters;
     private String loginUrl;
     private String successUrl;
@@ -142,9 +142,9 @@ public class FilterManager {
         // ------------static
         if (this.properties.isJcaptchaEnable())
             this.staticFilterChain.put(Commons.JCAPTCHA_URL, Commons.FILTER_JCAPTCHA);
-        this.properties.getFilteRules().forEach(rule->{
+        this.properties.getFilterRules().forEach(rule->{
             if(rule.split("-->").length!=2)
-                throw new IllegalConfigException("过滤规则配置不正确,格式：url->filters");
+                throw new IllegalConfigException("过滤规则配置不正确,格式：url-->filters");
             Stream.of(rule.split("-->")[0].split(","))
                     .forEach(url->this.staticFilterChain.put(url, rule.split("-->")[1]));
         });
@@ -259,7 +259,7 @@ public class FilterManager {
     public void setAccountProvider(ShiroAccountProvider accountProvider) {
         this.accountProvider = accountProvider;
     }
-    public void setRulesProvider(ShiroFilteRulesProvider rulesProvider) {
+    public void setRulesProvider(ShiroFilterRulesProvider rulesProvider) {
         this.rulesProvider = rulesProvider;
     }
     public void setCustomFilters(Map<String, Filter> customFilters) {

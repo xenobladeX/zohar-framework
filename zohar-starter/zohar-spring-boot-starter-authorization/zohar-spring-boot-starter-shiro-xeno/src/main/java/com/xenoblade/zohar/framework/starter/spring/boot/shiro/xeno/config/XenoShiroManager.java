@@ -245,7 +245,7 @@ public class XenoShiroManager {
         filterManager.setCacheDelegator(this.cacheDelegator);
         filterManager.setAccountProvider(this.managerConfig.getAccountProvider());
         filterManager.setCustomFilters(this.filterConfig.getFilters());
-        filterManager.setRulesProvider(this.filterConfig.getShiroFilteRulesProvider());
+        filterManager.setRulesProvider(this.filterConfig.getShiroFilterRulesProvider());
         filterManager.setMessages(MessageConfig.ins());
         filterManager.initFixations();
         filterManager.initFilters();
