@@ -30,6 +30,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 
 /**
  * 基于用户、名密码的控制域
@@ -59,7 +60,10 @@ public class PasswdRealm extends AuthorizingRealm {
         if (null == accountEntity) {
             throw new AuthenticationException(messages.getMsgAccountNotExist());
         }
-        return new SimpleAuthenticationInfo(account,accountEntity.getPassword(), getName());
+        return new SimpleAuthenticationInfo(account,
+                accountEntity.getPassword(),
+                ByteSource.Util.bytes(accountEntity.getSalt()),
+                getName());
     }
 
     /**

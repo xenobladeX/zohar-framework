@@ -92,4 +92,8 @@ public class StatelessLogined implements Account{
     public String getPassword() {
         return null;
     }
+
+    @Override public String getSalt() {
+        return null;
+    }
 }

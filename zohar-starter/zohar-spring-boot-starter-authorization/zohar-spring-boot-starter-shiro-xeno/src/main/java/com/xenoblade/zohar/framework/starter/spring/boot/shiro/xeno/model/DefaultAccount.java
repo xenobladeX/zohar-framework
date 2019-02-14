@@ -47,4 +47,8 @@ public class DefaultAccount implements Account{
     public String getPassword() {
         return password;
     }
+
+    @Override public String getSalt() {
+        return null;
+    }
 }

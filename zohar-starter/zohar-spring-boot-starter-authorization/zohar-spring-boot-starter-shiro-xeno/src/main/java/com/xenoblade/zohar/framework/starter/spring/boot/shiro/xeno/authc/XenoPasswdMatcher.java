@@ -24,6 +24,7 @@ import com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.service.Shir
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 
 /**
@@ -44,7 +45,11 @@ public class XenoPasswdMatcher implements CredentialsMatcher {
         String credentials = String.valueOf((char[]) token.getCredentials());
         String account = (String) info.getPrincipals().getPrimaryPrincipal();
         String password = (String) info.getCredentials();
-        String encrypted  = this.cryptoService.password(credentials);
+        String salt = null;
+        if (info instanceof SimpleAuthenticationInfo) {
+            salt = new String(((SimpleAuthenticationInfo) info).getCredentialsSalt().getBytes());
+        }
+        String encrypted  = this.cryptoService.password(credentials, salt);
         if (!password.equals(encrypted)) {
             int passwdMaxRetries = this.properties.getPasswdMaxRetries();
             String errorMsg = this.messages.getMsgAccountPasswordError();

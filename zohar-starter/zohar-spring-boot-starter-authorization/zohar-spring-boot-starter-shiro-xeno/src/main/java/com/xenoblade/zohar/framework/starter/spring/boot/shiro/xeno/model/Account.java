@@ -32,4 +32,9 @@ public interface Account extends Bean{
      * 获取登陆口令
      */
     public String getPassword();
+
+    /**
+     * 获取盐
+     */
+    public String getSalt();
 }

@@ -49,6 +49,18 @@ public class ShiroCryptoService {
     }
 
     /**
+     * 生成密码
+     * @param plaintext 明文
+     */
+    public String password(String plaintext, String salt) {
+        return new SimpleHash(this.shiroProperties.getPasswdAlg()
+                ,plaintext
+                ,salt == null ? this.shiroProperties.getPasswdSalt() : salt
+                ,this.shiroProperties.getPasswdIterations()
+        ).toHex();
+    }
+
+    /**
      * 生成HMAC摘要
      *
      * @param plaintext 明文
