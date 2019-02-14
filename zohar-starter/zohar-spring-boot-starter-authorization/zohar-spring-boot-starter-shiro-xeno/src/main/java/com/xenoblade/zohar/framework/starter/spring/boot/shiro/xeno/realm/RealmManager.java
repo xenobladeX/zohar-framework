@@ -29,6 +29,7 @@ import com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.service.Defa
 import com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.service.ShiroAccountProvider;
 import com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.service.ShiroCryptoService;
 import com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.service.ShiroStatelessAccountProvider;
+import org.apache.shiro.authz.permission.RolePermissionResolver;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.realm.Realm;
 import com.google.common.collect.Lists;
@@ -45,6 +46,7 @@ public class RealmManager {
     private XenoPasswdMatcher xenoPasswdMatcher;
     private ShiroCryptoService shiroCryptoService;
     private ShiroAccountProvider accountProvider;
+    private RolePermissionResolver rolePermissionResolver;
     private ShiroStatelessAccountProvider statelessAccountProvider;
     private List<Realm> customRealms;
     private CacheDelegator cacheDelegator;
@@ -63,6 +65,7 @@ public class RealmManager {
         PasswdRealm passwdRealm = new PasswdRealm();
         passwdRealm.setCredentialsMatcher(this.xenoPasswdMatcher);
         passwdRealm.setAccountProvider(this.accountProvider);
+        passwdRealm.setRolePermissionResolver(this.rolePermissionResolver);
         passwdRealm.setMessages(this.messages);
         if (this.properties.isAuthCacheEnabled()) {
             passwdRealm.setAuthorizationCacheName(ShiroProperties.CACHE_NAME_AUTHORIZATION);
@@ -165,6 +168,11 @@ public class RealmManager {
     public void setStatelessAccountProvider(ShiroStatelessAccountProvider statelessAccountProvider) {
         this.statelessAccountProvider = statelessAccountProvider;
     }
+
+    public void setRolePermissionResolver(RolePermissionResolver rolePermissionResolver) {
+        this.rolePermissionResolver = rolePermissionResolver;
+    }
+
     public void setCustomRealms(List<Realm> customRealms) {
         this.customRealms = customRealms;
     }

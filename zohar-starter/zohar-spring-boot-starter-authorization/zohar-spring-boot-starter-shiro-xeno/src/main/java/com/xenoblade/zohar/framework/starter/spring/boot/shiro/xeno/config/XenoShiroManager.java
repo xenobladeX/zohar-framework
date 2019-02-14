@@ -28,6 +28,7 @@ import com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.filter.Filte
 import com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.handler.DefaultSessionListener;
 import com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.realm.RealmManager;
 import com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.service.ShiroCryptoService;
+import com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.session.XenoWebSessionManager;
 import com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.util.Commons;
 import com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.util.ShiroUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -89,7 +90,7 @@ public class XenoShiroManager {
     }
 
     private void buildSessionManager() {
-        DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+        XenoWebSessionManager sessionManager = new XenoWebSessionManager();
         sessionManager.setGlobalSessionTimeout(this.properties.getSessionTimeout());
         sessionManager.setSessionIdUrlRewritingEnabled(Boolean.FALSE);
         sessionManager.setSessionDAO(this.getSessionDAO());
