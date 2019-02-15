@@ -19,6 +19,7 @@ package com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.config;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 
 import javax.annotation.PostConstruct;
@@ -28,7 +29,7 @@ import javax.annotation.PostConstruct;
  * @author xenoblade
  * @since 1.0.0
  */
-@AutoConfigureAfter(XenoShiroAutoConfiguration.class)
+@AutoConfigureAfter({XenoShiroAutoConfiguration.class, CacheAutoConfiguration.class})
 public abstract class XenoShiroConfigurationAdapter {
 
     @Autowired

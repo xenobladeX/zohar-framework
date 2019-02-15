@@ -53,6 +53,7 @@ public abstract class Commons {
     public static final String JCAPTCHA_URL = "/jcaptcha.jpg";
     public static final String FILTER_ANON = "anon";
     public static final String FILTER_AUTHC = "authc";
+    public static final String FILTER_REST_AUTHC = "restAuthc";
     public static final String FILTER_JCAPTCHA = "jcaptcha";
     public static final String FILTER_ROLES = "roles";
     public static final String FILTER_PERMS = "perms";
@@ -82,7 +83,6 @@ public abstract class Commons {
     /**
      * 判断是否AJAX请求
      */
-    // TODO: 放到 zohar-commons-web 的 Webutils 中
     public static boolean isAjax(HttpServletRequest request) {
         return "XMLHttpRequest".equalsIgnoreCase(request.getHeader("X-Requested-With"));
     }
@@ -90,7 +90,6 @@ public abstract class Commons {
     /**
      * REST失败响应
      */
-    // TODO: 使用 ResponseMessage 进行响应
     public static void restFailed(HttpServletResponse response, String code, String message) {
         respondJson(response,HttpServletResponse.SC_BAD_REQUEST,code,message);
     }
@@ -113,7 +112,6 @@ public abstract class Commons {
     /**
      * JSON响应
      */
-    // TODO: 使用 ResponseMessage 进行响应
     private static void respondJson(HttpServletResponse response
             , int respondStatus, String code,String message) {
         Map<String,String> map = Maps.newHashMap();

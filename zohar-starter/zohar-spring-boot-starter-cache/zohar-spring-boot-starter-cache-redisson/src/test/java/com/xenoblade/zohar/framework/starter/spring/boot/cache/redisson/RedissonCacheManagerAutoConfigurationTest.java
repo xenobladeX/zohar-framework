@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
+import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
@@ -28,6 +29,11 @@ public class RedissonCacheManagerAutoConfigurationTest {
         String value = "test";
         Cache cache = cacheManager.getCache("test");
         cache.put(key, value);
+        cache.put("test2", "test2");
+        cache.put("test3", "test3");
+        cache.put("test4", "test4");
+        cache.put("test5", "test5");
+        cache.put("test6", "test6");
         String getValue = (String)cache.get(key).get();
         Assert.assertEquals(getValue, value);
     }

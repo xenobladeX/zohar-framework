@@ -21,11 +21,16 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.Maps;
 import com.xenoblade.zohar.framework.commons.api.EErrorCode;
 import com.xenoblade.zohar.framework.commons.api.exception.ZoharException;
 import com.xenoblade.zohar.framework.commons.utils.JacksonUtils;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
@@ -42,8 +47,12 @@ import java.util.Set;
  * @since 1.0.0
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Slf4j
 public class ResponseMessage<T> implements Serializable {
     private static final long serialVersionUID = 8992436576262574064L;
+
+
+
 
     protected String message;
 
@@ -268,6 +277,24 @@ public class ResponseMessage<T> implements Serializable {
 
     public void setTimestamp(Long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public void responseJson(HttpServletResponse response
+            , int respondStatus) {
+        response.setStatus(respondStatus);
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json; charset=utf-8");
+        PrintWriter out = null;
+        try {
+            out = response.getWriter();
+            String json = new ObjectMapper().writeValueAsString(this);
+            out.write(json);
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+        } finally {
+            if (out != null)
+                out.close();
+        }
     }
 
 }

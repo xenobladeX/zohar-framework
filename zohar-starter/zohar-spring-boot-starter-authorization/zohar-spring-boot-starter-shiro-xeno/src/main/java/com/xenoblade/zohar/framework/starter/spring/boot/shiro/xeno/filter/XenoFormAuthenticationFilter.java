@@ -14,12 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.config;
+package com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.filter;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 
+import com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.config.MessageConfig;
+import com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.config.ShiroProperties;
 import com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.util.Commons;
 import com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.util.JCaptchaUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -38,8 +40,8 @@ import com.google.common.base.Strings;
 @Slf4j
 public class XenoFormAuthenticationFilter extends FormAuthenticationFilter {
 
-    private  ShiroProperties properties;
-    private  MessageConfig messages;
+    private ShiroProperties properties;
+    private MessageConfig messages;
 
 
     @Override

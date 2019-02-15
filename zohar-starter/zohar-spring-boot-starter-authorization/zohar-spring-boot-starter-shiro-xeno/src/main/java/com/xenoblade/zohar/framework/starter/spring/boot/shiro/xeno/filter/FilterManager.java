@@ -16,7 +16,6 @@
  */
 package com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.filter;
 
-import com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.config.XenoFormAuthenticationFilter;
 import com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.filter.stateless.HmacAuthcFilter;
 import com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.filter.stateless.HmacPermsFilter;
 import com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.filter.stateless.HmacRolesFilter;
@@ -85,6 +84,10 @@ public class FilterManager {
         formFilter.setProperties(this.properties);
         formFilter.setMessages(this.messages);
         this.statefulFilters.putIfAbsent(Commons.FILTER_AUTHC, formFilter);
+
+        XenoRestAuthcFilter restAuthcFilter = new XenoRestAuthcFilter();
+        restAuthcFilter.setProperties(this.properties);
+        this.statefulFilters.putIfAbsent(Commons.FILTER_REST_AUTHC, restAuthcFilter);
 
         if (properties.isJcaptchaEnable()) {
             JcaptchaFilter jcaptchaFilter = new JcaptchaFilter();

@@ -22,6 +22,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
+import org.redisson.spring.cache.CacheConfig;
+import org.redisson.spring.cache.RedissonSpringCacheManager;
 import org.redisson.spring.data.connection.RedissonConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
@@ -31,6 +33,7 @@ import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties.Sentinel;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cache.CacheManager;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -49,7 +52,9 @@ import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * RedissonAutoConfiguration
@@ -71,13 +76,12 @@ public class RedissonAutoConfiguration {
     @Autowired
     private ApplicationContext ctx;
 
-
 //    @Bean
 //    public CacheManager cacheManager(RedissonClient redissonClient) {
 //        Map<String, CacheConfig> config = new HashMap<String, CacheConfig>();
 //        // 创建一个名称为"testMap"的缓存，过期时间ttl为24分钟，同时最长空闲时maxIdleTime为12分钟。
 //        config.put("testMap", new CacheConfig(24*60*1000, 12*60*1000));
-//        return new RedissonSpringCacheManager(redissonClient, config);
+//        return new RedissonSpringCacheManager(redissonClient);
 //    }
 
 //    @Bean
