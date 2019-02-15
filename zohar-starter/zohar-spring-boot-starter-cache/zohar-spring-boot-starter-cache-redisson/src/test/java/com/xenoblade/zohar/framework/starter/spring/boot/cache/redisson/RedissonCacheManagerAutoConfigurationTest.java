@@ -24,8 +24,12 @@ public class RedissonCacheManagerAutoConfigurationTest {
     
     @Test
     public void testApp() {
+        String key = "test";
+        String value = "test";
         Cache cache = cacheManager.getCache("test");
-        Assert.assertNotNull(cache);
+        cache.put(key, value);
+        String getValue = (String)cache.get(key).get();
+        Assert.assertEquals(getValue, value);
     }
     
 }

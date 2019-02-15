@@ -30,14 +30,7 @@ public class RedissonAutoConfigurationTest {
     
     @Test
     public void testApp() {
-        redisson.getKeys().flushall();
-        
-        RMap<String, String> m = redisson.getMap("test", StringCodec.INSTANCE);
-        m.put("1", "2");
-        
-        BoundHashOperations<String, String, String> hash = template.boundHashOps("test");
-        String t = hash.get("1");
-        assertThat(t).isEqualTo("2");
+        template.opsForValue().set("test", "test");
     }
     
 }
