@@ -85,14 +85,23 @@ public class WrapperUtils {
 
     }
 
+    /**
+     * Determine if the object needs wrap
+     *
+     * @param clazz object type
+     * @return need wrap
+     */
     public static boolean needWrapper(Class<?> clazz) {
         return WrapperUtils.WRAPPER_SET.contains(clazz) || clazz.isArray() || clazz.isEnum();
     }
 
+    /**
+     * Determine if the object needs wrap
+     *
+     * @param obj object
+     * @return need wrap
+     */
     public static boolean needWrapper(Object obj) {
-        if (obj == null) {
-            return true;
-        }
         return needWrapper(obj.getClass());
     }
 

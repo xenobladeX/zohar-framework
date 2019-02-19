@@ -18,8 +18,8 @@ package com.xeonblade.zohar.framework.commons.dubbo.serialize.protostuff;
 
 import com.alibaba.dubbo.common.serialize.ObjectOutput;
 import com.xeonblade.zohar.framework.commons.dubbo.serialize.protostuff.utils.WrapperUtils;
+import io.protostuff.GraphIOUtil;
 import io.protostuff.LinkedBuffer;
-import io.protostuff.ProtobufIOUtil;
 import io.protostuff.Schema;
 import io.protostuff.runtime.RuntimeSchema;
 
@@ -44,6 +44,7 @@ public class ProtostuffObjectOutput implements ObjectOutput {
     @SuppressWarnings("unchecked")
     @Override
     public void writeObject(Object obj) throws IOException {
+
         byte[] bytes;
         byte[] classNameBytes;
 
@@ -51,14 +52,13 @@ public class ProtostuffObjectOutput implements ObjectOutput {
             if (WrapperUtils.needWrapper(obj)) {
                 Schema<Wrapper> schema = RuntimeSchema.getSchema(Wrapper.class);
                 Wrapper wrapper = new Wrapper(obj);
-                bytes = ProtobufIOUtil.toByteArray(wrapper, schema, buffer);
+                bytes = GraphIOUtil.toByteArray(wrapper, schema, buffer);
                 classNameBytes = Wrapper.class.getName().getBytes();
             } else {
                 Schema schema = RuntimeSchema.getSchema(obj.getClass());
-                bytes = ProtobufIOUtil.toByteArray(obj, schema, buffer);
+                bytes = GraphIOUtil.toByteArray(obj, schema, buffer);
                 classNameBytes = obj.getClass().getName().getBytes();
             }
-
         } finally {
             buffer.clear();
         }

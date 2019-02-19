@@ -18,7 +18,7 @@ package com.xeonblade.zohar.framework.commons.dubbo.serialize.protostuff;
 
 import com.alibaba.dubbo.common.serialize.ObjectInput;
 import com.xeonblade.zohar.framework.commons.dubbo.serialize.protostuff.utils.WrapperUtils;
-import io.protostuff.ProtobufIOUtil;
+import io.protostuff.GraphIOUtil;
 import io.protostuff.Schema;
 import io.protostuff.runtime.RuntimeSchema;
 
@@ -63,12 +63,12 @@ public class ProtostuffObjectInput implements ObjectInput {
         if (WrapperUtils.needWrapper(clazz)) {
             Schema<Wrapper> schema = RuntimeSchema.getSchema(Wrapper.class);
             Wrapper wrapper = schema.newMessage();
-            ProtobufIOUtil.mergeFrom(bytes, wrapper, schema);
+            GraphIOUtil.mergeFrom(bytes, wrapper, schema);
             result = wrapper.getData();
         } else {
             Schema schema = RuntimeSchema.getSchema(clazz);
             result = schema.newMessage();
-            ProtobufIOUtil.mergeFrom(bytes, result, schema);
+            GraphIOUtil.mergeFrom(bytes, result, schema);
         }
 
         return result;

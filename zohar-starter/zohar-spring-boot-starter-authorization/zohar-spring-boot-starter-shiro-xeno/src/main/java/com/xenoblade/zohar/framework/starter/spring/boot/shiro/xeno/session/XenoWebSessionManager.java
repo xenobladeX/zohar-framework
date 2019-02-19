@@ -16,6 +16,7 @@
  */
 package com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.session;
 
+import org.apache.shiro.session.Session;
 import org.apache.shiro.web.servlet.ShiroHttpServletRequest;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.apache.shiro.web.util.WebUtils;
@@ -32,6 +33,10 @@ import java.io.Serializable;
  * @since 1.0.0
  */
 public class XenoWebSessionManager extends DefaultWebSessionManager{
+
+    @Override protected void applyGlobalSessionTimeout(Session session) {
+        super.applyGlobalSessionTimeout(session);
+    }
 
     @Override protected Serializable getSessionId(ServletRequest request,
                                                   ServletResponse response) {
