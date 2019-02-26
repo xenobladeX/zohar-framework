@@ -19,6 +19,7 @@ package com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.config;
 import com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.service.ShiroCryptoService;
 import com.xenoblade.zohar.framework.starter.spring.boot.shiro.xeno.service.ShiroSecurityService;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
+import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -72,4 +73,13 @@ public class XenoShiroAutoConfiguration {
     public ShiroSecurityService shiroSecurityService() {
         return new ShiroSecurityService();
     }
+
+
+    @Bean
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(XenoShiroManager xenoShiroManager){
+        AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
+        authorizationAttributeSourceAdvisor.setSecurityManager(xenoShiroManager.getSecurityManager());
+        return authorizationAttributeSourceAdvisor;
+    }
+
 }
