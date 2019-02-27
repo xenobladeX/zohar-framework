@@ -287,7 +287,7 @@ public class ResponseMessage<T> implements Serializable {
         PrintWriter out = null;
         try {
             out = response.getWriter();
-            String json = new ObjectMapper().writeValueAsString(this);
+            String json = JacksonUtils.getObjectMapper().writeValueAsString(this);
             out.write(json);
         } catch (IOException e) {
             log.error(e.getMessage(), e);
