@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.xenoblade.zohar.framework.starter.spring.boot.web.RestAutoConfiguration
+com.xenoblade.zohar.framework.starter.spring.boot.web.RestAutoConfiguration,\
+com.xenoblade.zohar.framework.starter.spring.boot.web.CorsAutoConfiguration
