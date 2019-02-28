@@ -16,8 +16,13 @@
  */
 package com.xenoblade.zohar.framework.commons.api;
 
+import com.xenoblade.zohar.framework.commons.api.enums.IZoharErrorCode;
+import com.xenoblade.zohar.framework.commons.api.enums.ZoharErrorCode;
+import com.xenoblade.zohar.framework.commons.api.enums.dynamic.DigitsDynamicEnum;
+import com.xenoblade.zohar.framework.commons.api.enums.dynamic.DigitsExtendDynamicEnum;
 import org.junit.Assert;
 import org.junit.Test;
+
 
 /**
  * ErrorCodeTests
@@ -25,7 +30,6 @@ import org.junit.Test;
  * @since 1.0.0
  */
 public class ErrorCodeTests {
-
 
     @Test
     public void testErrorCode() {
@@ -39,6 +43,37 @@ public class ErrorCodeTests {
         int code = 500;
         EErrorCode errorCode = EErrorCode.CodeOf(code);
         Assert.assertEquals(errorCode, EErrorCode.INNER_ERROR);
+    }
+
+
+    @Test
+    public void testDirectAccess() {
+        Assert.assertEquals(0, DigitsDynamicEnum.ZERO.ordinal());
+    }
+
+    @Test
+    // valueOf() belongs to DynaEnum. I suppressed warning by annotation.
+    // Other solution is to implement trivial valueOf() that just calls parent's implementation in DigitsDynaEnum.
+    @SuppressWarnings("static-access")
+    public void testValueOf() {
+        Assert.assertEquals(1, DigitsDynamicEnum.valueOf(DigitsDynamicEnum.class, "ONE").ordinal());
+    }
+
+    @Test
+    public void testValues() {
+        DigitsDynamicEnum[] values = (DigitsDynamicEnum[]) DigitsExtendDynamicEnum.values();
+        Assert.assertEquals(8, values.length);
+//        Assert.assertArrayEquals(new DigitsDynamicEnum[] {DigitsDynamicEnum.ZERO, DigitsDynamicEnum.ONE, DigitsDynamicEnum.TWO, DigitsDynamicEnum.THREE}, values);
+    }
+
+    @SuppressWarnings("static-access")
+    @Test
+    public void testEquals() {
+        Assert.assertTrue(DigitsDynamicEnum.ONE == DigitsDynamicEnum.ONE);
+        Assert.assertTrue(DigitsDynamicEnum.ONE != DigitsDynamicEnum.TWO);
+
+        Assert.assertEquals(DigitsDynamicEnum.ONE, DigitsDynamicEnum.ONE);
+        Assert.assertEquals(DigitsDynamicEnum.ONE, DigitsDynamicEnum.valueOf(DigitsDynamicEnum.class, "ONE"));
     }
 
 }
