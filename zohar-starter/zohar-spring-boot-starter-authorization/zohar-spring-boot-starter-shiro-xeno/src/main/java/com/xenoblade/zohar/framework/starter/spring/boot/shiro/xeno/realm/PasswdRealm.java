@@ -60,7 +60,7 @@ public class PasswdRealm extends AuthorizingRealm {
         if (null == accountEntity) {
             throw new AuthenticationException(messages.getMsgAccountNotExist());
         }
-        return new SimpleAuthenticationInfo(account,
+        return new SimpleAuthenticationInfo(accountEntity,
                 accountEntity.getPassword(),
                 ByteSource.Util.bytes(accountEntity.getSalt()),
                 getName());
