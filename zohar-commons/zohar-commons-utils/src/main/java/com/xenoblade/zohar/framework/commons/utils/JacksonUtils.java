@@ -15,6 +15,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import com.hubspot.jackson.datatype.protobuf.ProtobufModule;
 import com.xenoblade.zohar.framework.commons.api.exception.ZoharException;
+import com.xenoblade.zohar.framework.commons.utils.jackson.CustomProtobufModule;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -101,7 +102,7 @@ public abstract class JacksonUtils {
 //        objectMapper.registerModule(simpleModule);
 
         // Jackson protobuf format
-        objectMapper.registerModule(new ProtobufModule());
+        objectMapper.registerModule(new CustomProtobufModule());
 
         return objectMapper;
     }
