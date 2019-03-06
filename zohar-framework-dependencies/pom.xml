@@ -31,10 +31,11 @@
         <spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
         <swagger.version>2.0.6</swagger.version>
         <mybatis-plus.version>3.0.6</mybatis-plus.version>
-        <dubbo.version>2.6.5</dubbo.version>
+        <dubbo.version>2.7.0</dubbo.version>
         <protostuff.version>1.5.9</protostuff.version>
         <netty.version>4.1.32.Final</netty.version>
         <pinyin4j.version>2.5.1</pinyin4j.version>
+        <hutool.version>4.5.0</hutool.version>
         <commons-text.version>1.6</commons-text.version>
         <commons-collections4.version>4.2</commons-collections4.version>
         <commons-io.version>2.6</commons-io.version>
@@ -49,7 +50,7 @@
         <dubbo-spring-boot-starter.version>0.2.1.RELEASE</dubbo-spring-boot-starter.version>
         <grpc.version>1.18.0</grpc.version>
         <protobuf-java.version>3.5.1</protobuf-java.version>
-        <mapstruct.version>1.3.0.Beta2</mapstruct.version>
+        <mapstruct.version>1.3.0.Final</mapstruct.version>
         <alibaba.spring-context-support.version>1.0.2</alibaba.spring-context-support.version>
         <redisson.version>3.10.0</redisson.version>
         <groovy.version>2.4.7</groovy.version>
@@ -77,80 +78,9 @@
     <dependencyManagement>
         <dependencies>
 
-
             <!--modules-->
 
-            <dependency>
-                <groupId>com.xenoblade</groupId>
-                <artifactId>zohar-commons-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
 
-            <dependency>
-                <groupId>com.xenoblade</groupId>
-                <artifactId>zohar-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.xenoblade</groupId>
-                <artifactId>zohar-spring-boot-starter-web</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.xenoblade</groupId>
-                <artifactId>zohar-spring-boot-starter-datasource</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.xenoblade</groupId>
-                <artifactId>zohar-spring-boot-starter-dao</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.xenoblade</groupId>
-                <artifactId>zohar-spring-boot-starter-dubbo</artifactId>
-                <version>${project.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>log4j</groupId>
-                        <artifactId>log4j</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-
-            <dependency>
-                <groupId>com.xenoblade</groupId>
-                <artifactId>zohar-spring-boot-starter-cache-lettuce</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.xenoblade</groupId>
-                <artifactId>zohar-spring-boot-starter-cache-redisson</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.xenoblade</groupId>
-                <artifactId>zohar-spring-boot-starter-shiro</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.xenoblade</groupId>
-                <artifactId>zohar-spring-boot-starter-shiro-web</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.xenoblade</groupId>
-                <artifactId>zohar-spring-boot-starter-shiro-xeno</artifactId>
-                <version>${project.version}</version>
-            </dependency>
 
             <!--third party -->
 
@@ -170,6 +100,24 @@
                 <groupId>com.belerweb</groupId>
                 <artifactId>pinyin4j</artifactId>
                 <version>${pinyin4j.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-core</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-crypto</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-extra</artifactId>
+                <version>${hutool.version}</version>
             </dependency>
 
             <dependency>
@@ -291,7 +239,7 @@
 
             <dependency>
                 <groupId>org.mapstruct</groupId>
-                <artifactId>mapstruct-jdk8</artifactId>
+                <artifactId>mapstruct</artifactId>
                 <version>${mapstruct.version}</version>
             </dependency>
             <dependency>

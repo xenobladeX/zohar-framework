@@ -23,12 +23,30 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 
+
 /**
  * 拼音常用方法
  * @author xenoblade
  * @since 1.0.0
  */
 public class PinyinUtils {
+
+    static final char CN_CHAR_START = '\u4e00';
+    static final char CN_CHAR_END   = '\u9fa5';
+
+    /**
+     * 是否包含中文字符
+     *
+     * @param str 要判断的字符串
+     * @return 是否包含中文字符
+     */
+    public static boolean containsChineseChar(String str) {
+        char[] chars = str.toCharArray();
+        for (int i = 0; i < chars.length; i++) {
+            if (chars[i] >= CN_CHAR_START && chars[i] <= CN_CHAR_END) return true;
+        }
+        return false;
+    }
 
     /**
      * 获取汉字全拼
@@ -48,7 +66,7 @@ public class PinyinUtils {
         try {
             for (int i = 0; i < t0; i++) {
                 // 判断是否为汉字字符
-                if (StringUtils.containsChineseChar(Character.toString(t1[i]))) {
+                if (containsChineseChar(Character.toString(t1[i]))) {
                     t2 = PinyinHelper.toHanyuPinyinStringArray(t1[i], t3);
                     t4 += t2[0];
                 } else {

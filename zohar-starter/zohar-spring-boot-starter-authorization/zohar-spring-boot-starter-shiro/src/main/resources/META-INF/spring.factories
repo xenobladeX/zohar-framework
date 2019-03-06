@@ -1,7 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration = \
-  com.xenoblade.zohar.framework.starter.spring.boot.shiro.ShiroBeanAutoConfiguration,\
-  com.xenoblade.zohar.framework.starter.spring.boot.shiro.ShiroAutoConfiguration,\
-  com.xenoblade.zohar.framework.starter.spring.boot.shiro.ShiroAnnotationProcessorAutoConfiguration
-
-org.springframework.boot.diagnostics.FailureAnalyzer = \
-  com.xenoblade.zohar.framework.starter.spring.boot.shiro.ShiroNoRealmConfiguredFailureAnalyzer

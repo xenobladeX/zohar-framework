@@ -16,6 +16,8 @@
  */
 package com.xenoblade.zohar.framework.commons.api.exception;
 
+import com.xenoblade.zohar.framework.commons.api.enums.IZoharErrorCode;
+
 /**
  * UnauthorizedException
  * @author xenoblade
@@ -25,9 +27,13 @@ public class UnauthorizedException extends ZoharException{
 
     private static final long serialVersionUID = 3459037880834678267L;
 
-    public UnauthorizedException(String message, String code, Integer status) {
+    public UnauthorizedException(String message) {
         super(message);
-        this.code(code).status(status);
+    }
+
+    public UnauthorizedException(String message, IZoharErrorCode errorCode) {
+        super(message);
+        this.errorCode(errorCode);
     }
 
 }

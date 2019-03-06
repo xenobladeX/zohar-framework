@@ -29,7 +29,6 @@
         <module>zohar-framework-dependencies</module>
         <module>zohar-framework-parent</module>
         <module>zohar-commons</module>
-        <module>zohar-starter</module>
     </modules>
 
 </project>

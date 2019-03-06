@@ -14,26 +14,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.api.exception;
-
-import com.xenoblade.zohar.framework.commons.api.enums.IZoharErrorCode;
+package com.xenoblade.zohar.framework.commons.api.enums;
 
 /**
- * NotFoundException
+ * IEnum
  * @author xenoblade
  * @since 1.0.0
  */
-public class NotFoundException extends ZoharException{
+public interface IEnum<T extends Comparable> {
 
-    private static final long serialVersionUID = 4335447221487758513L;
+    int ordinal();
 
-    public NotFoundException(String message) {
-        super(message);
-    }
+    String name();
 
-    public NotFoundException(String message, IZoharErrorCode errorCode) {
-        super(message);
-        this.errorCode(errorCode);
-    }
+    T value();
 
 }

@@ -22,14 +22,13 @@ package com.xenoblade.zohar.framework.commons.api.enums;
  * @author xenoblade
  * @since 1.0.0
  */
-public interface IZoharErrorCode<T extends Comparable> {
+public interface IZoharErrorCode extends IEnum<Integer> {
 
-    T getCode();
+    Integer getCode();
 
     String getMessage();
 
-    default T value() {
+    @Override default Integer value() {
         return this.getCode();
     }
-
 }
