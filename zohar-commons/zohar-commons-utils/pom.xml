@@ -21,12 +21,6 @@
             <version>${project.version}</version>
         </dependency>
 
-        <!--时间解析-->
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-        </dependency>
-
         <!--中文转拼音-->
         <dependency>
             <groupId>com.belerweb</groupId>
