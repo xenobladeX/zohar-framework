@@ -31,31 +31,20 @@
         <spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
         <swagger.version>2.0.6</swagger.version>
         <mybatis-plus.version>3.0.6</mybatis-plus.version>
-        <dubbo.version>2.7.0</dubbo.version>
+        <dubbo.version>2.6.5</dubbo.version>
         <protostuff.version>1.5.9</protostuff.version>
-        <netty.version>4.1.32.Final</netty.version>
         <pinyin4j.version>2.5.1</pinyin4j.version>
         <hutool.version>4.5.0</hutool.version>
-        <commons-text.version>1.6</commons-text.version>
-        <commons-collections4.version>4.2</commons-collections4.version>
-        <commons-io.version>2.6</commons-io.version>
-        <commons-compress.version>1.18</commons-compress.version>
-        <commons-beanutils.version>1.9.3</commons-beanutils.version>
-        <commons-cli.version>1.4</commons-cli.version>
         <guava.version>27.0.1-jre</guava.version>
-        <bcprov-jdk15on.version>1.60</bcprov-jdk15on.version>
         <jackson-datatype-protobuf.version>0.9.10-jackson2.9-proto3</jackson-datatype-protobuf.version>
-        <shiro.version>1.4.0</shiro.version>
         <p6spy.version>3.8.0</p6spy.version>
         <dubbo-spring-boot-starter.version>0.2.1.RELEASE</dubbo-spring-boot-starter.version>
         <grpc.version>1.18.0</grpc.version>
         <protobuf-java.version>3.5.1</protobuf-java.version>
         <mapstruct.version>1.3.0.Final</mapstruct.version>
         <alibaba.spring-context-support.version>1.0.2</alibaba.spring-context-support.version>
-        <redisson.version>3.10.0</redisson.version>
         <groovy.version>2.4.7</groovy.version>
-        <jjwt.version>0.9.1</jjwt.version>
-        <jcaptcha.version>1.0</jcaptcha.version>
+        <ttl.version>2.10.1</ttl.version>
 
         <!-- Plugins Version -->
         <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
@@ -79,10 +68,40 @@
         <dependencies>
 
             <!--modules-->
-
-
+            <dependency>
+                <groupId>com.xenoblade</groupId>
+                <artifactId>zohar-commons-utils</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.xenoblade</groupId>
+                <artifactId>zohar-commons-spring</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.xenoblade</groupId>
+                <artifactId>zohar-commons-web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <!--third party -->
+
+            <!-- declare Spring boot dependencies-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- declare Spring Cloud dependencies-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
             <dependency>
                 <groupId>io.swagger.core.v3</groupId>
@@ -102,58 +121,41 @@
                 <version>${pinyin4j.version}</version>
             </dependency>
 
+            <!--Hutool-->
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-core</artifactId>
                 <version>${hutool.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-system</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-crypto</artifactId>
                 <version>${hutool.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-extra</artifactId>
                 <version>${hutool.version}</version>
             </dependency>
-
             <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-text</artifactId>
-                <version>${commons-text.version}</version>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-captcha</artifactId>
+                <version>${hutool.version}</version>
             </dependency>
-
             <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-collections4</artifactId>
-                <version>${commons-collections4.version}</version>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-http</artifactId>
+                <version>${hutool.version}</version>
             </dependency>
-
             <dependency>
-                <groupId>commons-io</groupId>
-                <artifactId>commons-io</artifactId>
-                <version>${commons-io.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-compress</artifactId>
-                <version>${commons-compress.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>commons-beanutils</groupId>
-                <artifactId>commons-beanutils</artifactId>
-                <version>${commons-beanutils.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>commons-cli</groupId>
-                <artifactId>commons-cli</artifactId>
-                <version>${commons-cli.version}</version>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-db</artifactId>
+                <version>${hutool.version}</version>
             </dependency>
 
             <dependency>
@@ -163,27 +165,9 @@
             </dependency>
 
             <dependency>
-                <groupId>org.bouncycastle</groupId>
-                <artifactId>bcprov-jdk15on</artifactId>
-                <version>${bcprov-jdk15on.version}</version>
-            </dependency>
-
-            <dependency>
                 <groupId>com.hubspot.jackson</groupId>
                 <artifactId>jackson-datatype-protobuf</artifactId>
                 <version>${jackson-datatype-protobuf.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.shiro</groupId>
-                <artifactId>shiro-spring</artifactId>
-                <version>${shiro.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>p6spy</groupId>
-                <artifactId>p6spy</artifactId>
-                <version>${p6spy.version}</version>
             </dependency>
 
             <dependency>
@@ -203,16 +187,21 @@
                 <version>${protostuff.version}</version>
             </dependency>
 
+            <!--Dubbo-->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>dubbo</artifactId>
                 <version>${dubbo.version}</version>
             </dependency>
-
             <dependency>
-                <groupId>io.netty</groupId>
-                <artifactId>netty-all</artifactId>
-                <version>${netty.version}</version>
+                <groupId>com.alibaba.boot</groupId>
+                <artifactId>dubbo-spring-boot-starter</artifactId>
+                <version>${dubbo-spring-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.spring</groupId>
+                <artifactId>spring-context-support</artifactId>
+                <version>${alibaba.spring-context-support.version}</version>
             </dependency>
 
             <dependency>
@@ -221,6 +210,7 @@
                 <version>${protobuf-java.version}</version>
             </dependency>
 
+            <!--Grpc-->
             <dependency>
                 <groupId>io.grpc</groupId>
                 <artifactId>grpc-netty-shaded</artifactId>
@@ -249,60 +239,6 @@
                 <scope>provided</scope>
             </dependency>
 
-
-            <dependency>
-                <groupId>com.alibaba.boot</groupId>
-                <artifactId>dubbo-spring-boot-starter</artifactId>
-                <version>${dubbo-spring-boot-starter.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.alibaba.spring</groupId>
-                <artifactId>spring-context-support</artifactId>
-                <version>${alibaba.spring-context-support.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.redisson</groupId>
-                <artifactId>redisson</artifactId>
-                <version>${redisson.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.redisson</groupId>
-                <artifactId>redisson-spring-data-21</artifactId>
-                <version>${redisson.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.jsonwebtoken</groupId>
-                <artifactId>jjwt</artifactId>
-                <version>${jjwt.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.octo.captcha</groupId>
-                <artifactId>jcaptcha</artifactId>
-                <version>${jcaptcha.version}</version>
-            </dependency>
-
-            <!-- declare Spring boot dependencies-->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <!-- declare Spring Cloud dependencies-->
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
@@ -314,6 +250,13 @@
                         <artifactId>spring-boot-starter-tomcat</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+
+            <!--TTL-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>transmittable-thread-local</artifactId>
+                <version>${ttl.version}</version>
             </dependency>
 
             <!--for test -->

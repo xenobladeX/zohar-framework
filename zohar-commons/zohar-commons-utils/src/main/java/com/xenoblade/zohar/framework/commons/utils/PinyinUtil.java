@@ -16,6 +16,7 @@
  */
 package com.xenoblade.zohar.framework.commons.utils;
 
+import lombok.experimental.UtilityClass;
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
@@ -29,7 +30,8 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
  * @author xenoblade
  * @since 1.0.0
  */
-public class PinyinUtils {
+@UtilityClass
+public class PinyinUtil {
 
     static final char CN_CHAR_START = '\u4e00';
     static final char CN_CHAR_END   = '\u9fa5';

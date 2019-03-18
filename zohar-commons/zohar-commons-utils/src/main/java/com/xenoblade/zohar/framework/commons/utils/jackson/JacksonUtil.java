@@ -28,19 +28,18 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.xenoblade.zohar.framework.commons.api.exception.ZoharException;
 import com.xenoblade.zohar.framework.commons.utils.jackson.protobuf.CustomProtobufModule;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import lombok.experimental.UtilityClass;
 
 import java.text.SimpleDateFormat;
 import java.util.Objects;
 
 /**
- * JacksonUtils
+ * JacksonUtil
  * @author xenoblade
  * @since 1.0.0
  */
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class JacksonUtils {
+@UtilityClass
+public class JacksonUtil {
     private final static ObjectMapper objectMapper;
 
     static {

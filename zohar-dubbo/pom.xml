@@ -8,8 +8,8 @@
         <relativePath>../zohar-framework-parent</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>zohar-commons</artifactId>
-    <name>Zohar Common</name>
+    <artifactId>zohar-dubbo</artifactId>
+    <name>Zohar Dubbo</name>
     <packaging>pom</packaging>
 
     <properties>
@@ -17,25 +17,8 @@
     </properties>
 
     <modules>
-        <module>zohar-commons-api</module>
-        <module>zohar-commons-utils</module>
-        <module>zohar-commons-spring</module>
-        <module>zohar-commons-web</module>
+        <module>zohar-dubbo-serialization</module>
     </modules>
-
-    <dependencyManagement>
-        <dependencies>
-
-
-
-
-        </dependencies>
-    </dependencyManagement>
-
-    <dependencies>
-
-
-    </dependencies>
 
 
 </project>

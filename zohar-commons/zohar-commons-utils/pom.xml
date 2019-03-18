@@ -32,34 +32,30 @@
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-core</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-system</artifactId>
+        </dependency>
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-crypto</artifactId>
         </dependency>
-
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-extra</artifactId>
         </dependency>
-
-        <!--Apache Commons-->
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-captcha</artifactId>
         </dependency>
-        <!--对象池方法-->
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-pool2</artifactId>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-http</artifactId>
         </dependency>
-
         <dependency>
-            <groupId>commons-beanutils</groupId>
-            <artifactId>commons-beanutils</artifactId>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-db</artifactId>
         </dependency>
-
-        <!--End Apache Commons-->
 
         <!--google core library for java-->
         <dependency>
@@ -67,15 +63,13 @@
             <artifactId>guava</artifactId>
         </dependency>
 
-
         <!--校验框架-->
         <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
         </dependency>
 
-
-        <!--JSON-->
+        <!--Jackson-->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
@@ -95,6 +89,33 @@
         <dependency>
             <groupId>com.hubspot.jackson</groupId>
             <artifactId>jackson-datatype-protobuf</artifactId>
+        </dependency>
+
+        <!--mapstruct-->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!--TTL-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>transmittable-thread-local</artifactId>
+            <version>${ttl.version}</version>
+        </dependency>
+
+
+        <!--test-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <optional>true</optional>
         </dependency>
 
 

@@ -8,31 +8,28 @@
         <relativePath>../zohar-framework-parent</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>zohar-commons</artifactId>
-    <name>Zohar Common</name>
-    <packaging>pom</packaging>
-
+    <artifactId>zohar-web</artifactId>
+    <name>Zohar Web</name>
     <properties>
         <github.path>${project.artifactId}</github.path>
     </properties>
 
-    <modules>
-        <module>zohar-commons-api</module>
-        <module>zohar-commons-utils</module>
-        <module>zohar-commons-spring</module>
-        <module>zohar-commons-web</module>
-    </modules>
-
-    <dependencyManagement>
-        <dependencies>
-
-
-
-
-        </dependencies>
-    </dependencyManagement>
-
     <dependencies>
+
+        <dependency>
+            <groupId>com.xenoblade</groupId>
+            <artifactId>zohar-commons-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
 
 
     </dependencies>
