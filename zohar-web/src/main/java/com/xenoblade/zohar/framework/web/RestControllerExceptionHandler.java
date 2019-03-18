@@ -18,7 +18,7 @@ package com.xenoblade.zohar.framework.web;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.xenoblade.zohar.framework.commons.api.EErrorCode;
+import com.xenoblade.zohar.framework.commons.api.enums.ZoharErrorCode;
 import com.xenoblade.zohar.framework.commons.api.exception.NotFoundException;
 import com.xenoblade.zohar.framework.commons.api.exception.UnauthorizedException;
 import com.xenoblade.zohar.framework.commons.api.exception.ZoharException;
@@ -51,6 +51,8 @@ import org.springframework.web.multipart.support.MissingServletRequestPartExcept
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.util.List;
@@ -65,9 +67,9 @@ import java.util.List;
 public class RestControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(JsonProcessingException.class)
-    public ResponseEntity<Object> handleJsonProcessingException(final JsonProcessingException ex) {
+    public ResponseEntity<Object> handleJsonProcessingException(HttpServletRequest request, final JsonProcessingException ex, HttpServletResponse response) {
         ResponseMessage responseMessage = ResponseMessage
-                .error(EErrorCode.JSON_FORMAT_ERROR, ex.getMessage());
+                .error(ZoharErrorCode.JSON_FORMAT_ERROR, ex.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(responseMessage);
     }
@@ -103,7 +105,7 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
         }
         List<ValidateResults.Result> errorResults = results.getResults();
         ResponseMessage responseMessage = ResponseMessage
-                .error(EErrorCode.INVALID_PARAM, errorResults.isEmpty() ? "" : errorResults.get(0).getField() + errorResults.get(0).getMessage());
+                .error(ZoharErrorCode.INVALID_PARAM, errorResults.isEmpty() ? "" : errorResults.get(0).getField() + errorResults.get(0).getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(responseMessage);
     }
@@ -118,7 +120,7 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ResponseMessage> handleException(HttpServletRequest request, final Exception ex, HttpServletResponse response) {
         ResponseMessage responseMessage = ResponseMessage
-                .error(EErrorCode.INNER_ERROR, ex.getMessage());
+                .error(ZoharErrorCode.INNER_ERROR, ex.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(responseMessage);
     }
@@ -127,7 +129,7 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
     @Override protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(
             HttpRequestMethodNotSupportedException ex, HttpHeaders headers, HttpStatus status,
             WebRequest request) {
-        ResponseMessage responseMessage = ResponseMessage.error(EErrorCode.METHOD_NOT_ALLOWED)
+        ResponseMessage responseMessage = ResponseMessage.error(ZoharErrorCode.METHOD_NOT_ALLOWED)
                 .result(ex.getSupportedHttpMethods());
         return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED)
                 .body(responseMessage);
@@ -136,7 +138,7 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
     @Override protected ResponseEntity<Object> handleHttpMediaTypeNotSupported(
             HttpMediaTypeNotSupportedException ex, HttpHeaders headers, HttpStatus status,
             WebRequest request) {
-        ResponseMessage responseMessage = ResponseMessage.error( EErrorCode.UNSUPPORTED_MEDIA_TYPE)
+        ResponseMessage responseMessage = ResponseMessage.error( ZoharErrorCode.UNSUPPORTED_MEDIA_TYPE)
                 .result(ex.getContentType());
         return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
                 .body(responseMessage);
@@ -145,11 +147,11 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
     @Override protected ResponseEntity<Object> handleHttpMediaTypeNotAcceptable(
             HttpMediaTypeNotAcceptableException ex, HttpHeaders headers, HttpStatus status,
             WebRequest request) {
-        ResponseMessage responseMessage = ResponseMessage.error(EErrorCode.NOT_ACCEPTABLE);
+        ResponseMessage responseMessage = ResponseMessage.error(ZoharErrorCode.NOT_ACCEPTABLE);
         String contentType = request.getHeader("Content-Type");
         if (contentType != null) {
             String message = String.format("无法接收的媒体类型：%s", contentType);
-            responseMessage.setMessage(message);
+            responseMessage.message(message);
         }
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
                 .body(responseMessage);
@@ -159,7 +161,7 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
             MissingPathVariableException ex, HttpHeaders headers, HttpStatus status,
             WebRequest request) {
         String message = String.format("路径字段 %s 校验不通过", ex.getVariableName());
-        ResponseMessage responseMessage = ResponseMessage.error( EErrorCode.UNSUPPORTED_MEDIA_TYPE, message);
+        ResponseMessage responseMessage = ResponseMessage.error( ZoharErrorCode.UNSUPPORTED_MEDIA_TYPE, message);
         return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
                 .body(responseMessage);
     }
@@ -169,7 +171,7 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
             WebRequest request) {
         String message = String.format("参数[%s]不能为空", ex.getParameterName());
         ResponseMessage responseMessage = ResponseMessage
-                .error(EErrorCode.BAD_REQUEST, message);
+                .error(ZoharErrorCode.BAD_REQUEST, message);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(responseMessage);
     }
@@ -178,7 +180,7 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
             ServletRequestBindingException ex, HttpHeaders headers, HttpStatus status,
             WebRequest request) {
         ResponseMessage responseMessage = ResponseMessage
-                .error(EErrorCode.BAD_REQUEST);
+                .error(ZoharErrorCode.BAD_REQUEST);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(responseMessage);
     }
@@ -195,7 +197,7 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
                                                                   WebRequest request) {
         String messsage = String.format("无法将%s类型的值%s转为类型%s", ClassUtils.getDescriptiveType(ex.getValue()), ex.getValue(), ex.getRequiredType());
         ResponseMessage responseMessage = ResponseMessage
-                .error(EErrorCode.TYPE_MISMATCH, messsage);
+                .error(ZoharErrorCode.TYPE_MISMATCH, messsage);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(responseMessage);
     }
@@ -205,12 +207,12 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
             WebRequest request) {
         if (ex.getCause() instanceof JsonParseException) {
             ResponseMessage responseMessage = ResponseMessage
-                    .error(EErrorCode.JSON_FORMAT_ERROR);
+                    .error(ZoharErrorCode.JSON_FORMAT_ERROR);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(responseMessage);
         } else {
             ResponseMessage responseMessage = ResponseMessage
-                    .error(EErrorCode.BAD_REQUEST);
+                    .error(ZoharErrorCode.BAD_REQUEST);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(responseMessage);
         }
@@ -232,7 +234,7 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
                 .map(FieldError.class::cast)
                 .forEach(fieldError -> results.addResult(fieldError.getField(), fieldError.getDefaultMessage()));
         ResponseMessage responseMessage = ResponseMessage
-                .error(EErrorCode.METHOD_ARGUMENT_NOT_VALID,
+                .error(ZoharErrorCode.METHOD_ARGUMENT_NOT_VALID,
                         results.getResults().isEmpty() ?
                                 ex.getMessage() :
                                 results.getResults().get(0).getMessage()).result(results.getResults());
@@ -244,7 +246,7 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
             MissingServletRequestPartException ex, HttpHeaders headers, HttpStatus status,
             WebRequest request) {
         ResponseMessage responseMessage = ResponseMessage
-                .error(EErrorCode.BAD_REQUEST);
+                .error(ZoharErrorCode.BAD_REQUEST);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(responseMessage);
     }
@@ -260,7 +262,7 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
                 .map(FieldError.class::cast)
                 .forEach(fieldError -> results.addResult(fieldError.getField(), fieldError.getDefaultMessage()));
         ResponseMessage responseMessage = ResponseMessage
-                .error(EErrorCode.BAD_REQUEST,
+                .error(ZoharErrorCode.BAD_REQUEST,
                         results.getResults().isEmpty() ?
                                 ex.getMessage() :
                                 results.getResults().get(0).getMessage()).result(results.getResults());
@@ -273,7 +275,7 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
             WebRequest request) {
         String message = String.format("%s地址%s不存在", ex.getRequestURL(), ex.getHttpMethod());
         ResponseMessage responseMessage = ResponseMessage
-                .error(EErrorCode. NOT_FOUND, message);
+                .error(ZoharErrorCode.NOT_FOUND, message);
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(responseMessage);
     }
@@ -282,7 +284,7 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
             AsyncRequestTimeoutException ex, HttpHeaders headers, HttpStatus status,
             WebRequest webRequest) {
         ResponseMessage responseMessage = ResponseMessage
-                .error(EErrorCode.SERVICE_UNAVAILABLE);
+                .error(ZoharErrorCode.SERVICE_UNAVAILABLE);
         return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
                 .body(responseMessage);
     }
@@ -292,7 +294,7 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
                                                                        HttpStatus status,
                                                                        WebRequest request) {
         ResponseMessage responseMessage = ResponseMessage
-                .error(EErrorCode.INNER_ERROR, ex.getMessage());
+                .error(ZoharErrorCode.INNER_ERROR, ex.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(responseMessage);
     }

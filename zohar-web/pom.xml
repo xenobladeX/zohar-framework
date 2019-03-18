@@ -18,6 +18,11 @@
 
         <dependency>
             <groupId>com.xenoblade</groupId>
+            <artifactId>zohar-commons-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.xenoblade</groupId>
             <artifactId>zohar-commons-web</artifactId>
         </dependency>
 
@@ -29,6 +34,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
         </dependency>
 
 

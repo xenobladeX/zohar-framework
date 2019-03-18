@@ -18,7 +18,6 @@
         <dependency>
             <groupId>com.xenoblade</groupId>
             <artifactId>zohar-commons-api</artifactId>
-            <version>${project.version}</version>
         </dependency>
 
         <!--中文转拼音-->

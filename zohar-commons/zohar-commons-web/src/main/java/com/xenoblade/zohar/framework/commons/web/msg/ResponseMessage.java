@@ -17,12 +17,9 @@
 package com.xenoblade.zohar.framework.commons.web.msg;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.collect.Maps;
+import com.xenoblade.zohar.framework.commons.api.enums.IZoharErrorCode;
+import com.xenoblade.zohar.framework.commons.api.enums.ZoharErrorCode;
 import com.xenoblade.zohar.framework.commons.api.exception.ZoharException;
 import com.xenoblade.zohar.framework.commons.utils.jackson.JacksonUtil;
 import lombok.SneakyThrows;
@@ -82,6 +79,40 @@ public class ResponseMessage<T> implements Serializable {
         return timestamp;
     }
 
+    public static <T> ResponseMessage<T> error(String message) {
+        return error(ZoharErrorCode.INNER_ERROR, message);
+    }
+
+    public static <T> ResponseMessage<T> error(IZoharErrorCode errorCode) {
+        return error(errorCode, errorCode.getMessage());
+    }
+
+    public static <T> ResponseMessage<T> error(IZoharErrorCode errorCode, String message) {
+        ResponseMessage<T> msg = new ResponseMessage<>();
+        msg.errorCode(errorCode);
+        msg.message = message;
+        return msg.putTimeStamp();
+    }
+
+    public static <T> ResponseMessage<T> error(ZoharException ex) {
+        ResponseMessage<T> msg = new ResponseMessage<>();
+        msg.message = ex.getMessage();
+        msg.status = ex.getStatus();
+        msg.code = ex.getCode();
+        return msg.putTimeStamp();
+    }
+
+    public static <T> ResponseMessage<T> ok() {
+        return ok(null);
+    }
+
+    public static <T> ResponseMessage<T> ok(T result) {
+        return new ResponseMessage<T>()
+                .result(result)
+                .putTimeStamp()
+                .errorCode(ZoharErrorCode.OK);
+    }
+
     public ResponseMessage<T> result(T result) {
         this.result = result;
         return this;
@@ -102,8 +133,9 @@ public class ResponseMessage<T> implements Serializable {
         return this;
     }
 
-    public ResponseMessage<T> status(int status) {
-        this.status = status;
+    public ResponseMessage<T> errorCode(IZoharErrorCode errorCode) {
+        this.status = errorCode.getCode();
+        this.code = errorCode.name();
         return this;
     }
 
