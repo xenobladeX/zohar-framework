@@ -16,6 +16,7 @@
  */
 package com.xenoblade.zohar.framework.commons.utils.jackson.protobuf;
 
+import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.BeanProperty;
@@ -45,6 +46,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public abstract class CustomProtobufSerializer<T extends MessageOrBuilder> extends ProtobufSerializer<T> {
 
     private static final String NULL_VALUE_FULL_NAME = NullValue.getDescriptor().getFullName();
+    private static Long NUMBER_MAX_VALUE = Math.round(Math.pow(2,52));
     private final Map<Class<?>, JsonSerializer<Object>> serializerCache = new ConcurrentHashMap();
 
     public CustomProtobufSerializer(Class<T> protobufType) {
@@ -74,6 +76,7 @@ public abstract class CustomProtobufSerializer<T extends MessageOrBuilder> exten
                 generator.writeNumber((Integer)value);
                 break;
             case LONG:
+                // 解决 json number 类型有最大值限制导致部分Long 字段显示不全的问题
                 generator.writeString(String.valueOf((Long)value));
                 break;
             case FLOAT:
@@ -122,7 +125,7 @@ public abstract class CustomProtobufSerializer<T extends MessageOrBuilder> exten
     }
 
     private static IOException unrecognizedType(FieldDescriptor field, JsonGenerator generator) throws IOException {
-        String error = String.format("Unrecognized java type '%s' for field %s", field.getJavaType(), field.getFullName());
+        String error = StrUtil.format("Unrecognized java type '{}' for field {}", field.getJavaType(), field.getFullName());
         throw new JsonGenerationException(error, generator);
     }
 

@@ -16,6 +16,7 @@
  */
 package com.xenoblade.zohar.framework.web;
 
+import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.xenoblade.zohar.framework.commons.api.enums.ZoharErrorCode;
@@ -66,15 +67,8 @@ import java.util.List;
 @Slf4j
 public class RestControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(JsonProcessingException.class)
-    public ResponseEntity<Object> handleJsonProcessingException(HttpServletRequest request, final JsonProcessingException ex, HttpServletResponse response) {
-        ResponseMessage responseMessage = ResponseMessage
-                .error(ZoharErrorCode.JSON_FORMAT_ERROR, ex.getMessage());
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(responseMessage);
-    }
 
-
+//    Custom Exception
 
     @ExceptionHandler(ZoharException.class)
     public ResponseEntity<ResponseMessage> handleZoharException(HttpServletRequest request, final ZoharException ex, HttpServletResponse response) {
@@ -97,6 +91,17 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
                 .body(responseMessage);
     }
 
+//    Third Exception
+
+    @ExceptionHandler(JsonProcessingException.class)
+    public ResponseEntity<Object> handleJsonProcessingException(HttpServletRequest request, final JsonProcessingException ex, HttpServletResponse response) {
+        ResponseMessage responseMessage = ResponseMessage
+                .error(ZoharErrorCode.JSON_FORMAT_ERROR, ex.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(responseMessage);
+    }
+
+    // TODO: 统一 message
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<Object> handleConstraintViolationException(HttpServletRequest request, final ConstraintViolationException ex, HttpServletResponse response) {
         SimpleValidateResults results = new SimpleValidateResults();
@@ -105,7 +110,7 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
         }
         List<ValidateResults.Result> errorResults = results.getResults();
         ResponseMessage responseMessage = ResponseMessage
-                .error(ZoharErrorCode.INVALID_PARAM, errorResults.isEmpty() ? "" : errorResults.get(0).getField() + errorResults.get(0).getMessage());
+                .error(ZoharErrorCode.METHOD_ARGUMENT_NOT_VALID, errorResults.isEmpty() ? "" : errorResults.get(0).getField() + errorResults.get(0).getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(responseMessage);
     }
@@ -150,7 +155,7 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
         ResponseMessage responseMessage = ResponseMessage.error(ZoharErrorCode.NOT_ACCEPTABLE);
         String contentType = request.getHeader("Content-Type");
         if (contentType != null) {
-            String message = String.format("无法接收的媒体类型：%s", contentType);
+            String message = StrUtil.format("无法接收的媒体类型：{}", contentType);
             responseMessage.message(message);
         }
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
@@ -160,7 +165,7 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
     @Override protected ResponseEntity<Object> handleMissingPathVariable(
             MissingPathVariableException ex, HttpHeaders headers, HttpStatus status,
             WebRequest request) {
-        String message = String.format("路径字段 %s 校验不通过", ex.getVariableName());
+        String message = StrUtil.format("路径字段 {} 校验不通过", ex.getVariableName());
         ResponseMessage responseMessage = ResponseMessage.error( ZoharErrorCode.UNSUPPORTED_MEDIA_TYPE, message);
         return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
                 .body(responseMessage);
@@ -169,7 +174,7 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
     @Override protected ResponseEntity<Object> handleMissingServletRequestParameter(
             MissingServletRequestParameterException ex, HttpHeaders headers, HttpStatus status,
             WebRequest request) {
-        String message = String.format("参数[%s]不能为空", ex.getParameterName());
+        String message = StrUtil.format("参数[{}]不能为空", ex.getParameterName());
         ResponseMessage responseMessage = ResponseMessage
                 .error(ZoharErrorCode.BAD_REQUEST, message);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -195,7 +200,7 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
                                                                   HttpHeaders headers,
                                                                   HttpStatus status,
                                                                   WebRequest request) {
-        String messsage = String.format("无法将%s类型的值%s转为类型%s", ClassUtils.getDescriptiveType(ex.getValue()), ex.getValue(), ex.getRequiredType());
+        String messsage = StrUtil.format("无法将{}类型的值{}转为类型{}", ClassUtils.getDescriptiveType(ex.getValue()), ex.getValue(), ex.getRequiredType());
         ResponseMessage responseMessage = ResponseMessage
                 .error(ZoharErrorCode.TYPE_MISMATCH, messsage);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -224,6 +229,7 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
         return super.handleHttpMessageNotWritable(ex, headers, status, request);
     }
 
+    // TODO: 统一 message
     @Override protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status,
             WebRequest request) {
@@ -273,7 +279,7 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
     @Override protected ResponseEntity<Object> handleNoHandlerFoundException(
             NoHandlerFoundException ex, HttpHeaders headers, HttpStatus status,
             WebRequest request) {
-        String message = String.format("%s地址%s不存在", ex.getRequestURL(), ex.getHttpMethod());
+        String message = StrUtil.format("{}地址{}不存在", ex.getRequestURL(), ex.getHttpMethod());
         ResponseMessage responseMessage = ResponseMessage
                 .error(ZoharErrorCode.NOT_FOUND, message);
         return ResponseEntity.status(HttpStatus.NOT_FOUND)

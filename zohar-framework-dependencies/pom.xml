@@ -88,6 +88,16 @@
                 <artifactId>zohar-commons-web</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.xenoblade</groupId>
+                <artifactId>zohar-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.xenoblade</groupId>
+                <artifactId>zohar-web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <!--third party -->
 

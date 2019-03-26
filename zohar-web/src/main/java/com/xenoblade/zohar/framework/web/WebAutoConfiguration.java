@@ -17,20 +17,16 @@
 package com.xenoblade.zohar.framework.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.xenoblade.zohar.framework.commons.utils.jackson.JacksonUtil;
-import com.xenoblade.zohar.framework.commons.web.msg.ResponseJsonFilter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.web.context.request.RequestContextListener;
-import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.util.List;
 
 /**
  * WebAutoConfiguration
@@ -40,12 +36,6 @@ import java.util.List;
 @Configuration
 public class WebAutoConfiguration implements WebMvcConfigurer {
 
-
-    @Override public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-
-
-
-    }
 
     @Override public void addInterceptors(InterceptorRegistry registry) {
         // filter swagger
@@ -81,11 +71,9 @@ public class WebAutoConfiguration implements WebMvcConfigurer {
     @Primary
     @ConditionalOnMissingBean
     public ObjectMapper jacksonObjectMapper(Jackson2ObjectMapperBuilder builder) {
-        ObjectMapper objectMapper = JacksonUtil.getObjectMapper();
-        // Add filter provider
-        // parse 'include' and 'exclude' in ResponseMessage
-        objectMapper.setFilterProvider(new SimpleFilterProvider()
-                .addFilter(ResponseJsonFilter.FilterId, new ResponseJsonFilter()));
+        ObjectMapper objectMapper = builder.createXmlMapper(false).build();
+        JacksonUtil.initWrapperObjectMapper(objectMapper);
+
         return objectMapper;
     }
 

@@ -14,8 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.web;
+package com.xenoblade.zohar.framework.commons.web.utils;
 
+import com.xenoblade.zohar.framework.commons.web.HttpParameterConverter;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;

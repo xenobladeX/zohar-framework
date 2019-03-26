@@ -14,30 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.api.exception;
+package com.xenoblade.zohar.framework.sample.agares.service;
 
-import com.xenoblade.zohar.framework.commons.api.enums.IZoharErrorCode;
-import com.xenoblade.zohar.framework.commons.api.enums.ZoharErrorCode;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * NotFoundException
+ * AgaresApplication
  * @author xenoblade
  * @since 1.0.0
  */
-public class NotFoundException extends ZoharException{
+@SpringBootApplication
+public class AgaresApplication {
 
-    private static final long serialVersionUID = 4335447221487758513L;
-
-    public NotFoundException(String message) {
-        super(message, ZoharErrorCode.NOT_FOUND);
+    public static void main(String[] args) {
+        SpringApplication.run(AgaresApplication.class, args);
     }
 
-    public NotFoundException(String message, IZoharErrorCode errorCode) {
-        super(message, errorCode);
-    }
-
-    public NotFoundException(IZoharErrorCode errorCode) {
-        super(errorCode);
-    }
 
 }

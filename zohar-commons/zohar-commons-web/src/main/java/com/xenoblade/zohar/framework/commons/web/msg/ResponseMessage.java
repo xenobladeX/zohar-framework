@@ -16,7 +16,6 @@
  */
 package com.xenoblade.zohar.framework.commons.web.msg;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.xenoblade.zohar.framework.commons.api.enums.IZoharErrorCode;
 import com.xenoblade.zohar.framework.commons.api.enums.ZoharErrorCode;
@@ -42,7 +41,6 @@ import java.util.Set;
  * @author xenoblade
  * @since 1.0.0
  */
-@JsonFilter("response")
 @Slf4j
 public class ResponseMessage<T> implements Serializable {
 

@@ -16,12 +16,13 @@
  */
 package com.xenoblade.zohar.framework.core.config;
 
-import com.monitorjbl.json.JsonViewSupportFactoryBean;
-import com.xenoblade.zohar.framework.commons.spring.ApplicationContextHolder;
 import org.hibernate.validator.HibernateValidator;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.core.env.Environment;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 
 import javax.validation.Validation;
@@ -29,28 +30,32 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
 /**
- * ZoharAutoConfiguration
+ * ValidationAutoConfiguration
  * @author xenoblade
  * @since 1.0.0
  */
-@Configuration
-public class ZoharAutoConfiguration {
+@AutoConfigureBefore(org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration.class)
+public class ValidationAutoConfiguration {
 
 
-
-    /**
-     * 注入ApplicationContextAware
-     * @return
-     */
     @Bean
-    public ApplicationContextHolder applicationContextHolder() {
-        return new ApplicationContextHolder();
+    public Validator validator() {
+        ValidatorFactory validatorFactory = Validation.byProvider(HibernateValidator.class)
+                .configure()
+                .failFast(true)
+                .buildValidatorFactory();
+        return validatorFactory.getValidator();
     }
 
-
     @Bean
-    public JsonViewSupportFactoryBean jsonViewSupport() {
-        return new JsonViewSupportFactoryBean();
+    public static MethodValidationPostProcessor methodValidationPostProcessor(
+            Environment environment, @Lazy Validator validator) {
+        MethodValidationPostProcessor processor = new MethodValidationPostProcessor();
+        boolean proxyTargetClass = environment
+                .getProperty("spring.aop.proxy-target-class", Boolean.class, true);
+        processor.setProxyTargetClass(proxyTargetClass);
+        processor.setValidator(validator);
+        return processor;
     }
 
 }

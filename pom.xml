@@ -33,6 +33,9 @@
 
         <module>zohar-web</module>
         <module>zohar-dubbo</module>
+
+
+        <module>zohar-framework-sample</module>
     </modules>
 
 
