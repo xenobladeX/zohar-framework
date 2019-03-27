@@ -137,119 +137,6 @@ public class ResponseMessage<T> implements Serializable {
         return this;
     }
 
-
-    /**
-     * 过滤字段：指定需要序列化的字段
-     */
-    private transient Map<Class<?>, Set<String>> includes;
-
-    /**
-     * 过滤字段：指定不需要序列化的字段
-     */
-    private transient Map<Class<?>, Set<String>> excludes;
-
-    public ResponseMessage() {
-
-    }
-
-    public ResponseMessage<T> include(Class<?> type, String... fields) {
-        return include(type, Arrays.asList(fields));
-    }
-
-    public ResponseMessage<T> include(Class<?> type, Collection<String> fields) {
-        if (includes == null) {
-            includes = new HashMap<>();
-        }
-        if (fields == null || fields.isEmpty()) {
-            return this;
-        }
-        fields.forEach(field -> {
-            if (field.contains(".")) {
-                String tmp[] = field.split("[.]", 2);
-                try {
-                    Field field1 = type.getDeclaredField(tmp[0]);
-                    if (field1 != null) {
-                        include(field1.getType(), tmp[1]);
-                    }
-                } catch (Exception ignore) {
-                }
-            } else {
-                getStringListFromMap(includes, type).add(field);
-            }
-        });
-        return this;
-    }
-
-    public ResponseMessage<T> exclude(Class type, Collection<String> fields) {
-        if (excludes == null) {
-            excludes = new HashMap<>();
-        }
-        if (fields == null || fields.isEmpty()) {
-            return this;
-        }
-        fields.forEach(field -> {
-            if (field.contains(".")) {
-                String tmp[] = field.split("[.]", 2);
-                try {
-                    Field field1 = type.getDeclaredField(tmp[0]);
-                    if (field1 != null) {
-                        exclude(field1.getType(), tmp[1]);
-                    }
-                } catch (Exception ignore) {
-                }
-            } else {
-                getStringListFromMap(excludes, type).add(field);
-            }
-        });
-        return this;
-    }
-
-    public ResponseMessage<T> exclude(Collection<String> fields) {
-        if (excludes == null) {
-            excludes = new HashMap<>();
-        }
-        if (fields == null || fields.isEmpty()) {
-            return this;
-        }
-        Class type;
-        if (getResult() != null) {
-            type = getResult().getClass();
-        } else {
-            return this;
-        }
-        exclude(type, fields);
-        return this;
-    }
-
-    public ResponseMessage<T> include(Collection<String> fields) {
-        if (includes == null) {
-            includes = new HashMap<>();
-        }
-        if (fields == null || fields.isEmpty()) {
-            return this;
-        }
-        Class type;
-        if (getResult() != null) {
-            type = getResult().getClass();
-        } else {
-            return this;
-        }
-        include(type, fields);
-        return this;
-    }
-
-    public ResponseMessage<T> exclude(Class type, String... fields) {
-        return exclude(type, Arrays.asList(fields));
-    }
-
-    public ResponseMessage<T> exclude(String... fields) {
-        return exclude(Arrays.asList(fields));
-    }
-
-    public ResponseMessage<T> include(String... fields) {
-        return include(Arrays.asList(fields));
-    }
-
     protected Set<String> getStringListFromMap(Map<Class<?>, Set<String>> map, Class type) {
         return map.computeIfAbsent(type, k -> new HashSet<>());
     }
@@ -260,13 +147,6 @@ public class ResponseMessage<T> implements Serializable {
         return JacksonUtil.getObjectMapper().writeValueAsString(this);
     }
 
-    public Map<Class<?>, Set<String>> getExcludes() {
-        return excludes;
-    }
-
-    public Map<Class<?>, Set<String>> getIncludes() {
-        return includes;
-    }
 
     public void responseJson(HttpServletResponse response
             , int respondStatus) {

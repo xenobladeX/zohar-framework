@@ -26,7 +26,6 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.monitorjbl.json.JsonViewModule;
 import com.xenoblade.zohar.framework.commons.api.exception.ZoharException;
 import com.xenoblade.zohar.framework.commons.utils.jackson.protobuf.CustomProtobufModule;
 import lombok.experimental.UtilityClass;
@@ -107,8 +106,6 @@ public class JacksonUtil {
         // Jackson protobuf format
         objectMapper.registerModule(new CustomProtobufModule());
 
-        // jsonview
-        objectMapper.registerModule(new JsonViewModule());
 
         return objectMapper;
     }

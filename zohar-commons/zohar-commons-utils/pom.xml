@@ -89,11 +89,6 @@
             <groupId>com.hubspot.jackson</groupId>
             <artifactId>jackson-datatype-protobuf</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.monitorjbl</groupId>
-            <artifactId>json-view</artifactId>
-            <version>1.0.1</version>
-        </dependency>
 
         <!--mapstruct-->
         <dependency>

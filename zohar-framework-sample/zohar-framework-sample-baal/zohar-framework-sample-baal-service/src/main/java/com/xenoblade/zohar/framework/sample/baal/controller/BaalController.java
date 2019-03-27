@@ -16,9 +16,9 @@
  */
 package com.xenoblade.zohar.framework.sample.baal.controller;
 
-import com.monitorjbl.json.JsonResult;
-import com.monitorjbl.json.JsonView;
-import com.monitorjbl.json.Match;
+import cn.hutool.core.bean.BeanUtil;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.xenoblade.zohar.framework.commons.api.enums.ZoharErrorCode;
 import com.xenoblade.zohar.framework.commons.api.exception.NotFoundException;
 import com.xenoblade.zohar.framework.commons.web.msg.ResponseMessage;
@@ -37,6 +37,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.Min;
 import java.util.List;
+import java.util.Map;
 
 /**
  * BaalController
@@ -48,8 +49,6 @@ import java.util.List;
 @Validated
 @Slf4j
 public class BaalController implements BaalService{
-
-    private static JsonResult json = JsonResult.instance();
 
     @Autowired
     private IBaalService baalService;
@@ -80,11 +79,14 @@ public class BaalController implements BaalService{
     @PostMapping("/exclude")
     @Override
     public ResponseMessage<TestExcludeBody> testExclude(@RequestParam(value = "exclude", required = false) List<String> excludeFieldList, @RequestBody TestExcludeBody excludeBody) {
-        ResponseMessage response = ResponseMessage.ok(excludeBody);
-        String[] excludeFieldArray = new String[excludeFieldList.size()];
-        return ResponseMessage.ok(json.use(JsonView.with(excludeBody)
-                .onClass(TestExcludeBody.class, Match.match()
-                        .exclude(excludeFieldList.toArray(excludeFieldArray))))
-                .returnValue());
+        if (excludeFieldList != null && excludeFieldList.size() > 0) {
+            String[] excludeFieldArray = new String[excludeFieldList.size()];
+            TestExcludeBody newExcludeBody = new TestExcludeBody();
+            BeanUtil.copyProperties(excludeBody, newExcludeBody, excludeFieldList.toArray(excludeFieldArray));
+            return ResponseMessage.ok(newExcludeBody);
+        } else {
+            return ResponseMessage.ok(excludeBody);
+        }
+
     }
 }

@@ -16,17 +16,10 @@
  */
 package com.xenoblade.zohar.framework.core.config;
 
-import com.monitorjbl.json.JsonViewSupportFactoryBean;
 import com.xenoblade.zohar.framework.commons.spring.ApplicationContextHolder;
-import org.hibernate.validator.HibernateValidator;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 
 /**
  * ZoharAutoConfiguration
@@ -35,7 +28,6 @@ import javax.validation.ValidatorFactory;
  */
 @Configuration
 public class ZoharAutoConfiguration {
-
 
 
     /**
@@ -47,10 +39,5 @@ public class ZoharAutoConfiguration {
         return new ApplicationContextHolder();
     }
 
-
-    @Bean
-    public JsonViewSupportFactoryBean jsonViewSupport() {
-        return new JsonViewSupportFactoryBean();
-    }
 
 }

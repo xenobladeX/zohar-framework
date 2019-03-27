@@ -17,6 +17,7 @@
 package com.xenoblade.zohar.framework.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.xenoblade.zohar.framework.commons.utils.jackson.JacksonUtil;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
