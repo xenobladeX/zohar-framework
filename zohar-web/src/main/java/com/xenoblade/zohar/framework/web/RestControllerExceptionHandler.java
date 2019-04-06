@@ -101,18 +101,23 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
                 .body(responseMessage);
     }
 
-    // TODO: 统一 message
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<Object> handleConstraintViolationException(HttpServletRequest request, final ConstraintViolationException ex, HttpServletResponse response) {
         SimpleValidateResults results = new SimpleValidateResults();
-        for (ConstraintViolation<?> violation : ex.getConstraintViolations()) {
-            results.addResult(violation.getPropertyPath().toString(), violation.getMessage());
-        }
-        List<ValidateResults.Result> errorResults = results.getResults();
+
+        ex.getConstraintViolations()
+                .stream()
+                .filter(ConstraintViolation.class::isInstance)
+                .map(ConstraintViolation.class::cast)
+                .forEach(violation -> results.addResult(violation.getPropertyPath().toString(), violation.getMessage()));
         ResponseMessage responseMessage = ResponseMessage
-                .error(ZoharErrorCode.METHOD_ARGUMENT_NOT_VALID, errorResults.isEmpty() ? "" : errorResults.get(0).getField() + errorResults.get(0).getMessage());
+                .error(ZoharErrorCode.METHOD_ARGUMENT_NOT_VALID,
+                        results.getResults().isEmpty() ?
+                                ex.getMessage() :
+                                results.getResults().get(0).getMessage()).result(results.getResults());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(responseMessage);
+
     }
 
     /**
@@ -229,7 +234,6 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
         return super.handleHttpMessageNotWritable(ex, headers, status, request);
     }
 
-    // TODO: 统一 message
     @Override protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status,
             WebRequest request) {

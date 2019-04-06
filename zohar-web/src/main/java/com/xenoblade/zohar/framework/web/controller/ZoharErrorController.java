@@ -66,7 +66,7 @@ public class ZoharErrorController extends BasicErrorController{
 
         }
         if (errorCode != null) {
-            throw new ZoharException(message, errorCode);
+            return new ResponseEntity(ResponseMessage.error(errorCode), status);
         }
         return new ResponseEntity<>(body, status);
     }

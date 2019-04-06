@@ -14,11 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.sample.baal.controller;
+package com.xenoblade.zohar.framework.sample.baal.controller.v2;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.xenoblade.zohar.framework.commons.api.enums.ZoharErrorCode;
 import com.xenoblade.zohar.framework.commons.api.exception.NotFoundException;
 import com.xenoblade.zohar.framework.commons.web.msg.ResponseMessage;
@@ -37,7 +35,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.Min;
 import java.util.List;
-import java.util.Map;
 
 /**
  * BaalController
@@ -45,21 +42,20 @@ import java.util.Map;
  * @since 1.0.0
  */
 @RestController
-@RequestMapping("/baal")
+@RequestMapping("/{version}/baal")
 @Validated
 @Slf4j
-public class BaalController implements BaalService{
+public class BaalV2Controller implements BaalService{
 
     @Autowired
     private IBaalService baalService;
-
 
     @PostMapping("/hello")
     @Override
     public ResponseMessage<HelloBaalResponse> helloBaal(@RequestBody HelloBaalRequest request) {
         log.info("Post to helloBaal with request: {}", request);
         HelloBaalResponse response = new HelloBaalResponse();
-        response.setResponse("Hello, this is baal");
+        response.setResponse("Hello, this is baal v2");
         return ResponseMessage.ok(response);
     }
 
@@ -80,6 +76,7 @@ public class BaalController implements BaalService{
     @Override
     public ResponseMessage<TestExcludeBody> testExclude(@RequestParam(value = "exclude", required = false) List<String> excludeFieldList, @RequestBody TestExcludeBody excludeBody) {
         if (excludeFieldList != null && excludeFieldList.size() > 0) {
+
             String[] excludeFieldArray = new String[excludeFieldList.size()];
             TestExcludeBody newExcludeBody = new TestExcludeBody();
             BeanUtil.copyProperties(excludeBody, newExcludeBody, excludeFieldList.toArray(excludeFieldArray));

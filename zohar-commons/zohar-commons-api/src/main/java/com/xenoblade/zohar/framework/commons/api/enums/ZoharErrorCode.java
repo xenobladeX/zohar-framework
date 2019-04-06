@@ -29,6 +29,7 @@ import java.util.Optional;
  * @author xenoblade
  * @since 1.0.0
  */
+// TODO: 为了使用 message，将ZoharErrorCode移动到 zohar-commons-spring
 public enum ZoharErrorCode implements IZoharErrorCode{
 
     INVALID("非法错误码"),
@@ -39,6 +40,7 @@ public enum ZoharErrorCode implements IZoharErrorCode{
     METHOD_ARGUMENT_NOT_VALID("方法参数不合法"),
     ENCRYPTION_ERROR("加密错误"),
     DECRYPTION_ERROR("解密错误"),
+    API_DIDCARD("API接口已启用"),
 
     OK(200, "成功"),
 

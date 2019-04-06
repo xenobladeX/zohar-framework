@@ -19,7 +19,12 @@ package com.xenoblade.zohar.framework.web;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.xenoblade.zohar.framework.commons.utils.jackson.JacksonUtil;
+import com.xenoblade.zohar.framework.commons.web.version.ApiRequestMappingHandlerMapping;
+import com.xenoblade.zohar.framework.web.version.VersionProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.web.servlet.WebMvcRegistrations;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -27,7 +32,7 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 /**
  * WebAutoConfiguration
@@ -35,8 +40,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @since 1.0.0
  */
 @Configuration
-public class WebAutoConfiguration implements WebMvcConfigurer {
+@EnableConfigurationProperties({VersionProperties.class})
+public class WebAutoConfiguration implements WebMvcConfigurer, WebMvcRegistrations {
 
+    @Autowired
+    private VersionProperties versionProperties;
 
     @Override public void addInterceptors(InterceptorRegistry registry) {
         // filter swagger
@@ -51,6 +59,14 @@ public class WebAutoConfiguration implements WebMvcConfigurer {
         //                        "/swagger-ui.html/**",
         //                        "/webjars/**"
         //                );
+    }
+
+    @Override public RequestMappingHandlerMapping getRequestMappingHandlerMapping() {
+        if (versionProperties.isEnabled()) {
+            return new ApiRequestMappingHandlerMapping(versionProperties.getMinimumVersion(), versionProperties.isParsePackageVersion());
+        } else {
+            return null;
+        }
     }
 
     /**
