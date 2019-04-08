@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.sample.baal.controller.v2;
+package com.xenoblade.zohar.framework.sample.baal.controller;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.xenoblade.zohar.framework.commons.api.enums.ZoharErrorCode;
@@ -42,10 +42,10 @@ import java.util.List;
  * @since 1.0.0
  */
 @RestController
-@RequestMapping("/{version}/baal")
+@RequestMapping("/baal")
 @Validated
 @Slf4j
-public class BaalV2Controller implements BaalService{
+public class BaalController implements BaalService{
 
     @Autowired
     private IBaalService baalService;
@@ -55,7 +55,7 @@ public class BaalV2Controller implements BaalService{
     public ResponseMessage<HelloBaalResponse> helloBaal(@RequestBody HelloBaalRequest request) {
         log.info("Post to helloBaal with request: {}", request);
         HelloBaalResponse response = new HelloBaalResponse();
-        response.setResponse("Hello, this is baal v2");
+        response.setResponse("Hello, this is baal");
         return ResponseMessage.ok(response);
     }
 
