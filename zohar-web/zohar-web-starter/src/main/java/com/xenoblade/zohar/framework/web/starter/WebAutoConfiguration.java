@@ -14,13 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.web;
+package com.xenoblade.zohar.framework.web.starter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.xenoblade.zohar.framework.commons.utils.jackson.JacksonUtil;
 import com.xenoblade.zohar.framework.commons.web.version.ApiRequestMappingHandlerMapping;
-import com.xenoblade.zohar.framework.web.version.VersionProperties;
+import com.xenoblade.zohar.framework.web.starter.version.VersionProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcRegistrations;

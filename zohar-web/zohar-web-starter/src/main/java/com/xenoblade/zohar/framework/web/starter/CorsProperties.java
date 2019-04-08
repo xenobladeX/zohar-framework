@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.web;
+package com.xenoblade.zohar.framework.web.starter;
 
 import lombok.Getter;
 import lombok.Setter;

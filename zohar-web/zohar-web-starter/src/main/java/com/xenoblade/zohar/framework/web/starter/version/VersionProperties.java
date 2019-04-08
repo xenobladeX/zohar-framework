@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.web.version;
+package com.xenoblade.zohar.framework.web.starter.version;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

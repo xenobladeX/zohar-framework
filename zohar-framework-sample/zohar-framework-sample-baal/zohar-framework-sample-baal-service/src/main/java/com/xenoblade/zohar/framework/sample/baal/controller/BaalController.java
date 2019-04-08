@@ -55,7 +55,7 @@ public class BaalController implements BaalService{
     public ResponseMessage<HelloBaalResponse> helloBaal(@RequestBody HelloBaalRequest request) {
         log.info("Post to helloBaal with request: {}", request);
         HelloBaalResponse response = new HelloBaalResponse();
-        response.setResponse("Hello, this is baal");
+        response.setResponse("Hello, this is baal v2");
         return ResponseMessage.ok(response);
     }
 

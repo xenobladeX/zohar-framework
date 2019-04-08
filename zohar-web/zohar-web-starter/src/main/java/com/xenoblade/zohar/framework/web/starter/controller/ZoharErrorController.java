@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.web.controller;
+package com.xenoblade.zohar.framework.web.starter.controller;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.xenoblade.zohar.framework.commons.api.enums.ZoharErrorCode;
