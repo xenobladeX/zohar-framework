@@ -23,6 +23,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.StringJoiner;
 
@@ -79,7 +80,7 @@ public class AccessLoggerInfo implements Serializable{
     /**
      * 上下文信息
      */
-    private AccessLoggerContext context;
+    private Map<String, AccessLoggerContext> contexts = new HashMap<>();
 
     /**
      * 请求时间戳

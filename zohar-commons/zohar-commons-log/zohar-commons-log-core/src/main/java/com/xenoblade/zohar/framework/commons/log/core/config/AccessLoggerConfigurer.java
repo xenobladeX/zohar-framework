@@ -14,42 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.core.config;
+package com.xenoblade.zohar.framework.commons.log.core.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.xenoblade.zohar.framework.commons.spring.ApplicationContextHolder;
-import com.xenoblade.zohar.framework.commons.utils.jackson.JacksonUtil;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
+import com.xenoblade.zohar.framework.commons.log.core.config.AccessLoggerInterceptorConfiguration;
 
 /**
- * ZoharAutoConfiguration
+ * AccessLoggerConfigurer
  * @author xenoblade
  * @since 1.0.0
  */
-@Configuration
-public class ZoharAutoConfiguration {
+public interface AccessLoggerConfigurer {
+
+    void configure(ObjectMapper accessLoggerObjectMapper);
 
 
-    @Bean
-    @Primary
-    public ObjectMapper defaultObjectMapper() {
-
-        ObjectMapper defaultObjectMapper = new ObjectMapper();
-
-        return JacksonUtil.initWrapperObjectMapper(defaultObjectMapper);
-    }
-
-
-    /**
-     * 注入ApplicationContextAware
-     * @return
-     */
-    @Bean
-    public ApplicationContextHolder applicationContextHolder() {
-        return new ApplicationContextHolder();
-    }
-
+    void configure(AccessLoggerInterceptorConfiguration accessLoggerInterceptorConfiguration);
 
 }

@@ -14,21 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.log.starter;
+package com.xenoblade.zohar.framework.web.starter.log;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xenoblade.zohar.framework.commons.log.core.config.AccessLoggerConfigurer;
 import com.xenoblade.zohar.framework.commons.log.core.config.AccessLoggerInterceptorConfiguration;
+import com.xenoblade.zohar.framework.commons.web.log.AccessLoggerHttpParser;
 
 /**
- * AccessLoggerConfigurer
+ * AccessLoggerHttpConfigurer
  * @author xenoblade
  * @since 1.0.0
  */
-public interface AccessLoggerConfigurer {
+public class AccessLoggerHttpConfigurer implements AccessLoggerConfigurer {
 
-    void configure(ObjectMapper accessLoggerObjectMapper);
+    @Override public void configure(
+            AccessLoggerInterceptorConfiguration accessLoggerInterceptorConfiguration) {
+        accessLoggerInterceptorConfiguration.addParser(new AccessLoggerHttpParser());
+    }
 
+    @Override public void configure(ObjectMapper accessLoggerObjectMapper) {
 
-    void configure(AccessLoggerInterceptorConfiguration accessLoggerInterceptorConfiguration);
-
+    }
 }

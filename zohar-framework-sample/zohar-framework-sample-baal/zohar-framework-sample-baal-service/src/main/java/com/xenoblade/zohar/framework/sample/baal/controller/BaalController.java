@@ -17,14 +17,17 @@
 package com.xenoblade.zohar.framework.sample.baal.controller;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xenoblade.zohar.framework.commons.api.enums.ZoharErrorCode;
 import com.xenoblade.zohar.framework.commons.api.exception.NotFoundException;
+import com.xenoblade.zohar.framework.commons.spring.ApplicationContextHolder;
 import com.xenoblade.zohar.framework.commons.web.msg.ResponseMessage;
 import com.xenoblade.zohar.framework.commons.log.api.annotation.AccessLogger;
 import com.xenoblade.zohar.framework.sample.baal.api.BaalService;
 import com.xenoblade.zohar.framework.sample.baal.service.IBaalService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,8 +55,11 @@ public class BaalController implements BaalService{
     @Autowired
     private IBaalService baalService;
 
+    @Autowired
+    @Qualifier("defaultObjectMapper")
+    private ObjectMapper defaultObjectMapper;
+
     @PostMapping("/hello")
-    @Override
     public ResponseMessage<HelloBaalResponse> helloBaal(@RequestBody HelloBaalRequest request) {
         HelloBaalResponse response = new HelloBaalResponse();
         response.setResponse("Hello, this is baal");
@@ -61,20 +67,17 @@ public class BaalController implements BaalService{
     }
 
     @GetMapping("/exception/{errorCode}")
-    @Override
     public ResponseMessage testException(@PathVariable Integer errorCode) {
         ZoharErrorCode zoharErrorCode = ZoharErrorCode.CodeOf(errorCode);
         throw new NotFoundException(zoharErrorCode);
     }
 
     @PostMapping("/validate/{id}")
-    @Override
     public ResponseMessage testVallidate(@Min(value = 1, message = "id 必须大于0") @PathVariable Integer id, @Validated @RequestBody TestVallidateRequest request) {
         return ResponseMessage.ok();
     }
 
     @PostMapping("/exclude")
-    @Override
     public ResponseMessage<TestExcludeBody> testExclude(@RequestParam(value = "exclude", required = false) List<String> excludeFieldList, @RequestBody TestExcludeBody excludeBody) {
         if (excludeFieldList != null && excludeFieldList.size() > 0) {
 

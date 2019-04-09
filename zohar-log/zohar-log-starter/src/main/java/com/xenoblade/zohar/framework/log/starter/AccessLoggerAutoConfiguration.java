@@ -17,14 +17,16 @@
 package com.xenoblade.zohar.framework.log.starter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.collect.Lists;
+import com.xenoblade.zohar.framework.commons.log.core.listener.DefaultAccessLoggerListener;
+import com.xenoblade.zohar.framework.commons.log.core.config.AccessLoggerConfigurer;
+import com.xenoblade.zohar.framework.commons.log.core.config.AccessLoggerConfigurerAdapter;
 import com.xenoblade.zohar.framework.commons.utils.jackson.JacksonUtil;
 import com.xenoblade.zohar.framework.commons.log.core.DefaultAccessLoggerParser;
 import com.xenoblade.zohar.framework.commons.log.core.aop.AccessLoggerAdvisor;
 import com.xenoblade.zohar.framework.commons.log.core.aop.AccessLoggerInterceptor;
 import com.xenoblade.zohar.framework.commons.log.core.config.AccessLoggerInterceptorConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
@@ -52,6 +54,12 @@ public class AccessLoggerAutoConfiguration {
     }
 
     @Bean
+    public AccessLoggerConfigurer accessLoggerConfigurerAdapter() {
+        return new AccessLoggerConfigurerAdapter();
+    }
+
+
+    @Bean
     public AccessLoggerAdvisor accessLoggerAdvisor(ApplicationEventPublisher eventPublisher) {
         AccessLoggerInterceptorConfiguration accessLoggerInterceptorConfiguration = new AccessLoggerInterceptorConfiguration();
         accessLoggerInterceptorConfiguration.addParser(new DefaultAccessLoggerParser());
@@ -61,18 +69,18 @@ public class AccessLoggerAutoConfiguration {
         return advisor;
     }
 
-    @Bean(name = "accessLoggerObjectMapper")
+    @Bean
     public ObjectMapper accessLoggerObjectMapper() {
         ObjectMapper accessLoggerObjectMapper = new ObjectMapper();
-
         JacksonUtil.initWrapperObjectMapper(accessLoggerObjectMapper);
+
         configurers.stream().forEach(configurer -> configurer.configure(accessLoggerObjectMapper));
         return accessLoggerObjectMapper;
     }
 
 
     @Bean
-    public DefaultAccessLoggerListener defaultAccessLoggerListener(ObjectMapper accessLoggerObjectMapper) {
+    public DefaultAccessLoggerListener defaultAccessLoggerListener(@Qualifier("accessLoggerObjectMapper") ObjectMapper accessLoggerObjectMapper) {
         DefaultAccessLoggerListener defaultAccessLoggerListener = new DefaultAccessLoggerListener(accessLoggerObjectMapper);
 
         return defaultAccessLoggerListener;

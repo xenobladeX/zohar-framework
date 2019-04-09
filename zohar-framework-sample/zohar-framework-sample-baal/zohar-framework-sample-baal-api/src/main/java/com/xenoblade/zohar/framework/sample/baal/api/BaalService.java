@@ -33,15 +33,6 @@ import java.util.Map;
  */
 public interface BaalService {
 
-    ResponseMessage<HelloBaalResponse> helloBaal(HelloBaalRequest request);
-
-    ResponseMessage testException(Integer errorCode);
-
-    ResponseMessage testVallidate(@Min(value = 1, message = "id 必须大于0") Integer id, TestVallidateRequest request);
-
-    ResponseMessage<TestExcludeBody> testExclude(List<String> excludeFields, TestExcludeBody excludeBody);
-
-
     @Data
     class HelloBaalRequest implements Serializable {
 

@@ -14,15 +14,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.log.api;
+package com.xenoblade.zohar.framework.commons.web.log;
+
+import com.xenoblade.zohar.framework.commons.log.api.AccessLoggerContext;
+import lombok.Data;
+
+import java.util.Map;
 
 /**
- * AccessLoggerContext
+ * AccessLoggerHttpContext
  * @author xenoblade
  * @since 1.0.0
  */
-public interface AccessLoggerContext {
+@Data
+public class AccessLoggerHttpContext implements AccessLoggerContext {
 
-    String contextType();
+    /**
+     * 请求者ip地址
+     */
+    private String ip;
 
+    /**
+     * 请求的url地址
+     */
+    private String url;
+
+    /**
+     * http 请求头集合
+     */
+    private Map<String, String> httpHeaders;
+
+    /**
+     * http 请求方法, GET,POST...
+     */
+    private String httpMethod;
+
+    @Override public String contextType() {
+        return "HTTP";
+    }
 }

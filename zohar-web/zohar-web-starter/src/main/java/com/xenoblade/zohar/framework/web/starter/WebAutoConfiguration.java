@@ -16,23 +16,28 @@
  */
 package com.xenoblade.zohar.framework.web.starter;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xenoblade.zohar.framework.commons.log.core.config.AccessLoggerConfigurer;
 import com.xenoblade.zohar.framework.commons.utils.jackson.JacksonUtil;
 import com.xenoblade.zohar.framework.commons.web.version.ApiRequestMappingHandlerMapping;
+import com.xenoblade.zohar.framework.web.starter.log.AccessLoggerHttpConfigurer;
 import com.xenoblade.zohar.framework.web.starter.version.VersionProperties;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcRegistrations;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
+
+import java.util.List;
 
 /**
  * WebAutoConfiguration
@@ -79,19 +84,39 @@ public class WebAutoConfiguration implements WebMvcConfigurer, WebMvcRegistratio
         return new RequestContextListener();
     }
 
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        converters.forEach(e -> {
+            if (e instanceof MappingJackson2HttpMessageConverter) {
+                MappingJackson2HttpMessageConverter converter = (MappingJackson2HttpMessageConverter) e;
+                // Modify objectMapper
+                converter.getObjectMapper();
+            }
+        });
+    }
+
     /**
-     * 自定义 Jackson ObjectMapper
+     * 自定义 http ObjectMapper
      * @param builder
      * @return
      */
     @Bean
-    @ConditionalOnMissingBean(name = "objectMapper")
-    public ObjectMapper objectMapper(Jackson2ObjectMapperBuilder builder) {
+    public ObjectMapper httpObjectMapper(Jackson2ObjectMapperBuilder builder) {
         ObjectMapper objectMapper = builder.createXmlMapper(false).build();
         JacksonUtil.initWrapperObjectMapper(objectMapper);
 
         return objectMapper;
     }
+
+    @Bean
+//    @ConditionalOnMissingBean(value = MappingJackson2HttpMessageConverter.class, ignoredType = {
+//            "org.springframework.hateoas.mvc.TypeConstrainedMappingJackson2HttpMessageConverter",
+//            "org.springframework.data.rest.webmvc.alps.AlpsJsonHttpMessageConverter" })
+    public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter(
+            @Qualifier("httpObjectMapper") ObjectMapper objectMapper) {
+        return new MappingJackson2HttpMessageConverter(objectMapper);
+    }
+
 
     /**
      * 自定义全局异常处理
@@ -100,6 +125,14 @@ public class WebAutoConfiguration implements WebMvcConfigurer, WebMvcRegistratio
     @Bean
     public RestControllerExceptionHandler restControllerExceptionHandler() {
         return new RestControllerExceptionHandler();
+    }
+
+    /**
+     * custom AccessLoggerConfigurer
+     */
+    @Bean
+    public AccessLoggerConfigurer accessLoggerHttpConfigurer() {
+        return new AccessLoggerHttpConfigurer();
     }
 
 }
