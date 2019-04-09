@@ -16,8 +16,19 @@
  */
 package com.xenoblade.zohar.framework.sample.baal.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
+import com.xenoblade.zohar.framework.commons.api.enums.ZoharErrorCode;
+import com.xenoblade.zohar.framework.commons.api.exception.NotFoundException;
+import com.xenoblade.zohar.framework.commons.api.exception.ZoharException;
+import com.xenoblade.zohar.framework.sample.baal.api.BaalService.HelloBaalRequest;
+import com.xenoblade.zohar.framework.sample.baal.api.BaalService.HelloBaalResponse;
+import com.xenoblade.zohar.framework.sample.baal.api.BaalService.TestExcludeBody;
+import com.xenoblade.zohar.framework.sample.baal.api.BaalService.TestVallidateRequest;
 import com.xenoblade.zohar.framework.sample.baal.service.IBaalService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * BaalServiceImpl
@@ -25,9 +36,34 @@ import org.springframework.stereotype.Service;
  * @since 1.0.0
  */
 @Service
+@Slf4j
 public class BaalServiceImpl implements IBaalService{
 
+    @Override public HelloBaalResponse testRest(HelloBaalRequest request) {
+        HelloBaalResponse response = new HelloBaalResponse();
+        response.setResponse("Hello, this is baal");
+        return response;
+    }
 
+    @Override public void testException(Integer errorCode) throws ZoharException {
+        ZoharErrorCode zoharErrorCode = ZoharErrorCode.CodeOf(errorCode);
+        throw new NotFoundException(zoharErrorCode);
+    }
 
+    @Override public void testVallidate(Integer id, TestVallidateRequest request) {
 
+    }
+
+    @Override public TestExcludeBody testExclude(List<String> excludeFieldList,
+                                                 TestExcludeBody excludeBody) {
+        if (excludeFieldList != null && excludeFieldList.size() > 0) {
+
+            String[] excludeFieldArray = new String[excludeFieldList.size()];
+            TestExcludeBody newExcludeBody = new TestExcludeBody();
+            BeanUtil.copyProperties(excludeBody, newExcludeBody, excludeFieldList.toArray(excludeFieldArray));
+            return newExcludeBody;
+        } else {
+            return excludeBody;
+        }
+    }
 }

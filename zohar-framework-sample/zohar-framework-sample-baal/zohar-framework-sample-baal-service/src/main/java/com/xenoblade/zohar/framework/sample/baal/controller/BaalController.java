@@ -25,6 +25,7 @@ import com.xenoblade.zohar.framework.commons.web.msg.ResponseMessage;
 import com.xenoblade.zohar.framework.commons.log.api.annotation.AccessLogger;
 import com.xenoblade.zohar.framework.sample.baal.api.BaalService;
 import com.xenoblade.zohar.framework.sample.baal.service.IBaalService;
+import io.undertow.server.handlers.proxy.mod_cluster.Balancer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -55,39 +56,31 @@ public class BaalController implements BaalService{
     @Autowired
     private IBaalService baalService;
 
-    @Autowired
-    @Qualifier("defaultObjectMapper")
-    private ObjectMapper defaultObjectMapper;
-
     @PostMapping("/hello")
-    public ResponseMessage<HelloBaalResponse> helloBaal(@RequestBody HelloBaalRequest request) {
-        HelloBaalResponse response = new HelloBaalResponse();
-        response.setResponse("Hello, this is baal");
+    public ResponseMessage<HelloBaalResponse> testRest(@RequestBody HelloBaalRequest request) {
+        HelloBaalResponse response = baalService.testRest(request);
         return ResponseMessage.ok(response);
     }
 
     @GetMapping("/exception/{errorCode}")
     public ResponseMessage testException(@PathVariable Integer errorCode) {
-        ZoharErrorCode zoharErrorCode = ZoharErrorCode.CodeOf(errorCode);
-        throw new NotFoundException(zoharErrorCode);
+        baalService.testException(errorCode);
+
+        return ResponseMessage.ok();
     }
 
     @PostMapping("/validate/{id}")
     public ResponseMessage testVallidate(@Min(value = 1, message = "id 必须大于0") @PathVariable Integer id, @Validated @RequestBody TestVallidateRequest request) {
+
+        baalService.testVallidate(id, request);
+
         return ResponseMessage.ok();
     }
 
     @PostMapping("/exclude")
     public ResponseMessage<TestExcludeBody> testExclude(@RequestParam(value = "exclude", required = false) List<String> excludeFieldList, @RequestBody TestExcludeBody excludeBody) {
-        if (excludeFieldList != null && excludeFieldList.size() > 0) {
+        TestExcludeBody newBody = baalService.testExclude(excludeFieldList, excludeBody);
 
-            String[] excludeFieldArray = new String[excludeFieldList.size()];
-            TestExcludeBody newExcludeBody = new TestExcludeBody();
-            BeanUtil.copyProperties(excludeBody, newExcludeBody, excludeFieldList.toArray(excludeFieldArray));
-            return ResponseMessage.ok(newExcludeBody);
-        } else {
-            return ResponseMessage.ok(excludeBody);
-        }
-
+        return ResponseMessage.ok(newBody);
     }
 }

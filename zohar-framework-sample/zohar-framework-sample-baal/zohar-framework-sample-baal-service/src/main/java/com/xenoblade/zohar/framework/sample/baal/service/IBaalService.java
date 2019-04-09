@@ -16,6 +16,14 @@
  */
 package com.xenoblade.zohar.framework.sample.baal.service;
 
+import com.xenoblade.zohar.framework.commons.api.exception.ZoharException;
+import com.xenoblade.zohar.framework.sample.baal.api.BaalService;
+import com.xenoblade.zohar.framework.sample.baal.api.BaalService.HelloBaalRequest;
+import com.xenoblade.zohar.framework.sample.baal.api.BaalService.HelloBaalResponse;
+import com.xenoblade.zohar.framework.sample.baal.api.BaalService.TestExcludeBody;
+
+import java.util.List;
+
 /**
  * IBaalService
  * @author xenoblade
@@ -23,6 +31,12 @@ package com.xenoblade.zohar.framework.sample.baal.service;
  */
 public interface IBaalService {
 
+    HelloBaalResponse testRest(HelloBaalRequest request);
 
+    void testException(Integer errorCode) throws ZoharException;
+
+    void testVallidate(Integer id, BaalService.TestVallidateRequest request);
+
+    TestExcludeBody testExclude(List<String> excludeFieldList, TestExcludeBody excludeBody);
 
 }
