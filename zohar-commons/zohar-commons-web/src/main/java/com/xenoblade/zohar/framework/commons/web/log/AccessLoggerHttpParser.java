@@ -18,6 +18,7 @@ package com.xenoblade.zohar.framework.commons.web.log;
 
 import com.xenoblade.zohar.framework.commons.log.api.AccessLoggerInfo;
 import com.xenoblade.zohar.framework.commons.log.core.AccessLoggerParser;
+import com.xenoblade.zohar.framework.commons.spring.aop.MethodInterceptorContext;
 import com.xenoblade.zohar.framework.commons.spring.aop.MethodInterceptorHolder;
 import com.xenoblade.zohar.framework.commons.web.utils.WebUtil;
 
@@ -36,7 +37,7 @@ public class AccessLoggerHttpParser implements AccessLoggerParser {
     }
 
     @Override
-    public AccessLoggerInfo parse(MethodInterceptorHolder holder, AccessLoggerInfo loggerInfo) {
+    public AccessLoggerInfo parse(MethodInterceptorContext methodInterceptorContext, AccessLoggerInfo loggerInfo) {
         HttpServletRequest request = WebUtil.getHttpServletRequest();
         if (null != request) {
             AccessLoggerHttpContext context = new AccessLoggerHttpContext();

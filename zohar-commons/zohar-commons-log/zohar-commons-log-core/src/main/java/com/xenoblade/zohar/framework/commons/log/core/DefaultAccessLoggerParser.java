@@ -17,6 +17,7 @@
 package com.xenoblade.zohar.framework.commons.log.core;
 
 import cn.hutool.core.annotation.AnnotationUtil;
+import com.xenoblade.zohar.framework.commons.spring.aop.MethodInterceptorContext;
 import com.xenoblade.zohar.framework.commons.spring.aop.MethodInterceptorHolder;
 import com.xenoblade.zohar.framework.commons.log.api.AccessLoggerInfo;
 import com.xenoblade.zohar.framework.commons.log.api.annotation.AccessLogger;
@@ -46,9 +47,9 @@ public class DefaultAccessLoggerParser implements AccessLoggerParser {
     }
 
     @Override
-    public AccessLoggerInfo parse(MethodInterceptorHolder holder, AccessLoggerInfo loggerInfo) {
-        AccessLogger methodAnn = holder.findMethodAnnotation(AccessLogger.class);
-        AccessLogger classAnn = holder.findClassAnnotation(AccessLogger.class);
+    public AccessLoggerInfo parse(MethodInterceptorContext methodInterceptorContext, AccessLoggerInfo loggerInfo) {
+        AccessLogger methodAnn = AnnotationUtil.getAnnotation(methodInterceptorContext.getMethod(), AccessLogger.class);
+        AccessLogger classAnn = AnnotationUtil.getAnnotation(methodInterceptorContext.getTarget().getClass(), AccessLogger.class);
         String action = Stream.of(classAnn, methodAnn)
                 .filter(Objects::nonNull)
                 .map(AccessLogger::value)

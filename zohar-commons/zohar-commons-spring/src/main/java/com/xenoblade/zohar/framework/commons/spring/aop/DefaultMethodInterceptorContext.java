@@ -14,11 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.spring;
+package com.xenoblade.zohar.framework.commons.spring.aop;
 
 import cn.hutool.core.annotation.AnnotationUtil;
-import com.xenoblade.zohar.framework.commons.spring.aop.MethodInterceptorContext;
-import com.xenoblade.zohar.framework.commons.spring.aop.MethodInterceptorHolder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.aopalliance.intercept.MethodInvocation;
@@ -51,7 +49,8 @@ public class DefaultMethodInterceptorContext implements MethodInterceptorContext
 
     private Map<String, Object> args;
 
-    public DefaultMethodInterceptorContext init(MethodInvocation invocation) {
+
+    public static DefaultMethodInterceptorContext init(MethodInvocation invocation) {
 
         String id = DigestUtils.md5DigestAsHex(String.valueOf(invocation.getMethod().hashCode()).getBytes());
         String[] argNames = nameDiscoverer.getParameterNames(invocation.getMethod());
@@ -60,10 +59,7 @@ public class DefaultMethodInterceptorContext implements MethodInterceptorContext
         for (int i = 0, len = args.length; i < len; i++) {
             argMap.put((argNames == null || argNames[i] == null) ? "arg" + i : argNames[i], args[i]);
         }
-        return new DefaultMethodInterceptorContext(id,
-                invocation.getMethod(),
-                invocation.getThis(), argMap);
-
+        return new DefaultMethodInterceptorContext(id, invocation.getMethod(), invocation.getThis(), argMap);
     }
 
     public <T extends Annotation> T findMethodAnnotation(Class<T> annClass) {
@@ -84,15 +80,18 @@ public class DefaultMethodInterceptorContext implements MethodInterceptorContext
 
 
     @Override public <T> Optional<T> getParameter(String name) {
-        return Optional.empty();
+        if (args == null) {
+            return Optional.empty();
+        }
+        return Optional.of((T) args.get(name));
     }
 
-    @Override public <T extends Annotation> T getAnnotation(Class<T> type) {
-        return null;
+    @Override public <T extends Annotation> T getAnnotation(Class<T> annClass){
+        return findAnnotation(annClass);
     }
 
     @Override public Map<String, Object> getParams() {
-        return null;
+        return getArgs();
     }
 
     @Override public Object getInvokeResult() {

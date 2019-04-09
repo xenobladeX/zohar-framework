@@ -20,6 +20,7 @@ import cn.hutool.core.bean.BeanUtil;
 import com.xenoblade.zohar.framework.commons.api.enums.ZoharErrorCode;
 import com.xenoblade.zohar.framework.commons.api.exception.NotFoundException;
 import com.xenoblade.zohar.framework.commons.api.exception.ZoharException;
+import com.xenoblade.zohar.framework.commons.log.api.annotation.AccessLogger;
 import com.xenoblade.zohar.framework.sample.baal.api.BaalService.HelloBaalRequest;
 import com.xenoblade.zohar.framework.sample.baal.api.BaalService.HelloBaalResponse;
 import com.xenoblade.zohar.framework.sample.baal.api.BaalService.TestExcludeBody;
@@ -37,6 +38,7 @@ import java.util.List;
  */
 @Service
 @Slf4j
+@AccessLogger
 public class BaalServiceImpl implements IBaalService{
 
     @Override public HelloBaalResponse testRest(HelloBaalRequest request) {

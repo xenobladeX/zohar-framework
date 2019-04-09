@@ -42,6 +42,7 @@ public interface MethodInterceptorContext {
      */
     Method getMethod();
 
+
     /**
      * 根据参数名获取参数值,此参数为方法的参数,而非http参数 <br>
      * 如：当前被操作的方法为 query(QueryParam param); 调用getParameter("param"); 则返回QueryParam实例<br>

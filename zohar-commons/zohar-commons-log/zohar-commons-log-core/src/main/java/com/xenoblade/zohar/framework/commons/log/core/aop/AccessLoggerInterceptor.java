@@ -18,10 +18,11 @@ package com.xenoblade.zohar.framework.commons.log.core.aop;
 
 import cn.hutool.core.util.IdUtil;
 import com.xenoblade.zohar.framework.commons.log.core.config.AccessLoggerInterceptorConfiguration;
-import com.xenoblade.zohar.framework.commons.spring.aop.MethodInterceptorHolder;
 import com.xenoblade.zohar.framework.commons.log.api.AccessLoggerInfo;
 import com.xenoblade.zohar.framework.commons.log.api.event.AccessLoggerAfterEvent;
 import com.xenoblade.zohar.framework.commons.log.api.event.AccessLoggerBeforeEvent;
+import com.xenoblade.zohar.framework.commons.spring.aop.MethodInterceptorHolder;
+import com.xenoblade.zohar.framework.commons.spring.aop.MethodInterceptorContext;
 import lombok.AllArgsConstructor;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
@@ -42,8 +43,8 @@ public class AccessLoggerInterceptor implements MethodInterceptor {
 
     @Override
     public Object invoke(MethodInvocation invocation) throws Throwable {
-        MethodInterceptorHolder methodInterceptorHolder = MethodInterceptorHolder.create(invocation);
-        AccessLoggerInfo info = createLogger(methodInterceptorHolder);
+        MethodInterceptorHolder.current().add(invocation);
+        AccessLoggerInfo info = createLogger(MethodInterceptorHolder.current().peek());
         Object response;
         try {
             eventPublisher.publishEvent(new AccessLoggerBeforeEvent(info));
@@ -56,23 +57,27 @@ public class AccessLoggerInterceptor implements MethodInterceptor {
             info.setResponseTime(System.currentTimeMillis());
             //触发监听
             eventPublisher.publishEvent(new AccessLoggerAfterEvent(info));
+            MethodInterceptorHolder.current().poll();
+            if ( MethodInterceptorHolder.current().peek() == null) {
+                MethodInterceptorHolder.clear();
+            }
         }
         return response;
     }
 
 
-    protected AccessLoggerInfo createLogger(MethodInterceptorHolder holder) {
+    protected AccessLoggerInfo createLogger(MethodInterceptorContext methodInterceptorContext) {
         AccessLoggerInfo info = new AccessLoggerInfo();
         info.setId(IdUtil.objectId());
 
         info.setRequestTime(System.currentTimeMillis());
-        info.setParameters(holder.getArgs());
-        info.setTarget(holder.getTarget().getClass());
-        info.setMethod(holder.getMethod());
+        info.setParameters(methodInterceptorContext.getParams());
+        info.setTarget(methodInterceptorContext.getTarget().getClass());
+        info.setMethod(methodInterceptorContext.getMethod());
         // 链式调用
         configuration.getLoggerParsers().stream()
-                .filter(parser -> parser.support(ClassUtils.getUserClass(holder.getTarget()), holder.getMethod()))
-                .forEach(parser -> parser.parse(holder, info));
+                .filter(parser -> parser.support(ClassUtils.getUserClass(methodInterceptorContext.getTarget()), methodInterceptorContext.getMethod()))
+                .forEach(parser -> parser.parse(methodInterceptorContext, info));
 
         return info;
     }

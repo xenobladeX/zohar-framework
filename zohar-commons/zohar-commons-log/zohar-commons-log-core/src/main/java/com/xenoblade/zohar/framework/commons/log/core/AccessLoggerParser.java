@@ -16,6 +16,7 @@
  */
 package com.xenoblade.zohar.framework.commons.log.core;
 
+import com.xenoblade.zohar.framework.commons.spring.aop.MethodInterceptorContext;
 import com.xenoblade.zohar.framework.commons.spring.aop.MethodInterceptorHolder;
 import com.xenoblade.zohar.framework.commons.log.api.AccessLoggerInfo;
 
@@ -30,6 +31,6 @@ public interface AccessLoggerParser {
 
     boolean support(Class clazz, Method method);
 
-    AccessLoggerInfo parse(MethodInterceptorHolder holder, AccessLoggerInfo loggerInfo);
+    AccessLoggerInfo parse(MethodInterceptorContext methodInterceptorContext, AccessLoggerInfo loggerInfo);
 
 }
