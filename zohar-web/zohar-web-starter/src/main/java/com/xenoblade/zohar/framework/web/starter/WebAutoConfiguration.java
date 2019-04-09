@@ -16,6 +16,7 @@
  */
 package com.xenoblade.zohar.framework.web.starter;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xenoblade.zohar.framework.commons.utils.jackson.JacksonUtil;
 import com.xenoblade.zohar.framework.commons.web.version.ApiRequestMappingHandlerMapping;
@@ -84,9 +85,8 @@ public class WebAutoConfiguration implements WebMvcConfigurer, WebMvcRegistratio
      * @return
      */
     @Bean
-    @Primary
-    @ConditionalOnMissingBean
-    public ObjectMapper jacksonObjectMapper(Jackson2ObjectMapperBuilder builder) {
+    @ConditionalOnMissingBean(name = "objectMapper")
+    public ObjectMapper objectMapper(Jackson2ObjectMapperBuilder builder) {
         ObjectMapper objectMapper = builder.createXmlMapper(false).build();
         JacksonUtil.initWrapperObjectMapper(objectMapper);
 

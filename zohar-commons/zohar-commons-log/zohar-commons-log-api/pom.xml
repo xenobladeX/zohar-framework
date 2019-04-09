@@ -3,12 +3,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
         <groupId>com.xenoblade</groupId>
-        <artifactId>zohar-commons</artifactId>
+        <artifactId>zohar-commons-log</artifactId>
         <version>1.1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>zohar-commons-api</artifactId>
-    <name>Zohar Common API</name>
+    <artifactId>zohar-commons-log-api</artifactId>
+    <name>Zohar Common Log API</name>
     <properties>
         <github.path>${project.artifactId}</github.path>
     </properties>
@@ -16,12 +16,12 @@
     <dependencies>
 
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
+            <groupId>com.xenoblade</groupId>
+            <artifactId>zohar-commons-api</artifactId>
         </dependency>
 
-    </dependencies>
 
+    </dependencies>
 
 </project>
 

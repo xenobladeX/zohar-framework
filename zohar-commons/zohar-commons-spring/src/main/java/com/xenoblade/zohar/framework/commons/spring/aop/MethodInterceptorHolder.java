@@ -44,15 +44,15 @@ public class MethodInterceptorHolder {
     public static final ParameterNameDiscoverer nameDiscoverer = new LocalVariableTableParameterNameDiscoverer();
 
     public static MethodInterceptorHolder current() {
-        return ThreadLocalUtil.ttlGet(MethodInterceptorHolder.class.getName());
+        return ThreadLocalUtil.get(MethodInterceptorHolder.class.getName());
     }
 
     public static MethodInterceptorHolder clear() {
-        return ThreadLocalUtil.ttlGetAndRemove(MethodInterceptorHolder.class.getName());
+        return ThreadLocalUtil.getAndRemove(MethodInterceptorHolder.class.getName());
     }
 
     public static MethodInterceptorHolder setCurrent(MethodInterceptorHolder holder) {
-        return ThreadLocalUtil.ttlPut(MethodInterceptorHolder.class.getName(), holder);
+        return ThreadLocalUtil.put(MethodInterceptorHolder.class.getName(), holder);
     }
 
     public static MethodInterceptorHolder create(MethodInvocation invocation) {

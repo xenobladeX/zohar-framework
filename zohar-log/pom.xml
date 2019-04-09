@@ -8,35 +8,16 @@
         <relativePath>../zohar-framework-parent</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>zohar-commons</artifactId>
-    <name>Zohar Common</name>
+    <artifactId>zohar-log</artifactId>
+    <name>Zohar Log</name>
     <packaging>pom</packaging>
-
     <properties>
         <github.path>${project.artifactId}</github.path>
     </properties>
 
     <modules>
-        <module>zohar-commons-api</module>
-        <module>zohar-commons-utils</module>
-        <module>zohar-commons-spring</module>
-        <module>zohar-commons-log</module>
-        <module>zohar-commons-web</module>
+        <module>zohar-log-starter</module>
     </modules>
-
-    <dependencyManagement>
-        <dependencies>
-
-
-
-
-        </dependencies>
-    </dependencyManagement>
-
-    <dependencies>
-
-
-    </dependencies>
 
 
 </project>

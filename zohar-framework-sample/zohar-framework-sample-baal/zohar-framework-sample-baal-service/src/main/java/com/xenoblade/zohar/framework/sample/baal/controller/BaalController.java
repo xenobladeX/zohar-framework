@@ -20,6 +20,7 @@ import cn.hutool.core.bean.BeanUtil;
 import com.xenoblade.zohar.framework.commons.api.enums.ZoharErrorCode;
 import com.xenoblade.zohar.framework.commons.api.exception.NotFoundException;
 import com.xenoblade.zohar.framework.commons.web.msg.ResponseMessage;
+import com.xenoblade.zohar.framework.commons.log.api.annotation.AccessLogger;
 import com.xenoblade.zohar.framework.sample.baal.api.BaalService;
 import com.xenoblade.zohar.framework.sample.baal.service.IBaalService;
 import lombok.extern.slf4j.Slf4j;
@@ -45,6 +46,7 @@ import java.util.List;
 @RequestMapping("/baal")
 @Validated
 @Slf4j
+@AccessLogger
 public class BaalController implements BaalService{
 
     @Autowired
@@ -53,9 +55,8 @@ public class BaalController implements BaalService{
     @PostMapping("/hello")
     @Override
     public ResponseMessage<HelloBaalResponse> helloBaal(@RequestBody HelloBaalRequest request) {
-        log.info("Post to helloBaal with request: {}", request);
         HelloBaalResponse response = new HelloBaalResponse();
-        response.setResponse("Hello, this is baal v2");
+        response.setResponse("Hello, this is baal");
         return ResponseMessage.ok(response);
     }
 
