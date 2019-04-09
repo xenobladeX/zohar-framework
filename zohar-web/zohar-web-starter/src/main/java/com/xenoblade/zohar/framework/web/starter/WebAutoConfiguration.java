@@ -25,6 +25,7 @@ import com.xenoblade.zohar.framework.web.starter.version.VersionProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcRegistrations;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -66,7 +67,9 @@ public class WebAutoConfiguration implements WebMvcConfigurer, WebMvcRegistratio
         //                );
     }
 
-    @Override public RequestMappingHandlerMapping getRequestMappingHandlerMapping() {
+
+    @Override
+    public RequestMappingHandlerMapping getRequestMappingHandlerMapping() {
         if (versionProperties.isEnabled()) {
             return new ApiRequestMappingHandlerMapping(versionProperties.getMinimumVersion(), versionProperties.isParsePackageVersion());
         } else {
@@ -131,6 +134,7 @@ public class WebAutoConfiguration implements WebMvcConfigurer, WebMvcRegistratio
      * custom AccessLoggerConfigurer
      */
     @Bean
+    @ConditionalOnProperty(prefix = "zohar.log.access.context.http", name = "enable", havingValue = "true", matchIfMissing = true)
     public AccessLoggerConfigurer accessLoggerHttpConfigurer() {
         return new AccessLoggerHttpConfigurer();
     }
