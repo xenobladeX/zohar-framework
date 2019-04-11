@@ -14,34 +14,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.api.exception;
+package com.xenoblade.zohar.framework.sample.baal.api.dto;
 
-import com.xenoblade.zohar.framework.commons.api.enums.IZoharErrorCode;
-import com.xenoblade.zohar.framework.commons.api.enums.ZoharErrorCode;
+import lombok.Data;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 /**
- * NotFoundException
+ * TestVallidateRequest
  * @author xenoblade
  * @since 1.0.0
  */
-public class NotFoundException extends ZoharException{
+@Data
+public class TestVallidateRequest implements Serializable {
 
-    private static final long serialVersionUID = 4335447221487758513L;
+    private static final long serialVersionUID = -3731794253024922988L;
 
-    public NotFoundException() {
-        super(ZoharErrorCode.NOT_FOUND);
-    }
+    @NotBlank(message = "不能为空")
+    private String str;
 
-    public NotFoundException(String message) {
-        super(message, ZoharErrorCode.NOT_FOUND);
-    }
+    @Min(value = 1, message = "必须大于0")
+    private Integer num;
 
-    public NotFoundException(String message, IZoharErrorCode errorCode) {
-        super(message, errorCode);
-    }
-
-    public NotFoundException(IZoharErrorCode errorCode) {
-        super(errorCode);
-    }
 
 }

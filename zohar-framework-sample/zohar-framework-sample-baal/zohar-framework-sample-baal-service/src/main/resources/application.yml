@@ -2,6 +2,31 @@ spring:
   application:
     name: &appName zohar-framework-sample-baal
 
+  # redis 配置
+  redis:
+    # Redis数据库索引（默认为0）
+    database: 0
+    # Redis服务器地址
+    host: localhost
+    # Redis服务器连接端口
+    port: 6379
+    # Redis服务器连接密码（默认为空）
+    password:
+    # 连接超时时间（毫秒）
+    timeout:
+    # lettuce连接池配置
+    lettuce:
+      pool:
+        # 连接池最大连接数（使用负值表示没有限制）
+        max-active: 1000
+        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait:
+        # 连接池中的最大空闲连接
+        max-idle: 10
+        # 连接池中的最小空闲连接
+        min-idle: 2
+
+
 server:
   port: 1866
   # 下面是配置undertow作为服务器的参数
@@ -15,3 +40,9 @@ server:
     buffer-size: 1024
     # 是否分配的直接内存
     direct-buffers: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

@@ -34,6 +34,7 @@ public class ZoharAutoConfiguration {
 
     @Bean
     @Primary
+    // TODO: Jackson2ObjectMapperBuilderCustomizer
     public ObjectMapper defaultObjectMapper() {
 
         ObjectMapper defaultObjectMapper = new ObjectMapper();

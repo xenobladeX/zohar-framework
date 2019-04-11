@@ -14,34 +14,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.api.exception;
+package com.xenoblade.zohar.framework.sample.baal.api.dto;
 
-import com.xenoblade.zohar.framework.commons.api.enums.IZoharErrorCode;
-import com.xenoblade.zohar.framework.commons.api.enums.ZoharErrorCode;
+import lombok.Data;
+
+import java.io.Serializable;
 
 /**
- * NotFoundException
+ * RedisStoreObject
  * @author xenoblade
  * @since 1.0.0
  */
-public class NotFoundException extends ZoharException{
+@Data
+public class RedisStoreObject implements Serializable{
 
-    private static final long serialVersionUID = 4335447221487758513L;
+    private static final long serialVersionUID = 8331579971519255830L;
 
-    public NotFoundException() {
-        super(ZoharErrorCode.NOT_FOUND);
-    }
+    private String str;
 
-    public NotFoundException(String message) {
-        super(message, ZoharErrorCode.NOT_FOUND);
-    }
-
-    public NotFoundException(String message, IZoharErrorCode errorCode) {
-        super(message, errorCode);
-    }
-
-    public NotFoundException(IZoharErrorCode errorCode) {
-        super(errorCode);
-    }
+    private Integer num;
 
 }

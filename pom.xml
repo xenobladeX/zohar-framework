@@ -33,6 +33,7 @@
         <module>zohar-log</module>
         <module>zohar-web</module>
         <module>zohar-dubbo</module>
+        <module>zohar-redis</module>
 
 
         <module>zohar-framework-sample</module>

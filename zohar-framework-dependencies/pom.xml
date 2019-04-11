@@ -95,7 +95,17 @@
             </dependency>
             <dependency>
                 <groupId>com.xenoblade</groupId>
-                <artifactId>zohar-web</artifactId>
+                <artifactId>zohar-web-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.xenoblade</groupId>
+                <artifactId>zohar-log-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.xenoblade</groupId>
+                <artifactId>zohar-redis-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

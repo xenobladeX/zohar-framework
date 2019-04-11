@@ -97,7 +97,6 @@ public class JacksonUtil {
         objectMapper.setDateFormat(myDateFormat);
 
         objectMapper.registerModule(new JavaTimeModule());
-
         // 自定义序列化方式
         SimpleModule simpleModule = new SimpleModule();
         simpleModule.addSerializer(Long.class, ToStringSerializer.instance);

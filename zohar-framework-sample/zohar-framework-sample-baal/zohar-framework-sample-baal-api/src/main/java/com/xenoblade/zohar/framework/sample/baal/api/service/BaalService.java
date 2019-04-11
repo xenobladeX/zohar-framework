@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.sample.baal.api;
+package com.xenoblade.zohar.framework.sample.baal.api.service;
 
 import com.xenoblade.zohar.framework.commons.web.msg.ResponseMessage;
 import lombok.Data;
@@ -33,53 +33,6 @@ import java.util.Map;
  */
 public interface BaalService {
 
-    @Data
-    class HelloBaalRequest implements Serializable {
 
-        private static final long serialVersionUID = 2122526280765157441L;
-
-
-        @NotEmpty(message = "hello字段不能为空")
-        private String hello;
-
-    }
-
-    @Data
-    class HelloBaalResponse implements Serializable {
-
-        private static final long serialVersionUID = 2122526280765157441L;
-
-
-        private String response;
-
-    }
-
-    @Data
-    class TestVallidateRequest implements Serializable {
-
-        private static final long serialVersionUID = -3731794253024922988L;
-
-        @NotBlank(message = "不能为空")
-        private String str;
-
-        @Min(value = 1, message = "必须大于0")
-        private Integer num;
-
-
-    }
-
-
-    @Data
-    class TestExcludeBody implements Serializable {
-
-        private static final long serialVersionUID = 3196070488047099276L;
-
-        @NotBlank(message = "字段1不能为空")
-        private String field1;
-
-        @NotBlank(message = "字段2不能为空")
-        private String field2;
-
-    }
 
 }

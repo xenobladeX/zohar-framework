@@ -21,15 +21,19 @@ import com.xenoblade.zohar.framework.commons.api.enums.ZoharErrorCode;
 import com.xenoblade.zohar.framework.commons.api.exception.NotFoundException;
 import com.xenoblade.zohar.framework.commons.api.exception.ZoharException;
 import com.xenoblade.zohar.framework.commons.log.api.annotation.AccessLogger;
-import com.xenoblade.zohar.framework.sample.baal.api.BaalService.HelloBaalRequest;
-import com.xenoblade.zohar.framework.sample.baal.api.BaalService.HelloBaalResponse;
-import com.xenoblade.zohar.framework.sample.baal.api.BaalService.TestExcludeBody;
-import com.xenoblade.zohar.framework.sample.baal.api.BaalService.TestVallidateRequest;
+import com.xenoblade.zohar.framework.sample.baal.api.dto.HelloBaalRequest;
+import com.xenoblade.zohar.framework.sample.baal.api.dto.HelloBaalResponse;
+import com.xenoblade.zohar.framework.sample.baal.api.dto.RedisStoreObject;
+import com.xenoblade.zohar.framework.sample.baal.api.dto.TestExcludeBody;
+import com.xenoblade.zohar.framework.sample.baal.api.dto.TestVallidateRequest;
 import com.xenoblade.zohar.framework.sample.baal.service.IBaalService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * BaalServiceImpl
@@ -41,23 +45,32 @@ import java.util.List;
 @AccessLogger
 public class BaalServiceImpl implements IBaalService{
 
-    @Override public HelloBaalResponse testRest(HelloBaalRequest request) {
+    private static String TEST_REDIS_KEY = "test:redis:key";
+
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+    @Override
+    public HelloBaalResponse testRest(HelloBaalRequest request) {
         HelloBaalResponse response = new HelloBaalResponse();
         response.setResponse("Hello, this is baal");
         return response;
     }
 
-    @Override public void testException(Integer errorCode) throws ZoharException {
+    @Override
+    public void testException(Integer errorCode) throws ZoharException {
         ZoharErrorCode zoharErrorCode = ZoharErrorCode.CodeOf(errorCode);
         throw new NotFoundException(zoharErrorCode);
     }
 
-    @Override public void testVallidate(Integer id, TestVallidateRequest request) {
+    @Override
+    public void testVallidate(Integer id, TestVallidateRequest request) {
 
     }
 
-    @Override public TestExcludeBody testExclude(List<String> excludeFieldList,
-                                                 TestExcludeBody excludeBody) {
+    @Override
+    public TestExcludeBody testExclude(List<String> excludeFieldList,
+                                       TestExcludeBody excludeBody) {
         if (excludeFieldList != null && excludeFieldList.size() > 0) {
 
             String[] excludeFieldArray = new String[excludeFieldList.size()];
@@ -67,5 +80,13 @@ public class BaalServiceImpl implements IBaalService{
         } else {
             return excludeBody;
         }
+    }
+
+    @Override public RedisStoreObject testRedis(RedisStoreObject storeObject) {
+        redisTemplate.opsForValue().set(TEST_REDIS_KEY, storeObject);
+
+        return Optional
+                .ofNullable((RedisStoreObject) redisTemplate.opsForValue().get(TEST_REDIS_KEY))
+                .orElseThrow(NotFoundException::new);
     }
 }
