@@ -42,7 +42,6 @@ import java.util.Optional;
  */
 @Service
 @Slf4j
-@AccessLogger
 public class BaalServiceImpl implements IBaalService{
 
     private static String TEST_REDIS_KEY = "test:redis:key";
