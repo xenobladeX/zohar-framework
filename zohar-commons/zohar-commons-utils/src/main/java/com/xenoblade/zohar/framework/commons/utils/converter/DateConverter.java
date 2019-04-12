@@ -24,7 +24,9 @@ import org.mapstruct.factory.Mappers;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.Date;
 
 /**
@@ -35,6 +37,8 @@ import java.util.Date;
 @Mapper(collectionMappingStrategy = CollectionMappingStrategy.ADDER_PREFERRED,
         nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
 public interface DateConverter {
+
+    ZoneOffset defaultZoneOffSet = OffsetDateTime.now(ZoneId.systemDefault()).getOffset();
 
     DateConverter INSTANCE = Mappers.getMapper(DateConverter.class);
 
@@ -49,7 +53,7 @@ public interface DateConverter {
         if (date == null) {
             return null;
         }
-        return Timestamp.valueOf(date).getTime();
+        return date.toInstant(defaultZoneOffSet).toEpochMilli();
     }
 
     default Date LongToDate(Long date) {
