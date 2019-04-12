@@ -3,16 +3,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
         <groupId>com.xenoblade</groupId>
-        <artifactId>zohar-framework-sample-baal</artifactId>
+        <artifactId>zohar-framework-sample-agares</artifactId>
         <version>1.1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>zohar-framework-sample-baal-service</artifactId>
-    <name>Zohar Framework Sample Baal Service</name>
+    <artifactId>zohar-framework-sample-agares-service</artifactId>
+    <name>Zohar Framework Sample Agares Service</name>
     <properties>
         <github.path>${project.artifactId}</github.path>
     </properties>
-
 
     <dependencies>
 
@@ -23,27 +22,19 @@
 
         <dependency>
             <groupId>com.xenoblade</groupId>
-            <artifactId>zohar-log-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.xenoblade</groupId>
-            <artifactId>zohar-redis-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.xenoblade</groupId>
-            <artifactId>zohar-framework-sample-baal-api</artifactId>
+            <artifactId>zohar-framework-sample-agares-api</artifactId>
             <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.xenoblade</groupId>
-            <artifactId>zohar-web-starter</artifactId>
-            <version>1.1.0-SNAPSHOT</version>
+            <artifactId>zohar-starter-web</artifactId>
         </dependency>
 
+
+
     </dependencies>
+
 
 
     <build>
@@ -68,5 +59,7 @@
 
     </build>
 
-
 </project>
+
+
+

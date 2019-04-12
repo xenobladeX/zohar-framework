@@ -3,13 +3,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
         <groupId>com.xenoblade</groupId>
-        <artifactId>zohar-framework-parent</artifactId>
+        <artifactId>zohar-framework-samples</artifactId>
         <version>1.1.0-SNAPSHOT</version>
-        <relativePath>../zohar-framework-parent</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>zohar-framework-sample</artifactId>
-    <name>Zohar Framework Sample</name>
+    <artifactId>zohar-framework-sample-baal</artifactId>
+    <name>Zohar Framework Sample Baal</name>
     <packaging>pom</packaging>
 
     <properties>
@@ -18,10 +17,9 @@
 
 
     <modules>
-        <module>zohar-framework-sample-agares</module>
-        <module>zohar-framework-sample-baal</module>
+        <module>zohar-framework-sample-baal-api</module>
+        <module>zohar-framework-sample-baal-service</module>
     </modules>
-
 
 </project>
 

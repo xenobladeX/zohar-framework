@@ -49,6 +49,7 @@ import java.text.SimpleDateFormat;
 @Configuration
 public class RedisTemplateConfig {
 
+    // TODO: 增加 fastjson 等序列化方式
     @Configuration
     @ConditionalOnProperty(prefix = "zohar.redis.template", name = "serial", havingValue = "json", matchIfMissing = true)
     public static class JsonRedisTemplateConfig {

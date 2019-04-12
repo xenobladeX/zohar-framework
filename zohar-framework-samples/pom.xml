@@ -8,15 +8,18 @@
         <relativePath>../zohar-framework-parent</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>zohar-log</artifactId>
-    <name>Zohar Log</name>
+    <artifactId>zohar-framework-samples</artifactId>
+    <name>Zohar Framework Samples</name>
     <packaging>pom</packaging>
+
     <properties>
         <github.path>${project.artifactId}</github.path>
     </properties>
 
+
     <modules>
-        <module>zohar-log-starter</module>
+        <module>zohar-framework-sample-agares</module>
+        <module>zohar-framework-sample-baal</module>
     </modules>
 
 

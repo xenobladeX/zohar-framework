@@ -67,7 +67,7 @@
     <dependencyManagement>
         <dependencies>
 
-            <!--modules-->
+            <!--modules begin-->
             <dependency>
                 <groupId>com.xenoblade</groupId>
                 <artifactId>zohar-commons-api</artifactId>
@@ -93,21 +93,24 @@
                 <artifactId>zohar-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
+            <!--zohar starters-->
             <dependency>
                 <groupId>com.xenoblade</groupId>
-                <artifactId>zohar-web-starter</artifactId>
+                <artifactId>zohar-starter-web</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.xenoblade</groupId>
-                <artifactId>zohar-log-starter</artifactId>
+                <artifactId>zohar-starter-log</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.xenoblade</groupId>
-                <artifactId>zohar-redis-starter</artifactId>
+                <artifactId>zohar-starter-redis</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <!--modules end-->
 
             <!--third party -->
 
