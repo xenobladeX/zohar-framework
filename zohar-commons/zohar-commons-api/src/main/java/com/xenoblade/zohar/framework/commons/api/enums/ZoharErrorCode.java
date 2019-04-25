@@ -40,7 +40,8 @@ public enum ZoharErrorCode implements IZoharErrorCode{
     METHOD_ARGUMENT_NOT_VALID("方法参数不合法"),
     ENCRYPTION_ERROR("加密错误"),
     DECRYPTION_ERROR("解密错误"),
-    API_DIDCARD("API接口已启用"),
+    API_DISCARD("API接口已弃用"),
+
 
     OK(200, "成功"),
 

@@ -14,31 +14,66 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.web.version;
-
-import com.xenoblade.zohar.framework.commons.api.enums.IZoharErrorCode;
-import com.xenoblade.zohar.framework.commons.api.enums.ZoharErrorCode;
-import com.xenoblade.zohar.framework.commons.api.exception.ZoharException;
+package com.xenoblade.zohar.framework.commons.redis.support;
 
 /**
- * ApiVersionDiscardException
+ * Type
  * @author xenoblade
  * @since 1.0.0
  */
-public class ApiVersionDiscardException extends ZoharException {
+public enum Type {
+    /**
+     * null
+     */
+    NULL("null"),
 
-    private static final long serialVersionUID = 4335447221487758513L;
+    /**
+     * string
+     */
+    STRING("string"),
 
-    public ApiVersionDiscardException(String message) {
-        super(message, ZoharErrorCode.API_DISCARD);
+    /**
+     * object
+     */
+    OBJECT("Object 对象"),
+
+    /**
+     * List集合
+     */
+    LIST("List集合"),
+
+    /**
+     * Set集合
+     */
+    SET("Set集合"),
+
+    /**
+     * 数组
+     */
+    ARRAY("数组"),
+
+    /**
+     * 枚举
+     */
+    ENUM("枚举"),
+
+    /**
+     * 其他类型
+     */
+    OTHER("其他类型");
+
+    private String label;
+
+    Type(String label) {
+        this.label = label;
     }
 
-    public ApiVersionDiscardException(String message, IZoharErrorCode errorCode) {
-        super(message, errorCode);
+    public static Type parse(String name) {
+        for (Type type : Type.values()) {
+            if (type.name().equals(name)) {
+                return type;
+            }
+        }
+        return OTHER;
     }
-
-    public ApiVersionDiscardException(IZoharErrorCode errorCode) {
-        super(errorCode);
-    }
-
 }

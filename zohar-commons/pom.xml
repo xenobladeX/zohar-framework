@@ -22,6 +22,7 @@
         <module>zohar-commons-spring</module>
         <module>zohar-commons-log</module>
         <module>zohar-commons-web</module>
+        <module>zohar-commons-redis</module>
     </modules>
 
     <dependencyManagement>

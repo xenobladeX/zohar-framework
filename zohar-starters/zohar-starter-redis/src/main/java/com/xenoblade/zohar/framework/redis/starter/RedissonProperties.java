@@ -14,31 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.web.version;
+package com.xenoblade.zohar.framework.redis.starter;
 
-import com.xenoblade.zohar.framework.commons.api.enums.IZoharErrorCode;
-import com.xenoblade.zohar.framework.commons.api.enums.ZoharErrorCode;
-import com.xenoblade.zohar.framework.commons.api.exception.ZoharException;
+import com.xenoblade.zohar.framework.commons.redis.serial.ERedisSerialType;
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * ApiVersionDiscardException
+ * RedissonProperties
  * @author xenoblade
  * @since 1.0.0
  */
-public class ApiVersionDiscardException extends ZoharException {
+@ConfigurationProperties(prefix = "zohar.redis.redisson")
+@Data
+public class RedissonProperties {
 
-    private static final long serialVersionUID = 4335447221487758513L;
+    private String config;
 
-    public ApiVersionDiscardException(String message) {
-        super(message, ZoharErrorCode.API_DISCARD);
-    }
-
-    public ApiVersionDiscardException(String message, IZoharErrorCode errorCode) {
-        super(message, errorCode);
-    }
-
-    public ApiVersionDiscardException(IZoharErrorCode errorCode) {
-        super(errorCode);
-    }
 
 }

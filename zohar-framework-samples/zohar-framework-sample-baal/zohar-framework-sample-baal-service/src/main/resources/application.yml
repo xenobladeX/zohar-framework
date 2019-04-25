@@ -41,6 +41,7 @@ server:
     # 是否分配的直接内存
     direct-buffers: true
 
+# actuator config
 management:
   endpoints:
     web:

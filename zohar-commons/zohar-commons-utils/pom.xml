@@ -90,6 +90,13 @@
             <artifactId>jackson-datatype-protobuf</artifactId>
         </dependency>
 
+        <!--fastjson-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+
+
         <!--mapstruct-->
         <dependency>
             <groupId>org.mapstruct</groupId>
