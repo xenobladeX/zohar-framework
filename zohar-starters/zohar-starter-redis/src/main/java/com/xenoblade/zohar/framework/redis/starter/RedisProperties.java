@@ -31,12 +31,15 @@ public class RedisProperties {
 
     private RedisTemplateProperties template;
 
+    /**
+     * RedisTemplateProperties
+     * @author xenoblade
+     * @since 1.0.0
+     */
     @Data
-    public class RedisTemplateProperties {
+    public static class RedisTemplateProperties {
 
-        private ERedisSerialType serial;
+        private ERedisSerialType serial = ERedisSerialType.JDK;
 
     }
-
-
 }

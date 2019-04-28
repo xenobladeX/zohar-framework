@@ -31,6 +31,7 @@ import com.xenoblade.zohar.framework.commons.redis.serial.StringRedisSerializer;
 import com.xenoblade.zohar.framework.commons.utils.jackson.protobuf.CustomProtobufModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -48,6 +49,7 @@ import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer
  * @since 1.0.0
  */
 @Configuration
+@ConditionalOnClass(RedissonAutoConfiguration.class)
 @AutoConfigureAfter(RedissonAutoConfiguration.class)
 @EnableConfigurationProperties({RedisProperties.class})
 public class RedisTemplateConfig {
@@ -76,14 +78,14 @@ public class RedisTemplateConfig {
                 redisTemplate.setHashValueSerializer(new KryoRedisSerializer(Object.class));
                 break;
             }
-            case JACKSON_JSON:
+            case JACKSON:
             {
                 ObjectMapper jsonRedisObjectMapper = jsonRedisObjectMapper();
                 redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer(jsonRedisObjectMapper));
                 redisTemplate.setHashValueSerializer(new GenericJackson2JsonRedisSerializer(jsonRedisObjectMapper));
                 break;
             }
-            case FASTJSON_JSON:
+            case FASTJSON:
             {
                 redisTemplate.setValueSerializer(new FastJsonRedisSerializer<>(Object.class, "com.xenoblade.zohar."));
                 redisTemplate.setHashValueSerializer(new FastJsonRedisSerializer<>(Object.class, "com.xenoblade.zohar."));

@@ -23,9 +23,8 @@ package com.xenoblade.zohar.framework.commons.redis.serial;
  */
 public enum ERedisSerialType {
 
-    JACKSON_JSON,
-    FASTJSON_JSON,
-    FASTJSON_JSON2,
+    JACKSON,
+    FASTJSON,
     KRYO,
     JDK;
 
