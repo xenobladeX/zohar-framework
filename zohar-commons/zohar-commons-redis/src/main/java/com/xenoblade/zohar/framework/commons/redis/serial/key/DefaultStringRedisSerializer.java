@@ -14,26 +14,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.sample.baal.api.dto;
-
-import lombok.Data;
-
-import java.io.Serializable;
+package com.xenoblade.zohar.framework.commons.redis.serial.key;
 
 /**
- * RedisStoreObject
+ * DefaultStringRedisSerializer
  * @author xenoblade
  * @since 1.0.0
  */
-@Data
-public class RedisStoreObject implements Serializable{
+public class DefaultStringRedisSerializer extends AbstractStringRedisSerializer{
 
-    private static final long serialVersionUID = 8331579971519255830L;
+    public DefaultStringRedisSerializer() {
+        super();
+    }
 
-    private String str;
+    public DefaultStringRedisSerializer(String prefix) {
+        super(prefix);
+    }
 
-    private Integer num;
-
-    private ETestEnum testEnum;
-
+    @Override protected String objectToString(Object object) {
+        return object.toString();
+    }
 }

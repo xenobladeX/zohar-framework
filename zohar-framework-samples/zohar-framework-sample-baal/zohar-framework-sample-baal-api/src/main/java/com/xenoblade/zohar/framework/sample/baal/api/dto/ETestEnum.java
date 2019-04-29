@@ -16,24 +16,14 @@
  */
 package com.xenoblade.zohar.framework.sample.baal.api.dto;
 
-import lombok.Data;
-
-import java.io.Serializable;
-
 /**
- * RedisStoreObject
+ * ETestEnum
  * @author xenoblade
  * @since 1.0.0
  */
-@Data
-public class RedisStoreObject implements Serializable{
+public enum ETestEnum {
 
-    private static final long serialVersionUID = 8331579971519255830L;
-
-    private String str;
-
-    private Integer num;
-
-    private ETestEnum testEnum;
+    TEST1,
+    TEST2;
 
 }

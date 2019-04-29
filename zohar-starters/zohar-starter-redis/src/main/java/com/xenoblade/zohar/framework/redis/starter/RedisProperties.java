@@ -29,7 +29,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 public class RedisProperties {
 
-    private RedisTemplateProperties template;
+    private ObjectRedisTemplateProperties objctTemplate;
+
+    private StringRedisTemplateProperties stringTemplate;
 
     /**
      * RedisTemplateProperties
@@ -37,9 +39,24 @@ public class RedisProperties {
      * @since 1.0.0
      */
     @Data
-    public static class RedisTemplateProperties {
+    public static class ObjectRedisTemplateProperties {
 
-        private ERedisSerialType serial = ERedisSerialType.JDK;
+        private ERedisSerialType valueSerial = ERedisSerialType.JDK;
+
+        private ERedisSerialType keySerial = ERedisSerialType.JDK;
+
+        private String keyPrefix = "";
+
+    }
+
+    @Data
+    public static class StringRedisTemplateProperties {
+
+        private ERedisSerialType valueSerial = ERedisSerialType.STRING;
+
+        private ERedisSerialType keySerial = ERedisSerialType.STRING;
+
+        private String keyPrefix = "";
 
     }
 }

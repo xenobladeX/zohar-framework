@@ -14,34 +14,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.redis.serial;
+package com.xenoblade.zohar.framework.commons.redis.serial.key;
 
-import com.alibaba.fastjson.JSON;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.util.Assert;
 
 import java.nio.charset.Charset;
 
 /**
- * StringRedisSerializer
+ * AbstractStringRedisSerializer
  * @author xenoblade
  * @since 1.0.0
  */
-public class StringRedisSerializer implements RedisSerializer<Object> {
+public abstract class AbstractStringRedisSerializer implements RedisSerializer<Object> {
 
     private final Charset charset;
 
-    private final String target = "\"";
+    private String prefix = "";
 
-    private final String replacement = "";
-
-    public StringRedisSerializer() {
-        this(Charset.forName("UTF8"));
+    public AbstractStringRedisSerializer() {
+        this(Charset.forName("UTF8"), "");
     }
 
-    public StringRedisSerializer(Charset charset) {
+    public AbstractStringRedisSerializer(String prefix) {
+        this(Charset.forName("UTF8"), prefix);
+    }
+
+    public AbstractStringRedisSerializer(Charset charset, String prefix) {
         Assert.notNull(charset, "Charset must not be null!");
         this.charset = charset;
+        this.prefix = prefix;
     }
 
     @Override
@@ -51,11 +53,15 @@ public class StringRedisSerializer implements RedisSerializer<Object> {
 
     @Override
     public byte[] serialize(Object object) {
-        String string = JSON.toJSONString(object);
+        if (object == null) {
+            return null;
+        }
+        String string = objectToString(object);
         if (string == null) {
             return null;
         }
-        string = string.replace(target, replacement);
-        return string.getBytes(charset);
+        return (prefix + string).getBytes(charset);
     }
+
+    protected abstract String objectToString(Object object);
 }

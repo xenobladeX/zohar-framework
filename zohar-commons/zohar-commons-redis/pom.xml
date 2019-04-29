@@ -32,7 +32,6 @@
         <dependency>
             <groupId>com.esotericsoftware</groupId>
             <artifactId>kryo-shaded</artifactId>
-            <optional>true</optional>
         </dependency>
 
         <!--test-->

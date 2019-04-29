@@ -39,7 +39,13 @@ management:
 
 zohar:
   redis:
-    template:
-      serial: fastjson
+    objct-template:
+      key-prefix: zohar-redis-
+      key-serial: kryo
+      value-serial: fastjson
+    string-template:
+      key-prefix: zohar-redis-
+      key-serial: string
+      value-serial: string
     redisson:
       config: classpath:redisson.yml
