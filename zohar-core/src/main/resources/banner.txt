@@ -10,3 +10,4 @@
      |  |:/       \  \::/       \  \:\        \  \:\        \  \:\
      |__|/         \__\/         \__\/         \__\/         \__\/
 ${AnsiColor.BRIGHT_YELLOW}:: Spring Boot ::                                     ${AnsiColor.BLACK}(v2.1.1.RELEASE)
+${AnsiColor.BRIGHT_YELLOW}:: Zohar Framework ::                                 ${AnsiColor.BLACK}(v1.1.0-SNAPSHOT)

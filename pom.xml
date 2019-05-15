@@ -30,12 +30,9 @@
         <module>zohar-framework-parent</module>
         <module>zohar-commons</module>
         <module>zohar-core</module>
-        <!--<module>zohar-log</module>-->
-        <!--<module>zohar-web</module>-->
         <module>zohar-dubbo</module>
-        <!--<module>zohar-redis</module>-->
         <module>zohar-starters</module>
-
+        <module>zohar-cache</module>
         <module>zohar-framework-samples</module>
     </modules>
 

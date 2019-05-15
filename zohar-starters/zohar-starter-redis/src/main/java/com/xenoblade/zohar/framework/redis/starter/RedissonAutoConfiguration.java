@@ -66,7 +66,7 @@ public class RedissonAutoConfiguration {
 
     @Bean(destroyMethod = "shutdown")
     @ConditionalOnMissingBean(RedissonClient.class)
-    public RedissonClient redisson() throws IOException {
+    public RedissonClient redissonClient() throws IOException {
         Config config = null;
         Method clusterMethod = ReflectionUtils.findMethod(RedisProperties.class, "getCluster");
         Method timeoutMethod = ReflectionUtils.findMethod(RedisProperties.class, "getTimeout");
@@ -145,8 +145,8 @@ public class RedissonAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(RedisConnectionFactory.class)
-    public RedissonConnectionFactory redissonConnectionFactory(RedissonClient redisson) {
-        return new RedissonConnectionFactory(redisson);
+    public RedissonConnectionFactory redissonConnectionFactory(RedissonClient redissonClient) {
+        return new RedissonConnectionFactory(redissonClient);
     }
 
 

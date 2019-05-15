@@ -17,7 +17,7 @@
 package com.xenoblade.zohar.framework.commons.spring.aop;
 
 import com.google.common.collect.Lists;
-import com.xenoblade.zohar.framework.commons.utils.ThreadLocalUtil;
+import com.xenoblade.zohar.framework.commons.utils.thread.ThreadLocalUtil;
 import org.aopalliance.intercept.MethodInvocation;
 
 import java.util.LinkedList;

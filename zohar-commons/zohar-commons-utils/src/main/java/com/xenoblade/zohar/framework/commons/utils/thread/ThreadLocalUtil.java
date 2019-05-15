@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.utils;
+package com.xenoblade.zohar.framework.commons.utils.thread;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
 import lombok.experimental.UtilityClass;

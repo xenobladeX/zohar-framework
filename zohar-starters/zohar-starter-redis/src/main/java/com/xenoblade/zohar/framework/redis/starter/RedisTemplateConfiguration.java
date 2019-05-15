@@ -58,15 +58,15 @@ import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer
 @ConditionalOnClass(RedissonAutoConfiguration.class)
 @AutoConfigureAfter(RedissonAutoConfiguration.class)
 @EnableConfigurationProperties({RedisProperties.class})
-public class RedisTemplateConfig {
+public class RedisTemplateConfiguration {
 
     @Autowired
     private RedisProperties redisProperties;
 
     @Bean
     @ConditionalOnMissingBean(name = "redisTemplate")
-    public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
-        RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<Object, Object>();
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<String, Object>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
 
         // 设置值（value）的序列化
@@ -145,6 +145,7 @@ public class RedisTemplateConfig {
         return redisTemplate;
     }
 
+    // TODO: stringRedisTemplate 不需要其他序列化方式
     @Bean
     @ConditionalOnMissingBean(StringRedisTemplate.class)
     public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory redisConnectionFactory) {

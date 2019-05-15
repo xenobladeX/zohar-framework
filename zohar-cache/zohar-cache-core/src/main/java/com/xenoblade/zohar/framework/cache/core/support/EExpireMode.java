@@ -14,20 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.redis.serial;
+package com.xenoblade.zohar.framework.cache.core.support;
 
 /**
- * ERedisSerialType
+ * EExpireMode
  * @author xenoblade
  * @since 1.0.0
  */
-public enum ERedisSerialType {
+public enum EExpireMode {
+    /**
+     * 每写入一次重新计算一次缓存的有效时间
+     */
+    WRITE,
 
-    STRING,
-    JACKSON,
-    FASTJSON,
-    KRYO,
-    JDK;
-    // TODO: Protostuff
+    /**
+     * 每访问一次重新计算一次缓存的有效时间
+     */
+    ACCESS;
+
 
 }

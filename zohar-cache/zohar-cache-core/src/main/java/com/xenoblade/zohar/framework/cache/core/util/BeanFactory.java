@@ -14,20 +14,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.redis.serial;
+package com.xenoblade.zohar.framework.cache.core.util;
+
+import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
+
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * ERedisSerialType
+ * BeanFactory
  * @author xenoblade
  * @since 1.0.0
  */
-public enum ERedisSerialType {
+@Slf4j
+@UtilityClass
+public class BeanFactory {
 
-    STRING,
-    JACKSON,
-    FASTJSON,
-    KRYO,
-    JDK;
-    // TODO: Protostuff
+    /**
+     * bean 容器
+     */
+    private static ConcurrentHashMap<Class, Object> beanContainer = new ConcurrentHashMap<>();
 
+    public static <T> T getBean(Class<T> aClass) {
+        return (T) beanContainer.computeIfAbsent(aClass, aClass1 -> {
+            try {
+                return aClass1.newInstance();
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+            }
+            return null;
+        });
+    }
 }

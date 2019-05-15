@@ -34,6 +34,15 @@
             <artifactId>kryo-shaded</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>io.protostuff</groupId>
+            <artifactId>protostuff-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.protostuff</groupId>
+            <artifactId>protostuff-runtime</artifactId>
+        </dependency>
+
         <!--test-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

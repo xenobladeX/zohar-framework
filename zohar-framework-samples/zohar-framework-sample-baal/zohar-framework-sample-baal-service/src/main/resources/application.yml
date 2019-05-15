@@ -15,7 +15,6 @@ spring:
     # 连接超时时间（毫秒）
     timeout:
 
-
 server:
   port: 1866
   # 下面是配置undertow作为服务器的参数
@@ -49,3 +48,4 @@ zohar:
       value-serial: string
     redisson:
       config: classpath:redisson.yml
+

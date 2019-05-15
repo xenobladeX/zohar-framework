@@ -14,20 +14,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.redis.serial;
+package com.xenoblade.zohar.framework.cache.core.listener;
+
+import lombok.Data;
+
+import java.io.Serializable;
 
 /**
- * ERedisSerialType
+ * RedisPubSubMessage
  * @author xenoblade
  * @since 1.0.0
  */
-public enum ERedisSerialType {
+@Data
+public class RedisPubSubMessage implements Serializable{
 
-    STRING,
-    JACKSON,
-    FASTJSON,
-    KRYO,
-    JDK;
-    // TODO: Protostuff
+    /**
+     * 缓存名称
+     */
+    private String cacheName;
+
+    /**
+     * 缓存key
+     */
+    private Object key;
+
+    /**
+     * 消息类型
+     */
+    private ERedisPubSubMessageType messageType;
+
+
 
 }

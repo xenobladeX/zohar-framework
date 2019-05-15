@@ -14,20 +14,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.redis.serial;
+package com.xenoblade.zohar.framework.cache.core.listener;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
- * ERedisSerialType
+ * ERedisPubSubMessageType
  * @author xenoblade
  * @since 1.0.0
  */
-public enum ERedisSerialType {
+@AllArgsConstructor
+@Getter
+public enum  ERedisPubSubMessageType {
 
-    STRING,
-    JACKSON,
-    FASTJSON,
-    KRYO,
-    JDK;
-    // TODO: Protostuff
+    /**
+     * 删除缓存
+     */
+    EVICT("删除缓存"),
+
+    /**
+     * 清空缓存
+     */
+    CLEAR("清空缓存");
+
+    private String label;
 
 }

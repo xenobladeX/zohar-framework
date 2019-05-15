@@ -14,20 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.redis.serial;
+package com.xenoblade.zohar.framework.cache.core.listener;
+
+import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.listener.ChannelTopic;
 
 /**
- * ERedisSerialType
+ * RedisPublisher
  * @author xenoblade
  * @since 1.0.0
  */
-public enum ERedisSerialType {
+@UtilityClass
+@Slf4j
+public class RedisPublisher {
 
-    STRING,
-    JACKSON,
-    FASTJSON,
-    KRYO,
-    JDK;
-    // TODO: Protostuff
+    public static void publisher(RedisTemplate<String, Object> redisTemplate, ChannelTopic channelTopic, Object message) {
+        redisTemplate.convertAndSend(channelTopic.toString(), message);
+        log.debug("redis消息发布者向频道【{}】发布了【{}】消息", channelTopic.toString(), message.toString());
+    }
 
 }
