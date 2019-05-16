@@ -17,16 +17,29 @@
 package com.xenoblade.zohar.framework.commons.redis.serial.key;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.parser.ParserConfig;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * FastJsonStringRedisSerilizer
  * @author xenoblade
  * @since 1.0.0
  */
+@Slf4j
 public class FastJsonStringRedisSerilizer extends AbstractStringRedisSerializer{
 
-    public FastJsonStringRedisSerilizer() {
+    public FastJsonStringRedisSerilizer(String... packages) {
         super();
+        try {
+            ParserConfig.getGlobalInstance().addAccept("com.xenoblade.zohar.");
+            if (packages != null && packages.length > 0) {
+                for (String packageName : packages) {
+                    ParserConfig.getGlobalInstance().addAccept(packageName);
+                }
+            }
+        } catch (Throwable e) {
+            log.warn("fastjson 版本太低，反序列化有被攻击的风险", e);
+        }
     }
 
 

@@ -14,26 +14,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.redis.serial.key;
+package com.xenoblade.zohar.framework.cache.aspectj.expression;
 
-import cn.hutool.core.codec.Base64;
-import lombok.Setter;
-import org.springframework.core.convert.converter.Converter;
-import org.springframework.core.serializer.support.SerializingConverter;
+import org.springframework.expression.EvaluationException;
 
 /**
- * JdkSerializationStringRedisSerializer
+ * VariableNotAvailableException
  * @author xenoblade
  * @since 1.0.0
  */
-public class JdkSerializationStringRedisSerializer extends AbstractStringRedisSerializer{
+@SuppressWarnings("serial")
+class VariableNotAvailableException extends EvaluationException {
 
-    @Setter
-    private Converter<Object, byte[]> serializer = new SerializingConverter();
+    private final String name;
+
+    public VariableNotAvailableException(String name) {
+        super("Variable '" + name + "' is not available");
+        this.name = name;
+    }
 
 
-    @Override protected String objectToString(Object object) {
-        byte[] objectBytes = serializer.convert(object);
-        return Base64.encode(objectBytes);
+    public String getName() {
+        return this.name;
     }
 }

@@ -14,26 +14,52 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.redis.serial.key;
+package com.xenoblade.zohar.framework.cache.aspectj.model;
 
-import cn.hutool.core.codec.Base64;
-import lombok.Setter;
-import org.springframework.core.convert.converter.Converter;
-import org.springframework.core.serializer.support.SerializingConverter;
+import lombok.Data;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 /**
- * JdkSerializationStringRedisSerializer
+ * User
  * @author xenoblade
  * @since 1.0.0
  */
-public class JdkSerializationStringRedisSerializer extends AbstractStringRedisSerializer{
+@Data
+public class User implements Serializable{
 
-    @Setter
-    private Converter<Object, byte[]> serializer = new SerializingConverter();
+    private static final long serialVersionUID = 8266854428580691539L;
+
+    private long userId;
+
+    private String name;
+
+    private Address address;
+
+    private String[] lastName;
+
+    private List<String> lastNameList;
+
+    private Set<String> lastNameSet;
+
+    private int age;
+
+    private double height;
+
+    private BigDecimal income;
+
+    private Date birthday;
 
 
-    @Override protected String objectToString(Object object) {
-        byte[] objectBytes = serializer.convert(object);
-        return Base64.encode(objectBytes);
+    @Data
+    public static class Address implements Serializable{
+        private static final long serialVersionUID = 245208648493493146L;
+
+        private String addredd;
     }
+
 }

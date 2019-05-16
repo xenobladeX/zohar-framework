@@ -17,16 +17,8 @@
 package com.xenoblade.zohar.framework.redis.starter;
 
 import cn.hutool.core.util.StrUtil;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.xenoblade.zohar.framework.commons.redis.serial.SerializationUtils;
-import com.xenoblade.zohar.framework.commons.redis.serial.key.AbstractStringRedisSerializer;
 import com.xenoblade.zohar.framework.commons.redis.serial.key.DefaultStringRedisSerializer;
 import com.xenoblade.zohar.framework.commons.redis.serial.key.FastJsonStringRedisSerilizer;
 import com.xenoblade.zohar.framework.commons.redis.serial.key.JacksonStringRedisSerilaizer;
@@ -34,7 +26,6 @@ import com.xenoblade.zohar.framework.commons.redis.serial.key.JdkSerializationSt
 import com.xenoblade.zohar.framework.commons.redis.serial.key.KryoStringRedisSerilaizer;
 import com.xenoblade.zohar.framework.commons.redis.serial.value.FastJsonRedisSerializer;
 import com.xenoblade.zohar.framework.commons.redis.serial.value.KryoRedisSerializer;
-import com.xenoblade.zohar.framework.commons.utils.jackson.protobuf.CustomProtobufModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;

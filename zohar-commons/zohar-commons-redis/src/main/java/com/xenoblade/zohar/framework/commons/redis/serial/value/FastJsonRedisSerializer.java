@@ -16,6 +16,7 @@
  */
 package com.xenoblade.zohar.framework.commons.redis.serial.value;
 
+import com.xenoblade.zohar.framework.commons.redis.serial.FastJsonSerializerWrapper;
 import com.xenoblade.zohar.framework.commons.redis.serial.SerializationUtils;
 import com.xenoblade.zohar.framework.commons.redis.support.Type;
 import lombok.extern.slf4j.Slf4j;

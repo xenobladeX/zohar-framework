@@ -43,16 +43,16 @@ public class RedisProperties {
 
         private ERedisSerialType valueSerial = ERedisSerialType.JDK;
 
-        private ERedisSerialType keySerial = ERedisSerialType.STRING;
+        private ERedisSerialType keySerial = ERedisSerialType.JACKSON;
 
     }
 
     @Data
     public static class StringRedisTemplateProperties {
 
-        private ERedisSerialType valueSerial = ERedisSerialType.STRING;
+        private ERedisSerialType valueSerial = ERedisSerialType.JACKSON;
 
-        private ERedisSerialType keySerial = ERedisSerialType.STRING;
+        private ERedisSerialType keySerial = ERedisSerialType.JACKSON;
 
     }
 }

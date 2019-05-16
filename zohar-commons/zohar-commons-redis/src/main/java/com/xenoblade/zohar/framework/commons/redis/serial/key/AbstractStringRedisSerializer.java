@@ -17,7 +17,6 @@
 package com.xenoblade.zohar.framework.commons.redis.serial.key;
 
 import org.springframework.data.redis.serializer.RedisSerializer;
-import org.springframework.util.Assert;
 
 import java.nio.charset.Charset;
 
@@ -28,20 +27,14 @@ import java.nio.charset.Charset;
  */
 public abstract class AbstractStringRedisSerializer implements RedisSerializer<Object> {
 
-    private final Charset charset;
+    private static final Charset CAHRSET_UTF8 = Charset.forName("UTF8");
 
     public AbstractStringRedisSerializer() {
-        this(Charset.forName("UTF8"));
-    }
-
-    public AbstractStringRedisSerializer(Charset charset) {
-        Assert.notNull(charset, "Charset must not be null!");
-        this.charset = charset;
     }
 
     @Override
     public String deserialize(byte[] bytes) {
-        return (bytes == null ? null : new String(bytes, charset));
+        return (bytes == null ? null : new String(bytes, CAHRSET_UTF8));
     }
 
     @Override
@@ -53,8 +46,9 @@ public abstract class AbstractStringRedisSerializer implements RedisSerializer<O
         if (string == null) {
             return null;
         }
-        return string.getBytes(charset);
+        return string.getBytes(CAHRSET_UTF8);
     }
 
     protected abstract String objectToString(Object object);
+
 }

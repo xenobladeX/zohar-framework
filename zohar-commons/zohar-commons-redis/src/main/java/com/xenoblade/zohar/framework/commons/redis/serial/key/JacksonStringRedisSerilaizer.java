@@ -32,10 +32,6 @@ public class JacksonStringRedisSerilaizer extends AbstractStringRedisSerializer{
     @Setter
     private ObjectMapper objectMapper = SerializationUtils.jsonRedisObjectMapper();
 
-    public JacksonStringRedisSerilaizer() {
-        super();
-    }
-
     @Override protected String objectToString(Object object) {
         try {
             return objectMapper.writeValueAsString(object);

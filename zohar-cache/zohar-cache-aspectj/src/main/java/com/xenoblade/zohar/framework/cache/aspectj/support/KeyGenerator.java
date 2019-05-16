@@ -14,26 +14,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.redis.serial.key;
+package com.xenoblade.zohar.framework.cache.aspectj.support;
 
-import cn.hutool.core.codec.Base64;
-import lombok.Setter;
-import org.springframework.core.convert.converter.Converter;
-import org.springframework.core.serializer.support.SerializingConverter;
+import java.lang.reflect.Method;
 
 /**
- * JdkSerializationStringRedisSerializer
- * @author xenoblade
- * @since 1.0.0
+ * Cache key generator. Used for creating a key based on the given method
+ * (used as context) and its parameters.
+ *
+ * @author Costin Leau
+ * @author Chris Beams
+ * @author Phillip Webb
+ * @since 3.1
  */
-public class JdkSerializationStringRedisSerializer extends AbstractStringRedisSerializer{
+public interface KeyGenerator {
 
-    @Setter
-    private Converter<Object, byte[]> serializer = new SerializingConverter();
+    /**
+     * Generate a key for the given method and its parameters.
+     * @param target the target instance
+     * @param method the method being called
+     * @param params the method parameters (with any var-args expanded)
+     * @return a generated key
+     */
+    Object generate(Object target, Method method, Object... params);
 
-
-    @Override protected String objectToString(Object object) {
-        byte[] objectBytes = serializer.convert(object);
-        return Base64.encode(objectBytes);
-    }
 }

@@ -15,9 +15,32 @@
 
     <dependencies>
 
+        <dependency>
+            <groupId>com.xenoblade</groupId>
+            <artifactId>zohar-cache-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <optional>true</optional>
+        </dependency>
 
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <optional>true</optional>
+            <scope>test</scope>
+        </dependency>
 
+        <dependency>
+            <groupId>com.xenoblade</groupId>
+            <artifactId>zohar-starter-redis</artifactId>
+            <optional>true</optional>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 

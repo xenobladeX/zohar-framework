@@ -14,26 +14,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.redis.serial.key;
-
-import cn.hutool.core.codec.Base64;
-import lombok.Setter;
-import org.springframework.core.convert.converter.Converter;
-import org.springframework.core.serializer.support.SerializingConverter;
+package com.xenoblade.zohar.framework.cache.core.support;
 
 /**
- * JdkSerializationStringRedisSerializer
+ * ECacheMode
  * @author xenoblade
  * @since 1.0.0
  */
-public class JdkSerializationStringRedisSerializer extends AbstractStringRedisSerializer{
+public enum ECacheMode {
 
-    @Setter
-    private Converter<Object, byte[]> serializer = new SerializingConverter();
+    /**
+     * 只开启一级缓存
+     */
+    ONLY_FIRST("只是用一级缓存"),
 
+    /**
+     * 只开启二级缓存
+     */
+    ONLY_SECOND("只是使用二级缓存"),
 
-    @Override protected String objectToString(Object object) {
-        byte[] objectBytes = serializer.convert(object);
-        return Base64.encode(objectBytes);
+    /**
+     * 同时开启一级缓存和二级缓存
+     */
+    ALL("同时开启一级缓存和二级缓存");
+
+    private String label;
+
+    ECacheMode(String label) {
+        this.label = label;
     }
 }
