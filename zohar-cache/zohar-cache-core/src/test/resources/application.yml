@@ -23,10 +23,8 @@ logging:
 #zohar:
 #  redis:
 #    objct-template:
-#      key-prefix: zohar-redis-
 #      key-serial: kryo
 #      value-serial: fastjson
 #    string-template:
-#      key-prefix: zohar-redis-
 #      key-serial: string
 #      value-serial: string

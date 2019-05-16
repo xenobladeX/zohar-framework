@@ -115,7 +115,7 @@ public abstract class AbstractCacheManager
         ConcurrentMap<String, Cache> cacheMap = this.cacheContainer.get(name);
         if (!CollectionUtils.isEmpty(cacheMap)) {
             if (cacheMap.size() > 1) {
-                log.warn("缓存名称为 {} 的缓存,存在两个不同的过期时间配置，请一定注意保证缓存的key唯一性，否则会出现缓存过期时间错乱的情况", name);
+                log.warn("缓存名称为 {} 的缓存,存在{}个不同的过期时间配置，请一定注意保证缓存的key唯一性，否则会出现缓存过期时间错乱的情况", name, cacheMap.size());
             }
             Cache cache = cacheMap.get(multiLayerCacheConfig.getInternalKey());
             if (cache != null) {
@@ -149,7 +149,7 @@ public abstract class AbstractCacheManager
                 // 将新的Cache对象放到容器
                 cacheMap.put(multiLayerCacheConfig.getInternalKey(), cache);
                 if (cacheMap.size() > 1) {
-                    log.warn("缓存名称为 {} 的缓存,存在两个不同的过期时间配置，请一定注意保证缓存的key唯一性，否则会出现缓存过期时间错乱的情况", name);
+                    log.warn("缓存名称为 {} 的缓存,存在{}个不同的过期时间配置，请一定注意保证缓存的key唯一性，否则会出现缓存过期时间错乱的情况", name, cacheMap.size());
                 }
             }
 

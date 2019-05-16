@@ -39,10 +39,6 @@ public class KryoStringRedisSerilaizer extends AbstractStringRedisSerializer{
         super();
     }
 
-    public KryoStringRedisSerilaizer(String prefix) {
-        super(prefix);
-    }
-
     @Override protected String objectToString(Object object) {
         Kryo kryo = kryos.get();
         // 设置成false 序列化速度更快，但是遇到循环应用序列化器会报栈内存溢出

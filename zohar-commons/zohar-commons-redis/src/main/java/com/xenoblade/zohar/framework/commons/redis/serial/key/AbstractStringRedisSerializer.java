@@ -30,20 +30,13 @@ public abstract class AbstractStringRedisSerializer implements RedisSerializer<O
 
     private final Charset charset;
 
-    private String prefix = "";
-
     public AbstractStringRedisSerializer() {
-        this(Charset.forName("UTF8"), "");
+        this(Charset.forName("UTF8"));
     }
 
-    public AbstractStringRedisSerializer(String prefix) {
-        this(Charset.forName("UTF8"), prefix);
-    }
-
-    public AbstractStringRedisSerializer(Charset charset, String prefix) {
+    public AbstractStringRedisSerializer(Charset charset) {
         Assert.notNull(charset, "Charset must not be null!");
         this.charset = charset;
-        this.prefix = prefix;
     }
 
     @Override
@@ -60,7 +53,7 @@ public abstract class AbstractStringRedisSerializer implements RedisSerializer<O
         if (string == null) {
             return null;
         }
-        return (prefix + string).getBytes(charset);
+        return string.getBytes(charset);
     }
 
     protected abstract String objectToString(Object object);

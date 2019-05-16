@@ -29,7 +29,7 @@ import java.util.Optional;
  * @author xenoblade
  * @since 1.0.0
  */
-// TODO: 为了使用 message，将ZoharErrorCode移动到 zohar-commons-spring
+// TODO 为了使用 message，将ZoharErrorCode移动到 zohar-commons-spring
 public enum ZoharErrorCode implements IZoharErrorCode{
 
     INVALID("非法错误码"),

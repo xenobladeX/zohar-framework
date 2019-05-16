@@ -36,10 +36,6 @@ public class JacksonStringRedisSerilaizer extends AbstractStringRedisSerializer{
         super();
     }
 
-    public JacksonStringRedisSerilaizer(String prefix) {
-        super(prefix);
-    }
-
     @Override protected String objectToString(Object object) {
         try {
             return objectMapper.writeValueAsString(object);

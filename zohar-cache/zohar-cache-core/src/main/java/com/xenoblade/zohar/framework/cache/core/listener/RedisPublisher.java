@@ -32,7 +32,7 @@ public class RedisPublisher {
 
     public static void publisher(RedisTemplate<String, Object> redisTemplate, ChannelTopic channelTopic, Object message) {
         redisTemplate.convertAndSend(channelTopic.toString(), message);
-        log.debug("redis消息发布者向频道【{}】发布了【{}】消息", channelTopic.toString(), message.toString());
+        log.debug("redis publisher： 向频道【{}】发布了【{}】消息", channelTopic.toString(), message.toString());
     }
 
 }

@@ -27,10 +27,6 @@ public class DefaultStringRedisSerializer extends AbstractStringRedisSerializer{
         super();
     }
 
-    public DefaultStringRedisSerializer(String prefix) {
-        super(prefix);
-    }
-
     @Override protected String objectToString(Object object) {
         return object.toString();
     }

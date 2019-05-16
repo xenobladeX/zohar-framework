@@ -46,7 +46,7 @@ public class RedisMessageListener extends MessageListenerAdapter{
         // 解析订阅发布的信息，获取缓存的名称和缓存的key
         RedisPubSubMessage redisPubSubMessage = (RedisPubSubMessage) cacheManager.getRedisTemplate()
                 .getValueSerializer().deserialize(message.getBody());
-        log.debug("redis消息订阅者接收到频道【{}】发布的消息。消息内容：{}", new String(message.getChannel()), JacksonUtil.toJson(redisPubSubMessage));
+        log.debug("redis subscriber： 接收到频道【{}】发布的消息。消息内容：{}", new String(message.getChannel()), JacksonUtil.toJson(redisPubSubMessage));
 
         // 根据缓存名称获取多级缓存，可能有多个
         Collection<Cache> caches = cacheManager.getCache(redisPubSubMessage.getCacheName());
@@ -57,7 +57,7 @@ public class RedisMessageListener extends MessageListenerAdapter{
                     case EVICT:
                         // 获取一级缓存，并删除一级缓存数据
                         ((MultiLayerCache) cache).getFirstCache().evict(redisPubSubMessage.getKey());
-                        log.info("删除一级缓存{}数据,key={}", redisPubSubMessage.getCacheName(), redisPubSubMessage.getKey());
+                        log.info("Evict first cache: 一级缓存{}数据,key={}", redisPubSubMessage.getCacheName(), redisPubSubMessage.getKey());
                         break;
 
                     case CLEAR:

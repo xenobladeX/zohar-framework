@@ -104,36 +104,35 @@ public class RedisTemplateConfiguration {
         }
 
         // 设置键（key）的序列化采用支持 Object 的StringRedisSerializer。
-        String keyPrefix = redisProperties.getObjctTemplate().getKeyPrefix();
         switch (redisProperties.getObjctTemplate().getKeySerial()) {
             case STRING:
             {
-                redisTemplate.setKeySerializer(new DefaultStringRedisSerializer(keyPrefix));
-                redisTemplate.setHashKeySerializer(new DefaultStringRedisSerializer(keyPrefix));
+                redisTemplate.setKeySerializer(new DefaultStringRedisSerializer());
+                redisTemplate.setHashKeySerializer(new DefaultStringRedisSerializer());
                 break;
             }
             case FASTJSON:
             {
-                redisTemplate.setKeySerializer(new FastJsonStringRedisSerilizer(keyPrefix));
-                redisTemplate.setHashKeySerializer(new FastJsonStringRedisSerilizer(keyPrefix));
+                redisTemplate.setKeySerializer(new FastJsonStringRedisSerilizer());
+                redisTemplate.setHashKeySerializer(new FastJsonStringRedisSerilizer());
                 break;
             }
             case JACKSON:
             {
-                redisTemplate.setKeySerializer(new JacksonStringRedisSerilaizer(keyPrefix));
-                redisTemplate.setHashKeySerializer(new JacksonStringRedisSerilaizer(keyPrefix));
+                redisTemplate.setKeySerializer(new JacksonStringRedisSerilaizer());
+                redisTemplate.setHashKeySerializer(new JacksonStringRedisSerilaizer());
                 break;
             }
             case KRYO:
             {
-                redisTemplate.setKeySerializer(new KryoStringRedisSerilaizer(keyPrefix));
-                redisTemplate.setHashKeySerializer(new KryoStringRedisSerilaizer(keyPrefix));
+                redisTemplate.setKeySerializer(new KryoStringRedisSerilaizer());
+                redisTemplate.setHashKeySerializer(new KryoStringRedisSerilaizer());
                 break;
             }
             case JDK:
             {
-                redisTemplate.setKeySerializer(new JdkSerializationStringRedisSerializer(keyPrefix));
-                redisTemplate.setHashKeySerializer(new JdkSerializationStringRedisSerializer(keyPrefix));
+                redisTemplate.setKeySerializer(new JdkSerializationStringRedisSerializer());
+                redisTemplate.setHashKeySerializer(new JdkSerializationStringRedisSerializer());
                 break;
             }
             default:
@@ -145,7 +144,6 @@ public class RedisTemplateConfiguration {
         return redisTemplate;
     }
 
-    // TODO: stringRedisTemplate 不需要其他序列化方式
     @Bean
     @ConditionalOnMissingBean(StringRedisTemplate.class)
     public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
@@ -186,31 +184,30 @@ public class RedisTemplateConfiguration {
         }
 
         // 设置键（key）的序列化采用支持 Object 的StringRedisSerializer。
-        String keyPrefix = redisProperties.getStringTemplate().getKeyPrefix();
         switch (redisProperties.getStringTemplate().getKeySerial()) {
             case STRING: {
-                stringRedisTemplate.setKeySerializer(new DefaultStringRedisSerializer(keyPrefix));
-                stringRedisTemplate.setHashKeySerializer(new DefaultStringRedisSerializer(keyPrefix));
+                stringRedisTemplate.setKeySerializer(new DefaultStringRedisSerializer());
+                stringRedisTemplate.setHashKeySerializer(new DefaultStringRedisSerializer());
                 break;
             }
             case FASTJSON: {
-                stringRedisTemplate.setKeySerializer(new FastJsonStringRedisSerilizer(keyPrefix));
-                stringRedisTemplate.setHashKeySerializer(new FastJsonStringRedisSerilizer(keyPrefix));
+                stringRedisTemplate.setKeySerializer(new FastJsonStringRedisSerilizer());
+                stringRedisTemplate.setHashKeySerializer(new FastJsonStringRedisSerilizer());
                 break;
             }
             case JACKSON: {
-                stringRedisTemplate.setKeySerializer(new JacksonStringRedisSerilaizer(keyPrefix));
-                stringRedisTemplate.setHashKeySerializer(new JacksonStringRedisSerilaizer(keyPrefix));
+                stringRedisTemplate.setKeySerializer(new JacksonStringRedisSerilaizer());
+                stringRedisTemplate.setHashKeySerializer(new JacksonStringRedisSerilaizer());
                 break;
             }
             case KRYO: {
-                stringRedisTemplate.setKeySerializer(new KryoStringRedisSerilaizer(keyPrefix));
-                stringRedisTemplate.setHashKeySerializer(new KryoStringRedisSerilaizer(keyPrefix));
+                stringRedisTemplate.setKeySerializer(new KryoStringRedisSerilaizer());
+                stringRedisTemplate.setHashKeySerializer(new KryoStringRedisSerilaizer());
                 break;
             }
             case JDK: {
-                stringRedisTemplate.setKeySerializer(new JdkSerializationStringRedisSerializer(keyPrefix));
-                stringRedisTemplate.setHashKeySerializer(new JdkSerializationStringRedisSerializer(keyPrefix));
+                stringRedisTemplate.setKeySerializer(new JdkSerializationStringRedisSerializer());
+                stringRedisTemplate.setHashKeySerializer(new JdkSerializationStringRedisSerializer());
                 break;
             }
             default: {

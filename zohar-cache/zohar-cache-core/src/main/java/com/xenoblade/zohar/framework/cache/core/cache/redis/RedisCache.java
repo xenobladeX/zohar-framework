@@ -19,6 +19,7 @@ package com.xenoblade.zohar.framework.cache.core.cache.redis;
 import com.xenoblade.zohar.framework.cache.core.cache.AbstractValueAdaptingCache;
 import com.xenoblade.zohar.framework.cache.core.config.SecondaryCacheConfig;
 import com.xenoblade.zohar.framework.cache.core.util.AwaitThreadContainer;
+import com.xenoblade.zohar.framework.cache.core.util.RedisLockUtils;
 import com.xenoblade.zohar.framework.cache.core.util.ThreadTaskUtils;
 import com.xenoblade.zohar.framework.commons.utils.jackson.JacksonUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -228,10 +229,10 @@ public class RedisCache extends AbstractValueAdaptingCache {
     }
 
     /**
-     * 同一个线程循环5次查询缓存，每次等待20毫秒，如果还是没有数据直接去执行被缓存的方法
+     * 同一个线程循环20次查询缓存，每次等待20毫秒，如果还是没有数据直接去执行被缓存的方法
      */
     private <T> T executeCacheMethod(RedisCacheKey redisCacheKey, Callable<T> valueLoader) {
-        RLock lock = redissonClient.getLock(redisCacheKey.getKey() + "_sync_lock");
+        RLock lock = RedisLockUtils.getRLock(redissonClient, redisCacheKey.getKey(), "_sync_lock");
         // 同一个线程循环20次查询缓存，每次等待20毫秒，如果还是没有数据直接去执行被缓存的方法
         for (int i = 0; i < RETRY_COUNT; i++) {
             try {
@@ -341,7 +342,7 @@ public class RedisCache extends AbstractValueAdaptingCache {
      */
     private void softRefresh(RedisCacheKey redisCacheKey) {
         // 加一个分布式锁，只放一个请求去刷新缓存
-        RLock lock = redissonClient.getLock(redisCacheKey.getKey() + "_lock");
+        RLock lock = RedisLockUtils.getRLock(redissonClient, redisCacheKey.getKey());
         try {
             if (lock.tryLock()) {
                 redisTemplate.expire(redisCacheKey.getKey(), this.expiration, TimeUnit.MILLISECONDS);
@@ -363,7 +364,7 @@ public class RedisCache extends AbstractValueAdaptingCache {
         // 尽量少的去开启线程，因为线程池是有限的
         ThreadTaskUtils.run(() -> {
             // 加一个分布式锁，只放一个请求去刷新缓存
-            RLock lock = redissonClient.getLock(redisCacheKey.getKey() + "_lock");
+            RLock lock = RedisLockUtils.getRLock(redissonClient, redisCacheKey.getKey());
             try {
                 lock.lock();
                 // 获取锁之后再判断一下过期时间，看是否需要加载数据

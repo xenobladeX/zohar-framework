@@ -51,7 +51,7 @@ public class FirstCacheConfig implements Serializable{
     /**
      * 缓存时间单位
      */
-    // TODO: use Duration
+    // TODO use Duration
     private TimeUnit timeUnit = TimeUnit.MILLISECONDS;
 
     /**

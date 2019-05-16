@@ -63,7 +63,6 @@ public class FastJsonSerializerWrapper {
             return;
         }
 
-        // TODO: fastjson suppport array and enum
         if (content.getClass().isArray()) {
             throw new SerializationException("FastJsonRedisSerializer 序列化不支持枚数组型");
         }

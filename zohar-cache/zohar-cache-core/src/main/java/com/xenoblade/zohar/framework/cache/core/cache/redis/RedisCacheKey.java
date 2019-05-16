@@ -16,6 +16,7 @@
  */
 package com.xenoblade.zohar.framework.cache.core.cache.redis;
 
+import com.xenoblade.zohar.framework.cache.core.support.ECacheConstants;
 import com.xenoblade.zohar.framework.commons.redis.serial.key.DefaultStringRedisSerializer;
 import com.xenoblade.zohar.framework.commons.redis.serial.key.JacksonStringRedisSerilaizer;
 import org.springframework.data.redis.serializer.RedisSerializer;
@@ -89,6 +90,7 @@ public class RedisCacheKey {
         if (!usePrefix) {
             return rawKey;
         }
+        // TODO: add "|" between prefix and rawkey
         byte[] prefix = getPrefix();
         byte[] prefixedKey = Arrays.copyOf(prefix, prefix.length + rawKey.length);
         System.arraycopy(rawKey, 0, prefixedKey, prefix.length, rawKey.length);
@@ -111,7 +113,8 @@ public class RedisCacheKey {
      * @return byte[]
      */
     public byte[] getPrefix() {
-        return prefixSerializer.serialize((StringUtils.isEmpty(cacheName) ? cacheName.concat(":") : cacheName.concat(":")));
+        return prefixSerializer.serialize((StringUtils.isEmpty(cacheName) ? cacheName.concat(
+                ECacheConstants.REDIS_KEY_SPLIT) : cacheName.concat(ECacheConstants.REDIS_KEY_SPLIT)));
     }
 
     /**

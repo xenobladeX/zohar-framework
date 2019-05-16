@@ -74,4 +74,15 @@ public class SecondaryCacheConfig implements Serializable{
      */
     int magnification = 1;
 
+    public SecondaryCacheConfig(long expiration, long preloadTime, TimeUnit timeUnit, boolean forceRefresh,
+                                 boolean allowNullValues, int magnification) {
+        this.expiration = expiration;
+        this.preloadTime = preloadTime;
+        this.timeUnit = timeUnit;
+        this.forceRefresh = forceRefresh;
+        this.allowNullValue = allowNullValues;
+        this.magnification = magnification;
+        this.usePrefix = true;
+    }
+
 }

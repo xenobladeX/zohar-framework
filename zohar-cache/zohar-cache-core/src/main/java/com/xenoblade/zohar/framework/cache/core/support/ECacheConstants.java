@@ -14,23 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.redis.serial.key;
+package com.xenoblade.zohar.framework.cache.core.support;
 
-import com.alibaba.fastjson.JSON;
+import lombok.experimental.UtilityClass;
 
 /**
- * FastJsonStringRedisSerilizer
+ * ECacheConstants
  * @author xenoblade
  * @since 1.0.0
  */
-public class FastJsonStringRedisSerilizer extends AbstractStringRedisSerializer{
+@UtilityClass
+public class ECacheConstants {
 
-    public FastJsonStringRedisSerilizer() {
-        super();
-    }
+    public static final String REDIS_KEY_SPLIT = ":";
 
+    public static final String REDIS_KEY_INNER_SPLIT = "-";
 
-    @Override protected String objectToString(Object object) {
-        return JSON.toJSONString(object);
-    }
 }

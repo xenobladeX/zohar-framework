@@ -14,23 +14,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.redis.serial.key;
+package com.xenoblade.zohar.framework.cache.core.util;
 
-import com.alibaba.fastjson.JSON;
+import lombok.experimental.UtilityClass;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
+
+import static com.xenoblade.zohar.framework.cache.core.support.ECacheConstants.REDIS_KEY_SPLIT;
 
 /**
- * FastJsonStringRedisSerilizer
+ * RedisLockUtils
  * @author xenoblade
  * @since 1.0.0
  */
-public class FastJsonStringRedisSerilizer extends AbstractStringRedisSerializer{
+@UtilityClass
+public class RedisLockUtils {
 
-    public FastJsonStringRedisSerilizer() {
-        super();
+    private static final String DEFAULT_LOCK_KEY_SUFFIX = REDIS_KEY_SPLIT + "lock";
+
+
+    public static RLock getRLock(RedissonClient redissonClient, String key, String suffix) {
+        return redissonClient.getLock(key + suffix);
     }
 
 
-    @Override protected String objectToString(Object object) {
-        return JSON.toJSONString(object);
+    public static RLock getRLock(RedissonClient redissonClient, String key) {
+        return redissonClient.getLock(key + DEFAULT_LOCK_KEY_SUFFIX);
     }
+
 }

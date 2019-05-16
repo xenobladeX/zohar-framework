@@ -22,6 +22,8 @@ import com.xenoblade.zohar.framework.cache.core.cache.MultiLayerCache;
 import com.xenoblade.zohar.framework.cache.core.config.MultiLayerCacheConfig;
 import com.xenoblade.zohar.framework.cache.core.manager.AbstractCacheManager;
 import com.xenoblade.zohar.framework.cache.core.manager.CacheManager;
+import com.xenoblade.zohar.framework.cache.core.support.ECacheConstants;
+import com.xenoblade.zohar.framework.cache.core.util.RedisLockUtils;
 import com.xenoblade.zohar.framework.commons.utils.jackson.JacksonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
@@ -49,8 +51,12 @@ public class CacheStatsService {
     /**
      * 缓存统计数据前缀
      */
-    private static final String CACHE_STATS_KEY_PREFIX = "zohar:multi-layer-cache:cache_stats_info:";
-
+    private static final String CACHE_STATS_KEY_PREFIX = new StringBuilder("zohar")
+            .append(ECacheConstants.REDIS_KEY_INNER_SPLIT)
+            .append("multiLayerCache")
+            .append(ECacheConstants.REDIS_KEY_INNER_SPLIT)
+            .append("cacheStatsInfo")
+            .toString();
     /**
      * 定时任务线程池
      */
@@ -68,8 +74,6 @@ public class CacheStatsService {
      * @return List&lt;CacheStatsInfo&gt;
      */
     public List<CacheStatsInfo> listCacheStats(String cacheNameParam) {
-        log.debug("获取缓存统计数据");
-
         List<CacheStatsInfo> statsList = new ArrayList<>();
         Collection<String> cacheNames = cacheManager.getCacheNames();
         for (String cacheName : cacheNames) {
@@ -83,7 +87,7 @@ public class CacheStatsService {
                 MultiLayerCache multiLayerCache = (MultiLayerCache) cache;
                 MultiLayerCacheConfig multiLayerCacheConfig = multiLayerCache.getMultiLayerCacheConfig();
                 // 加锁并增量缓存统计数据，缓存key=固定前缀 + 缓存名称加 + 内部缓存名
-                String redisKey = CACHE_STATS_KEY_PREFIX + cacheName + multiLayerCacheConfig.getInternalKey();
+                String redisKey = getRedisStatsKey(cacheName, multiLayerCacheConfig.getInternalKey());
                 CacheStatsInfo cacheStats = (CacheStatsInfo) cacheManager.getRedisTemplate().opsForValue().get(redisKey);
                 if (!Objects.isNull(cacheStats)) {
                     statsList.add(cacheStats);
@@ -117,8 +121,8 @@ public class CacheStatsService {
                         MultiLayerCache multiLayerCache = (MultiLayerCache) cache;
                         MultiLayerCacheConfig multiLayerCacheConfig = multiLayerCache.getMultiLayerCacheConfig();
                         // 加锁并增量缓存统计数据，缓存key=固定前缀 +缓存名称加 + 内部缓存名
-                        String redisKey = CACHE_STATS_KEY_PREFIX + cacheName + multiLayerCacheConfig.getInternalKey();
-                        RLock lock = redissonClient.getLock(redisKey);
+                        String redisKey = getRedisStatsKey(cacheName, multiLayerCacheConfig.getInternalKey());
+                        RLock lock = RedisLockUtils.getRLock(redissonClient, redisKey);
                         try {
                             if (lock.tryLock()) {
                                 CacheStatsInfo cacheStats = (CacheStatsInfo) redisTemplate.opsForValue().get(redisKey);
@@ -170,6 +174,16 @@ public class CacheStatsService {
 
             //  初始时间间隔是1分
         }, 1, 1, TimeUnit.MINUTES);
+    }
+
+    private String getRedisStatsKey(String cacheName, String cacheInnerKey) {
+        String redisStatsKey = new StringBuilder(CACHE_STATS_KEY_PREFIX)
+                .append(ECacheConstants.REDIS_KEY_SPLIT)
+                .append(cacheName)
+                .append(ECacheConstants.REDIS_KEY_SPLIT)
+                .append(cacheInnerKey)
+                .toString();
+        return redisStatsKey;
     }
 
     /**

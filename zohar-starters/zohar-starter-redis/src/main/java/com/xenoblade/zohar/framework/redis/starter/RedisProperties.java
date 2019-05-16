@@ -45,8 +45,6 @@ public class RedisProperties {
 
         private ERedisSerialType keySerial = ERedisSerialType.STRING;
 
-        private String keyPrefix = "";
-
     }
 
     @Data
@@ -55,8 +53,6 @@ public class RedisProperties {
         private ERedisSerialType valueSerial = ERedisSerialType.STRING;
 
         private ERedisSerialType keySerial = ERedisSerialType.STRING;
-
-        private String keyPrefix = "";
 
     }
 }

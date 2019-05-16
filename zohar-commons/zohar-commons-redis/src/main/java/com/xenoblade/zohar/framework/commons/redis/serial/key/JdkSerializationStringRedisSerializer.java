@@ -35,10 +35,6 @@ public class JdkSerializationStringRedisSerializer extends AbstractStringRedisSe
         super();
     }
 
-    public JdkSerializationStringRedisSerializer(String prefix) {
-        super(prefix);
-    }
-
     @Override protected String objectToString(Object object) {
         byte[] objectBytes = serializer.convert(object);
         return Base64.encode(objectBytes);

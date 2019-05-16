@@ -16,6 +16,7 @@
  */
 package com.xenoblade.zohar.framework.cache.core.config;
 
+import com.xenoblade.zohar.framework.cache.core.support.ECacheConstants;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -34,8 +35,6 @@ public class MultiLayerCacheConfig implements Serializable{
      */
     private boolean enableFirstCache = true;
 
-
-    private static final String SPLIT = "-";
     /**
      * 内部缓存名，由[一级缓存有效时间-二级缓存有效时间-二级缓存自动刷新时间]组成
      */
@@ -49,7 +48,6 @@ public class MultiLayerCacheConfig implements Serializable{
     /**
      * 是否使用一级缓存
      */
-    // TODO:
     boolean useFirstCache = true;
 
     /**
@@ -80,10 +78,10 @@ public class MultiLayerCacheConfig implements Serializable{
         if (firstCacheConfig != null) {
             sb.append(firstCacheConfig.getTimeUnit().toMillis(firstCacheConfig.getExpireTime()));
         }
-        sb.append(SPLIT);
+        sb.append(ECacheConstants.REDIS_KEY_INNER_SPLIT);
         if (secondaryCacheConfig != null) {
             sb.append(secondaryCacheConfig.getTimeUnit().toMillis(secondaryCacheConfig.getExpiration()));
-            sb.append(SPLIT);
+            sb.append(ECacheConstants.REDIS_KEY_INNER_SPLIT);
             sb.append(secondaryCacheConfig.getTimeUnit().toMillis(secondaryCacheConfig.getPreloadTime()));
         }
         internalKey = sb.toString();
