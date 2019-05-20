@@ -16,9 +16,10 @@
  */
 package com.xenoblade.zohar.framework.cache.core.cache.redis;
 
+import cn.hutool.core.codec.Base64;
+import cn.hutool.core.util.HashUtil;
 import com.xenoblade.zohar.framework.cache.core.support.ECacheConstants;
 import com.xenoblade.zohar.framework.commons.redis.serial.key.DefaultStringRedisSerializer;
-import com.xenoblade.zohar.framework.commons.redis.serial.key.JacksonStringRedisSerilaizer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
@@ -51,6 +52,10 @@ public class RedisCacheKey {
      * 是否使用缓存前缀
      */
     private boolean usePrefix = true;
+
+    // TODO 是否使用base64编码序列化的结果
+    // TODO 使用何种 Hash 方式
+    private boolean useBase64 = true;
 
     /**
      * RedisTemplate 的key序列化器
@@ -90,7 +95,7 @@ public class RedisCacheKey {
         if (!usePrefix) {
             return rawKey;
         }
-        // TODO: add "|" between prefix and rawkey
+
         byte[] prefix = getPrefix();
         byte[] prefixedKey = Arrays.copyOf(prefix, prefix.length + rawKey.length);
         System.arraycopy(rawKey, 0, prefixedKey, prefix.length, rawKey.length);
@@ -104,7 +109,13 @@ public class RedisCacheKey {
             return (byte[]) keyElement;
         }
 
-        return serializer.serialize(keyElement);
+        byte[] bytes = serializer.serialize(keyElement);
+
+        // 对keyElement的序列化字符串进行Base64编码
+        if (!(keyElement instanceof String) && useBase64) {
+            return Base64.encode(bytes, false);
+        }
+        return bytes;
     }
 
     /**

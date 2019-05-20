@@ -16,6 +16,7 @@
  */
 package com.xenoblade.zohar.framework.cache.aspectj.service;
 
+import com.xenoblade.zohar.framework.cache.aspectj.annotation.CacheConfig;
 import com.xenoblade.zohar.framework.cache.aspectj.annotation.CacheEvict;
 import com.xenoblade.zohar.framework.cache.aspectj.annotation.CachePut;
 import com.xenoblade.zohar.framework.cache.aspectj.annotation.Cacheable;
@@ -40,14 +41,14 @@ import java.util.concurrent.TimeUnit;
  * @author xenoblade
  * @since 1.0.0
  */
+@CacheConfig(cacheManager = "user-info", ignoreException = false,
+        firstCache = @FirstCache(expireTime = 4, timeUnit = TimeUnit.SECONDS),
+        secondaryCache = @SecondaryCache(expireTime = 10, preloadTime = 3, forceRefresh = true, timeUnit = TimeUnit.SECONDS))
 @Service
 @Slf4j
 public class TestService {
 
-    @Cacheable(value = "user-info", key = "#userId", ignoreException = false,
-            firstCache = @FirstCache(expireTime = 4, timeUnit = TimeUnit.SECONDS),
-            secondaryCache = @SecondaryCache(expireTime = 10, preloadTime = 3,
-                    forceRefresh = true, timeUnit = TimeUnit.SECONDS))
+    @Cacheable(key = "#userId")
     public User getUserById(long userId) {
         log.info("测试正常配置的缓存方法，参数是基本类型");
         User user = new User();
@@ -57,9 +58,7 @@ public class TestService {
         return user;
     }
 
-    @Cacheable(value = "user-info", ignoreException = false,
-            firstCache = @FirstCache(expireTime = 4, timeUnit = TimeUnit.SECONDS),
-            secondaryCache = @SecondaryCache(expireTime = 10, preloadTime = 3, forceRefresh = true, timeUnit = TimeUnit.SECONDS))
+    @Cacheable(value = "user-info")
     public User getUserNoKey(long userId, String[] lastName) {
         log.info("测试没有配置key的缓存方法，参数是基本类型和数组的缓存缓存方法");
         User user = new User();
@@ -69,17 +68,13 @@ public class TestService {
         return user;
     }
 
-    @Cacheable(value = "user-info",
-            firstCache = @FirstCache(expireTime = 4, timeUnit = TimeUnit.SECONDS), ignoreException = false,
-            secondaryCache = @SecondaryCache(expireTime = 10, preloadTime = 3, forceRefresh = true, timeUnit = TimeUnit.SECONDS))
+    @Cacheable(value = "user-info")
     public User getUserObjectPram(User user) {
         log.info("测试没有配置key的缓存方法，参数是复杂对象");
         return user;
     }
 
-    @Cacheable(value = "user-info", ignoreException = false,
-            firstCache = @FirstCache(expireTime = 4, timeUnit = TimeUnit.SECONDS),
-            secondaryCache = @SecondaryCache(expireTime = 10, preloadTime = 3, forceRefresh = true, timeUnit = TimeUnit.SECONDS))
+    @Cacheable(value = "user-info")
     public User getUser(User user, int age) {
         log.info("测试没有配置key的缓存方法，参数是复杂对象和基本量类型");
         user.setAge(age);
@@ -87,9 +82,7 @@ public class TestService {
     }
 
 
-    @Cacheable(value = "user-info", ignoreException = false,
-            firstCache = @FirstCache(expireTime = 4, timeUnit = TimeUnit.SECONDS),
-            secondaryCache = @SecondaryCache(expireTime = 10, preloadTime = 3, forceRefresh = true, timeUnit = TimeUnit.SECONDS))
+    @Cacheable(value = "user-info")
     public User getUserNoParam() {
         log.info("测试没有配置key的缓存方法，没有参数");
         User user = new User();
@@ -99,24 +92,19 @@ public class TestService {
         return user;
     }
 
-    @Cacheable(value = "user-info", key = "#user.userId", ignoreException = false,
-            firstCache = @FirstCache(expireTime = 4, timeUnit = TimeUnit.SECONDS),
-            secondaryCache = @SecondaryCache(expireTime = 10, preloadTime = 3, forceRefresh = true, timeUnit = TimeUnit.SECONDS))
+    @Cacheable(value = "user-info", key = "#user.userId")
     public User getNullObjectPram(User user) {
         log.info("测试参数是NULL对象，不忽略异常");
         return user;
     }
 
-    @Cacheable(value = "user-info",
-            firstCache = @FirstCache(expireTime = 4, timeUnit = TimeUnit.SECONDS),
-            secondaryCache = @SecondaryCache(expireTime = 10, preloadTime = 3, forceRefresh = true, timeUnit = TimeUnit.SECONDS))
+    @Cacheable(value = "user-info")
     public User getNullObjectPramIgnoreException(User user) {
         log.info("测试参数是NULL对象，忽略异常");
         return user;
     }
 
-    @Cacheable(value = "user-info", key = "#userId", ignoreException = false,
-            firstCache = @FirstCache(expireTime = 4, timeUnit = TimeUnit.SECONDS),
+    @Cacheable(value = "user-info", key = "#userId",
             secondaryCache = @SecondaryCache(expireTime = 10, preloadTime = 3, forceRefresh = true,
                     timeUnit = TimeUnit.SECONDS, isAllowNullValue = true, magnification = 1))
     public User getNullUser(Long userId) {
@@ -124,8 +112,7 @@ public class TestService {
         return null;
     }
 
-    @Cacheable(value = "user-info", key = "#userId", ignoreException = false,
-            firstCache = @FirstCache(expireTime = 4, timeUnit = TimeUnit.SECONDS),
+    @Cacheable(value = "user-info", key = "#userId",
             secondaryCache = @SecondaryCache(expireTime = 100, preloadTime = 70, forceRefresh = true,
                     timeUnit = TimeUnit.SECONDS, isAllowNullValue = true, magnification = 10))
     public User getNullUserAllowNullValueTrueMagnification(Long userId) {
@@ -133,8 +120,7 @@ public class TestService {
         return null;
     }
 
-    @Cacheable(value = "user-info", key = "#userId", ignoreException = false,
-            firstCache = @FirstCache(expireTime = 4, timeUnit = TimeUnit.SECONDS),
+    @Cacheable(value = "user-info", key = "#userId",
             secondaryCache = @SecondaryCache(expireTime = 10, preloadTime = 7, forceRefresh = true,
                     timeUnit = TimeUnit.SECONDS, isAllowNullValue = false))
     public User getNullUserAllowNullValueFalse(Long userId) {
@@ -142,91 +128,69 @@ public class TestService {
         return null;
     }
 
-    @Cacheable(value = "user-info", ignoreException = false,
-            firstCache = @FirstCache(expireTime = 4, timeUnit = TimeUnit.SECONDS),
-            secondaryCache = @SecondaryCache(expireTime = 10, preloadTime = 3, forceRefresh = true, timeUnit = TimeUnit.SECONDS))
+    @Cacheable(value = "user-info")
     public String getString(long userId) {
         log.info("缓存方法返回字符串");
         return "User";
     }
 
-    @Cacheable(value = "user-info", ignoreException = false,
-            firstCache = @FirstCache(expireTime = 4, timeUnit = TimeUnit.SECONDS),
-            secondaryCache = @SecondaryCache(expireTime = 10, preloadTime = 3, forceRefresh = true, timeUnit = TimeUnit.SECONDS))
+    @Cacheable(value = "user-info")
     public int getInt(long userId) {
         log.info("缓存方法返回基本类型");
         return 111;
     }
 
-    @Cacheable(value = "user-info", ignoreException = false,
-            firstCache = @FirstCache(expireTime = 4, timeUnit = TimeUnit.SECONDS),
-            secondaryCache = @SecondaryCache(expireTime = 10, preloadTime = 3, forceRefresh = true, timeUnit = TimeUnit.SECONDS))
+    @Cacheable(value = "user-info")
     public Long getLong(long userId) {
         log.info("缓存方法返回包装类型");
         return 1111L;
     }
 
-    @Cacheable(value = "user-info", ignoreException = false,
-            firstCache = @FirstCache(expireTime = 4, timeUnit = TimeUnit.SECONDS),
-            secondaryCache = @SecondaryCache(expireTime = 10, preloadTime = 3, forceRefresh = true, timeUnit = TimeUnit.SECONDS))
+    @Cacheable(value = "user-info")
     public double getDouble(long userId) {
         log.info("缓存方法返回包装类型");
         return 111.2;
     }
 
-    @Cacheable(value = "user-info", ignoreException = false,
-            firstCache = @FirstCache(expireTime = 4, timeUnit = TimeUnit.SECONDS),
-            secondaryCache = @SecondaryCache(expireTime = 10, preloadTime = 3, forceRefresh = true, timeUnit = TimeUnit.SECONDS))
+    @Cacheable(value = "user-info")
     public float getFloat(long userId) {
         log.info("缓存方法返回包装类型");
         return 11.311F;
     }
 
-    @Cacheable(value = "user-info", ignoreException = false,
-            firstCache = @FirstCache(expireTime = 4, timeUnit = TimeUnit.SECONDS),
-            secondaryCache = @SecondaryCache(expireTime = 10, preloadTime = 3, forceRefresh = true, timeUnit = TimeUnit.SECONDS))
+    @Cacheable(value = "user-info")
     public BigDecimal getBigDecimal(long userId) {
         log.info("缓存方法返回包装类型");
         return new BigDecimal(33.33);
     }
 
-    @Cacheable(value = "user-info", ignoreException = false,
-            firstCache = @FirstCache(expireTime = 4, timeUnit = TimeUnit.SECONDS),
-            secondaryCache = @SecondaryCache(expireTime = 10, preloadTime = 3, forceRefresh = true, timeUnit = TimeUnit.SECONDS))
+    @Cacheable(value = "user-info")
     public Date getDate(long userId) {
         log.info("缓存方法返回Date类型");
         return new Date();
     }
 
 
-    @Cacheable(value = "user-info", ignoreException = false,
-            firstCache = @FirstCache(expireTime = 4, timeUnit = TimeUnit.SECONDS),
-            secondaryCache = @SecondaryCache(expireTime = 10, preloadTime = 3, forceRefresh = true, timeUnit = TimeUnit.SECONDS))
+    @Cacheable(value = "user-info")
     public ECacheMode getEnum(long userId) {
         log.info("缓存方法返回枚举");
         return ECacheMode.ONLY_FIRST;
     }
 
-    @Cacheable(value = "user-info", ignoreException = false,
-            firstCache = @FirstCache(expireTime = 4, timeUnit = TimeUnit.SECONDS),
-            secondaryCache = @SecondaryCache(expireTime = 10, preloadTime = 3, forceRefresh = true, timeUnit = TimeUnit.SECONDS))
+    @Cacheable(value = "user-info")
     public long[] getArray(long userId) {
         log.info("缓存方法返回数组");
         return new long[]{111, 222, 333};
     }
 
-    @Cacheable(value = "user-info", ignoreException = false,
-            firstCache = @FirstCache(expireTime = 4, timeUnit = TimeUnit.SECONDS),
-            secondaryCache = @SecondaryCache(expireTime = 10, preloadTime = 3, forceRefresh = true, timeUnit = TimeUnit.SECONDS))
+    @Cacheable(value = "user-info")
     public User[] getObjectArray(long userId) {
         log.info("缓存方法返回数组");
         User user = new User();
         return new User[]{user, user, user};
     }
 
-    @Cacheable(value = "user-info", ignoreException = false,
-            firstCache = @FirstCache(expireTime = 4, timeUnit = TimeUnit.SECONDS),
-            secondaryCache = @SecondaryCache(expireTime = 10, preloadTime = 3, forceRefresh = true, timeUnit = TimeUnit.SECONDS))
+    @Cacheable(value = "user-info")
     public List<String> getList(long userId) {
         log.info("调用方法获取数组");
         List<String> list = new ArrayList<>();
@@ -237,9 +201,7 @@ public class TestService {
         return list;
     }
 
-    @Cacheable(value = "user-info", ignoreException = false,
-            firstCache = @FirstCache(expireTime = 4, timeUnit = TimeUnit.SECONDS),
-            secondaryCache = @SecondaryCache(expireTime = 10, preloadTime = 3, forceRefresh = true, timeUnit = TimeUnit.SECONDS))
+    @Cacheable(value = "user-info")
     public LinkedList<String> getLinkedList(long userId) {
         log.info("调用方法获取数组");
         LinkedList<String> list = new LinkedList<>();
@@ -250,9 +212,7 @@ public class TestService {
         return list;
     }
 
-    @Cacheable(value = "user-info", ignoreException = false,
-            firstCache = @FirstCache(expireTime = 4, timeUnit = TimeUnit.SECONDS),
-            secondaryCache = @SecondaryCache(expireTime = 10, preloadTime = 3, forceRefresh = true, timeUnit = TimeUnit.SECONDS))
+    @Cacheable(value = "user-info")
     public List<User> getListObject(long userId) {
         log.info("调用方法获取数组");
         List<User> list = new ArrayList<>();
@@ -264,9 +224,7 @@ public class TestService {
         return list;
     }
 
-    @Cacheable(value = "user-info", ignoreException = false,
-            firstCache = @FirstCache(expireTime = 4, timeUnit = TimeUnit.SECONDS),
-            secondaryCache = @SecondaryCache(expireTime = 10, preloadTime = 3, forceRefresh = true, timeUnit = TimeUnit.SECONDS))
+    @Cacheable(value = "user-info")
     public Set<String> getSet(long userId) {
         log.info("调用方法获取数组");
         Set<String> set = new HashSet<>();
@@ -276,9 +234,7 @@ public class TestService {
         return set;
     }
 
-    @Cacheable(value = "user-info", ignoreException = false,
-            firstCache = @FirstCache(expireTime = 4, timeUnit = TimeUnit.SECONDS),
-            secondaryCache = @SecondaryCache(expireTime = 10, preloadTime = 3, forceRefresh = true, timeUnit = TimeUnit.SECONDS))
+    @Cacheable(value = "user-info")
     public Set<User> getSetObject(long userId) {
         log.info("调用方法获取数组");
         Set<User> set = new HashSet<>();
@@ -287,9 +243,7 @@ public class TestService {
         return set;
     }
 
-    @Cacheable(value = "user-info", ignoreException = false,
-            firstCache = @FirstCache(expireTime = 4, timeUnit = TimeUnit.SECONDS),
-            secondaryCache = @SecondaryCache(expireTime = 10, preloadTime = 3, forceRefresh = true, timeUnit = TimeUnit.SECONDS))
+    @Cacheable(value = "user-info")
     public List<User> getException(long userId) {
         log.info("缓存测试方法");
 
@@ -297,23 +251,18 @@ public class TestService {
     }
 
 
-    @CachePut(value = "user-info", key = "#userId", ignoreException = false,
-            firstCache = @FirstCache(expireTime = 4, timeUnit = TimeUnit.SECONDS),
-            secondaryCache = @SecondaryCache(expireTime = 10, preloadTime = 3, forceRefresh = true, timeUnit = TimeUnit.SECONDS))
+    @CachePut(value = "user-info", key = "#userId")
     public User putUser(long userId) {
         return new User();
     }
 
-    @CachePut(value = "user-info",
-            firstCache = @FirstCache(expireTime = 4, timeUnit = TimeUnit.SECONDS), ignoreException = false,
-            secondaryCache = @SecondaryCache(expireTime = 10, preloadTime = 3, forceRefresh = true, timeUnit = TimeUnit.SECONDS))
+    @CachePut(value = "user-info")
     public User putUserNoParam() {
         User user = new User();
         return user;
     }
 
-    @CachePut(value = "user-info", key = "#userId", ignoreException = false,
-            firstCache = @FirstCache(expireTime = 4, timeUnit = TimeUnit.SECONDS),
+    @CachePut(value = "user-info", key = "#userId",
             secondaryCache = @SecondaryCache(expireTime = 10, preloadTime = 3, forceRefresh = true,
                     timeUnit = TimeUnit.SECONDS, isAllowNullValue = true))
     public User putNullUser(long userId) {

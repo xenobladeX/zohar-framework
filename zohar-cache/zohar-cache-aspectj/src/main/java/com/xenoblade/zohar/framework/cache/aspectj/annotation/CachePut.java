@@ -106,13 +106,13 @@ public @interface CachePut {
      *
      * @return FirstCache
      */
-    FirstCache firstCache() default @FirstCache();
+    FirstCache[] firstCache() default {};
 
     /**
      * 二级缓存配置
      *
      * @return SecondaryCache
      */
-    SecondaryCache secondaryCache() default @SecondaryCache();
+    SecondaryCache[] secondaryCache() default {};
 
 }

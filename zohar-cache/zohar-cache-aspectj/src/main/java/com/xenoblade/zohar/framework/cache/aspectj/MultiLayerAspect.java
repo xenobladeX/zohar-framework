@@ -16,12 +16,19 @@
  */
 package com.xenoblade.zohar.framework.cache.aspectj;
 
+import cn.hutool.core.annotation.AnnotationUtil;
 import cn.hutool.core.util.StrUtil;
+import com.xenoblade.zohar.framework.cache.aspectj.annotation.CacheConfig;
 import com.xenoblade.zohar.framework.cache.aspectj.annotation.CacheEvict;
 import com.xenoblade.zohar.framework.cache.aspectj.annotation.CachePut;
 import com.xenoblade.zohar.framework.cache.aspectj.annotation.Cacheable;
 import com.xenoblade.zohar.framework.cache.aspectj.annotation.FirstCache;
 import com.xenoblade.zohar.framework.cache.aspectj.annotation.SecondaryCache;
+import com.xenoblade.zohar.framework.cache.aspectj.annotation.operation.CacheEvictOperation;
+import com.xenoblade.zohar.framework.cache.aspectj.annotation.operation.CachePutOperation;
+import com.xenoblade.zohar.framework.cache.aspectj.annotation.operation.CacheableOperation;
+import com.xenoblade.zohar.framework.cache.aspectj.annotation.parser.CacheAnnotationParser;
+import com.xenoblade.zohar.framework.cache.aspectj.annotation.parser.DefaultCacheAnnotationParser;
 import com.xenoblade.zohar.framework.cache.aspectj.expression.CacheOperationExpressionEvaluator;
 import com.xenoblade.zohar.framework.cache.aspectj.support.CacheOperationInvoker;
 import com.xenoblade.zohar.framework.cache.aspectj.support.KeyGenerator;
@@ -74,6 +81,8 @@ public class MultiLayerAspect {
 
     private KeyGenerator keyGenerator = new SimpleKeyGenerator();
 
+    private CacheAnnotationParser cacheAnnotationParser = new DefaultCacheAnnotationParser();
+
     public MultiLayerAspect(CacheManager cacheManager) {
         this.cacheManager = cacheManager;
     }
@@ -83,8 +92,6 @@ public class MultiLayerAspect {
         this.keyGenerator = keyGenerator;
     }
 
-
-    // TODO 实现 @CacheConfig
     @Pointcut("@annotation(com.xenoblade.zohar.framework.cache.aspectj.annotation.Cacheable)")
     public void cacheablePointcut() {
     }
@@ -103,27 +110,26 @@ public class MultiLayerAspect {
 
         // 获取method
         Method method = this.getSpecificmethod(joinPoint);
-        // 获取注解
-        Cacheable cacheable = AnnotationUtils.findAnnotation(method, Cacheable.class);
-
+        // 获取注解操作
+        CacheableOperation cacheableOperation = cacheAnnotationParser.parseCacheable(method);
         try {
             // 执行查询缓存方法
-            return executeCacheable(aopAllianceInvoker, cacheable, method, joinPoint.getArgs(), joinPoint.getTarget());
+            return executeCacheable(aopAllianceInvoker, cacheableOperation, method, joinPoint.getArgs(), joinPoint.getTarget());
         } catch (SerializationException e) {
             // 如果是序列化异常需要先删除原有缓存
-            String[] cacheNames = cacheable.cacheNames();
+            String[] cacheNames = cacheableOperation.getCacheNames();
             // 删除缓存
-            delete(cacheNames, cacheable.key(), method, joinPoint.getArgs(), joinPoint.getTarget());
+            delete(cacheNames, cacheableOperation.getKey(), method, joinPoint.getArgs(), joinPoint.getTarget());
 
             // 忽略操作缓存过程中遇到的异常
-            if (cacheable.ignoreException()) {
+            if (cacheableOperation.isIgnoreException()) {
                 log.warn(e.getMessage(), e);
                 return aopAllianceInvoker.invoke();
             }
             throw e;
         } catch (Exception e) {
             // 忽略操作缓存过程中遇到的异常
-            if (cacheable.ignoreException()) {
+            if (cacheableOperation.isIgnoreException()) {
                 log.warn(e.getMessage(), e);
                 return aopAllianceInvoker.invoke();
             }
@@ -137,15 +143,15 @@ public class MultiLayerAspect {
 
         // 获取method
         Method method = this.getSpecificmethod(joinPoint);
-        // 获取注解
-        CacheEvict cacheEvict = AnnotationUtils.findAnnotation(method, CacheEvict.class);
+        // 获取注解操作
+        CacheEvictOperation cacheEvictOperation = cacheAnnotationParser.parseCacheEvict(method);
 
         try {
             // 执行查询缓存方法
-            return executeEvict(aopAllianceInvoker, cacheEvict, method, joinPoint.getArgs(), joinPoint.getTarget());
+            return executeEvict(aopAllianceInvoker, cacheEvictOperation, method, joinPoint.getArgs(), joinPoint.getTarget());
         } catch (Exception e) {
             // 忽略操作缓存过程中遇到的异常
-            if (cacheEvict.ignoreException()) {
+            if (cacheEvictOperation.isIgnoreException()) {
                 log.warn(e.getMessage(), e);
                 return aopAllianceInvoker.invoke();
             }
@@ -160,14 +166,14 @@ public class MultiLayerAspect {
         // 获取method
         Method method = this.getSpecificmethod(joinPoint);
         // 获取注解
-        CachePut cacheEvict = AnnotationUtils.findAnnotation(method, CachePut.class);
+        CachePutOperation cachePutOperation = cacheAnnotationParser.parseCachePut(method);
 
         try {
             // 执行查询缓存方法
-            return executePut(aopAllianceInvoker, cacheEvict, method, joinPoint.getArgs(), joinPoint.getTarget());
+            return executePut(aopAllianceInvoker, cachePutOperation, method, joinPoint.getArgs(), joinPoint.getTarget());
         } catch (Exception e) {
             // 忽略操作缓存过程中遇到的异常
-            if (cacheEvict.ignoreException()) {
+            if (cachePutOperation.isIgnoreException()) {
                 log.warn(e.getMessage(), e);
                 return aopAllianceInvoker.invoke();
             }
@@ -180,25 +186,25 @@ public class MultiLayerAspect {
      * 执行Cacheable切面
      *
      * @param invoker   缓存注解的回调方法
-     * @param cacheable {@link Cacheable}
+     * @param cacheableOperation {@link CacheableOperation}
      * @param method    {@link Method}
      * @param args      注解方法参数
      * @param target    target
      * @return {@link Object}
      */
-    private Object executeCacheable(CacheOperationInvoker invoker, Cacheable cacheable,
+    private Object executeCacheable(CacheOperationInvoker invoker, CacheableOperation cacheableOperation,
                                     Method method, Object[] args, Object target) {
 
         // 解析SpEL表达式获取cacheName和key
-        String[] cacheNames = cacheable.cacheNames();
-        Assert.notEmpty(cacheable.cacheNames(), CACHE_NAME_ERROR_MESSAGE);
+        String[] cacheNames = cacheableOperation.getCacheNames();
+        Assert.notEmpty(cacheNames, CACHE_NAME_ERROR_MESSAGE);
         String cacheName = cacheNames[0];
-        Object key = generateKey(cacheable.key(), method, args, target);
-        Assert.notNull(key, String.format(CACHE_KEY_ERROR_MESSAGE, cacheable.key()));
+        Object key = generateKey(cacheableOperation.getKey(), method, args, target);
+        Assert.notNull(key, String.format(CACHE_KEY_ERROR_MESSAGE, cacheableOperation.getKey()));
 
         // 从解决中获取缓存配置
-        FirstCache firstCache = cacheable.firstCache();
-        SecondaryCache secondaryCache = cacheable.secondaryCache();
+        FirstCache firstCache = cacheableOperation.getFirstCache();
+        SecondaryCache secondaryCache = cacheableOperation.getSecondaryCache();
         FirstCacheConfig firstCacheConfig = new FirstCacheConfig(firstCache.initialCapacity(), firstCache.maximumSize(),
                 firstCache.expireTime(), firstCache.timeUnit(), firstCache.expireMode());
 
@@ -207,7 +213,7 @@ public class MultiLayerAspect {
                 secondaryCache.isAllowNullValue(), secondaryCache.magnification());
 
         MultiLayerCacheConfig multiLayerCacheConfig = new MultiLayerCacheConfig(firstCacheConfig, secondaryCacheConfig,
-                cacheable.depict());
+                cacheableOperation.getDepict());
 
         // 通过cacheName和缓存配置获取Cache
         Cache cache = cacheManager.getCache(cacheName, multiLayerCacheConfig);
@@ -221,20 +227,20 @@ public class MultiLayerAspect {
      * 执行 CacheEvict 切面
      *
      * @param invoker    缓存注解的回调方法
-     * @param cacheEvict {@link CacheEvict}
+     * @param cacheEvictOperation {@link CacheEvictOperation}
      * @param method     {@link Method}
      * @param args       注解方法参数
      * @param target     target
      * @return {@link Object}
      */
-    private Object executeEvict(CacheOperationInvoker invoker, CacheEvict cacheEvict,
+    private Object executeEvict(CacheOperationInvoker invoker, CacheEvictOperation cacheEvictOperation,
                                 Method method, Object[] args, Object target) {
 
         // 解析SpEL表达式获取cacheName和key
-        String[] cacheNames = cacheEvict.cacheNames();
-        Assert.notEmpty(cacheEvict.cacheNames(), CACHE_NAME_ERROR_MESSAGE);
+        String[] cacheNames = cacheEvictOperation.getCacheNames();
+        Assert.notEmpty(cacheNames, CACHE_NAME_ERROR_MESSAGE);
         // 判断是否删除所有缓存数据
-        if (cacheEvict.allEntries()) {
+        if (cacheEvictOperation.isAllEntries()) {
             // 删除所有缓存数据（清空）
             for (String cacheName : cacheNames) {
                 Collection<Cache> caches = cacheManager.getCache(cacheName);
@@ -244,7 +250,7 @@ public class MultiLayerAspect {
             }
         } else {
             // 删除指定key
-            delete(cacheNames, cacheEvict.key(), method, args, target);
+            delete(cacheNames, cacheEvictOperation.getKey(), method, args, target);
         }
 
         // 执行方法
@@ -256,24 +262,24 @@ public class MultiLayerAspect {
      * 执行 CachePut 切面
      *
      * @param invoker  缓存注解的回调方法
-     * @param cachePut {@link CachePut}
+     * @param cachePutOperation {@link CachePutOperation}
      * @param method   {@link Method}
      * @param args     注解方法参数
      * @param target   target
      * @return {@link Object}
      */
-    private Object executePut(CacheOperationInvoker invoker, CachePut cachePut, Method method, Object[] args, Object target) {
+    private Object executePut(CacheOperationInvoker invoker, CachePutOperation cachePutOperation, Method method, Object[] args, Object target) {
 
 
-        String[] cacheNames = cachePut.cacheNames();
-        Assert.notEmpty(cachePut.cacheNames(), CACHE_NAME_ERROR_MESSAGE);
+        String[] cacheNames = cachePutOperation.getCacheNames();
+        Assert.notEmpty(cachePutOperation.getCacheNames(), CACHE_NAME_ERROR_MESSAGE);
         // 解析SpEL表达式获取 key
-        Object key = generateKey(cachePut.key(), method, args, target);
-        Assert.notNull(key, String.format(CACHE_KEY_ERROR_MESSAGE, cachePut.key()));
+        Object key = generateKey(cachePutOperation.getKey(), method, args, target);
+        Assert.notNull(key, String.format(CACHE_KEY_ERROR_MESSAGE, cachePutOperation.getKey()));
 
         // 从解决中获取缓存配置
-        FirstCache firstCache = cachePut.firstCache();
-        SecondaryCache secondaryCache = cachePut.secondaryCache();
+        FirstCache firstCache = cachePutOperation.getFirstCache();
+        SecondaryCache secondaryCache = cachePutOperation.getSecondaryCache();
         FirstCacheConfig firstCacheConfig = new FirstCacheConfig(firstCache.initialCapacity(), firstCache.maximumSize(),
                 firstCache.expireTime(), firstCache.timeUnit(), firstCache.expireMode());
 
@@ -282,7 +288,7 @@ public class MultiLayerAspect {
                 secondaryCache.isAllowNullValue(), secondaryCache.magnification());
 
         MultiLayerCacheConfig multiLayerCacheConfig = new MultiLayerCacheConfig(firstCacheConfig, secondaryCacheConfig,
-                cachePut.depict());
+                cachePutOperation.getDepict());
 
         // 指定调用方法获取缓存值
         Object result = invoker.invoke();
@@ -361,6 +367,11 @@ public class MultiLayerAspect {
             targetClass = target.getClass();
         }
         return targetClass;
+    }
+
+    private CacheConfig getCacheConfig(Object target) {
+        Class<?> targetClass = getTargetClass(target);
+        return AnnotationUtil.getAnnotation(targetClass, CacheConfig.class);
     }
 
     /**

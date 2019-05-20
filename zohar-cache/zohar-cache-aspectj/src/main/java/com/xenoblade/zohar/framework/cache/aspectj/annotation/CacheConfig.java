@@ -16,78 +16,46 @@
  */
 package com.xenoblade.zohar.framework.cache.aspectj.annotation;
 
-import org.springframework.cache.interceptor.KeyGenerator;
-import org.springframework.core.annotation.AliasFor;
+import com.xenoblade.zohar.framework.cache.core.manager.CacheManager;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
-import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Cacheable
+ * CacheConfig
  * @author xenoblade
  * @since 1.0.0
  */
-@Target({ElementType.METHOD, ElementType.TYPE})
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Inherited
 @Documented
-public @interface Cacheable {
+public @interface CacheConfig {
 
     /**
-     * 别名是 {@link #cacheNames}.
-     *
-     * @return String[]
+     * Names of the default caches to consider for caching operations defined
+     * in the annotated class.
+     * <p>If none is set at the operation level, these are used instead of the default.
+     * <p>May be used to determine the target cache (or caches), matching the
+     * qualifier value or the bean names of a specific bean definition.
      */
-    @AliasFor("cacheNames")
-    String[] value() default {};
-
-    /**
-     * 缓存名称，支持SpEL表达式
-     *
-     * @return String[]
-     */
-    @AliasFor("value")
     String[] cacheNames() default {};
 
     /**
-     * 描述
-     *
-     * @return String
+     * The bean name of the default {@link org.springframework.cache.interceptor.KeyGenerator} to
+     * use for the class.
+     * <p>If none is set at the operation level, this one is used instead of the default.
+     * <p>The key generator is mutually exclusive with the use of a custom key. When such key is
+     * defined for the operation, the value of this key generator is ignored.
      */
-    String depict() default "";
-
-    /**
-     * 缓存key，支持SpEL表达式
-     * <p>The SpEL expression evaluates against a dedicated context that provides the
-     * following meta-data:
-     * <ul>
-     * <li>{@code #root.method}, {@code #root.target}, and {@code #root.caches} for
-     * references to the {@link java.lang.reflect.Method method}, target object, and
-     * affected cache(s) respectively.</li>
-     * <li>Shortcuts for the method name ({@code #root.methodName}) and target class
-     * ({@code #root.targetClass}) are also available.
-     * <li>Method arguments can be accessed by index. For instance the second argument
-     * can be accessed via {@code #root.args[1]}, {@code #p1} or {@code #a1}. Arguments
-     * can also be accessed by name if that information is available.</li>
-     * </ul>
-     *
-     * @return String
-     */
-    String key() default "";
-
-    /**
-     * The bean name of the custom {@link KeyGenerator}
-     * to use.
-     * <p>Mutually exclusive with the {@link #key} attribute.
-     *
-     * @return String
-     */
-    @Deprecated
     String keyGenerator() default "";
+
+    /**
+     * The bean name of the custom {@link CacheManager}
+     */
+    String cacheManager() default "";
 
     /**
      * 是否忽略在操作缓存中遇到的异常，如反序列化异常，默认true。
@@ -103,13 +71,13 @@ public @interface Cacheable {
      *
      * @return FirstCache
      */
-    FirstCache[] firstCache() default {};
+    FirstCache firstCache() default @FirstCache;
 
     /**
      * 二级缓存配置
      *
      * @return SecondaryCache
      */
-    SecondaryCache[] secondaryCache() default {};
+    SecondaryCache secondaryCache() default @SecondaryCache;
 
 }

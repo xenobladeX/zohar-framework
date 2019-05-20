@@ -42,6 +42,9 @@ public abstract class AbstractStringRedisSerializer implements RedisSerializer<O
         if (object == null) {
             return null;
         }
+        if (object instanceof String) {
+            return ((String) object).getBytes(CAHRSET_UTF8);
+        }
         String string = objectToString(object);
         if (string == null) {
             return null;

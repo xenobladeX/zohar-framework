@@ -45,7 +45,6 @@ public class CacheEvaluationContext extends MethodBasedEvaluationContext {
 
     private final Set<String> unavailableVariables = new HashSet<String>(1);
 
-
     CacheEvaluationContext(Object rootObject, Method method, Object[] arguments,
                            ParameterNameDiscoverer parameterNameDiscoverer) {
 
