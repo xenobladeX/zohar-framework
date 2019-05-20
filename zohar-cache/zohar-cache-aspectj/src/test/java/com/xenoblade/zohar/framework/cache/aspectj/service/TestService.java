@@ -270,8 +270,7 @@ public class TestService {
         return null;
     }
 
-    @CachePut(value = "user-info", key = "#userId", ignoreException = false,
-            firstCache = @FirstCache(expireTime = 4, timeUnit = TimeUnit.SECONDS),
+    @CachePut(value = "user-info", key = "#userId"
             secondaryCache = @SecondaryCache(expireTime = 40, preloadTime = 30, forceRefresh = true,
                     timeUnit = TimeUnit.SECONDS, isAllowNullValue = true, magnification = 10))
     public User putNullUserAllowNullValueTrueMagnification(long userId) {
@@ -279,8 +278,7 @@ public class TestService {
         return null;
     }
 
-    @CachePut(value = "user-info", key = "#userId", ignoreException = false,
-            firstCache = @FirstCache(expireTime = 4, timeUnit = TimeUnit.SECONDS),
+    @CachePut(value = "user-info", key = "#userId"
             secondaryCache = @SecondaryCache(expireTime = 10, preloadTime = 7, forceRefresh = true, timeUnit = TimeUnit.SECONDS))
     public User putNullUserAllowNullValueFalse(long userId) {
 
@@ -289,8 +287,7 @@ public class TestService {
 
 
 
-    @CachePut(value = "user-info", key = "#userId", ignoreException = false,
-            firstCache = @FirstCache(expireTime = 4, timeUnit = TimeUnit.SECONDS),
+    @CachePut(value = "user-info", key = "#userId",
             secondaryCache = @SecondaryCache(expireTime = 10, preloadTime = 3, forceRefresh = true, timeUnit = TimeUnit.SECONDS))
     public User putUserById(long userId) {
         User user = new User();
@@ -301,12 +298,12 @@ public class TestService {
         return user;
     }
 
-    @CacheEvict(value = "user-info", key = "#userId", ignoreException = false)
+    @CacheEvict(value = "user-info", key = "#userId")
     public void evictUser(long userId) {
 
     }
 
-    @CacheEvict(value = "user-info", allEntries = true, ignoreException = false)
+    @CacheEvict(value = "user-info", allEntries = true)
     public void evictAllUser() {
     }
 }
