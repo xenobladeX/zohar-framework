@@ -125,12 +125,7 @@ public class DefaultCacheAnnotationParser implements CacheAnnotationParser {
     private void parseCacheConfig(Method method, CacheOperation cacheOperation) {
         CacheConfig cacheConfig = AnnotationUtil.getAnnotation(method.getDeclaringClass(), CacheConfig.class);
         if (cacheConfig == null) {
-            if (cacheOperation.getFirstCache() == null) {
-                cacheOperation.setFirstCache(AnnotationConstants.defaultFirstCache());
-            }
-            if (cacheOperation.getSecondaryCache() == null) {
-                cacheOperation.setSecondaryCache(AnnotationConstants.defaultSecondaryCache());
-            }
+
         } else {
             if (cacheOperation.getCacheNames().length == 0) {
                 cacheOperation.setCacheNames(cacheConfig.cacheNames());
@@ -144,11 +139,11 @@ public class DefaultCacheAnnotationParser implements CacheAnnotationParser {
             if (cacheOperation.isIgnoreException()) {
                 cacheOperation.setCacheManager(cacheConfig.cacheManager());
             }
-            if (cacheOperation.getFirstCache() == null) {
-                cacheOperation.setFirstCache(cacheConfig.firstCache());
+            if (cacheOperation.getFirstCache() == null && cacheConfig.firstCache().length > 0) {
+                cacheOperation.setFirstCache(cacheConfig.firstCache()[0]);
             }
-            if (cacheOperation.getSecondaryCache() == null) {
-                cacheOperation.setSecondaryCache(cacheConfig.secondaryCache());
+            if (cacheOperation.getSecondaryCache() == null && cacheConfig.secondaryCache().length > 0) {
+                cacheOperation.setSecondaryCache(cacheConfig.secondaryCache()[0]);
             }
         }
 

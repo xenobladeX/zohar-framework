@@ -33,6 +33,8 @@ import org.springframework.data.redis.core.RedisTemplate;
  */
 public class MultiLayerCacheManager extends AbstractCacheManager{
 
+    @Setter
+    private MultiLayerCacheConfig defaultMultiLayerCacheConfig;
 
     public MultiLayerCacheManager(RedisTemplate<String, Object> redisTemplate, RedissonClient redissonClient) {
         this.redisTemplate = redisTemplate;
@@ -43,10 +45,25 @@ public class MultiLayerCacheManager extends AbstractCacheManager{
     @Override
     protected Cache getMissingCache(String name, MultiLayerCacheConfig multiLayerCacheConfig) {
         // 创建一级缓存
-        CaffeineCache caffeineCache = new CaffeineCache(name, multiLayerCacheConfig.getFirstCacheConfig(), getStats());
+        CaffeineCache caffeineCache = new CaffeineCache(name, multiLayerCacheConfig.getFirstCacheConfig(), isStats());
         // 创建二级缓存
-        RedisCache redisCache = new RedisCache(name, redisTemplate, redissonClient, multiLayerCacheConfig.getSecondaryCacheConfig(), getStats());
-        return new MultiLayerCache(redisTemplate, caffeineCache, redisCache, super.getStats(), multiLayerCacheConfig);
+        RedisCache redisCache = new RedisCache(name, redisTemplate, redissonClient, multiLayerCacheConfig.getSecondaryCacheConfig(), isStats());
+        return new MultiLayerCache(redisTemplate, caffeineCache, redisCache, super.isStats(), multiLayerCacheConfig);
+    }
+
+    @Override protected void parseMultiLayerCacheConfig(
+            MultiLayerCacheConfig multiLayerCacheConfig) {
+
+
+        if (multiLayerCacheConfig.getCacheMode() == null) {
+            multiLayerCacheConfig.setCacheMode(defaultMultiLayerCacheConfig.getCacheMode());
+        }
+        if (multiLayerCacheConfig.getFirstCacheConfig() == null) {
+            multiLayerCacheConfig.setFirstCacheConfig(defaultMultiLayerCacheConfig.getFirstCacheConfig());
+        }
+        if (multiLayerCacheConfig.getSecondaryCacheConfig() == null) {
+            multiLayerCacheConfig.setSecondaryCacheConfig(defaultMultiLayerCacheConfig.getSecondaryCacheConfig());
+        }
     }
 
     @Override

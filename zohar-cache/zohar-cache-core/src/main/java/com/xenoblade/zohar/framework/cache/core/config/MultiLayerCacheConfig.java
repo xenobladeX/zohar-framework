@@ -17,6 +17,7 @@
 package com.xenoblade.zohar.framework.cache.core.config;
 
 import com.xenoblade.zohar.framework.cache.core.support.ECacheConstants;
+import com.xenoblade.zohar.framework.cache.core.support.ECacheMode;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -31,10 +32,6 @@ import java.time.Duration;
 public class MultiLayerCacheConfig implements Serializable{
 
     private static final long serialVersionUID = -7185999794798838069L;
-    /**
-     * 是否使用一级缓存
-     */
-    private boolean enableFirstCache = true;
 
     /**
      * 内部缓存名，由[一级缓存有效时间-二级缓存有效时间-二级缓存自动刷新时间]组成
@@ -49,7 +46,7 @@ public class MultiLayerCacheConfig implements Serializable{
     /**
      * 是否使用一级缓存
      */
-    boolean useFirstCache = true;
+    private ECacheMode cacheMode;
 
     /**
      * 一级缓存配置

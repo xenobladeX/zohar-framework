@@ -30,26 +30,24 @@ import java.util.concurrent.TimeUnit;
  * @since 1.0.0
  */
 @Data
-@AllArgsConstructor
 public class SecondaryCacheConfig implements Serializable{
 
     private static final long serialVersionUID = 1435597244908000981L;
 
-
     /**
      * 缓存有效时间
      */
-    private long expiration = 0;
+    private long expiration = 5;
 
     /**
      * 缓存主动在失效前强制刷新缓存的时间
      */
-    private long preloadTime = 0;
+    private long preloadTime = 1;
 
     /**
      * 时间单位 {@link TimeUnit}
      */
-    private TimeUnit timeUnit = TimeUnit.MICROSECONDS;
+    private TimeUnit timeUnit = TimeUnit.HOURS;
 
     /**
      * 是否强制刷新（走数据库），默认是false

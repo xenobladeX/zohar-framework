@@ -205,12 +205,15 @@ public class MultiLayerAspect {
         // 从解决中获取缓存配置
         FirstCache firstCache = cacheableOperation.getFirstCache();
         SecondaryCache secondaryCache = cacheableOperation.getSecondaryCache();
-        FirstCacheConfig firstCacheConfig = new FirstCacheConfig(firstCache.initialCapacity(), firstCache.maximumSize(),
-                firstCache.expireTime(), firstCache.timeUnit(), firstCache.expireMode());
+        FirstCacheConfig firstCacheConfig = secondaryCache == null ? null :
+                new FirstCacheConfig(firstCache.initialCapacity(), firstCache.maximumSize(),
+                        firstCache.expireTime(), firstCache.timeUnit(), firstCache.expireMode());
 
-        SecondaryCacheConfig secondaryCacheConfig = new SecondaryCacheConfig(secondaryCache.expireTime(),
-                secondaryCache.preloadTime(), secondaryCache.timeUnit(), secondaryCache.forceRefresh(),
-                secondaryCache.isAllowNullValue(), secondaryCache.magnification(), secondaryCache.keyEncodeType(), secondaryCache.keyHashType());
+        SecondaryCacheConfig secondaryCacheConfig = secondaryCache == null ? null :
+                new SecondaryCacheConfig(secondaryCache.expireTime(),
+                        secondaryCache.preloadTime(), secondaryCache.timeUnit(), secondaryCache.forceRefresh(),
+                        secondaryCache.isAllowNullValue(), secondaryCache.magnification(), secondaryCache.keyEncodeType(),
+                        secondaryCache.keyHashType());
 
         MultiLayerCacheConfig multiLayerCacheConfig = new MultiLayerCacheConfig(firstCacheConfig, secondaryCacheConfig,
                 cacheableOperation.getDepict());
@@ -367,11 +370,6 @@ public class MultiLayerAspect {
             targetClass = target.getClass();
         }
         return targetClass;
-    }
-
-    private CacheConfig getCacheConfig(Object target) {
-        Class<?> targetClass = getTargetClass(target);
-        return AnnotationUtil.getAnnotation(targetClass, CacheConfig.class);
     }
 
     /**

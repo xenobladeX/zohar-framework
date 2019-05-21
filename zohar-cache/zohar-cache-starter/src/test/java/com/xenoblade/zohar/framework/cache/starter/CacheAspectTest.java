@@ -14,11 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.cache.aspectj;
+package com.xenoblade.zohar.framework.cache.starter;
 
-import com.xenoblade.zohar.framework.cache.aspectj.model.User;
-import com.xenoblade.zohar.framework.cache.aspectj.service.TestService;
 import com.xenoblade.zohar.framework.cache.core.support.ECacheMode;
+import com.xenoblade.zohar.framework.cache.starter.model.User;
+import com.xenoblade.zohar.framework.cache.starter.service.TestService;
 import com.xenoblade.zohar.framework.commons.utils.jackson.JacksonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;

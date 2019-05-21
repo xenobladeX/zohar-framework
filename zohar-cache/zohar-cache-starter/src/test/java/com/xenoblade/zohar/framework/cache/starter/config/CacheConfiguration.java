@@ -14,38 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.cache.core.support;
+package com.xenoblade.zohar.framework.cache.starter.config;
+
+import org.springframework.context.annotation.Configuration;
 
 /**
- * ECacheMode
+ * CacheConfig
  * @author xenoblade
  * @since 1.0.0
  */
-public enum ECacheMode {
+@Configuration
+public class CacheConfiguration {
 
-    /**
-     * 不开缓存
-     */
-    NONE("不使用缓存"),
 
-    /**
-     * 只开启一级缓存
-     */
-    ONLY_FIRST("只使用一级缓存"),
-
-    /**
-     * 只开启二级缓存
-     */
-    ONLY_SECOND("只使用二级缓存"),
-
-    /**
-     * 同时开启一级缓存和二级缓存
-     */
-    ALL("同时开启一级缓存和二级缓存");
-
-    private String label;
-
-    ECacheMode(String label) {
-        this.label = label;
-    }
 }

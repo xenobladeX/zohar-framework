@@ -16,6 +16,7 @@
  */
 package com.xenoblade.zohar.framework.cache.aspectj.annotation;
 
+import com.xenoblade.zohar.framework.cache.aspectj.support.KeyGenerator;
 import com.xenoblade.zohar.framework.cache.core.manager.CacheManager;
 
 import java.lang.annotation.Documented;
@@ -45,7 +46,7 @@ public @interface CacheConfig {
     String[] cacheNames() default {};
 
     /**
-     * The bean name of the default {@link org.springframework.cache.interceptor.KeyGenerator} to
+     * The bean name of the default {@link KeyGenerator} to
      * use for the class.
      * <p>If none is set at the operation level, this one is used instead of the default.
      * <p>The key generator is mutually exclusive with the use of a custom key. When such key is
@@ -72,13 +73,13 @@ public @interface CacheConfig {
      *
      * @return FirstCache
      */
-    FirstCache firstCache() default @FirstCache;
+    FirstCache[] firstCache() default {};
 
     /**
      * 二级缓存配置
      *
      * @return SecondaryCache
      */
-    SecondaryCache secondaryCache() default @SecondaryCache;
+    SecondaryCache[] secondaryCache() default {};
 
 }

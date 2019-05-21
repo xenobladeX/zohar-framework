@@ -1,6 +1,6 @@
 spring:
   application:
-    name: &appName zohar-cache-core-test
+    name: &appName zohar-cache-starter-test
 
   # redis 配置
   redis:
@@ -20,7 +20,7 @@ logging:
   level:
     com.xenoblade.zohar.framework.cache: debug
 
-#zohar:
+zohar:
 #  redis:
 #    objct-template:
 #      key-serial: kryo
@@ -28,3 +28,15 @@ logging:
 #    string-template:
 #      key-serial: string
 #      value-serial: string
+  multi-layer-cache:
+    stats: true
+    cache-mode: all
+    first-cache:
+      expire-time: 4
+      time-unit: seconds
+    secnodary-cache:
+      key-hash-type: md5
+      expiration: 10
+      preload-time: 3
+      force-refresh: true
+      time-unit: seconds

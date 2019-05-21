@@ -19,6 +19,7 @@ package com.xenoblade.zohar.framework.commons.redis.serial.value;
 import com.xenoblade.zohar.framework.commons.redis.serial.FastJsonSerializerWrapper;
 import com.xenoblade.zohar.framework.commons.redis.serial.SerializationUtils;
 import com.xenoblade.zohar.framework.commons.redis.support.Type;
+import com.xenoblade.zohar.framework.commons.utils.jackson.JacksonUtil;
 import lombok.extern.slf4j.Slf4j;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -87,7 +88,7 @@ public class FastJsonRedisSerializer<T> implements RedisSerializer<T> {
             return JSON.toJSONString(new FastJsonSerializerWrapper(t), SerializerFeature.WriteClassName).getBytes(DEFAULT_CHARSET);
         } catch (Exception e) {
             throw new SerializationException(String.format("FastJsonRedisSerializer 序列化异常: %s, 【JSON：%s】",
-                    e.getMessage(), JSON.toJSONString(t)), e);
+                    e.getMessage(), JacksonUtil.toJson(t)), e);
 
         }
 

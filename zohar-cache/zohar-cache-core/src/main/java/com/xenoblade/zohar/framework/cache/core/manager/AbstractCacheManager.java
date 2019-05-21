@@ -82,6 +82,8 @@ public abstract class AbstractCacheManager
     /**
      * 是否开启统计
      */
+    @Setter
+    @Getter
     private boolean stats = true;
 
     /**
@@ -111,11 +113,12 @@ public abstract class AbstractCacheManager
     // Lazy cache initialization on access
     @Override
     public Cache getCache(String name, MultiLayerCacheConfig multiLayerCacheConfig) {
+        parseMultiLayerCacheConfig(multiLayerCacheConfig);
         // 第一次获取缓存Cache，如果有直接返回,如果没有加锁往容器里里面放Cache
         ConcurrentMap<String, Cache> cacheMap = this.cacheContainer.get(name);
         if (!CollectionUtils.isEmpty(cacheMap)) {
             if (cacheMap.size() > 1) {
-                log.warn("缓存名称为 {} 的缓存,存在{}个不同的过期时间配置，请一定注意保证缓存的key唯一性，否则会出现缓存过期时间错乱的情况", name, cacheMap.size());
+                log.warn("缓存名称为 {} 的缓存,存在{}个配置，请一定注意保证缓存的key唯一性，否则会出现缓存过期时间错乱的情况", name, cacheMap.size());
             }
             Cache cache = cacheMap.get(multiLayerCacheConfig.getInternalKey());
             if (cache != null) {
@@ -149,7 +152,7 @@ public abstract class AbstractCacheManager
                 // 将新的Cache对象放到容器
                 cacheMap.put(multiLayerCacheConfig.getInternalKey(), cache);
                 if (cacheMap.size() > 1) {
-                    log.warn("缓存名称为 {} 的缓存,存在{}个不同的过期时间配置，请一定注意保证缓存的key唯一性，否则会出现缓存过期时间错乱的情况", name, cacheMap.size());
+                    log.warn("缓存名称为 {} 的缓存,存在{}个不同配置，请一定注意保证缓存的key唯一性，否则会出现缓存过期时间错乱的情况", name, cacheMap.size());
                 }
             }
 
@@ -191,6 +194,10 @@ public abstract class AbstractCacheManager
      */
     protected abstract Cache getMissingCache(String name, MultiLayerCacheConfig multiLayerCacheConfig);
 
+
+    protected abstract void parseMultiLayerCacheConfig(MultiLayerCacheConfig multiLayerCacheConfig);
+
+
     /**
      * 获取缓存容器
      *
@@ -218,7 +225,7 @@ public abstract class AbstractCacheManager
         messageListener.afterPropertiesSet();
 
         BeanFactory.getBean(CacheStatsService.class).setCacheManager(this);
-        if (getStats()) {
+        if (isStats()) {
             // 采集缓存命中率数据
             BeanFactory.getBean(CacheStatsService.class).syncCacheStats();
         }
@@ -273,14 +280,6 @@ public abstract class AbstractCacheManager
     @Override
     public int getPhase() {
         return container.getPhase();
-    }
-
-    public boolean getStats() {
-        return stats;
-    }
-
-    public void setStats(boolean stats) {
-        this.stats = stats;
     }
 
     @Override

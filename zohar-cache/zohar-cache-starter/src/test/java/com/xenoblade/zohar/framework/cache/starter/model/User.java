@@ -14,48 +14,52 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.cache.core.config;
+package com.xenoblade.zohar.framework.cache.starter.model;
 
-import com.xenoblade.zohar.framework.cache.core.support.EExpireMode;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.concurrent.TimeUnit;
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 /**
- * 一级缓存配置项
+ * User
  * @author xenoblade
  * @since 1.0.0
  */
 @Data
-@AllArgsConstructor
-public class FirstCacheConfig implements Serializable{
+public class User implements Serializable{
 
-    private static final long serialVersionUID = -798857359716343190L;
-    /**
-     * 缓存初始Size
-     */
-    private int initialCapacity = 10;
+    private static final long serialVersionUID = 8266854428580691539L;
 
-    /**
-     * 缓存最大Size
-     */
-    private int maximumSize = 500;
+    private long userId;
 
-    /**
-     * 缓存有效时间
-     */
-    private int expireTime = 9;
+    private String name;
 
-    /**
-     * 缓存时间单位
-     */
-    private TimeUnit timeUnit = TimeUnit.MILLISECONDS;
+    private Address address;
 
-    /**
-     * 缓存失效模式{@link EExpireMode}
-     */
-    private EExpireMode expireMode = EExpireMode.WRITE;
+    private String[] lastName;
+
+    private List<String> lastNameList;
+
+    private Set<String> lastNameSet;
+
+    private int age;
+
+    private double height;
+
+    private BigDecimal income;
+
+    private Date birthday;
+
+
+    @Data
+    public static class Address implements Serializable{
+        private static final long serialVersionUID = 245208648493493146L;
+
+        private String addredd;
+    }
 
 }

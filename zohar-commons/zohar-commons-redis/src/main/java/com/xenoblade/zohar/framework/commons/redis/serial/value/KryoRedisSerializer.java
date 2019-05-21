@@ -18,8 +18,8 @@ package com.xenoblade.zohar.framework.commons.redis.serial.value;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.xenoblade.zohar.framework.commons.redis.serial.SerializationUtils;
+import com.xenoblade.zohar.framework.commons.utils.jackson.JacksonUtil;
 import lombok.extern.slf4j.Slf4j;
-import com.alibaba.fastjson.JSON;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import org.springframework.cache.support.NullValue;
@@ -62,7 +62,7 @@ public class KryoRedisSerializer<T> implements RedisSerializer<T> {
             return baos.toByteArray();
         } catch (Exception e) {
             throw new SerializationException(String.format("KryoRedisSerializer Serial Failed: %s, 【JSON：%s】",
-                    e.getMessage(), JSON.toJSONString(t)), e);
+                    e.getMessage(), JacksonUtil.toJson(t)), e);
         } finally {
             kryos.remove();
         }
@@ -88,7 +88,7 @@ public class KryoRedisSerializer<T> implements RedisSerializer<T> {
             return (T) result;
         } catch (Exception e) {
             throw new SerializationException(String.format("FastJsonRedisSerializer Serial Failed: %s, 【JSON：%s】",
-                    e.getMessage(), JSON.toJSONString(bytes)), e);
+                    e.getMessage(), JacksonUtil.toJson(bytes)), e);
         } finally {
             kryos.remove();
         }

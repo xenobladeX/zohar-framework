@@ -17,9 +17,9 @@
 package com.xenoblade.zohar.framework.commons.redis.serial.key;
 
 import cn.hutool.core.codec.Base64;
-import com.alibaba.fastjson.JSON;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Output;
+import com.xenoblade.zohar.framework.commons.utils.jackson.JacksonUtil;
 import org.springframework.data.redis.serializer.SerializationException;
 
 import java.io.ByteArrayOutputStream;
@@ -53,7 +53,7 @@ public class KryoStringRedisSerilaizer extends AbstractStringRedisSerializer{
             return Base64.encode(objectBytes);
         } catch (Exception e) {
             throw new SerializationException(String.format("KryoRedisSerializer Serial Failed: %s, 【JSON：%s】",
-                    e.getMessage(), JSON.toJSONString(object)), e);
+                    e.getMessage(), JacksonUtil.toJson(object)), e);
         } finally {
             kryos.remove();
         }
