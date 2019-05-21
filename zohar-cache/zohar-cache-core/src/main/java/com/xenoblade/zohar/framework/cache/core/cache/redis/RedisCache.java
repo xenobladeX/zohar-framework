@@ -18,6 +18,8 @@ package com.xenoblade.zohar.framework.cache.core.cache.redis;
 
 import com.xenoblade.zohar.framework.cache.core.cache.AbstractValueAdaptingCache;
 import com.xenoblade.zohar.framework.cache.core.config.SecondaryCacheConfig;
+import com.xenoblade.zohar.framework.cache.core.support.EEncodeType;
+import com.xenoblade.zohar.framework.cache.core.support.EHashType;
 import com.xenoblade.zohar.framework.cache.core.util.AwaitThreadContainer;
 import com.xenoblade.zohar.framework.cache.core.util.RedisLockUtils;
 import com.xenoblade.zohar.framework.cache.core.util.ThreadTaskUtils;
@@ -104,17 +106,29 @@ public class RedisCache extends AbstractValueAdaptingCache {
     private final int magnification;
 
     /**
+     * key 编码类型
+     */
+    private EEncodeType keyEncodeType;
+
+    /**
+     * key 哈希类型
+     */
+    private EHashType keyHashType;
+
+    /**
      * @param name                  缓存名称
      * @param redisTemplate         redis客户端 redis 客户端
      * @param secondaryCacheConfig 二级缓存配置{@link SecondaryCacheConfig}
      * @param stats                 是否开启统计模式
      */
-    public RedisCache(String name, RedisTemplate<String, Object> redisTemplate, RedissonClient redissonClient, SecondaryCacheConfig secondaryCacheConfig, boolean stats) {
+    public RedisCache(String name, RedisTemplate<String, Object> redisTemplate,
+                      RedissonClient redissonClient, SecondaryCacheConfig secondaryCacheConfig, boolean stats) {
 
         this(name, redisTemplate, redissonClient, secondaryCacheConfig.getTimeUnit().toMillis(secondaryCacheConfig.getExpiration()),
                 secondaryCacheConfig.getTimeUnit().toMillis(secondaryCacheConfig.getPreloadTime()),
                 secondaryCacheConfig.isForceRefresh(), secondaryCacheConfig.isUsePrefix(),
-                secondaryCacheConfig.isAllowNullValue(), secondaryCacheConfig.getMagnification(), stats);
+                secondaryCacheConfig.isAllowNullValue(), secondaryCacheConfig.getMagnification(), stats,
+                secondaryCacheConfig.getKeyEncodeType(), secondaryCacheConfig.getKeyHashType());
     }
 
     /**
@@ -130,7 +144,8 @@ public class RedisCache extends AbstractValueAdaptingCache {
      * @param stats           是否开启统计模式
      */
     public RedisCache(String name, RedisTemplate<String, Object> redisTemplate, RedissonClient redissonClient, long expiration, long preloadTime,
-                      boolean forceRefresh, boolean usePrefix, boolean allowNullValues, int magnification, boolean stats) {
+                      boolean forceRefresh, boolean usePrefix, boolean allowNullValues, int magnification, boolean stats,
+                      EEncodeType encodeType, EHashType hashType) {
         super(stats, name);
 
         Assert.notNull(redisTemplate, "RedisTemplate 不能为NULL");
@@ -142,6 +157,8 @@ public class RedisCache extends AbstractValueAdaptingCache {
         this.usePrefix = usePrefix;
         this.allowNullValues = allowNullValues;
         this.magnification = magnification;
+        this.keyEncodeType = encodeType;
+        this.keyHashType = hashType;
     }
 
     @Override
@@ -225,7 +242,10 @@ public class RedisCache extends AbstractValueAdaptingCache {
      */
     public RedisCacheKey getRedisCacheKey(Object key) {
         return new RedisCacheKey(key, redisTemplate.getKeySerializer())
-                .cacheName(getName()).usePrefix(usePrefix);
+                .cacheName(getName())
+                .usePrefix(usePrefix)
+                .encodeType(keyEncodeType)
+                .hashType(keyHashType);
     }
 
     /**

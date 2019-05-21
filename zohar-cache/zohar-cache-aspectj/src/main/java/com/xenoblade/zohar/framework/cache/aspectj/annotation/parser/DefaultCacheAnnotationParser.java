@@ -17,7 +17,6 @@
 package com.xenoblade.zohar.framework.cache.aspectj.annotation.parser;
 
 import cn.hutool.core.annotation.AnnotationUtil;
-import cn.hutool.core.util.HashUtil;
 import cn.hutool.core.util.StrUtil;
 import com.xenoblade.zohar.framework.cache.aspectj.annotation.AnnotationConstants;
 import com.xenoblade.zohar.framework.cache.aspectj.annotation.CacheConfig;
@@ -126,26 +125,31 @@ public class DefaultCacheAnnotationParser implements CacheAnnotationParser {
     private void parseCacheConfig(Method method, CacheOperation cacheOperation) {
         CacheConfig cacheConfig = AnnotationUtil.getAnnotation(method.getDeclaringClass(), CacheConfig.class);
         if (cacheConfig == null) {
-            return;
-        }
-
-        if (cacheOperation.getCacheNames().length == 0) {
-            cacheOperation.setCacheNames(cacheConfig.cacheNames());
-        }
-        if (StrUtil.isNotBlank(cacheOperation.getKeyGenerator())) {
-            cacheOperation.setKeyGenerator(cacheConfig.keyGenerator());
-        }
-        if (StrUtil.isNotBlank(cacheOperation.getCacheManager())) {
-            cacheOperation.setCacheManager(cacheConfig.cacheManager());
-        }
-        if (cacheOperation.isIgnoreException()) {
-            cacheOperation.setCacheManager(cacheConfig.cacheManager());
-        }
-        if (cacheOperation.getFirstCache() == null) {
-            cacheOperation.setFirstCache(cacheConfig.firstCache());
-        }
-        if (cacheOperation.getSecondaryCache() == null) {
-            cacheOperation.setSecondaryCache(cacheConfig.secondaryCache());
+            if (cacheOperation.getFirstCache() == null) {
+                cacheOperation.setFirstCache(AnnotationConstants.defaultFirstCache());
+            }
+            if (cacheOperation.getSecondaryCache() == null) {
+                cacheOperation.setSecondaryCache(AnnotationConstants.defaultSecondaryCache());
+            }
+        } else {
+            if (cacheOperation.getCacheNames().length == 0) {
+                cacheOperation.setCacheNames(cacheConfig.cacheNames());
+            }
+            if (StrUtil.isNotBlank(cacheOperation.getKeyGenerator())) {
+                cacheOperation.setKeyGenerator(cacheConfig.keyGenerator());
+            }
+            if (StrUtil.isNotBlank(cacheOperation.getCacheManager())) {
+                cacheOperation.setCacheManager(cacheConfig.cacheManager());
+            }
+            if (cacheOperation.isIgnoreException()) {
+                cacheOperation.setCacheManager(cacheConfig.cacheManager());
+            }
+            if (cacheOperation.getFirstCache() == null) {
+                cacheOperation.setFirstCache(cacheConfig.firstCache());
+            }
+            if (cacheOperation.getSecondaryCache() == null) {
+                cacheOperation.setSecondaryCache(cacheConfig.secondaryCache());
+            }
         }
 
     }

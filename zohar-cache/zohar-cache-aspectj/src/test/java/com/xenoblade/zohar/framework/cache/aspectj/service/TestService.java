@@ -24,6 +24,8 @@ import com.xenoblade.zohar.framework.cache.aspectj.annotation.FirstCache;
 import com.xenoblade.zohar.framework.cache.aspectj.annotation.SecondaryCache;
 import com.xenoblade.zohar.framework.cache.aspectj.model.User;
 import com.xenoblade.zohar.framework.cache.core.support.ECacheMode;
+import com.xenoblade.zohar.framework.cache.core.support.EEncodeType;
+import com.xenoblade.zohar.framework.cache.core.support.EHashType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +43,7 @@ import java.util.concurrent.TimeUnit;
  * @author xenoblade
  * @since 1.0.0
  */
-@CacheConfig(cacheManager = "user-info", ignoreException = false,
+@CacheConfig(cacheNames = "user-info", ignoreException = false,
         firstCache = @FirstCache(expireTime = 4, timeUnit = TimeUnit.SECONDS),
         secondaryCache = @SecondaryCache(expireTime = 10, preloadTime = 3, forceRefresh = true, timeUnit = TimeUnit.SECONDS))
 @Service
@@ -58,7 +60,9 @@ public class TestService {
         return user;
     }
 
-    @Cacheable(value = "user-info")
+    @Cacheable(value = "user-info",
+            secondaryCache = @SecondaryCache(expireTime = 10, preloadTime = 3, forceRefresh = true, timeUnit = TimeUnit.SECONDS,
+                    keyHashType = EHashType.MD5))
     public User getUserNoKey(long userId, String[] lastName) {
         log.info("测试没有配置key的缓存方法，参数是基本类型和数组的缓存缓存方法");
         User user = new User();
@@ -270,7 +274,7 @@ public class TestService {
         return null;
     }
 
-    @CachePut(value = "user-info", key = "#userId"
+    @CachePut(value = "user-info", key = "#userId",
             secondaryCache = @SecondaryCache(expireTime = 40, preloadTime = 30, forceRefresh = true,
                     timeUnit = TimeUnit.SECONDS, isAllowNullValue = true, magnification = 10))
     public User putNullUserAllowNullValueTrueMagnification(long userId) {
@@ -278,7 +282,7 @@ public class TestService {
         return null;
     }
 
-    @CachePut(value = "user-info", key = "#userId"
+    @CachePut(value = "user-info", key = "#userId",
             secondaryCache = @SecondaryCache(expireTime = 10, preloadTime = 7, forceRefresh = true, timeUnit = TimeUnit.SECONDS))
     public User putNullUserAllowNullValueFalse(long userId) {
 

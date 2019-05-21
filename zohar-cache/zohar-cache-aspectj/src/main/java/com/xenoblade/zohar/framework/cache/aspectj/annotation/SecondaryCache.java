@@ -16,6 +16,9 @@
  */
 package com.xenoblade.zohar.framework.cache.aspectj.annotation;
 
+import com.xenoblade.zohar.framework.cache.core.support.EEncodeType;
+import com.xenoblade.zohar.framework.cache.core.support.EHashType;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
@@ -80,4 +83,17 @@ public @interface SecondaryCache {
      * @return int
      */
     int magnification() default 1;
+
+    /**
+     * key的编码方式
+     * @return
+     */
+    EEncodeType keyEncodeType() default EEncodeType.NONE;
+
+    /**
+     * key 的哈希方式
+     * @return
+     */
+    EHashType keyHashType() default EHashType.NONE;
+
 }

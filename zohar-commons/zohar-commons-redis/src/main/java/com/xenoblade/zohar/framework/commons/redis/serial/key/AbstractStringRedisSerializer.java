@@ -16,6 +16,7 @@
  */
 package com.xenoblade.zohar.framework.commons.redis.serial.key;
 
+import cn.hutool.core.util.ClassUtil;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
 import java.nio.charset.Charset;
@@ -28,6 +29,8 @@ import java.nio.charset.Charset;
 public abstract class AbstractStringRedisSerializer implements RedisSerializer<Object> {
 
     private static final Charset CAHRSET_UTF8 = Charset.forName("UTF8");
+
+
 
     public AbstractStringRedisSerializer() {
     }
@@ -42,10 +45,39 @@ public abstract class AbstractStringRedisSerializer implements RedisSerializer<O
         if (object == null) {
             return null;
         }
-        if (object instanceof String) {
-            return ((String) object).getBytes(CAHRSET_UTF8);
+        
+        String string = null;
+        if (object.getClass() == int.class) {
+            string = String.valueOf((int)object);
+        }  else if (object.getClass() == char.class) {
+            string  = String.valueOf((char)object);
+        } else if (object.getClass() == char[].class) {
+            string = String.valueOf((char[]) object);
+        } else if (object.getClass() == long.class) {
+            string  = String.valueOf((long)object);
+        } else if (object.getClass() == float.class) {
+            string = String.valueOf((float)object);
+        } else if (object.getClass() == double.class) {
+            string = String.valueOf((double)object);
+        } else if (object.getClass() == boolean.class) {
+            string = String.valueOf((boolean)object);
         }
-        String string = objectToString(object);
+        else if (object instanceof Integer) {
+            string = String.valueOf((Integer) object);
+        } else if (object instanceof Long) {
+            string = String.valueOf((Long)object);
+        } else if (object instanceof Float) {
+            string = String.valueOf((Float)object);
+        } else if (object instanceof Double) {
+            string = String.valueOf((Double)object);
+        } else if (object instanceof Boolean) {
+            string = String.valueOf((Boolean)object);
+        } else if (object instanceof String) {
+            string = (String)object;
+        } else {
+            string = objectToString(object);
+        }
+
         if (string == null) {
             return null;
         }

@@ -16,6 +16,8 @@
  */
 package com.xenoblade.zohar.framework.cache.core.config;
 
+import com.xenoblade.zohar.framework.cache.core.support.EEncodeType;
+import com.xenoblade.zohar.framework.cache.core.support.EHashType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -64,6 +66,17 @@ public class SecondaryCacheConfig implements Serializable{
      */
     boolean allowNullValue = false;
 
+    /**
+     * Key 的编码方式
+     */
+    private EEncodeType keyEncodeType = EEncodeType.NONE;
+
+
+    /**
+     * Key 的hash 方式
+     */
+    private EHashType keyHashType = EHashType.NONE;
+
 
     /**
      * 非空值和null值之间的时间倍率，默认是1。allowNullValue=true才有效
@@ -75,7 +88,12 @@ public class SecondaryCacheConfig implements Serializable{
     int magnification = 1;
 
     public SecondaryCacheConfig(long expiration, long preloadTime, TimeUnit timeUnit, boolean forceRefresh,
-                                 boolean allowNullValues, int magnification) {
+                                boolean allowNullValues, int magnification) {
+        this(expiration, preloadTime, timeUnit, forceRefresh, allowNullValues, magnification, EEncodeType.NONE, EHashType.NONE);
+    }
+
+    public SecondaryCacheConfig(long expiration, long preloadTime, TimeUnit timeUnit, boolean forceRefresh,
+                                 boolean allowNullValues, int magnification, EEncodeType keyEncodeType, EHashType keyHashType) {
         this.expiration = expiration;
         this.preloadTime = preloadTime;
         this.timeUnit = timeUnit;
@@ -83,6 +101,8 @@ public class SecondaryCacheConfig implements Serializable{
         this.allowNullValue = allowNullValues;
         this.magnification = magnification;
         this.usePrefix = true;
+        this.keyEncodeType = keyEncodeType;
+        this.keyHashType = keyHashType;
     }
 
 }

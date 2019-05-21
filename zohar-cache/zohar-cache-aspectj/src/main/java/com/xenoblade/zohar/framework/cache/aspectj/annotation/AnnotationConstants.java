@@ -16,7 +16,9 @@
  */
 package com.xenoblade.zohar.framework.cache.aspectj.annotation;
 
+import com.xenoblade.zohar.framework.cache.core.support.EEncodeType;
 import com.xenoblade.zohar.framework.cache.core.support.EExpireMode;
+import com.xenoblade.zohar.framework.cache.core.support.EHashType;
 import lombok.experimental.UtilityClass;
 
 import java.lang.annotation.Annotation;
@@ -160,6 +162,14 @@ public class AnnotationConstants {
              */
             @Override public int magnification() {
                 return 1;
+            }
+
+            @Override public EEncodeType keyEncodeType() {
+                return EEncodeType.NONE;
+            }
+
+            @Override public EHashType keyHashType() {
+                return EHashType.NONE;
             }
         };
 

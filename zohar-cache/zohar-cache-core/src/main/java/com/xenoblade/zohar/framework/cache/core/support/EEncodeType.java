@@ -14,48 +14,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.cache.core.config;
-
-import com.xenoblade.zohar.framework.cache.core.support.EExpireMode;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
-import java.io.Serializable;
-import java.util.concurrent.TimeUnit;
+package com.xenoblade.zohar.framework.cache.core.support;
 
 /**
- * 一级缓存配置项
+ * EEncodeType
  * @author xenoblade
  * @since 1.0.0
  */
-@Data
-@AllArgsConstructor
-public class FirstCacheConfig implements Serializable{
-
-    private static final long serialVersionUID = -798857359716343190L;
-    /**
-     * 缓存初始Size
-     */
-    private int initialCapacity = 10;
+public enum EEncodeType {
 
     /**
-     * 缓存最大Size
+     * base64
      */
-    private int maximumSize = 500;
+    BASE64,
 
     /**
-     * 缓存有效时间
+     * 十六进制
      */
-    private int expireTime = 0;
+    HEX,
 
     /**
-     * 缓存时间单位
+     * 不做任何操作
      */
-    private TimeUnit timeUnit = TimeUnit.MILLISECONDS;
+    NONE;
 
-    /**
-     * 缓存失效模式{@link EExpireMode}
-     */
-    private EExpireMode expireMode = EExpireMode.WRITE;
 
 }

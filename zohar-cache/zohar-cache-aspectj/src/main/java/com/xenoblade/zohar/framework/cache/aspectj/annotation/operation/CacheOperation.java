@@ -83,14 +83,14 @@ public abstract class CacheOperation implements Serializable{
      * 一级缓存配置
      *
      */
-    private FirstCache firstCache = AnnotationConstants.defaultFirstCache();
+    private FirstCache firstCache;
 
     /**
      * 二级缓存配置
      *
      * @return SecondaryCache
      */
-    private SecondaryCache secondaryCache = AnnotationConstants.defaultSecondaryCache();
+    private SecondaryCache secondaryCache;
 
 
 }

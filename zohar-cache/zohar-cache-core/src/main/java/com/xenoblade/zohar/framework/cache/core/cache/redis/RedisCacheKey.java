@@ -18,7 +18,13 @@ package com.xenoblade.zohar.framework.cache.core.cache.redis;
 
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.HashUtil;
+import cn.hutool.core.util.HexUtil;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.crypto.SecureUtil;
+import cn.hutool.crypto.digest.HMac;
 import com.xenoblade.zohar.framework.cache.core.support.ECacheConstants;
+import com.xenoblade.zohar.framework.cache.core.support.EEncodeType;
+import com.xenoblade.zohar.framework.cache.core.support.EHashType;
 import com.xenoblade.zohar.framework.commons.redis.serial.key.DefaultStringRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.util.Assert;
@@ -53,9 +59,15 @@ public class RedisCacheKey {
      */
     private boolean usePrefix = true;
 
-    // TODO 是否使用base64编码序列化的结果
-    // TODO 使用何种 Hash 方式
-    private boolean useBase64 = true;
+    /**
+     * 编码类型
+     */
+    private EEncodeType encodeType;
+
+    /**
+     * 哈希类型
+     */
+    private EHashType hashType;
 
     /**
      * RedisTemplate 的key序列化器
@@ -92,6 +104,14 @@ public class RedisCacheKey {
     public byte[] getKeyBytes() {
 
         byte[] rawKey = serializeKeyElement();
+        if (EHashType.NONE == hashType) {
+            // 如果不做哈希，则使用编码方法
+            rawKey = encode(rawKey, encodeType);
+        } else {
+            // 直接进行哈希算法
+            rawKey = hash(rawKey, hashType);
+        }
+
         if (!usePrefix) {
             return rawKey;
         }
@@ -111,11 +131,60 @@ public class RedisCacheKey {
 
         byte[] bytes = serializer.serialize(keyElement);
 
-        // 对keyElement的序列化字符串进行Base64编码
-        if (!(keyElement instanceof String) && useBase64) {
-            return Base64.encode(bytes, false);
-        }
         return bytes;
+    }
+
+    private byte[] encode(byte[] bytes, EEncodeType encodeType) {
+        if (bytes.length == 0) {
+            return new byte[0];
+        }
+        byte[] encodeBytes = Arrays.copyOf(bytes, bytes.length);
+        switch (encodeType) {
+            case BASE64:
+            {
+                encodeBytes = Base64.encode(bytes, false);
+                break;
+            }
+            case HEX:
+            {
+                String encodeStr = HexUtil.encodeHexStr(bytes);
+                encodeBytes = encodeStr.getBytes();
+                break;
+            }
+        }
+        return encodeBytes;
+    }
+
+    private byte[] hash(byte[] bytes, EHashType hashType) {
+        byte[] hashBytes = Arrays.copyOf(bytes, bytes.length);
+        switch (hashType) {
+            case MD5: {
+                // md5 + hex
+                byte[] hash = SecureUtil.md5().digest(bytes);
+                hashBytes = encode(hash, EEncodeType.HEX);
+                break;
+            }
+            case SHA1: {
+                // sha-1 + hex
+                byte[] hash = SecureUtil.sha1().digest(bytes);
+                hashBytes = encode(hash, EEncodeType.HEX);
+                break;
+            }
+            case HMAC_SHA1: {
+                // hmac + sha1
+                byte[] hash = SecureUtil.hmacSha1().digest(bytes);
+                hashBytes = encode(hash, EEncodeType.HEX);
+                break;
+            }
+            case HMAC_MD5: {
+                // hmac + sha1
+                byte[] hash = SecureUtil.hmacMd5().digest(bytes);
+                hashBytes = encode(hash, EEncodeType.HEX);
+                break;
+            }
+
+        }
+        return hashBytes;
     }
 
     /**
@@ -147,6 +216,26 @@ public class RedisCacheKey {
      */
     public RedisCacheKey usePrefix(boolean usePrefix) {
         this.usePrefix = usePrefix;
+        return this;
+    }
+
+    /**
+     * 设置编码类型
+     * @param encodeType
+     * @return
+     */
+    public RedisCacheKey encodeType(EEncodeType encodeType) {
+        this.encodeType = encodeType;
+        return this;
+    }
+
+    /**
+     * 设置哈希类型
+     * @param hashType
+     * @return
+     */
+    public RedisCacheKey hashType(EHashType hashType) {
+        this.hashType = hashType;
         return this;
     }
 

@@ -20,6 +20,7 @@ import com.xenoblade.zohar.framework.cache.core.support.ECacheConstants;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.Duration;
 
 /**
  * MultiLayerCacheConfig
@@ -73,6 +74,7 @@ public class MultiLayerCacheConfig implements Serializable{
 
 
     private void internalKey() {
+        // TODO 完善 multiLayerCache 的 key，使用格式[key1=value1;key2=value2/key3=key4]
         // 一级缓存有效时间-二级缓存有效时间-二级缓存自动刷新时间
         StringBuilder sb = new StringBuilder();
         if (firstCacheConfig != null) {
