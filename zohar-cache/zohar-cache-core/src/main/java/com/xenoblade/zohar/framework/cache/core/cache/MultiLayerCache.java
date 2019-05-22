@@ -21,6 +21,7 @@ import com.xenoblade.zohar.framework.cache.core.listener.ERedisPubSubMessageType
 import com.xenoblade.zohar.framework.cache.core.listener.RedisPubSubMessage;
 import com.xenoblade.zohar.framework.cache.core.listener.RedisPublisher;
 import com.xenoblade.zohar.framework.cache.core.stats.CacheStats;
+import com.xenoblade.zohar.framework.cache.core.support.ECacheMode;
 import com.xenoblade.zohar.framework.commons.utils.jackson.JacksonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -61,6 +62,8 @@ public class MultiLayerCache extends AbstractValueAdaptingCache {
      */
     private boolean useFirstCache = true;
 
+    private ECacheMode cacheMode = ECacheMode.ALL;
+
 
     /**
      * 创建一个多级缓存对象
@@ -93,6 +96,7 @@ public class MultiLayerCache extends AbstractValueAdaptingCache {
         this.secondCache = secondCache;
         this.useFirstCache = useFirstCache;
         this.multiLayerCacheConfig = multiLayerCacheConfig;
+        this.cacheMode = multiLayerCacheConfig.getCacheMode();
     }
 
     @Override
@@ -103,89 +107,272 @@ public class MultiLayerCache extends AbstractValueAdaptingCache {
     @Override
     public Object get(Object key) {
         Object result = null;
-        if (useFirstCache) {
-            result = firstCache.get(key);
-            log.debug("查询一级缓存。 key={},返回值是:{}", key, JacksonUtil.toJson(result));
-        }
-        if (result == null) {
-            result = secondCache.get(key);
-            firstCache.putIfAbsent(key, result);
-            log.debug("查询二级缓存,并将数据放到一级缓存。 key={},返回值是:{}", key, JacksonUtil.toJson(result));
+        switch (cacheMode) {
+            case NONE:
+            {
+
+                break;
+            }
+            case ALL:
+            {
+                result = firstCache.get(key);
+                if (result == null) {
+                    result = secondCache.get(key);
+                    firstCache.putIfAbsent(key, result);
+                }
+                break;
+            }
+            case ONLY_FIRST:
+            {
+                result = firstCache.get(key);
+                break;
+            }
+            case ONLY_SECOND:
+            {
+                result = secondCache.get(key);
+                break;
+            }
+            default:
+            {
+
+                break;
+            }
         }
         return fromStoreValue(result);
     }
 
     @Override
     public <T> T get(Object key, Class<T> type) {
-        if (useFirstCache) {
-            Object result = firstCache.get(key, type);
-            log.debug("查询一级缓存。 key={},返回值是:{}", key, JacksonUtil.toJson(result));
-            if (result != null) {
-                return (T) fromStoreValue(result);
-            }
-        }
+        T result = null;
+        switch (cacheMode) {
+            case NONE:
+            {
 
-        T result = secondCache.get(key, type);
-        firstCache.putIfAbsent(key, result);
-        log.debug("查询二级缓存,并将数据放到一级缓存。 key={},返回值是:{}", key, JacksonUtil.toJson(result));
+                break;
+            }
+            case ALL:
+            {
+                result = firstCache.get(key, type);
+                if (result != null) {
+                    result = (T)fromStoreValue(result);
+                } else {
+                    result = secondCache.get(key, type);
+                    firstCache.putIfAbsent(key, result);
+                }
+                break;
+            }
+            case ONLY_FIRST:
+            {
+                result = firstCache.get(key, type);
+                if (result != null) {
+                    result = (T)fromStoreValue(result);
+                }
+                break;
+            }
+            case ONLY_SECOND:
+            {
+                result = secondCache.get(key, type);
+                break;
+            }
+            default: {
+
+                break;
+            }
+
+        }
         return result;
     }
 
     @Override
     public <T> T get(Object key, Callable<T> valueLoader) {
-        if (useFirstCache) {
-            Object result = firstCache.get(key);
-            log.debug("查询一级缓存。 key={},返回值是:{}", key, JacksonUtil.toJson(result));
-            if (result != null) {
-                return (T) fromStoreValue(result);
+        T result = null;
+        switch (cacheMode) {
+            case NONE:
+            {
+                try {
+                    result = valueLoader.call();
+                } catch (Exception e) {
+                    throw new LoaderCacheValueException(key, e);
+                }
+                break;
             }
+            case ALL:
+            {
+                Object ret = firstCache.get(key);
+                if (ret != null) {
+                    result = (T) fromStoreValue(ret);
+                } else {
+                    result = secondCache.get(key, valueLoader);
+                    firstCache.putIfAbsent(key, result);
+                }
+                break;
+            }
+            case ONLY_FIRST:
+            {
+                result = firstCache.get(key, valueLoader);
+                break;
+            }
+            case ONLY_SECOND:
+            {
+                result = secondCache.get(key, valueLoader);
+                break;
+            }
+            default: {
+                try {
+                    result = valueLoader.call();
+                } catch (Exception e) {
+                    throw new LoaderCacheValueException(key, e);
+                }
+                break;
+            }
+
         }
-        T result = secondCache.get(key, valueLoader);
-        firstCache.putIfAbsent(key, result);
-        log.debug("查询二级缓存,并将数据放到一级缓存。 key={},返回值是:{}", key, JacksonUtil.toJson(result));
         return result;
     }
 
     @Override
     public void put(Object key, Object value) {
-        secondCache.put(key, value);
-        // 删除一级缓存
-        if (useFirstCache) {
-            deleteFirstCache(key);
+        switch (cacheMode) {
+            case NONE:
+            {
+
+                break;
+            }
+            case ALL:
+            {
+                secondCache.put(key, value);
+                // 删除一级缓存
+                deleteFirstCache(key);
+                break;
+            }
+            case ONLY_FIRST:
+            {
+                firstCache.put(key, value);
+                break;
+            }
+            case ONLY_SECOND:
+            {
+                secondCache.put(key, value);
+                break;
+            }
+            default: {
+
+                break;
+            }
+
         }
     }
 
     @Override
     public Object putIfAbsent(Object key, Object value) {
-        Object result = secondCache.putIfAbsent(key, value);
-        // 删除一级缓存
-        if (useFirstCache) {
-            deleteFirstCache(key);
+        Object result = null;
+        switch (cacheMode) {
+            case NONE:
+            {
+
+                break;
+            }
+            case ALL:
+            {
+                result = secondCache.putIfAbsent(key, value);
+                // 删除一级缓存
+                deleteFirstCache(key);
+                break;
+            }
+            case ONLY_FIRST:
+            {
+                result = firstCache.putIfAbsent(key, value);
+                break;
+            }
+            case ONLY_SECOND:
+            {
+                result = secondCache.putIfAbsent(key, value);
+                break;
+            }
+            default: {
+
+                break;
+            }
+
         }
         return result;
     }
 
     @Override
     public void evict(Object key) {
-        // 删除的时候要先删除二级缓存再删除一级缓存，否则有并发问题
-        secondCache.evict(key);
-        // 删除一级缓存
-        if (useFirstCache) {
-            deleteFirstCache(key);
+        switch (cacheMode) {
+            case NONE:
+            {
+
+                break;
+            }
+            case ALL:
+            {
+                // 删除的时候要先删除二级缓存再删除一级缓存，否则有并发问题
+                secondCache.evict(key);
+                // 删除一级缓存
+                deleteFirstCache(key);
+                break;
+            }
+            case ONLY_FIRST:
+            {
+                deleteFirstCache(key);
+                break;
+            }
+            case ONLY_SECOND:
+            {
+                secondCache.evict(key);
+                break;
+            }
+            default: {
+
+                break;
+            }
+
         }
     }
 
     @Override
     public void clear() {
-        // 删除的时候要先删除二级缓存再删除一级缓存，否则有并发问题
-        secondCache.clear();
-        if (useFirstCache) {
-            // 清除一级缓存需要用到redis的订阅/发布模式，否则集群中其他服服务器节点的一级缓存数据无法删除
-            RedisPubSubMessage message = new RedisPubSubMessage();
-            message.setCacheName(getName());
-            message.setMessageType(ERedisPubSubMessageType.CLEAR);
-            // 发布消息
-            RedisPublisher.publisher(redisTemplate, new ChannelTopic(getName()), message);
+        switch (cacheMode) {
+            case NONE:
+            {
+
+                break;
+            }
+            case ALL:
+            {
+                // 删除的时候要先删除二级缓存再删除一级缓存，否则有并发问题
+                secondCache.clear();
+
+                // 清除一级缓存需要用到redis的订阅/发布模式，否则集群中其他服服务器节点的一级缓存数据无法删除
+                RedisPubSubMessage message = new RedisPubSubMessage();
+                message.setCacheName(getName());
+                message.setMessageType(ERedisPubSubMessageType.CLEAR);
+                // 发布消息
+                RedisPublisher.publisher(redisTemplate, new ChannelTopic(getName()), message);
+                break;
+            }
+            case ONLY_FIRST:
+            {
+                // 清除一级缓存需要用到redis的订阅/发布模式，否则集群中其他服服务器节点的一级缓存数据无法删除
+                RedisPubSubMessage message = new RedisPubSubMessage();
+                message.setCacheName(getName());
+                message.setMessageType(ERedisPubSubMessageType.CLEAR);
+                // 发布消息
+                RedisPublisher.publisher(redisTemplate, new ChannelTopic(getName()), message);
+                break;
+            }
+            case ONLY_SECOND:
+            {
+                secondCache.clear();
+                break;
+            }
+            default: {
+
+                break;
+            }
+
         }
     }
 

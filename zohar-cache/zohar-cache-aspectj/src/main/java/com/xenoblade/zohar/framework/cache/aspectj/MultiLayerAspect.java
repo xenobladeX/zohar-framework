@@ -33,6 +33,7 @@ import com.xenoblade.zohar.framework.cache.aspectj.expression.CacheOperationExpr
 import com.xenoblade.zohar.framework.cache.aspectj.support.CacheOperationInvoker;
 import com.xenoblade.zohar.framework.cache.aspectj.support.KeyGenerator;
 import com.xenoblade.zohar.framework.cache.aspectj.support.SimpleKeyGenerator;
+import com.xenoblade.zohar.framework.cache.core.cache.AbstractValueAdaptingCache.LoaderCacheValueException;
 import com.xenoblade.zohar.framework.cache.core.cache.Cache;
 import com.xenoblade.zohar.framework.cache.core.config.FirstCacheConfig;
 import com.xenoblade.zohar.framework.cache.core.config.MultiLayerCacheConfig;
@@ -127,6 +128,9 @@ public class MultiLayerAspect {
                 return aopAllianceInvoker.invoke();
             }
             throw e;
+        } catch (LoaderCacheValueException e) {
+
+            throw e.getEx();
         } catch (Exception e) {
             // 忽略操作缓存过程中遇到的异常
             if (cacheableOperation.isIgnoreException()) {

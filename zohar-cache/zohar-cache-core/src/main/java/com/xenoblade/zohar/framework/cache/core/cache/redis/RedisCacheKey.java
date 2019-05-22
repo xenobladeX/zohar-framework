@@ -104,12 +104,29 @@ public class RedisCacheKey {
     public byte[] getKeyBytes() {
 
         byte[] rawKey = serializeKeyElement();
-        if (EHashType.NONE == hashType) {
-            // 如果不做哈希，则使用编码方法
-            rawKey = encode(rawKey, encodeType);
+
+        if (keyElement.getClass() == int.class ||
+                keyElement.getClass() == char.class ||
+                keyElement.getClass() == char[].class ||
+                keyElement.getClass() == long.class ||
+                keyElement.getClass() == float.class ||
+                keyElement.getClass() == double.class ||
+                keyElement.getClass() == boolean.class ||
+                keyElement instanceof Integer ||
+                keyElement instanceof Long ||
+                keyElement instanceof Float ||
+                keyElement instanceof Double ||
+                keyElement instanceof Boolean ||
+                keyElement instanceof String) {
+
         } else {
-            // 直接进行哈希算法
-            rawKey = hash(rawKey, hashType);
+            if (EHashType.NONE == hashType) {
+                // 如果不做哈希，则使用编码方法
+                rawKey = encode(rawKey, encodeType);
+            } else {
+                // 直接进行哈希算法
+                rawKey = hash(rawKey, hashType);
+            }
         }
 
         if (!usePrefix) {
@@ -156,6 +173,9 @@ public class RedisCacheKey {
     }
 
     private byte[] hash(byte[] bytes, EHashType hashType) {
+        if (bytes.length == 0) {
+            return new byte[0];
+        }
         byte[] hashBytes = Arrays.copyOf(bytes, bytes.length);
         switch (hashType) {
             case MD5: {

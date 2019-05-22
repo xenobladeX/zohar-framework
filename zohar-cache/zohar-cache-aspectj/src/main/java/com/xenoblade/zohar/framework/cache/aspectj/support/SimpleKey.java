@@ -20,7 +20,6 @@ import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 import java.io.Serializable;
-import java.lang.reflect.Method;
 import java.util.Arrays;
 
 /**
@@ -34,8 +33,6 @@ public class SimpleKey implements Serializable {
 
     private static final long serialVersionUID = 7860535724041259057L;
 
-    private final String methodStr;
-
     private final Object[] params;
 
     private final int hashCode;
@@ -46,20 +43,18 @@ public class SimpleKey implements Serializable {
      *
      * @param elements the elements of the key
      */
-    public SimpleKey(Method method, Object... elements) {
+    public SimpleKey( Object... elements) {
         Assert.notNull(elements, "Elements must not be null");
         this.params = new Object[elements.length];
         System.arraycopy(elements, 0, this.params, 0, elements.length);
         int hashCode = Arrays.deepHashCode(this.params);
-        this.methodStr = method.toString();
-        this.hashCode = hashCode * 59 + (this.methodStr == null ? 43 : this.methodStr.hashCode());
+        this.hashCode = hashCode;
     }
 
     @Override
     public boolean equals(Object obj) {
-        return (this == obj || (obj instanceof SimpleKey
-                && this.methodStr.equals(((SimpleKey) obj).methodStr)) &&
-                Arrays.deepEquals(this.params, ((SimpleKey) obj).params));
+        return (this == obj || (obj instanceof SimpleKey &&
+                Arrays.deepEquals(this.params, ((SimpleKey) obj).params)));
     }
 
     @Override
@@ -70,9 +65,7 @@ public class SimpleKey implements Serializable {
     @Override
     public String toString() {
         StringBuilder toString = new StringBuilder(getClass().getSimpleName());
-        toString.append("(method=")
-                .append(this.methodStr)
-                .append(", params=").append("[")
+        toString.append("(params=[")
                 .append(StringUtils.arrayToCommaDelimitedString(this.params))
                 .append("])");
         return toString.toString();

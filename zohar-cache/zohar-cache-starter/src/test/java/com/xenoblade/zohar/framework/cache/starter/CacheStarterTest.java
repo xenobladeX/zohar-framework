@@ -41,14 +41,14 @@ import java.util.concurrent.TimeUnit;
 import static cn.hutool.core.thread.ThreadUtil.sleep;
 
 /**
- * CacheAspectTest
+ * CacheStarterTest
  * @author xenoblade
  * @since 1.0.0
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = {CacheAspectTest.CacheAspectTestApplication.class})
+@SpringBootTest(classes = {CacheStarterTest.CacheAspectTestApplication.class})
 @Slf4j
-public class CacheAspectTest {
+public class CacheStarterTest {
 
     @Autowired
     private TestService testService;
@@ -87,8 +87,8 @@ public class CacheAspectTest {
         user = testService.getUserNoKey(userId, lastName);
         sleep(4, TimeUnit.SECONDS);
         user = testService.getUserNoKey(userId, lastName);
-        sleep(10, TimeUnit.SECONDS);
-        Object result = redisTemplate.opsForValue().get("user-info:113:113");
+        sleep(11, TimeUnit.SECONDS);
+        Object result = redisTemplate.opsForValue().get("user-info:963613814018492c0549bed99c201c86");
         Assert.assertNull(result);
 
         user = testService.getUserNoKey(userId, lastName);
@@ -493,7 +493,6 @@ public class CacheAspectTest {
         public static void main(String[] args) {
             SpringApplication.run(CacheAspectTestApplication.class, args);
         }
-
 
     }
 

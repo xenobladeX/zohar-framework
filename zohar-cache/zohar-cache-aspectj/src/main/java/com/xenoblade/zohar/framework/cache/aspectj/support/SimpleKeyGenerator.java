@@ -40,7 +40,7 @@ public class SimpleKeyGenerator implements KeyGenerator {
 
     @Override
     public Object generate(Object target, Method method, Object... params) {
-        return generateKey(method, params);
+        return generateKey(params);
     }
 
     /**
@@ -49,8 +49,8 @@ public class SimpleKeyGenerator implements KeyGenerator {
      * @param params params
      * @return Object
      */
-    public static Object generateKey(Method method, Object... params) {
-        return new SimpleKey(method, params);
+    public static Object generateKey(Object... params) {
+        return new SimpleKey(params);
     }
 
 }

@@ -111,13 +111,20 @@ public abstract class AbstractValueAdaptingCache implements Cache{
 
         private final Object key;
 
+        private final Throwable ex;
+
         public LoaderCacheValueException(Object key, Throwable ex) {
             super(String.format("加载key为 %s 的缓存数据,执行被缓存方法异常", JacksonUtil.toJson(key)), ex);
             this.key = key;
+            this.ex = ex;
         }
 
         public Object getKey() {
             return this.key;
+        }
+
+        public Throwable getEx() {
+            return ex;
         }
     }
 
