@@ -205,7 +205,7 @@ public class MultiLayerAspect {
         // 从解决中获取缓存配置
         FirstCache firstCache = cacheableOperation.getFirstCache();
         SecondaryCache secondaryCache = cacheableOperation.getSecondaryCache();
-        FirstCacheConfig firstCacheConfig = secondaryCache == null ? null :
+        FirstCacheConfig firstCacheConfig = firstCache == null ? null :
                 new FirstCacheConfig(firstCache.initialCapacity(), firstCache.maximumSize(),
                         firstCache.expireTime(), firstCache.timeUnit(), firstCache.expireMode());
 

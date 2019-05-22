@@ -113,7 +113,7 @@ public abstract class AbstractCacheManager
     // Lazy cache initialization on access
     @Override
     public Cache getCache(String name, MultiLayerCacheConfig multiLayerCacheConfig) {
-        parseMultiLayerCacheConfig(multiLayerCacheConfig);
+        parseMultiLayerCacheConfig(name, multiLayerCacheConfig);
         // 第一次获取缓存Cache，如果有直接返回,如果没有加锁往容器里里面放Cache
         ConcurrentMap<String, Cache> cacheMap = this.cacheContainer.get(name);
         if (!CollectionUtils.isEmpty(cacheMap)) {
@@ -195,7 +195,7 @@ public abstract class AbstractCacheManager
     protected abstract Cache getMissingCache(String name, MultiLayerCacheConfig multiLayerCacheConfig);
 
 
-    protected abstract void parseMultiLayerCacheConfig(MultiLayerCacheConfig multiLayerCacheConfig);
+    protected abstract void parseMultiLayerCacheConfig(String name, MultiLayerCacheConfig multiLayerCacheConfig);
 
 
     /**

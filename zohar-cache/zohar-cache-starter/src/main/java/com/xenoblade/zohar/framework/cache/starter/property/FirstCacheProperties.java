@@ -16,52 +16,44 @@
  */
 package com.xenoblade.zohar.framework.cache.starter.property;
 
-import com.xenoblade.zohar.framework.cache.core.support.ECacheMode;
-import com.xenoblade.zohar.framework.cache.core.support.EEncodeType;
 import com.xenoblade.zohar.framework.cache.core.support.EExpireMode;
-import com.xenoblade.zohar.framework.cache.core.support.EHashType;
 import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
 import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 
 /**
- * MultiLayerCacheProperties
+ * FirstCacheProperties
  * @author xenoblade
  * @since 1.0.0
  */
-@ConfigurationProperties(prefix = "zohar.multi-layer-cache")
 @Data
-public class MultiLayerCacheProperties implements Serializable{
+public class FirstCacheProperties implements Serializable {
 
-    private static final long serialVersionUID = -1851585837066249652L;
+    private static final long serialVersionUID = 3590707686623423702L;
     /**
-     * 是否开启缓存统计（全局）
+     * 缓存初始Size
      */
-    private Boolean stats = true;
-
-    /**
-     * cache 模式
-     */
-    private ECacheMode cacheMode = ECacheMode.ALL;
+    private int initialCapacity = 10;
 
     /**
-     * 缓存名
+     * 缓存最大Size
      */
-    private String cacheName = "zohar-cache";
+    private int maximumSize = 500;
 
     /**
-     * 一级缓存配置
+     * 缓存有效时间
      */
-    @NestedConfigurationProperty
-    private FirstCacheProperties firstCache = new FirstCacheProperties();
+    private int expireTime = 9;
 
     /**
-     * 二级缓存配置
+     * 缓存时间单位
      */
-    @NestedConfigurationProperty
-    private SecnodaryCacheProperties secnodaryCache = new SecnodaryCacheProperties();
+    private TimeUnit timeUnit = TimeUnit.MILLISECONDS;
+
+    /**
+     * 缓存失效模式{@link EExpireMode}
+     */
+    private EExpireMode expireMode = EExpireMode.WRITE;
 
 }

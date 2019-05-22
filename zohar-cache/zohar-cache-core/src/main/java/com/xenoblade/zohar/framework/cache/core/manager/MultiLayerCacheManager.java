@@ -16,6 +16,7 @@
  */
 package com.xenoblade.zohar.framework.cache.core.manager;
 
+import cn.hutool.core.util.StrUtil;
 import com.xenoblade.zohar.framework.cache.core.cache.Cache;
 import com.xenoblade.zohar.framework.cache.core.cache.MultiLayerCache;
 import com.xenoblade.zohar.framework.cache.core.cache.caffeine.CaffeineCache;
@@ -36,6 +37,12 @@ public class MultiLayerCacheManager extends AbstractCacheManager{
     @Setter
     private MultiLayerCacheConfig defaultMultiLayerCacheConfig;
 
+    /**
+     * 缓存名
+     */
+    @Setter
+    private String cacheName;
+
     public MultiLayerCacheManager(RedisTemplate<String, Object> redisTemplate, RedissonClient redissonClient) {
         this.redisTemplate = redisTemplate;
         this.redissonClient = redissonClient;
@@ -52,9 +59,10 @@ public class MultiLayerCacheManager extends AbstractCacheManager{
     }
 
     @Override protected void parseMultiLayerCacheConfig(
-            MultiLayerCacheConfig multiLayerCacheConfig) {
-
-
+            String name, MultiLayerCacheConfig multiLayerCacheConfig) {
+        if (StrUtil.isBlank(name)) {
+            name = cacheName;
+        }
         if (multiLayerCacheConfig.getCacheMode() == null) {
             multiLayerCacheConfig.setCacheMode(defaultMultiLayerCacheConfig.getCacheMode());
         }

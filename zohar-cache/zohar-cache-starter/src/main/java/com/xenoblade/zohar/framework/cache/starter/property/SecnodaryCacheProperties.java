@@ -16,52 +16,72 @@
  */
 package com.xenoblade.zohar.framework.cache.starter.property;
 
-import com.xenoblade.zohar.framework.cache.core.support.ECacheMode;
 import com.xenoblade.zohar.framework.cache.core.support.EEncodeType;
-import com.xenoblade.zohar.framework.cache.core.support.EExpireMode;
 import com.xenoblade.zohar.framework.cache.core.support.EHashType;
 import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
 import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 
 /**
- * MultiLayerCacheProperties
+ * SecnodaryCacheProperties
  * @author xenoblade
  * @since 1.0.0
  */
-@ConfigurationProperties(prefix = "zohar.multi-layer-cache")
 @Data
-public class MultiLayerCacheProperties implements Serializable{
+public class SecnodaryCacheProperties implements Serializable {
 
-    private static final long serialVersionUID = -1851585837066249652L;
-    /**
-     * 是否开启缓存统计（全局）
-     */
-    private Boolean stats = true;
+    private static final long serialVersionUID = -2141649760949886679L;
 
     /**
-     * cache 模式
+     * 缓存有效时间
      */
-    private ECacheMode cacheMode = ECacheMode.ALL;
+    private long expiration = 5;
 
     /**
-     * 缓存名
+     * 缓存主动在失效前强制刷新缓存的时间
      */
-    private String cacheName = "zohar-cache";
+    private long preloadTime = 1;
 
     /**
-     * 一级缓存配置
+     * 时间单位 {@link TimeUnit}
      */
-    @NestedConfigurationProperty
-    private FirstCacheProperties firstCache = new FirstCacheProperties();
+    private TimeUnit timeUnit = TimeUnit.HOURS;
 
     /**
-     * 二级缓存配置
+     * 是否强制刷新（走数据库），默认是false
      */
-    @NestedConfigurationProperty
-    private SecnodaryCacheProperties secnodaryCache = new SecnodaryCacheProperties();
+    private boolean forceRefresh = false;
+
+    /**
+     * 是否使用缓存名称作为 redis key 前缀
+     */
+    private boolean usePrefix = true;
+
+    /**
+     * 是否允许存NULL值
+     */
+    boolean allowNullValue = false;
+
+    /**
+     * Key 的编码方式
+     */
+    private EEncodeType keyEncodeType = EEncodeType.NONE;
+
+
+    /**
+     * Key 的hash 方式
+     */
+    private EHashType keyHashType = EHashType.NONE;
+
+
+    /**
+     * 非空值和null值之间的时间倍率，默认是1。allowNullValue=true才有效
+     * <p>
+     * 如配置缓存的有效时间是200秒，倍率设置成10，
+     * 那么当缓存value为null时，缓存的有效时间将是20秒，非空时为200秒
+     * </p>
+     */
+    int magnification = 1;
 
 }

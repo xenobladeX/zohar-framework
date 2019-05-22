@@ -21,6 +21,7 @@ logging:
     com.xenoblade.zohar.framework.cache: debug
 
 zohar:
+
 #  redis:
 #    objct-template:
 #      key-serial: kryo
@@ -28,6 +29,7 @@ zohar:
 #    string-template:
 #      key-serial: string
 #      value-serial: string
+
   multi-layer-cache:
     stats: true
     cache-mode: all

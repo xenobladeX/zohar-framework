@@ -22,9 +22,9 @@ import com.xenoblade.zohar.framework.cache.core.config.MultiLayerCacheConfig;
 import com.xenoblade.zohar.framework.cache.core.config.SecondaryCacheConfig;
 import com.xenoblade.zohar.framework.cache.core.manager.CacheManager;
 import com.xenoblade.zohar.framework.cache.core.manager.MultiLayerCacheManager;
+import com.xenoblade.zohar.framework.cache.starter.property.FirstCacheProperties;
 import com.xenoblade.zohar.framework.cache.starter.property.MultiLayerCacheProperties;
-import com.xenoblade.zohar.framework.cache.starter.property.MultiLayerCacheProperties.FirstCacheProperties;
-import com.xenoblade.zohar.framework.cache.starter.property.MultiLayerCacheProperties.SecnodaryCacheProperties;
+import com.xenoblade.zohar.framework.cache.starter.property.SecnodaryCacheProperties;
 import com.xenoblade.zohar.framework.redis.starter.RedisTemplateConfiguration;
 import org.redisson.api.RedissonClient;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -55,6 +55,7 @@ public class MultiLayerCacheAutoConfiguration {
         MultiLayerCacheManager multiLayerCacheManager = new MultiLayerCacheManager(redisTemplate, redissonClient);
         // 开启统计功能
         multiLayerCacheManager.setStats(multiLayerCacheProperties.getStats());
+        multiLayerCacheManager.setCacheName(multiLayerCacheProperties.getCacheName());
 
         // set defaultMultiLayerCacheConfig
         MultiLayerCacheConfig defaultMultiLayerCacheConfig = new MultiLayerCacheConfig();

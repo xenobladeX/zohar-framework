@@ -66,6 +66,5 @@ public interface CacheManager {
      * 重置缓存统计数据
      */
     void resetCacheStat();
-
-
+    
 }
