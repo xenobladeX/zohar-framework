@@ -89,7 +89,7 @@ public class UserServiceImpl implements IUserService{
 
     @CachePut(key = "#updateUserRequest.userId")
     @Override
-    public void updateUser(UpdateUserRequest updateUserRequest) throws ZoharException{
+    public UserDTO updateUser(UpdateUserRequest updateUserRequest) throws ZoharException{
         log.info("Update user: {}", updateUserRequest);
         UserEntity userEntity = localUsers.entrySet().stream().map(Map.Entry::getValue)
                 .filter(user -> updateUserRequest.getUserId().equals(user.getUserId()))
@@ -111,13 +111,14 @@ public class UserServiceImpl implements IUserService{
         }
 
         localUsers.put(userEntity.getUserId(), userEntity);
+        return UserConverter.INSTANCE.userEntityToUserDTO(userEntity);
     }
 
     @CacheEvict(key = "#removeUserRequest.userId")
     @Override
     public void removeUser(RemoveUserRequest removeUserRequest) throws ZoharException{
         log.info("Remove user: {}", removeUserRequest);
-        Optional.of(localUsers.remove(removeUserRequest.getUserId()))
+        Optional.ofNullable(localUsers.remove(removeUserRequest.getUserId()))
                 .orElseThrow(NotFoundException::new);
     }
 }

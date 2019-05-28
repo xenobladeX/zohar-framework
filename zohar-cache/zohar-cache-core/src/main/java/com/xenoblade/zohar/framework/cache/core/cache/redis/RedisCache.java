@@ -274,6 +274,9 @@ public class RedisCache extends AbstractValueAdaptingCache {
                 // 线程等待
                 log.debug("redis缓存 key= {} 从数据库获取数据未获取到锁，进入等待状态，等待{}毫秒", redisCacheKey.getKey(), WAIT_TIME);
                 container.await(redisCacheKey.getKey(), WAIT_TIME);
+            } catch (LoaderCacheValueException e) {
+                container.signalAll(redisCacheKey.getKey());
+                throw e;
             } catch (Exception e) {
                 container.signalAll(redisCacheKey.getKey());
                 throw new LoaderCacheValueException(redisCacheKey.getKey(), e);

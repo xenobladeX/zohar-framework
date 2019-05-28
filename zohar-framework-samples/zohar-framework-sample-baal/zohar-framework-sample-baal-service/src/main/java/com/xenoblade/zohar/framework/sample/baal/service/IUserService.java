@@ -35,7 +35,7 @@ public interface IUserService {
 
     UserDTO saveUser(SaveUserRequest saveUserRequest)throws ZoharException;
 
-    void updateUser(UpdateUserRequest updateUserRequest)throws ZoharException;
+    UserDTO updateUser(UpdateUserRequest updateUserRequest)throws ZoharException;
 
     void removeUser(RemoveUserRequest removeUserRequest)throws ZoharException;
 

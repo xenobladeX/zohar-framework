@@ -65,9 +65,10 @@ public class UserController {
         return ResponseMessage.ok();
     }
 
-    @PutMapping
-    public ResponseMessage updateUser(@Validated @RequestBody UpdateUserRequest updateUserRequest) {
-
+    @PutMapping("/{id}")
+    public ResponseMessage updateUser(@NotBlank(message = "用户id不能为空") @PathVariable String id,
+                                          @Validated @RequestBody UpdateUserRequest updateUserRequest) {
+        updateUserRequest.setUserId(id);
         userService.updateUser(updateUserRequest);
         return ResponseMessage.ok();
     }

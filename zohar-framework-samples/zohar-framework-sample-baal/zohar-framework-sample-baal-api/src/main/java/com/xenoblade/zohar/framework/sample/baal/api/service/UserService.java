@@ -83,7 +83,6 @@ public interface UserService {
         /**
          * 用户 id
          */
-        @NotBlank(message = "用户id不能为空")
         private String userId;
 
         /**

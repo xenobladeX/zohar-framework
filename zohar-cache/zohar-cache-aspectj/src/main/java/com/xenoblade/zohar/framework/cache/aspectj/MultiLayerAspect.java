@@ -124,8 +124,12 @@ public class MultiLayerAspect {
             }
             throw e;
         } catch (LoaderCacheValueException e) {
-
-            throw e.getEx();
+            if (e.getEx() instanceof CacheOperationInvoker.ThrowableWrapperException) {
+                CacheOperationInvoker.ThrowableWrapperException ex = (CacheOperationInvoker.ThrowableWrapperException)e.getEx();
+                throw ex.getOriginal();
+            } else {
+                throw e.getEx();
+            }
         } catch (Exception e) {
             // 忽略操作缓存过程中遇到的异常
             if (cacheableOperation.isIgnoreException()) {
@@ -148,6 +152,9 @@ public class MultiLayerAspect {
         try {
             // 执行查询缓存方法
             return executeEvict(aopAllianceInvoker, cacheEvictOperation, method, joinPoint.getArgs(), joinPoint.getTarget());
+        } catch (CacheOperationInvoker.ThrowableWrapperException e) {
+            // 执行中出现错误
+            throw e.getOriginal();
         } catch (Exception e) {
             // 忽略操作缓存过程中遇到的异常
             if (cacheEvictOperation.isIgnoreException()) {
@@ -170,6 +177,9 @@ public class MultiLayerAspect {
         try {
             // 执行查询缓存方法
             return executePut(aopAllianceInvoker, cachePutOperation, method, joinPoint.getArgs(), joinPoint.getTarget());
+        } catch (CacheOperationInvoker.ThrowableWrapperException e) {
+            // 执行中出现错误
+            throw e.getOriginal();
         } catch (Exception e) {
             // 忽略操作缓存过程中遇到的异常
             if (cachePutOperation.isIgnoreException()) {
