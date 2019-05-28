@@ -11,9 +11,9 @@ spring:
     # Redis服务器连接端口
     port: 6379
     # Redis服务器连接密码（默认为空）
-    password:
+#    password:
     # 连接超时时间（毫秒）
-    timeout:
+#    timeout:
 
 server:
   port: 1866
@@ -37,13 +37,26 @@ management:
         include: '*'
 
 zohar:
-  redis:
-    objct-template:
-      key-serial: kryo
-      value-serial: fastjson
-    string-template:
-      key-serial: string
-      value-serial: string
-    redisson:
-      config: classpath:redisson.yml
+
+#  redis:
+#    objct-template:
+#      key-serial: kryo
+#      value-serial: fastjson
+#    string-template:
+#      key-serial: string
+#      value-serial: string
+
+  multi-layer-cache:
+    cache-name: zohar-cache
+    stats: false
+    cache-mode: all
+#    first-cache:
+#      expire-time: 4
+#      time-unit: seconds
+#    secnodary-cache:
+#      key-hash-type: md5
+#      expiration: 10
+#      preload-time: 3
+#      force-refresh: true
+#      time-unit: seconds
 

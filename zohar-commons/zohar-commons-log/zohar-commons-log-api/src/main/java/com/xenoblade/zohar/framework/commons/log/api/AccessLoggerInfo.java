@@ -99,7 +99,7 @@ public class AccessLoggerInfo implements Serializable{
     /**
      * 异常信息,请求对应方法抛出的异常
      */
-    @JsonSerialize(as = Exception.class, using = ExceptionSerizlizer.class)
+    @JsonSerialize(as = Throwable.class, using = ExceptionSerizlizer.class)
     private Throwable exception;
 
     @JsonProperty("method")

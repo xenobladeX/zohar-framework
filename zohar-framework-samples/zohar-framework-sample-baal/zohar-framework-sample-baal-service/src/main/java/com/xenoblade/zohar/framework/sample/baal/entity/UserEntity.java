@@ -14,46 +14,73 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.cache.starter.property;
+package com.xenoblade.zohar.framework.sample.baal.entity;
 
-import com.xenoblade.zohar.framework.cache.core.support.EExpireMode;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.concurrent.TimeUnit;
+import java.time.LocalDateTime;
 
 /**
- * FirstCacheProperties
+ * UserEntity
  * @author xenoblade
  * @since 1.0.0
  */
 @Data
-public class FirstCacheProperties implements Serializable {
+@Accessors(chain = true)
+public class UserEntity implements Serializable{
 
-    private static final long serialVersionUID = 3590707686623423702L;
-    /**
-     * 缓存初始Size
-     */
-    private int initialCapacity = 10;
+    private static final long serialVersionUID = 2936587197573601290L;
 
     /**
-     * 缓存最大Size
+     * 数据库自增 id
      */
-    private int maximumSize = 500;
+    private Long id;
 
     /**
-     * 缓存有效时间
+     * 用户 id
      */
-    private int expireTime = 9;
+    private String userId;
 
     /**
-     * 缓存时间单位
+     * 用户名
      */
-    private TimeUnit timeUnit = TimeUnit.MINUTES;
+    private String username;
 
     /**
-     * 缓存失效模式{@link EExpireMode}
+     * 密码
      */
-    private EExpireMode expireMode = EExpireMode.WRITE;
+    private String password;
+
+    /**
+     * 盐
+     */
+    private String salt;
+
+    /**
+     * 电话号码
+     */
+    private String phone;
+
+    /**
+     * 邮箱地址
+     */
+    private String email;
+
+    /**
+     * 逻辑删除
+     */
+    private Integer isDeleted;
+
+    /**
+     * 创建时间
+     */
+    private LocalDateTime createTime;
+
+    /**
+     * 更新时间
+     */
+    private LocalDateTime updateTime;
 
 }

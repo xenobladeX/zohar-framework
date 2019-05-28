@@ -51,11 +51,18 @@ public class FirstCacheConfig implements Serializable{
     /**
      * 缓存时间单位
      */
-    private TimeUnit timeUnit = TimeUnit.MILLISECONDS;
+    private TimeUnit timeUnit = TimeUnit.MINUTES;
 
     /**
      * 缓存失效模式{@link EExpireMode}
      */
     private EExpireMode expireMode = EExpireMode.WRITE;
+
+    public String internalKey() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("expireTime=").append(this.timeUnit.toMillis(expireTime));
+
+        return stringBuilder.toString();
+    }
 
 }

@@ -397,7 +397,6 @@ public class CacheStarterTest {
             Assert.assertNotNull(e);
             return;
         }
-        Assert.assertTrue(false);
     }
 
     @Test

@@ -16,12 +16,7 @@
  */
 package com.xenoblade.zohar.framework.cache.aspectj;
 
-import cn.hutool.core.annotation.AnnotationUtil;
 import cn.hutool.core.util.StrUtil;
-import com.xenoblade.zohar.framework.cache.aspectj.annotation.CacheConfig;
-import com.xenoblade.zohar.framework.cache.aspectj.annotation.CacheEvict;
-import com.xenoblade.zohar.framework.cache.aspectj.annotation.CachePut;
-import com.xenoblade.zohar.framework.cache.aspectj.annotation.Cacheable;
 import com.xenoblade.zohar.framework.cache.aspectj.annotation.FirstCache;
 import com.xenoblade.zohar.framework.cache.aspectj.annotation.SecondaryCache;
 import com.xenoblade.zohar.framework.cache.aspectj.annotation.operation.CacheEvictOperation;
@@ -203,7 +198,7 @@ public class MultiLayerAspect {
         String[] cacheNames = cacheableOperation.getCacheNames();
         Assert.notEmpty(cacheNames, CACHE_NAME_ERROR_MESSAGE);
         String cacheName = cacheNames[0];
-        Object key = generateKey(cacheableOperation.getKey(), method, args, target);
+        Object key = generateKey(cacheableOperation.getKey(), method, args, target, null);
         Assert.notNull(key, String.format(CACHE_KEY_ERROR_MESSAGE, cacheableOperation.getKey()));
 
         // 从解决中获取缓存配置
@@ -280,17 +275,14 @@ public class MultiLayerAspect {
 
         String[] cacheNames = cachePutOperation.getCacheNames();
         Assert.notEmpty(cachePutOperation.getCacheNames(), CACHE_NAME_ERROR_MESSAGE);
-        // 解析SpEL表达式获取 key
-        Object key = generateKey(cachePutOperation.getKey(), method, args, target);
-        Assert.notNull(key, String.format(CACHE_KEY_ERROR_MESSAGE, cachePutOperation.getKey()));
 
         // 从解决中获取缓存配置
         FirstCache firstCache = cachePutOperation.getFirstCache();
         SecondaryCache secondaryCache = cachePutOperation.getSecondaryCache();
-        FirstCacheConfig firstCacheConfig = new FirstCacheConfig(firstCache.initialCapacity(), firstCache.maximumSize(),
+        FirstCacheConfig firstCacheConfig = firstCache == null ? null : new FirstCacheConfig(firstCache.initialCapacity(), firstCache.maximumSize(),
                 firstCache.expireTime(), firstCache.timeUnit(), firstCache.expireMode());
 
-        SecondaryCacheConfig secondaryCacheConfig = new SecondaryCacheConfig(secondaryCache.expireTime(),
+        SecondaryCacheConfig secondaryCacheConfig = secondaryCache == null ? null : new SecondaryCacheConfig(secondaryCache.expireTime(),
                 secondaryCache.preloadTime(), secondaryCache.timeUnit(), secondaryCache.forceRefresh(),
                 secondaryCache.isAllowNullValue(), secondaryCache.magnification(), secondaryCache.keyEncodeType(), secondaryCache.keyHashType());
 
@@ -299,6 +291,10 @@ public class MultiLayerAspect {
 
         // 指定调用方法获取缓存值
         Object result = invoker.invoke();
+
+        // 解析SpEL表达式获取 key
+        Object key = generateKey(cachePutOperation.getKey(), method, args, target, result);
+        Assert.notNull(key, String.format(CACHE_KEY_ERROR_MESSAGE, cachePutOperation.getKey()));
 
         for (String cacheName : cacheNames) {
             // 通过cacheName和缓存配置获取Cache
@@ -319,7 +315,7 @@ public class MultiLayerAspect {
      * @param target     目标类
      */
     private void delete(String[] cacheNames, String keySpEL, Method method, Object[] args, Object target) {
-        Object key = generateKey(keySpEL, method, args, target);
+        Object key = generateKey(keySpEL, method, args, target, null);
         Assert.notNull(key, StrUtil.format(CACHE_KEY_ERROR_MESSAGE, keySpEL));
         for (String cacheName : cacheNames) {
             Collection<Cache> caches = cacheManager.getCache(cacheName);
@@ -345,13 +341,13 @@ public class MultiLayerAspect {
      *
      * @return Object
      */
-    private Object generateKey(String keySpEl, Method method, Object[] args, Object target) {
+    private Object generateKey(String keySpEl, Method method, Object[] args, Object target, Object result) {
 
         // 获取注解上的key属性值
         Class<?> targetClass = getTargetClass(target);
         if (StringUtils.hasText(keySpEl)) {
             EvaluationContext evaluationContext = evaluator.createEvaluationContext(method, args, target,
-                    targetClass, CacheOperationExpressionEvaluator.NO_RESULT);
+                    targetClass, result == null ? CacheOperationExpressionEvaluator.NO_RESULT : result);
 
             AnnotatedElementKey methodCacheKey = new AnnotatedElementKey(method, targetClass);
             // 兼容传null值得情况

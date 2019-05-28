@@ -32,6 +32,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -55,7 +56,6 @@ public class CacheAspectTest {
 
     @Autowired
     private RedisTemplate redisTemplate;
-
 
     @Test
     public void testGetUserNameLongParam() {

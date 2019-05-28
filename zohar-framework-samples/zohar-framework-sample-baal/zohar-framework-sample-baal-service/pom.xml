@@ -38,11 +38,26 @@
 
         <dependency>
             <groupId>com.xenoblade</groupId>
+            <artifactId>zohar-cache-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.xenoblade</groupId>
             <artifactId>zohar-framework-sample-baal-api</artifactId>
             <version>${project.version}</version>
         </dependency>
 
 
+        <!--mapstruct-->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
     </dependencies>
 

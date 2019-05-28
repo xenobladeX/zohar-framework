@@ -75,13 +75,11 @@ public class MultiLayerCacheConfig implements Serializable{
         // 一级缓存有效时间-二级缓存有效时间-二级缓存自动刷新时间
         StringBuilder sb = new StringBuilder();
         if (firstCacheConfig != null) {
-            sb.append(firstCacheConfig.getTimeUnit().toMillis(firstCacheConfig.getExpireTime()));
+            sb.append(firstCacheConfig.internalKey());
         }
         sb.append(ECacheConstants.REDIS_KEY_INNER_SPLIT);
         if (secondaryCacheConfig != null) {
-            sb.append(secondaryCacheConfig.getTimeUnit().toMillis(secondaryCacheConfig.getExpiration()));
-            sb.append(ECacheConstants.REDIS_KEY_INNER_SPLIT);
-            sb.append(secondaryCacheConfig.getTimeUnit().toMillis(secondaryCacheConfig.getPreloadTime()));
+            sb.append(secondaryCacheConfig.internalKey());
         }
         internalKey = sb.toString();
     }

@@ -47,7 +47,7 @@ public class BaalServiceImpl implements IBaalService{
     private static String TEST_REDIS_KEY = "test:redis:key";
 
     @Autowired
-    private RedisTemplate<Object, Object> redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Override
     public HelloBaalResponse testRest(HelloBaalRequest request) {
@@ -82,7 +82,7 @@ public class BaalServiceImpl implements IBaalService{
     }
 
     @Override public RedisStoreObject testRedis(RedisStoreObject storeObject) {
-        redisTemplate.opsForValue().set(storeObject, storeObject);
+        redisTemplate.opsForValue().set(TEST_REDIS_KEY + storeObject.getStr(), storeObject);
 
         return Optional
                 .ofNullable((RedisStoreObject) redisTemplate.opsForValue().get(storeObject))

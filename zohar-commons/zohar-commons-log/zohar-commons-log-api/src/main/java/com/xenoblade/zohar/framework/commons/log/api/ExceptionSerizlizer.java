@@ -30,16 +30,16 @@ import java.io.StringWriter;
  * @author xenoblade
  * @since 1.0.0
  */
-public class ExceptionSerizlizer extends JsonSerializer<Exception> {
+public class ExceptionSerizlizer extends JsonSerializer<Throwable> {
 
-    @Override public void serialize(Exception e, JsonGenerator jsonGenerator,
+    @Override public void serialize(Throwable e, JsonGenerator jsonGenerator,
                                     SerializerProvider serializerProvider) throws IOException {
         StringWriter errors = new StringWriter();
         e.printStackTrace(new PrintWriter(errors));
         jsonGenerator.writeString(errors.toString());
     }
 
-    @Override public void serializeWithType(Exception value, JsonGenerator gen,
+    @Override public void serializeWithType(Throwable value, JsonGenerator gen,
                                             SerializerProvider serializers, TypeSerializer typeSer)
             throws IOException {
         super.serializeWithType(value, gen, serializers, typeSer);

@@ -38,7 +38,8 @@ public class DefaultAccessLoggerListener {
 
     private ObjectMapper accessLoggerObjectMapper;
 
-    @EventListener public void onLogger(AccessLoggerAfterEvent event) {
+    @EventListener
+    public void onLogger(AccessLoggerAfterEvent event) {
         AccessLoggerInfo info = event.getLogger();
 
         try {

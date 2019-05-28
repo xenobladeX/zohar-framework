@@ -18,6 +18,8 @@ package com.xenoblade.zohar.framework.commons.redis.serial.key;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.parser.ParserConfig;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.xenoblade.zohar.framework.commons.redis.serial.FastJsonSerializerWrapper;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -44,6 +46,6 @@ public class FastJsonStringRedisSerilizer extends AbstractStringRedisSerializer{
 
 
     @Override protected String objectToString(Object object) {
-        return JSON.toJSONString(object);
+        return JSON.toJSONString(new FastJsonSerializerWrapper(object), SerializerFeature.WriteClassName);
     }
 }

@@ -114,6 +114,11 @@
                 <artifactId>zohar-starter-redis</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.xenoblade</groupId>
+                <artifactId>zohar-cache-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <!--modules end-->
 
             <!--third party -->

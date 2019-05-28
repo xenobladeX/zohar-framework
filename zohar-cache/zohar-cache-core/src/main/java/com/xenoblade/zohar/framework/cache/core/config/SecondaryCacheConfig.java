@@ -103,4 +103,13 @@ public class SecondaryCacheConfig implements Serializable{
         this.keyHashType = keyHashType;
     }
 
+
+    public String internalKey() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("expireTime=").append(timeUnit.toMillis(expiration));
+        stringBuilder.append("preloadTime=").append(timeUnit.toMillis(preloadTime));
+
+        return stringBuilder.toString();
+    }
+
 }
