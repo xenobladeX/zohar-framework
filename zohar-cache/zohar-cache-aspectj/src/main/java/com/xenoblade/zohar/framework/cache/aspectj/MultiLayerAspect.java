@@ -203,35 +203,39 @@ public class MultiLayerAspect {
      */
     private Object executeCacheable(CacheOperationInvoker invoker, CacheableOperation cacheableOperation,
                                     Method method, Object[] args, Object target) {
+        if(estimateCondition(cacheableOperation.getCondition(), method, args, target, null)) {
+            // 解析SpEL表达式获取cacheName和key
+            String[] cacheNames = cacheableOperation.getCacheNames();
+            Assert.notEmpty(cacheNames, CACHE_NAME_ERROR_MESSAGE);
+            String cacheName = cacheNames[0];
+            Object key = generateKey(cacheableOperation.getKey(), method, args, target, null);
+            Assert.notNull(key, String.format(CACHE_KEY_ERROR_MESSAGE, cacheableOperation.getKey()));
 
-        // 解析SpEL表达式获取cacheName和key
-        String[] cacheNames = cacheableOperation.getCacheNames();
-        Assert.notEmpty(cacheNames, CACHE_NAME_ERROR_MESSAGE);
-        String cacheName = cacheNames[0];
-        Object key = generateKey(cacheableOperation.getKey(), method, args, target, null);
-        Assert.notNull(key, String.format(CACHE_KEY_ERROR_MESSAGE, cacheableOperation.getKey()));
+            // 从解决中获取缓存配置
+            FirstCache firstCache = cacheableOperation.getFirstCache();
+            SecondaryCache secondaryCache = cacheableOperation.getSecondaryCache();
+            FirstCacheConfig firstCacheConfig = firstCache == null ? null :
+                    new FirstCacheConfig(firstCache.initialCapacity(), firstCache.maximumSize(),
+                            firstCache.expireTime(), firstCache.timeUnit(), firstCache.expireMode());
 
-        // 从解决中获取缓存配置
-        FirstCache firstCache = cacheableOperation.getFirstCache();
-        SecondaryCache secondaryCache = cacheableOperation.getSecondaryCache();
-        FirstCacheConfig firstCacheConfig = firstCache == null ? null :
-                new FirstCacheConfig(firstCache.initialCapacity(), firstCache.maximumSize(),
-                        firstCache.expireTime(), firstCache.timeUnit(), firstCache.expireMode());
+            SecondaryCacheConfig secondaryCacheConfig = secondaryCache == null ? null :
+                    new SecondaryCacheConfig(secondaryCache.expireTime(),
+                            secondaryCache.preloadTime(), secondaryCache.timeUnit(), secondaryCache.forceRefresh(),
+                            secondaryCache.isAllowNullValue(), secondaryCache.magnification(), secondaryCache.keyEncodeType(),
+                            secondaryCache.keyHashType());
 
-        SecondaryCacheConfig secondaryCacheConfig = secondaryCache == null ? null :
-                new SecondaryCacheConfig(secondaryCache.expireTime(),
-                        secondaryCache.preloadTime(), secondaryCache.timeUnit(), secondaryCache.forceRefresh(),
-                        secondaryCache.isAllowNullValue(), secondaryCache.magnification(), secondaryCache.keyEncodeType(),
-                        secondaryCache.keyHashType());
+            MultiLayerCacheConfig multiLayerCacheConfig = new MultiLayerCacheConfig(firstCacheConfig, secondaryCacheConfig,
+                    cacheableOperation.getDepict());
 
-        MultiLayerCacheConfig multiLayerCacheConfig = new MultiLayerCacheConfig(firstCacheConfig, secondaryCacheConfig,
-                cacheableOperation.getDepict());
+            // 通过cacheName和缓存配置获取Cache
+            Cache cache = cacheManager.getCache(cacheName, multiLayerCacheConfig);
 
-        // 通过cacheName和缓存配置获取Cache
-        Cache cache = cacheManager.getCache(cacheName, multiLayerCacheConfig);
+            // 通过Cache获取值
 
-        // 通Cache获取值
-        return cache.get(key, () -> invoker.invoke());
+            return cache.get(key, () -> invoker.invoke());
+        } else {
+            return invoker.invoke();
+        }
     }
 
 
@@ -247,26 +251,29 @@ public class MultiLayerAspect {
      */
     private Object executeEvict(CacheOperationInvoker invoker, CacheEvictOperation cacheEvictOperation,
                                 Method method, Object[] args, Object target) {
-
-        // 解析SpEL表达式获取cacheName和key
-        String[] cacheNames = cacheEvictOperation.getCacheNames();
-        Assert.notEmpty(cacheNames, CACHE_NAME_ERROR_MESSAGE);
-        // 判断是否删除所有缓存数据
-        if (cacheEvictOperation.isAllEntries()) {
-            // 删除所有缓存数据（清空）
-            for (String cacheName : cacheNames) {
-                Collection<Cache> caches = cacheManager.getCache(cacheName);
-                for (Cache cache : caches) {
-                    cache.clear();
+        if(estimateCondition(cacheEvictOperation.getCondition(), method, args, target, null)) {
+            // 解析SpEL表达式获取cacheName和key
+            String[] cacheNames = cacheEvictOperation.getCacheNames();
+            Assert.notEmpty(cacheNames, CACHE_NAME_ERROR_MESSAGE);
+            // 判断是否删除所有缓存数据
+            if (cacheEvictOperation.isAllEntries()) {
+                // 删除所有缓存数据（清空）
+                for (String cacheName : cacheNames) {
+                    Collection<Cache> caches = cacheManager.getCache(cacheName);
+                    for (Cache cache : caches) {
+                        cache.clear();
+                    }
                 }
+            } else {
+                // 删除指定key
+                delete(cacheNames, cacheEvictOperation.getKey(), method, args, target);
             }
-        } else {
-            // 删除指定key
-            delete(cacheNames, cacheEvictOperation.getKey(), method, args, target);
-        }
 
-        // 执行方法
-        return invoker.invoke();
+            // 执行方法
+            return invoker.invoke();
+        } else {
+            return invoker.invoke();
+        }
     }
 
 
@@ -281,7 +288,6 @@ public class MultiLayerAspect {
      * @return {@link Object}
      */
     private Object executePut(CacheOperationInvoker invoker, CachePutOperation cachePutOperation, Method method, Object[] args, Object target) {
-
 
         String[] cacheNames = cachePutOperation.getCacheNames();
         Assert.notEmpty(cachePutOperation.getCacheNames(), CACHE_NAME_ERROR_MESSAGE);
@@ -302,14 +308,16 @@ public class MultiLayerAspect {
         // 指定调用方法获取缓存值
         Object result = invoker.invoke();
 
-        // 解析SpEL表达式获取 key
-        Object key = generateKey(cachePutOperation.getKey(), method, args, target, result);
-        Assert.notNull(key, String.format(CACHE_KEY_ERROR_MESSAGE, cachePutOperation.getKey()));
+        if(estimateCondition(cachePutOperation.getCondition(), method, args, target, null)) {
+            // 解析SpEL表达式获取 key
+            Object key = generateKey(cachePutOperation.getKey(), method, args, target, result);
+            Assert.notNull(key, String.format(CACHE_KEY_ERROR_MESSAGE, cachePutOperation.getKey()));
 
-        for (String cacheName : cacheNames) {
-            // 通过cacheName和缓存配置获取Cache
-            Cache cache = cacheManager.getCache(cacheName, multiLayerCacheConfig);
-            cache.put(key, result);
+            for (String cacheName : cacheNames) {
+                // 通过cacheName和缓存配置获取Cache
+                Cache cache = cacheManager.getCache(cacheName, multiLayerCacheConfig);
+                cache.put(key, result);
+            }
         }
 
         return result;
@@ -360,11 +368,28 @@ public class MultiLayerAspect {
                     targetClass, result == null ? CacheOperationExpressionEvaluator.NO_RESULT : result);
 
             AnnotatedElementKey methodCacheKey = new AnnotatedElementKey(method, targetClass);
-            // 兼容传null值得情况
+            // 兼容传null值的情况
             Object keyValue = evaluator.key(keySpEl, methodCacheKey, evaluationContext);
             return Objects.isNull(keyValue) ? "null" : keyValue;
         }
         return this.keyGenerator.generate(target, method, args);
+    }
+
+    private boolean estimateCondition(String conditionSpEl, Method method, Object[] args, Object target, Object result) {
+
+        // 获取注解上的key属性值
+        Class<?> targetClass = getTargetClass(target);
+        if (StringUtils.hasText(conditionSpEl)) {
+            EvaluationContext evaluationContext = evaluator.createEvaluationContext(method, args, target,
+                    targetClass, result == null ? CacheOperationExpressionEvaluator.NO_RESULT : result);
+
+            AnnotatedElementKey methodCacheKey = new AnnotatedElementKey(method, targetClass);
+            // 兼容传null值的情况
+            boolean ret = evaluator.condition(conditionSpEl, methodCacheKey, evaluationContext);
+            return ret;
+        }
+        // 默认为true
+        return true;
     }
 
 

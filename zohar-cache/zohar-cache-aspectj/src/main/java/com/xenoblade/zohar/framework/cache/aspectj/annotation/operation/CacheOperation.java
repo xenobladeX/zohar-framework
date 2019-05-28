@@ -72,6 +72,12 @@ public abstract class CacheOperation implements Serializable{
     private String key;
 
     /**
+     * 条件表达式，支持SpEL表达式
+     * @return
+     */
+    private String condition;
+
+    /**
      * 是否忽略在操作缓存中遇到的异常，如反序列化异常，默认true。
      * <p>true: 有异常会输出warn级别的日志，并直接执行被缓存的方法（缓存将失效）</p>
      * <p>false:有异常会输出error级别的日志，并抛出异常</p>
