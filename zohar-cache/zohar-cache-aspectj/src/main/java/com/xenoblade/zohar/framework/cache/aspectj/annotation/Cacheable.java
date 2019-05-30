@@ -80,6 +80,13 @@ public @interface Cacheable {
     String key() default "";
 
     /**
+     * 条件表达式，支持SpEL表达式
+     * 只有当计算结果为true才会进行操作
+     * @return
+     */
+    String condition() default "";
+
+    /**
      * The bean name of the custom {@link KeyGenerator}
      * to use.
      * <p>Mutually exclusive with the {@link #key} attribute.

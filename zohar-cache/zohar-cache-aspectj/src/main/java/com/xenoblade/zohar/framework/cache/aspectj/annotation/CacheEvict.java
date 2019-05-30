@@ -71,6 +71,13 @@ public @interface CacheEvict {
     String key() default "";
 
     /**
+     * 条件表达式，支持SpEL表达式
+     * 只有当计算结果为true才会进行操作
+     * @return
+     */
+    String condition() default "";
+
+    /**
      * 是否忽略在操作缓存中遇到的异常，如反序列化异常，默认true。
      * <p>true: 有异常会输出warn级别的日志，并直接执行被缓存的方法（缓存将失效）</p>
      * <p>false:有异常会输出error级别的日志，并抛出异常</p>

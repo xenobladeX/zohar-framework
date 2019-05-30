@@ -52,6 +52,7 @@ public class DefaultCacheAnnotationParser implements CacheAnnotationParser {
         cacheableOperation.setCacheNames(cacheable.cacheNames());
         cacheableOperation.setDepict(cacheable.depict());
         cacheableOperation.setKey(cacheable.key());
+        cacheableOperation.setCondition(cacheable.condition());
         cacheableOperation.setIgnoreException(cacheable.ignoreException());
         if (cacheable.firstCache().length > 0) {
             cacheableOperation.setFirstCache(cacheable.firstCache()[0]);
@@ -81,6 +82,7 @@ public class DefaultCacheAnnotationParser implements CacheAnnotationParser {
         cachePutOperation.setCacheNames(cachePut.cacheNames());
         cachePutOperation.setDepict(cachePut.depict());
         cachePutOperation.setKey(cachePut.key());
+        cachePutOperation.setCondition(cachePut.condition());
         cachePutOperation.setIgnoreException(cachePut.ignoreException());
         if (cachePut.firstCache().length > 0) {
             cachePutOperation.setFirstCache(cachePut.firstCache()[0]);
@@ -108,6 +110,7 @@ public class DefaultCacheAnnotationParser implements CacheAnnotationParser {
         CacheEvictOperation cacheEvictOperation = new CacheEvictOperation();
         cacheEvictOperation.setCacheNames(cacheEvict.cacheNames());
         cacheEvictOperation.setKey(cacheEvict.key());
+        cacheEvictOperation.setCondition(cacheEvict.condition());
         cacheEvictOperation.setIgnoreException(cacheEvict.ignoreException());
         cacheEvictOperation.setAllEntries(cacheEvict.allEntries());
 
