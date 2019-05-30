@@ -34,11 +34,6 @@ public class MultiLayerCacheConfig implements Serializable{
     private static final long serialVersionUID = -7185999794798838069L;
 
     /**
-     * 内部缓存名，由[一级缓存有效时间-二级缓存有效时间-二级缓存自动刷新时间]组成
-     */
-    private String internalKey;
-
-    /**
      * 描述，数据监控页面使用
      */
     private String depict;
@@ -66,12 +61,10 @@ public class MultiLayerCacheConfig implements Serializable{
         this.firstCacheConfig = firstCacheConfig;
         this.secondaryCacheConfig = secondaryCacheConfig;
         this.depict = depict;
-        internalKey();
     }
 
 
-    private void internalKey() {
-        // TODO 完善 multiLayerCache 的 key，使用格式[key1=value1;key2=value2/key3=key4]
+    public String internalKey() {
         // 一级缓存有效时间-二级缓存有效时间-二级缓存自动刷新时间
         StringBuilder sb = new StringBuilder();
         if (firstCacheConfig != null) {
@@ -81,7 +74,7 @@ public class MultiLayerCacheConfig implements Serializable{
         if (secondaryCacheConfig != null) {
             sb.append(secondaryCacheConfig.internalKey());
         }
-        internalKey = sb.toString();
+        return sb.toString();
     }
 
 

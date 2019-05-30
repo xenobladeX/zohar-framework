@@ -20,11 +20,4 @@ logging:
   level:
     com.xenoblade.zohar.framework.cache: debug
 
-#zohar:
-#  redis:
-#    objct-template:
-#      key-serial: kryo
-#      value-serial: fastjson
-#    string-template:
-#      key-serial: string
-#      value-serial: string
+

@@ -26,6 +26,9 @@ import com.xenoblade.zohar.framework.commons.redis.serial.key.JdkSerializationSt
 import com.xenoblade.zohar.framework.commons.redis.serial.key.KryoStringRedisSerilaizer;
 import com.xenoblade.zohar.framework.commons.redis.serial.value.FastJsonRedisSerializer;
 import com.xenoblade.zohar.framework.commons.redis.serial.value.KryoRedisSerializer;
+import com.xenoblade.zohar.framework.commons.redis.support.InvalidRedisSerializerException;
+import com.xenoblade.zohar.framework.commons.utils.support.EEncodeType;
+import com.xenoblade.zohar.framework.commons.utils.support.EHashType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -61,7 +64,7 @@ public class RedisTemplateConfiguration {
         redisTemplate.setConnectionFactory(redisConnectionFactory);
 
         // 设置值（value）的序列化
-        switch (redisProperties.getObjctTemplate().getValueSerial()) {
+        switch (redisProperties.getRedisTemplate().getValueSerial()) {
 
             case JDK:
             {
@@ -90,49 +93,98 @@ public class RedisTemplateConfiguration {
             }
             default:
             {
-                throw new InvalidRedisSerializerException(StrUtil.format("Invalid reids object serializer: {}", redisProperties.getObjctTemplate().getValueSerial()));
+                throw new InvalidRedisSerializerException(StrUtil.format("Invalid reids object serializer: {}", redisProperties.getRedisTemplate().getValueSerial()));
             }
         }
 
         // 设置键（key）的序列化采用支持 Object 的StringRedisSerializer。
-        switch (redisProperties.getObjctTemplate().getKeySerial()) {
-            case STRING:
+        redisTemplate.setKeySerializer(new DefaultStringRedisSerializer());
+        redisTemplate.setHashKeySerializer(new DefaultStringRedisSerializer());
+
+        return redisTemplate;
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(name = "objectRedisTemplate")
+    public RedisTemplate<Object, Object> objectRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
+        RedisTemplate<Object, Object> objectRedisTemplate = new RedisTemplate<Object, Object>();
+        objectRedisTemplate.setConnectionFactory(redisConnectionFactory);
+
+        // 设置值（value）的序列化
+        switch (redisProperties.getObjectRedisTemplate().getValueSerial()) {
+
+            case JDK:
             {
-                redisTemplate.setKeySerializer(new DefaultStringRedisSerializer());
-                redisTemplate.setHashKeySerializer(new DefaultStringRedisSerializer());
-                break;
-            }
-            case FASTJSON:
-            {
-                redisTemplate.setKeySerializer(new FastJsonStringRedisSerilizer());
-                redisTemplate.setHashKeySerializer(new FastJsonStringRedisSerilizer());
-                break;
-            }
-            case JACKSON:
-            {
-                redisTemplate.setKeySerializer(new JacksonStringRedisSerilaizer());
-                redisTemplate.setHashKeySerializer(new JacksonStringRedisSerilaizer());
+                objectRedisTemplate.setValueSerializer(new JdkSerializationRedisSerializer());
+                objectRedisTemplate.setHashValueSerializer(new JdkSerializationRedisSerializer());
                 break;
             }
             case KRYO:
             {
-                redisTemplate.setKeySerializer(new KryoStringRedisSerilaizer());
-                redisTemplate.setHashKeySerializer(new KryoStringRedisSerilaizer());
+                objectRedisTemplate.setValueSerializer(new KryoRedisSerializer(Object.class));
+                objectRedisTemplate.setHashValueSerializer(new KryoRedisSerializer(Object.class));
                 break;
             }
-            case JDK:
+            case JACKSON:
             {
-                redisTemplate.setKeySerializer(new JdkSerializationStringRedisSerializer());
-                redisTemplate.setHashKeySerializer(new JdkSerializationStringRedisSerializer());
+                ObjectMapper jsonRedisObjectMapper = SerializationUtils.jsonRedisObjectMapper();
+                objectRedisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer(jsonRedisObjectMapper));
+                objectRedisTemplate.setHashValueSerializer(new GenericJackson2JsonRedisSerializer(jsonRedisObjectMapper));
+                break;
+            }
+            case FASTJSON:
+            {
+                objectRedisTemplate.setValueSerializer(new FastJsonRedisSerializer<>(Object.class, null));
+                objectRedisTemplate.setHashValueSerializer(new FastJsonRedisSerializer<>(Object.class, null));
                 break;
             }
             default:
             {
-                throw new InvalidRedisSerializerException(StrUtil.format("Invalid reids key serializer: {}", redisProperties.getObjctTemplate().getKeySerial()));
+                throw new InvalidRedisSerializerException(StrUtil.format("Invalid reids object serializer: {}", redisProperties.getObjectRedisTemplate().getValueSerial()));
             }
         }
 
-        return redisTemplate;
+        // 设置键（key）的序列化采用支持 Object 的StringRedisSerializer。
+        EHashType hashType = redisProperties.getObjectRedisTemplate().getHashType();
+        EEncodeType encodeType =  redisProperties.getObjectRedisTemplate().getEncodeType();
+        switch (redisProperties.getObjectRedisTemplate().getKeySerial()) {
+            case STRING:
+            {
+                objectRedisTemplate.setKeySerializer(new DefaultStringRedisSerializer(encodeType, hashType));
+                objectRedisTemplate.setHashKeySerializer(new DefaultStringRedisSerializer(encodeType, hashType));
+                break;
+            }
+            case FASTJSON:
+            {
+                objectRedisTemplate.setKeySerializer(new FastJsonStringRedisSerilizer(encodeType, hashType));
+                objectRedisTemplate.setHashKeySerializer(new FastJsonStringRedisSerilizer(encodeType, hashType));
+                break;
+            }
+            case JACKSON:
+            {
+                objectRedisTemplate.setKeySerializer(new JacksonStringRedisSerilaizer(encodeType, hashType));
+                objectRedisTemplate.setHashKeySerializer(new JacksonStringRedisSerilaizer(encodeType, hashType));
+                break;
+            }
+            case KRYO:
+            {
+                objectRedisTemplate.setKeySerializer(new KryoStringRedisSerilaizer(encodeType, hashType));
+                objectRedisTemplate.setHashKeySerializer(new KryoStringRedisSerilaizer(encodeType, hashType));
+                break;
+            }
+            case JDK:
+            {
+                objectRedisTemplate.setKeySerializer(new JdkSerializationStringRedisSerializer(encodeType, hashType));
+                objectRedisTemplate.setHashKeySerializer(new JdkSerializationStringRedisSerializer(encodeType, hashType));
+                break;
+            }
+            default:
+            {
+                throw new InvalidRedisSerializerException(StrUtil.format("Invalid reids key serializer: {}", redisProperties.getObjectRedisTemplate().getKeySerial()));
+            }
+        }
+
+        return objectRedisTemplate;
     }
 
     @Bean
@@ -142,70 +194,13 @@ public class RedisTemplateConfiguration {
         stringRedisTemplate.setConnectionFactory(redisConnectionFactory);
 
         // 设置值（value）的序列化
-        switch (redisProperties.getStringTemplate().getValueSerial()) {
-            case STRING: {
-                stringRedisTemplate.setValueSerializer(new DefaultStringRedisSerializer());
-                stringRedisTemplate.setHashValueSerializer(new DefaultStringRedisSerializer());
-                break;
-            }
-            case FASTJSON: {
-                stringRedisTemplate.setValueSerializer(new FastJsonStringRedisSerilizer());
-                stringRedisTemplate.setHashValueSerializer(new FastJsonStringRedisSerilizer());
-                break;
-            }
-            case JACKSON: {
-                stringRedisTemplate.setValueSerializer(new JacksonStringRedisSerilaizer());
-                stringRedisTemplate.setHashValueSerializer(new JacksonStringRedisSerilaizer());
-                break;
-            }
-            case KRYO: {
-                stringRedisTemplate.setValueSerializer(new KryoStringRedisSerilaizer());
-                stringRedisTemplate.setHashValueSerializer(new KryoStringRedisSerilaizer());
-                break;
-            }
-            case JDK: {
-                stringRedisTemplate.setValueSerializer(new JdkSerializationStringRedisSerializer());
-                stringRedisTemplate.setHashValueSerializer(new JdkSerializationStringRedisSerializer());
-                break;
-            }
-            default: {
-                throw new InvalidRedisSerializerException(StrUtil.format("Invalid reids value serializer: {}",
-                        redisProperties.getObjctTemplate().getValueSerial()));
-            }
-        }
+        stringRedisTemplate.setValueSerializer(new DefaultStringRedisSerializer());
+        stringRedisTemplate.setHashValueSerializer(new DefaultStringRedisSerializer());
 
         // 设置键（key）的序列化采用支持 Object 的StringRedisSerializer。
-        switch (redisProperties.getStringTemplate().getKeySerial()) {
-            case STRING: {
-                stringRedisTemplate.setKeySerializer(new DefaultStringRedisSerializer());
-                stringRedisTemplate.setHashKeySerializer(new DefaultStringRedisSerializer());
-                break;
-            }
-            case FASTJSON: {
-                stringRedisTemplate.setKeySerializer(new FastJsonStringRedisSerilizer());
-                stringRedisTemplate.setHashKeySerializer(new FastJsonStringRedisSerilizer());
-                break;
-            }
-            case JACKSON: {
-                stringRedisTemplate.setKeySerializer(new JacksonStringRedisSerilaizer());
-                stringRedisTemplate.setHashKeySerializer(new JacksonStringRedisSerilaizer());
-                break;
-            }
-            case KRYO: {
-                stringRedisTemplate.setKeySerializer(new KryoStringRedisSerilaizer());
-                stringRedisTemplate.setHashKeySerializer(new KryoStringRedisSerilaizer());
-                break;
-            }
-            case JDK: {
-                stringRedisTemplate.setKeySerializer(new JdkSerializationStringRedisSerializer());
-                stringRedisTemplate.setHashKeySerializer(new JdkSerializationStringRedisSerializer());
-                break;
-            }
-            default: {
-                throw new InvalidRedisSerializerException(StrUtil.format("Invalid reids key serializer: {}",
-                        redisProperties.getObjctTemplate().getKeySerial()));
-            }
-        }
+        stringRedisTemplate.setKeySerializer(new DefaultStringRedisSerializer());
+        stringRedisTemplate.setHashKeySerializer(new DefaultStringRedisSerializer());
+
         return stringRedisTemplate;
     }
 

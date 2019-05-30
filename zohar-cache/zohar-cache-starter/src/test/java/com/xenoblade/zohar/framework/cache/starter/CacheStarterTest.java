@@ -56,7 +56,6 @@ public class CacheStarterTest {
     @Autowired
     private RedisTemplate redisTemplate;
 
-
     @Test
     public void testGetUserNameLongParam() {
         long userId = 111;

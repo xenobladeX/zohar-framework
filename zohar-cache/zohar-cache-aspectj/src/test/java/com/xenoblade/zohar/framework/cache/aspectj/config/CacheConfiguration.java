@@ -23,9 +23,10 @@ import com.xenoblade.zohar.framework.cache.core.config.SecondaryCacheConfig;
 import com.xenoblade.zohar.framework.cache.core.manager.CacheManager;
 import com.xenoblade.zohar.framework.cache.core.manager.MultiLayerCacheManager;
 import com.xenoblade.zohar.framework.cache.core.support.ECacheMode;
-import com.xenoblade.zohar.framework.cache.core.support.EEncodeType;
+import com.xenoblade.zohar.framework.commons.redis.serial.ERedisSerialType;
+import com.xenoblade.zohar.framework.commons.utils.support.EEncodeType;
 import com.xenoblade.zohar.framework.cache.core.support.EExpireMode;
-import com.xenoblade.zohar.framework.cache.core.support.EHashType;
+import com.xenoblade.zohar.framework.commons.utils.support.EHashType;
 import com.xenoblade.zohar.framework.redis.starter.RedisTemplateConfiguration;
 import com.xenoblade.zohar.framework.redis.starter.RedissonAutoConfiguration;
 import org.redisson.api.RedissonClient;
@@ -61,7 +62,7 @@ public class CacheConfiguration {
         defaultMultiLayerCacheConfig.setFirstCacheConfig(firstCacheConfig);
         // secondaryCacheConfig
         SecondaryCacheConfig secondaryCacheConfig = new SecondaryCacheConfig(10,
-                1, TimeUnit.SECONDS, false, false, 1,
+                1, TimeUnit.SECONDS, false, false, 1, ERedisSerialType.JDK,
                 EEncodeType.NONE, EHashType.MD5);
         defaultMultiLayerCacheConfig.setSecondaryCacheConfig(secondaryCacheConfig);
 

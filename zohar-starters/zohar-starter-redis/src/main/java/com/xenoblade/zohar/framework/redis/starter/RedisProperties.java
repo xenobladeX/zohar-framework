@@ -17,6 +17,8 @@
 package com.xenoblade.zohar.framework.redis.starter;
 
 import com.xenoblade.zohar.framework.commons.redis.serial.ERedisSerialType;
+import com.xenoblade.zohar.framework.commons.utils.support.EEncodeType;
+import com.xenoblade.zohar.framework.commons.utils.support.EHashType;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -29,9 +31,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 public class RedisProperties {
 
-    private ObjectRedisTemplateProperties objctTemplate = new ObjectRedisTemplateProperties();
+    private ObjectRedisTemplateProperties objectRedisTemplate = new ObjectRedisTemplateProperties();
 
-    private StringRedisTemplateProperties stringTemplate = new StringRedisTemplateProperties();
+    private RedisTemplateProperties redisTemplate = new RedisTemplateProperties();
 
     /**
      * RedisTemplateProperties
@@ -41,18 +43,20 @@ public class RedisProperties {
     @Data
     public static class ObjectRedisTemplateProperties {
 
-        private ERedisSerialType valueSerial = ERedisSerialType.JDK;
+        private ERedisSerialType valueSerial = ERedisSerialType.JACKSON;
 
-        private ERedisSerialType keySerial = ERedisSerialType.JACKSON;
+        private ERedisSerialType keySerial = ERedisSerialType.JDK;
+
+        private EEncodeType encodeType = EEncodeType.NONE;
+
+        private EHashType hashType = EHashType.MD5;
 
     }
 
     @Data
-    public static class StringRedisTemplateProperties {
+    public static class RedisTemplateProperties {
 
         private ERedisSerialType valueSerial = ERedisSerialType.JACKSON;
-
-        private ERedisSerialType keySerial = ERedisSerialType.JACKSON;
 
     }
 }

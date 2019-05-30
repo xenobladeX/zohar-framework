@@ -16,9 +16,10 @@
  */
 package com.xenoblade.zohar.framework.cache.aspectj.annotation;
 
-import com.xenoblade.zohar.framework.cache.core.support.EEncodeType;
+import com.xenoblade.zohar.framework.commons.redis.serial.ERedisSerialType;
+import com.xenoblade.zohar.framework.commons.utils.support.EEncodeType;
 import com.xenoblade.zohar.framework.cache.core.support.EExpireMode;
-import com.xenoblade.zohar.framework.cache.core.support.EHashType;
+import com.xenoblade.zohar.framework.commons.utils.support.EHashType;
 import lombok.experimental.UtilityClass;
 
 import java.lang.annotation.Annotation;
@@ -164,12 +165,17 @@ public class AnnotationConstants {
                 return 1;
             }
 
+            @Override
+            public ERedisSerialType keySerialType() {
+                return ERedisSerialType.JDK;
+            }
+
             @Override public EEncodeType keyEncodeType() {
                 return EEncodeType.NONE;
             }
 
             @Override public EHashType keyHashType() {
-                return EHashType.NONE;
+                return EHashType.MD5;
             }
         };
 

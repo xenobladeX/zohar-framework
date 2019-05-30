@@ -20,10 +20,11 @@ import com.xenoblade.zohar.framework.cache.aspectj.annotation.CacheConfig;
 import com.xenoblade.zohar.framework.cache.aspectj.annotation.CacheEvict;
 import com.xenoblade.zohar.framework.cache.aspectj.annotation.CachePut;
 import com.xenoblade.zohar.framework.cache.aspectj.annotation.Cacheable;
-import com.xenoblade.zohar.framework.cache.aspectj.annotation.FirstCache;
 import com.xenoblade.zohar.framework.cache.aspectj.annotation.SecondaryCache;
 import com.xenoblade.zohar.framework.cache.core.support.ECacheMode;
-import com.xenoblade.zohar.framework.cache.core.support.EHashType;
+import com.xenoblade.zohar.framework.commons.redis.serial.ERedisSerialType;
+import com.xenoblade.zohar.framework.commons.utils.support.EEncodeType;
+import com.xenoblade.zohar.framework.commons.utils.support.EHashType;
 import com.xenoblade.zohar.framework.cache.starter.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -47,7 +48,9 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class TestService {
 
-    @Cacheable(key = "#userId")
+    @Cacheable(key = "#userId", secondaryCache = @SecondaryCache(expireTime = 10, preloadTime = 3,
+            timeUnit = TimeUnit.SECONDS, keySerialType = ERedisSerialType.STRING,
+            keyHashType = EHashType.NONE, keyEncodeType = EEncodeType.NONE, forceRefresh = true))
     public User getUserById(long userId) {
         log.info("测试正常配置的缓存方法，参数是基本类型");
         User user = new User();

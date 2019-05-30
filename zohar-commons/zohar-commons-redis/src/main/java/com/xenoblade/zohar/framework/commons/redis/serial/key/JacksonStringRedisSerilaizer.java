@@ -16,9 +16,12 @@
  */
 package com.xenoblade.zohar.framework.commons.redis.serial.key;
 
+import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xenoblade.zohar.framework.commons.redis.serial.SerializationUtils;
+import com.xenoblade.zohar.framework.commons.utils.support.EEncodeType;
+import com.xenoblade.zohar.framework.commons.utils.support.EHashType;
 import lombok.Setter;
 import org.springframework.data.redis.serializer.SerializationException;
 
@@ -29,14 +32,25 @@ import org.springframework.data.redis.serializer.SerializationException;
  */
 public class JacksonStringRedisSerilaizer extends AbstractStringRedisSerializer{
 
+    public JacksonStringRedisSerilaizer() {
+        super();
+    }
+
+    public JacksonStringRedisSerilaizer(EEncodeType encodeType, EHashType hashType) {
+        super(encodeType, hashType);
+    }
+
+
     @Setter
     private ObjectMapper objectMapper = SerializationUtils.jsonRedisObjectMapper();
 
-    @Override protected String objectToString(Object object) {
+    @Override protected byte[] objectToBytes(Object object) {
         try {
-            return objectMapper.writeValueAsString(object);
+            String objectStr = objectMapper.writeValueAsString(object);
+            return StrUtil.utf8Bytes(objectStr);
         } catch (JsonProcessingException e) {
             throw new SerializationException("Could not write JSON: " + e.getMessage(), e);
         }
     }
+
 }

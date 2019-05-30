@@ -16,7 +16,6 @@
  */
 package com.xenoblade.zohar.framework.redis.starter;
 
-import com.xenoblade.zohar.framework.commons.redis.serial.ERedisSerialType;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -29,7 +28,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 public class RedissonProperties {
 
+    /**
+     * redisson 配置文件路径，（如：classpath:redisson.yml）
+     */
     private String config;
-
 
 }

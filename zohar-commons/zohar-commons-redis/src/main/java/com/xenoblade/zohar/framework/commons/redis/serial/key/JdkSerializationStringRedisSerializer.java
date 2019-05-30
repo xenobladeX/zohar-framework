@@ -16,7 +16,8 @@
  */
 package com.xenoblade.zohar.framework.commons.redis.serial.key;
 
-import cn.hutool.core.codec.Base64;
+import com.xenoblade.zohar.framework.commons.utils.support.EEncodeType;
+import com.xenoblade.zohar.framework.commons.utils.support.EHashType;
 import lombok.Setter;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.serializer.support.SerializingConverter;
@@ -28,12 +29,19 @@ import org.springframework.core.serializer.support.SerializingConverter;
  */
 public class JdkSerializationStringRedisSerializer extends AbstractStringRedisSerializer{
 
+
+    public JdkSerializationStringRedisSerializer() {
+        super();
+    }
+
+    public JdkSerializationStringRedisSerializer(EEncodeType encodeType, EHashType hashType) {
+        super(encodeType, hashType);
+    }
+
     @Setter
     private Converter<Object, byte[]> serializer = new SerializingConverter();
 
-
-    @Override protected String objectToString(Object object) {
-        byte[] objectBytes = serializer.convert(object);
-        return Base64.encode(objectBytes);
+    @Override protected byte[] objectToBytes(Object object) {
+        return serializer.convert(object);
     }
 }

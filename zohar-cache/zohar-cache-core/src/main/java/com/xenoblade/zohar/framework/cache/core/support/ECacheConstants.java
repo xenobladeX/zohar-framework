@@ -30,4 +30,6 @@ public class ECacheConstants {
 
     public static final String REDIS_KEY_INNER_SPLIT = "-";
 
+    public static final String CONFIG_PROPERTY_SPLLIT = ";";
+
 }

@@ -16,8 +16,9 @@
  */
 package com.xenoblade.zohar.framework.cache.aspectj.annotation;
 
-import com.xenoblade.zohar.framework.cache.core.support.EEncodeType;
-import com.xenoblade.zohar.framework.cache.core.support.EHashType;
+import com.xenoblade.zohar.framework.commons.redis.serial.ERedisSerialType;
+import com.xenoblade.zohar.framework.commons.utils.support.EEncodeType;
+import com.xenoblade.zohar.framework.commons.utils.support.EHashType;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -85,6 +86,11 @@ public @interface SecondaryCache {
     int magnification() default 1;
 
     /**
+     * Key 的序列化方式
+     */
+    ERedisSerialType keySerialType() default ERedisSerialType.JDK;
+
+    /**
      * key的编码方式
      * @return
      */
@@ -94,6 +100,6 @@ public @interface SecondaryCache {
      * key 的哈希方式
      * @return
      */
-    EHashType keyHashType() default EHashType.NONE;
+    EHashType keyHashType() default EHashType.MD5;
 
 }

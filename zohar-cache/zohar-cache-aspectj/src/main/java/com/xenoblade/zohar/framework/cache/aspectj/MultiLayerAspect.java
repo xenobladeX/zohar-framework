@@ -221,8 +221,8 @@ public class MultiLayerAspect {
         SecondaryCacheConfig secondaryCacheConfig = secondaryCache == null ? null :
                 new SecondaryCacheConfig(secondaryCache.expireTime(),
                         secondaryCache.preloadTime(), secondaryCache.timeUnit(), secondaryCache.forceRefresh(),
-                        secondaryCache.isAllowNullValue(), secondaryCache.magnification(), secondaryCache.keyEncodeType(),
-                        secondaryCache.keyHashType());
+                        secondaryCache.isAllowNullValue(), secondaryCache.magnification(), secondaryCache.keySerialType(),
+                        secondaryCache.keyEncodeType(), secondaryCache.keyHashType());
 
         MultiLayerCacheConfig multiLayerCacheConfig = new MultiLayerCacheConfig(firstCacheConfig, secondaryCacheConfig,
                 cacheableOperation.getDepict());
@@ -294,7 +294,8 @@ public class MultiLayerAspect {
 
         SecondaryCacheConfig secondaryCacheConfig = secondaryCache == null ? null : new SecondaryCacheConfig(secondaryCache.expireTime(),
                 secondaryCache.preloadTime(), secondaryCache.timeUnit(), secondaryCache.forceRefresh(),
-                secondaryCache.isAllowNullValue(), secondaryCache.magnification(), secondaryCache.keyEncodeType(), secondaryCache.keyHashType());
+                secondaryCache.isAllowNullValue(), secondaryCache.magnification(), secondaryCache.keySerialType(),
+                secondaryCache.keyEncodeType(), secondaryCache.keyHashType());
 
         MultiLayerCacheConfig multiLayerCacheConfig = new MultiLayerCacheConfig(firstCacheConfig, secondaryCacheConfig,
                 cachePutOperation.getDepict());

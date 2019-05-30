@@ -16,10 +16,10 @@
  */
 package com.xenoblade.zohar.framework.commons.redis.serial.key;
 
-import cn.hutool.core.util.ClassUtil;
+import cn.hutool.core.util.StrUtil;
+import com.xenoblade.zohar.framework.commons.utils.support.EEncodeType;
+import com.xenoblade.zohar.framework.commons.utils.support.EHashType;
 import org.springframework.data.redis.serializer.RedisSerializer;
-
-import java.nio.charset.Charset;
 
 /**
  * AbstractStringRedisSerializer
@@ -28,16 +28,22 @@ import java.nio.charset.Charset;
  */
 public abstract class AbstractStringRedisSerializer implements RedisSerializer<Object> {
 
-    private static final Charset CAHRSET_UTF8 = Charset.forName("UTF8");
+    private EEncodeType encodeType = EEncodeType.NONE;
 
-
+    private EHashType hashType = EHashType.NONE;
 
     public AbstractStringRedisSerializer() {
     }
 
+    public AbstractStringRedisSerializer(EEncodeType encodeType, EHashType hashType) {
+        this.encodeType = encodeType;
+        this.hashType = hashType;
+    }
+
     @Override
     public String deserialize(byte[] bytes) {
-        return (bytes == null ? null : new String(bytes, CAHRSET_UTF8));
+        // TODO deserialize
+        return (bytes == null ? null : StrUtil.utf8Str(bytes));
     }
 
     @Override
@@ -45,45 +51,20 @@ public abstract class AbstractStringRedisSerializer implements RedisSerializer<O
         if (object == null) {
             return null;
         }
-        
-        String string = null;
-        if (object.getClass() == int.class) {
-            string = String.valueOf((int)object);
-        }  else if (object.getClass() == char.class) {
-            string  = String.valueOf((char)object);
-        } else if (object.getClass() == char[].class) {
-            string = String.valueOf((char[]) object);
-        } else if (object.getClass() == long.class) {
-            string  = String.valueOf((long)object);
-        } else if (object.getClass() == float.class) {
-            string = String.valueOf((float)object);
-        } else if (object.getClass() == double.class) {
-            string = String.valueOf((double)object);
-        } else if (object.getClass() == boolean.class) {
-            string = String.valueOf((boolean)object);
-        }
-        else if (object instanceof Integer) {
-            string = String.valueOf((Integer) object);
-        } else if (object instanceof Long) {
-            string = String.valueOf((Long)object);
-        } else if (object instanceof Float) {
-            string = String.valueOf((Float)object);
-        } else if (object instanceof Double) {
-            string = String.valueOf((Double)object);
-        } else if (object instanceof Boolean) {
-            string = String.valueOf((Boolean)object);
-        } else if (object instanceof String) {
-            string = (String)object;
+
+        byte[] bytes = objectToBytes(object);
+
+        if (EHashType.NONE == hashType) {
+            // 如果不做哈希，则使用编码方法
+            bytes = com.xenoblade.zohar.framework.commons.utils.StrUtil.encode(bytes, encodeType);
         } else {
-            string = objectToString(object);
+            // 直接进行哈希算法
+            bytes = com.xenoblade.zohar.framework.commons.utils.StrUtil.hash(bytes, hashType);
         }
 
-        if (string == null) {
-            return null;
-        }
-        return string.getBytes(CAHRSET_UTF8);
+        return bytes;
     }
 
-    protected abstract String objectToString(Object object);
+    protected abstract byte[] objectToBytes(Object object);
 
 }

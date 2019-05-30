@@ -16,10 +16,13 @@
  */
 package com.xenoblade.zohar.framework.commons.redis.serial.key;
 
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.xenoblade.zohar.framework.commons.redis.serial.FastJsonSerializerWrapper;
+import com.xenoblade.zohar.framework.commons.utils.support.EEncodeType;
+import com.xenoblade.zohar.framework.commons.utils.support.EHashType;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -30,8 +33,17 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class FastJsonStringRedisSerilizer extends AbstractStringRedisSerializer{
 
+    public FastJsonStringRedisSerilizer(EEncodeType encodeType, EHashType hashType, String... packages) {
+        super(encodeType, hashType);
+        customPackages(packages);
+    }
+
     public FastJsonStringRedisSerilizer(String... packages) {
         super();
+        customPackages(packages);
+    }
+
+    private void customPackages(String... packages) {
         try {
             ParserConfig.getGlobalInstance().addAccept("com.xenoblade.zohar.");
             if (packages != null && packages.length > 0) {
@@ -44,8 +56,10 @@ public class FastJsonStringRedisSerilizer extends AbstractStringRedisSerializer{
         }
     }
 
-
-    @Override protected String objectToString(Object object) {
-        return JSON.toJSONString(new FastJsonSerializerWrapper(object), SerializerFeature.WriteClassName);
+    @Override protected byte[] objectToBytes(Object object) {
+//        String objectStr = JSON.toJSONString(new FastJsonSerializerWrapper(object), SerializerFeature.WriteClassName);
+        String objectStr = JSON.toJSONString(new FastJsonSerializerWrapper(object), SerializerFeature.WriteClassName);
+        return StrUtil.utf8Bytes(objectStr);
     }
+
 }

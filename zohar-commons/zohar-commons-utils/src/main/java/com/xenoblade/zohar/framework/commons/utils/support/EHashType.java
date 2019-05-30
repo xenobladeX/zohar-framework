@@ -14,27 +14,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.cache.core.support;
+package com.xenoblade.zohar.framework.commons.utils.support;
 
 /**
- * EEncodeType
+ * EHashType
  * @author xenoblade
  * @since 1.0.0
  */
-public enum EEncodeType {
+public enum EHashType {
 
     /**
-     * base64
+     * md5
      */
-    BASE64,
+    MD5,
 
     /**
-     * 十六进制
+     * sha-1
      */
-    HEX,
+    SHA1,
 
     /**
-     * 不做任何操作
+     * Hmac + sha-1
+     */
+    HMAC_SHA1,
+
+    /**
+     * Hmac + md5
+     */
+    HMAC_MD5,
+
+    /**
+     * 不做操作
      */
     NONE;
 

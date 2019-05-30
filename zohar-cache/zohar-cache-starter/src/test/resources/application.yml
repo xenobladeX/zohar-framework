@@ -22,14 +22,6 @@ logging:
 
 zohar:
 
-#  redis:
-#    objct-template:
-#      key-serial: kryo
-#      value-serial: fastjson
-#    string-template:
-#      key-serial: string
-#      value-serial: string
-
   multi-layer-cache:
     stats: true
     cache-mode: all

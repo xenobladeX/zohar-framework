@@ -16,10 +16,18 @@
  */
 package com.xenoblade.zohar.framework.cache.core.cache.redis;
 
+import cn.hutool.core.util.StrUtil;
 import com.xenoblade.zohar.framework.cache.core.cache.AbstractValueAdaptingCache;
 import com.xenoblade.zohar.framework.cache.core.config.SecondaryCacheConfig;
-import com.xenoblade.zohar.framework.cache.core.support.EEncodeType;
-import com.xenoblade.zohar.framework.cache.core.support.EHashType;
+import com.xenoblade.zohar.framework.commons.redis.serial.ERedisSerialType;
+import com.xenoblade.zohar.framework.commons.redis.serial.key.DefaultStringRedisSerializer;
+import com.xenoblade.zohar.framework.commons.redis.serial.key.FastJsonStringRedisSerilizer;
+import com.xenoblade.zohar.framework.commons.redis.serial.key.JacksonStringRedisSerilaizer;
+import com.xenoblade.zohar.framework.commons.redis.serial.key.JdkSerializationStringRedisSerializer;
+import com.xenoblade.zohar.framework.commons.redis.serial.key.KryoStringRedisSerilaizer;
+import com.xenoblade.zohar.framework.commons.redis.support.InvalidRedisSerializerException;
+import com.xenoblade.zohar.framework.commons.utils.support.EEncodeType;
+import com.xenoblade.zohar.framework.commons.utils.support.EHashType;
 import com.xenoblade.zohar.framework.cache.core.util.AwaitThreadContainer;
 import com.xenoblade.zohar.framework.cache.core.util.RedisLockUtils;
 import com.xenoblade.zohar.framework.cache.core.util.ThreadTaskUtils;
@@ -29,10 +37,10 @@ import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.cache.support.NullValue;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
-import java.time.Duration;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
@@ -106,6 +114,11 @@ public class RedisCache extends AbstractValueAdaptingCache {
     private final int magnification;
 
     /**
+     * Key 的序列化方式
+     */
+    private ERedisSerialType keySerialType;
+
+    /**
      * key 编码类型
      */
     private EEncodeType keyEncodeType;
@@ -128,7 +141,8 @@ public class RedisCache extends AbstractValueAdaptingCache {
                 secondaryCacheConfig.getTimeUnit().toMillis(secondaryCacheConfig.getPreloadTime()),
                 secondaryCacheConfig.isForceRefresh(), secondaryCacheConfig.isUsePrefix(),
                 secondaryCacheConfig.isAllowNullValue(), secondaryCacheConfig.getMagnification(), stats,
-                secondaryCacheConfig.getKeyEncodeType(), secondaryCacheConfig.getKeyHashType());
+                secondaryCacheConfig.getKeySerialType(), secondaryCacheConfig.getKeyEncodeType(),
+                secondaryCacheConfig.getKeyHashType());
     }
 
     /**
@@ -145,7 +159,7 @@ public class RedisCache extends AbstractValueAdaptingCache {
      */
     public RedisCache(String name, RedisTemplate<String, Object> redisTemplate, RedissonClient redissonClient, long expiration, long preloadTime,
                       boolean forceRefresh, boolean usePrefix, boolean allowNullValues, int magnification, boolean stats,
-                      EEncodeType encodeType, EHashType hashType) {
+                      ERedisSerialType keySerialType, EEncodeType encodeType, EHashType hashType) {
         super(stats, name);
 
         Assert.notNull(redisTemplate, "RedisTemplate 不能为NULL");
@@ -157,6 +171,7 @@ public class RedisCache extends AbstractValueAdaptingCache {
         this.usePrefix = usePrefix;
         this.allowNullValues = allowNullValues;
         this.magnification = magnification;
+        this.keySerialType = keySerialType;
         this.keyEncodeType = encodeType;
         this.keyHashType = hashType;
     }
@@ -241,11 +256,47 @@ public class RedisCache extends AbstractValueAdaptingCache {
      * @return RedisCacheKey
      */
     public RedisCacheKey getRedisCacheKey(Object key) {
-        return new RedisCacheKey(key, redisTemplate.getKeySerializer())
+
+        return new RedisCacheKey(key, getKeyRedisSerializer())
                 .cacheName(getName())
-                .usePrefix(usePrefix)
-                .encodeType(keyEncodeType)
-                .hashType(keyHashType);
+                .usePrefix(usePrefix);
+    }
+
+    private RedisSerializer getKeyRedisSerializer() throws InvalidRedisSerializerException {
+        RedisSerializer keyRedisSerializer = null;
+        switch (this.keySerialType) {
+            case STRING:
+            {
+                keyRedisSerializer = new DefaultStringRedisSerializer(this.keyEncodeType, this.keyHashType);
+                break;
+            }
+            case FASTJSON:
+            {
+                keyRedisSerializer = new FastJsonStringRedisSerilizer(this.keyEncodeType, this.keyHashType);
+                break;
+            }
+            case JACKSON:
+            {
+                keyRedisSerializer = new JacksonStringRedisSerilaizer(this.keyEncodeType, this.keyHashType);
+                break;
+            }
+            case KRYO:
+            {
+                keyRedisSerializer = new KryoStringRedisSerilaizer(this.keyEncodeType, this.keyHashType);
+                break;
+            }
+            case JDK:
+            {
+                keyRedisSerializer = new JdkSerializationStringRedisSerializer(this.keyEncodeType, this.keyHashType);
+                break;
+            }
+            default:
+            {
+                throw new InvalidRedisSerializerException(StrUtil.format("Invalid reids object serializer: {}", this.keySerialType));
+            }
+        }
+
+        return keyRedisSerializer;
     }
 
     /**

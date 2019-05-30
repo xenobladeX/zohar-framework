@@ -16,6 +16,10 @@
  */
 package com.xenoblade.zohar.framework.commons.redis.serial.key;
 
+import cn.hutool.core.util.StrUtil;
+import com.xenoblade.zohar.framework.commons.utils.support.EEncodeType;
+import com.xenoblade.zohar.framework.commons.utils.support.EHashType;
+
 /**
  * DefaultStringRedisSerializer
  * @author xenoblade
@@ -27,7 +31,12 @@ public class DefaultStringRedisSerializer extends AbstractStringRedisSerializer{
         super();
     }
 
-    @Override protected String objectToString(Object object) {
-        return object.toString();
+    public DefaultStringRedisSerializer(EEncodeType encodeType, EHashType hashType) {
+        super(encodeType, hashType);
     }
+
+    @Override protected byte[] objectToBytes(Object object) {
+        return StrUtil.utf8Bytes(object.toString());
+    }
+
 }

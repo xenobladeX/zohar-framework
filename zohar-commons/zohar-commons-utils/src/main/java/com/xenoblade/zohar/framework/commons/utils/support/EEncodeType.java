@@ -14,18 +14,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.redis.starter;
+package com.xenoblade.zohar.framework.commons.utils.support;
 
 /**
- * InvalidRedisSerializerException
+ * EEncodeType
  * @author xenoblade
  * @since 1.0.0
  */
-public class InvalidRedisSerializerException extends RuntimeException{
+public enum EEncodeType {
 
-    public InvalidRedisSerializerException(String message) {
-        super(message);
-    }
+    /**
+     * base64
+     */
+    BASE64,
+
+    /**
+     * 十六进制
+     */
+    HEX,
+
+    /**
+     * 不做任何操作
+     */
+    NONE;
 
 
 }

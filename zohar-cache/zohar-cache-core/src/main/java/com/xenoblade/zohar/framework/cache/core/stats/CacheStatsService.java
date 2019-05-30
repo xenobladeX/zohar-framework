@@ -87,7 +87,7 @@ public class CacheStatsService {
                 MultiLayerCache multiLayerCache = (MultiLayerCache) cache;
                 MultiLayerCacheConfig multiLayerCacheConfig = multiLayerCache.getMultiLayerCacheConfig();
                 // 加锁并增量缓存统计数据，缓存key=固定前缀 + 缓存名称加 + 内部缓存名
-                String redisKey = getRedisStatsKey(cacheName, multiLayerCacheConfig.getInternalKey());
+                String redisKey = getRedisStatsKey(cacheName, multiLayerCacheConfig.internalKey());
                 CacheStatsInfo cacheStats = (CacheStatsInfo) cacheManager.getRedisTemplate().opsForValue().get(redisKey);
                 if (!Objects.isNull(cacheStats)) {
                     statsList.add(cacheStats);
@@ -121,7 +121,7 @@ public class CacheStatsService {
                         MultiLayerCache multiLayerCache = (MultiLayerCache) cache;
                         MultiLayerCacheConfig multiLayerCacheConfig = multiLayerCache.getMultiLayerCacheConfig();
                         // 加锁并增量缓存统计数据，缓存key=固定前缀 +缓存名称加 + 内部缓存名
-                        String redisKey = getRedisStatsKey(cacheName, multiLayerCacheConfig.getInternalKey());
+                        String redisKey = getRedisStatsKey(cacheName, multiLayerCacheConfig.internalKey());
                         RLock lock = RedisLockUtils.getRLock(redissonClient, redisKey);
                         try {
                             if (lock.tryLock()) {
@@ -132,7 +132,7 @@ public class CacheStatsService {
 
                                 // 设置缓存唯一标示
                                 cacheStats.setCacheName(cacheName);
-                                cacheStats.setInternalKey(multiLayerCacheConfig.getInternalKey());
+                                cacheStats.setInternalKey(multiLayerCacheConfig.internalKey());
 
                                 cacheStats.setDepict(multiLayerCacheConfig.getDepict());
                                 // 设置缓存配置信息

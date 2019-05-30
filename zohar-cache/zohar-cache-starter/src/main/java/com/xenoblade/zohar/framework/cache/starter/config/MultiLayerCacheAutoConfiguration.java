@@ -70,7 +70,7 @@ public class MultiLayerCacheAutoConfiguration {
         SecnodaryCacheProperties secnodaryCacheProperties = multiLayerCacheProperties.getSecnodaryCache();
         SecondaryCacheConfig secondaryCacheConfig = new SecondaryCacheConfig(secnodaryCacheProperties.getExpiration(),
                 secnodaryCacheProperties.getPreloadTime(), secnodaryCacheProperties.getTimeUnit(), secnodaryCacheProperties.isForceRefresh(),
-                secnodaryCacheProperties.isAllowNullValue(), secnodaryCacheProperties.getMagnification(),
+                secnodaryCacheProperties.isAllowNullValue(), secnodaryCacheProperties.getMagnification(), secnodaryCacheProperties.getKeySerialType(),
                 secnodaryCacheProperties.getKeyEncodeType(), secnodaryCacheProperties.getKeyHashType());
         defaultMultiLayerCacheConfig.setSecondaryCacheConfig(secondaryCacheConfig);
 

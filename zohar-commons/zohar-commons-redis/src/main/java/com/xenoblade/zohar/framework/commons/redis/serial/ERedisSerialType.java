@@ -23,6 +23,7 @@ package com.xenoblade.zohar.framework.commons.redis.serial;
  */
 public enum ERedisSerialType {
 
+    INVALID,
     STRING,
     JACKSON,
     FASTJSON,

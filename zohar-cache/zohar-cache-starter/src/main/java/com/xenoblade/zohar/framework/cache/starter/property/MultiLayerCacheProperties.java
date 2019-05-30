@@ -17,15 +17,11 @@
 package com.xenoblade.zohar.framework.cache.starter.property;
 
 import com.xenoblade.zohar.framework.cache.core.support.ECacheMode;
-import com.xenoblade.zohar.framework.cache.core.support.EEncodeType;
-import com.xenoblade.zohar.framework.cache.core.support.EExpireMode;
-import com.xenoblade.zohar.framework.cache.core.support.EHashType;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
 import java.io.Serializable;
-import java.util.concurrent.TimeUnit;
 
 /**
  * MultiLayerCacheProperties

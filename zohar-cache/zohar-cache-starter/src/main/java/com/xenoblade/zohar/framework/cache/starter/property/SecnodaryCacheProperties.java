@@ -16,8 +16,9 @@
  */
 package com.xenoblade.zohar.framework.cache.starter.property;
 
-import com.xenoblade.zohar.framework.cache.core.support.EEncodeType;
-import com.xenoblade.zohar.framework.cache.core.support.EHashType;
+import com.xenoblade.zohar.framework.commons.redis.serial.ERedisSerialType;
+import com.xenoblade.zohar.framework.commons.utils.support.EEncodeType;
+import com.xenoblade.zohar.framework.commons.utils.support.EHashType;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -64,6 +65,11 @@ public class SecnodaryCacheProperties implements Serializable {
     boolean allowNullValue = false;
 
     /**
+     * Key 的序列化方式
+     */
+    private ERedisSerialType keySerialType = ERedisSerialType.JDK;
+
+    /**
      * Key 的编码方式
      */
     private EEncodeType keyEncodeType = EEncodeType.NONE;
@@ -72,7 +78,7 @@ public class SecnodaryCacheProperties implements Serializable {
     /**
      * Key 的hash 方式
      */
-    private EHashType keyHashType = EHashType.NONE;
+    private EHashType keyHashType = EHashType.MD5;
 
 
     /**

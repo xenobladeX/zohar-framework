@@ -139,9 +139,12 @@ public class DefaultCacheAnnotationParser implements CacheAnnotationParser {
             if (cacheOperation.isIgnoreException()) {
                 cacheOperation.setCacheManager(cacheConfig.cacheManager());
             }
+
+            // Merge firstConfig
             if (cacheOperation.getFirstCache() == null && cacheConfig.firstCache().length > 0) {
                 cacheOperation.setFirstCache(cacheConfig.firstCache()[0]);
             }
+            // Merge secondConfig
             if (cacheOperation.getSecondaryCache() == null && cacheConfig.secondaryCache().length > 0) {
                 cacheOperation.setSecondaryCache(cacheConfig.secondaryCache()[0]);
             }

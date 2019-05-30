@@ -120,7 +120,7 @@ public abstract class AbstractCacheManager
             if (cacheMap.size() > 1) {
                 log.warn("缓存名称为 {} 的缓存,存在{}个配置，请一定注意保证缓存的key唯一性，否则会出现缓存过期时间错乱的情况", name, cacheMap.size());
             }
-            Cache cache = cacheMap.get(multiLayerCacheConfig.getInternalKey());
+            Cache cache = cacheMap.get(multiLayerCacheConfig.internalKey());
             if (cache != null) {
                 return cache;
             }
@@ -131,7 +131,7 @@ public abstract class AbstractCacheManager
             cacheMap = this.cacheContainer.get(name);
             if (!CollectionUtils.isEmpty(cacheMap)) {
                 // 从容器中获取缓存
-                Cache cache = cacheMap.get(multiLayerCacheConfig.getInternalKey());
+                Cache cache = cacheMap.get(multiLayerCacheConfig.internalKey());
                 if (cache != null) {
                     return cache;
                 }
@@ -150,7 +150,7 @@ public abstract class AbstractCacheManager
                 // 装饰Cache对象
                 cache = decorateCache(cache);
                 // 将新的Cache对象放到容器
-                cacheMap.put(multiLayerCacheConfig.getInternalKey(), cache);
+                cacheMap.put(multiLayerCacheConfig.internalKey(), cache);
                 if (cacheMap.size() > 1) {
                     log.warn("缓存名称为 {} 的缓存,存在{}个不同配置，请一定注意保证缓存的key唯一性，否则会出现缓存过期时间错乱的情况", name, cacheMap.size());
                 }

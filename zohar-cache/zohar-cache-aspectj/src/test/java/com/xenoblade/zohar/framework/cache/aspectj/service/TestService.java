@@ -24,8 +24,7 @@ import com.xenoblade.zohar.framework.cache.aspectj.annotation.FirstCache;
 import com.xenoblade.zohar.framework.cache.aspectj.annotation.SecondaryCache;
 import com.xenoblade.zohar.framework.cache.aspectj.model.User;
 import com.xenoblade.zohar.framework.cache.core.support.ECacheMode;
-import com.xenoblade.zohar.framework.cache.core.support.EEncodeType;
-import com.xenoblade.zohar.framework.cache.core.support.EHashType;
+import com.xenoblade.zohar.framework.commons.utils.support.EHashType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

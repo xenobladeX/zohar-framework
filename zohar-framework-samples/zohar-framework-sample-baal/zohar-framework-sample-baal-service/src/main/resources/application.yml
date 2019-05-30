@@ -38,25 +38,9 @@ management:
 
 zohar:
 
-#  redis:
-#    objct-template:
-#      key-serial: kryo
-#      value-serial: fastjson
-#    string-template:
-#      key-serial: string
-#      value-serial: string
-
   multi-layer-cache:
     cache-name: zohar-cache
     stats: false
     cache-mode: all
-#    first-cache:
-#      expire-time: 4
-#      time-unit: seconds
-#    secnodary-cache:
-#      key-hash-type: md5
-#      expiration: 10
-#      preload-time: 3
-#      force-refresh: true
-#      time-unit: seconds
+
 

@@ -14,39 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.cache.core.support;
+package com.xenoblade.zohar.framework.commons.redis.support;
 
 /**
- * EHashType
+ * InvalidRedisSerializerException
  * @author xenoblade
  * @since 1.0.0
  */
-public enum EHashType {
+public class InvalidRedisSerializerException extends RuntimeException{
 
-    /**
-     * md5
-     */
-    MD5,
-
-    /**
-     * sha-1
-     */
-    SHA1,
-
-    /**
-     * Hmac + sha-1
-     */
-    HMAC_SHA1,
-
-    /**
-     * Hmac + md5
-     */
-    HMAC_MD5,
-
-    /**
-     * 不做操作
-     */
-    NONE;
+    public InvalidRedisSerializerException(String message) {
+        super(message);
+    }
 
 
 }
