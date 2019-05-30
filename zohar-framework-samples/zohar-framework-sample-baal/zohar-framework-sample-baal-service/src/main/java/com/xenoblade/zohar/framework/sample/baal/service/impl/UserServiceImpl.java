@@ -23,8 +23,12 @@ import com.xenoblade.zohar.framework.cache.aspectj.annotation.CacheConfig;
 import com.xenoblade.zohar.framework.cache.aspectj.annotation.CacheEvict;
 import com.xenoblade.zohar.framework.cache.aspectj.annotation.CachePut;
 import com.xenoblade.zohar.framework.cache.aspectj.annotation.Cacheable;
+import com.xenoblade.zohar.framework.cache.aspectj.annotation.SecondaryCache;
 import com.xenoblade.zohar.framework.commons.api.exception.NotFoundException;
 import com.xenoblade.zohar.framework.commons.api.exception.ZoharException;
+import com.xenoblade.zohar.framework.commons.redis.serial.ERedisSerialType;
+import com.xenoblade.zohar.framework.commons.utils.support.EEncodeType;
+import com.xenoblade.zohar.framework.commons.utils.support.EHashType;
 import com.xenoblade.zohar.framework.sample.baal.api.dto.UserDTO;
 import com.xenoblade.zohar.framework.sample.baal.api.service.UserService.GetUserParam;
 import com.xenoblade.zohar.framework.sample.baal.api.service.UserService.RemoveUserRequest;
@@ -40,6 +44,7 @@ import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 /**
  * UserServiceImpl
@@ -48,7 +53,8 @@ import java.util.Optional;
  */
 @Service
 @Slf4j
-@CacheConfig(cacheNames = "baal-user")
+@CacheConfig(cacheNames = "baal-user", secondaryCache = @SecondaryCache(keySerialType = ERedisSerialType.STRING,
+        keyHashType = EHashType.NONE, keyEncodeType = EEncodeType.NONE))
 public class UserServiceImpl implements IUserService{
 
     private static Map<String, UserEntity> localUsers = Maps.newConcurrentMap();

@@ -28,7 +28,8 @@ public interface IZoharErrorCode extends IEnum<Integer> {
 
     String getMessage();
 
-    @Override default Integer value() {
+    @Override
+    default Integer value() {
         return this.getCode();
     }
 }

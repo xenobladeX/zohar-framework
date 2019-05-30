@@ -21,6 +21,7 @@ package com.xenoblade.zohar.framework.commons.api.enums;
  * @author xenoblade
  * @since 1.0.0
  */
+// TODO  该接口实现一个伪enum，并使用 ENUM注解实现注解的继承
 public interface IEnum<T extends Comparable> {
 
     int ordinal();

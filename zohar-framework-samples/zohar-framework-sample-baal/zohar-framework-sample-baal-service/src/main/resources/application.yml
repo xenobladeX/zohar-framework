@@ -37,10 +37,8 @@ management:
         include: '*'
 
 zohar:
-
   multi-layer-cache:
     cache-name: zohar-cache
     stats: false
-    cache-mode: all
 
 
