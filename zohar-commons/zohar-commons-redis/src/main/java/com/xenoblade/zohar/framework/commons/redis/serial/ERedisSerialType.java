@@ -29,6 +29,6 @@ public enum ERedisSerialType {
     FASTJSON,
     KRYO,
     JDK;
-    // TODO: Protostuff
+    // TODO 100 Protostuff
 
 }

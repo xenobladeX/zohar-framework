@@ -63,9 +63,16 @@ public enum ZoharErrorCode implements IZoharErrorCode{
     SERVICE_UNAVAILABLE(503, "请求超时"),
 
 
+    // datasource error
+    DATA_NOT_EXIST(601, "数据不存在"),
+    DATA_DUPLICATE("数据重复"),
+    DATA_SAVE_ERROR("数据保存错误"),
+    DATA_DELETE_ERROR("数据删除错误"),
+    DATA_UPDATE_ERROR("数据更新错误"),
+    DATA_ACCESS_ERROR("数据访问错误"),
 
 
-    MAX_FRAMEWORK_ERROR(600, "zohar-framework最大错误码，请不要直接使用");
+    MAX_FRAMEWORK_ERROR(1000, "zohar-framework最大错误码，请不要直接使用");
 
     @Getter
     private Integer code;

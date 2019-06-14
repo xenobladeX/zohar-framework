@@ -42,7 +42,6 @@ public abstract class AbstractStringRedisSerializer implements RedisSerializer<O
 
     @Override
     public String deserialize(byte[] bytes) {
-        // TODO deserialize
         return (bytes == null ? null : StrUtil.utf8Str(bytes));
     }
 

@@ -36,6 +36,8 @@ public class ZoharException extends RuntimeException{
 
     private Integer status;
 
+
+    // TODO getHttpErrorCode
     public ZoharException(Throwable throwable) {
         super(throwable);
         this.errorCode(ZoharErrorCode.INNER_ERROR);

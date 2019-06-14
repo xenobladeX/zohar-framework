@@ -33,7 +33,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-// TODO  add @CacheConfigs
+// TODO 100 add @CacheConfigs
 public @interface CacheConfig {
 
     /**

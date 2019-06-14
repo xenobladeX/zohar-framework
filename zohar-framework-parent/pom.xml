@@ -56,13 +56,19 @@
     <build>
 
         <resources>
-
             <!--打包resources下所有配置文件-->
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
             </resource>
-
+            <!--打包源码中MyBatis自动生成的XML-->
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
         </resources>
 
         <plugins>

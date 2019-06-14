@@ -14,45 +14,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.core.config;
+package com.xenoblade.zohar.framework.sample.agares.service.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.xenoblade.zohar.framework.commons.spring.ApplicationContextHolder;
-import com.xenoblade.zohar.framework.commons.utils.jackson.JacksonUtil;
+import com.baomidou.mybatisplus.core.injector.ISqlInjector;
+import com.baomidou.mybatisplus.extension.injector.LogicSqlInjector;
+import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 
 /**
- * ZoharAutoConfiguration
+ * MyBatisPlusConfiguration
  * @author xenoblade
  * @since 1.0.0
  */
 @Configuration
-public class ZoharAutoConfiguration {
-
-
-    @Bean
-    @Primary
-    // TODO 50 Jackson2ObjectMapperBuilderCustomizer
-    public ObjectMapper defaultObjectMapper() {
-
-        ObjectMapper defaultObjectMapper = new ObjectMapper();
-
-        return JacksonUtil.initWrapperObjectMapper(defaultObjectMapper);
-    }
+@MapperScan("com.xenoblade.zohar.framework.sample.agares.service.mapper")
+public class MyBatisPlusConfiguration {
 
 
     /**
-     * 注入ApplicationContextAware
+     * 分页插件
+     */
+    @Bean
+    public PaginationInterceptor paginationInterceptor() {
+        return new PaginationInterceptor();
+    }
+
+    /**
+     * 逻辑删除
      * @return
      */
     @Bean
-    public ApplicationContextHolder applicationContextHolder() {
-        return new ApplicationContextHolder();
+    public ISqlInjector sqlInjector() {
+        return new LogicSqlInjector();
     }
-
-
-    // TODO 100 plugin use pf4j-spring
 
 }

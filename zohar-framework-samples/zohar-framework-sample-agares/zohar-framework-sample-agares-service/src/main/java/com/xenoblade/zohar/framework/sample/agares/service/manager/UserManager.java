@@ -14,20 +14,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.api.enums;
+package com.xenoblade.zohar.framework.sample.agares.service.manager;
+
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.xenoblade.zohar.framework.sample.agares.service.entity.UserEntity;
 
 /**
- * IEnum
+ * UserManager
  * @author xenoblade
  * @since 1.0.0
  */
-// TODO 0 该接口实现一个伪enum，并使用 ENUM注解实现注解的继承
-public interface IEnum<T extends Comparable> {
+public interface UserManager extends IService<UserEntity>{
 
-    int ordinal();
 
-    String name();
 
-    T value();
 
 }

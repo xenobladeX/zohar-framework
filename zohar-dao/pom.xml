@@ -3,24 +3,30 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
         <groupId>com.xenoblade</groupId>
-        <artifactId>zohar-framework-sample-agares</artifactId>
+        <artifactId>zohar-framework-parent</artifactId>
         <version>1.1.0-SNAPSHOT</version>
+        <relativePath>../zohar-framework-parent</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>zohar-framework-sample-agares-api</artifactId>
-    <name>Zohar Framework Sample Agares API</name>
+    <artifactId>zohar-dao</artifactId>
+    <name>Zohar DAO</name>
+    <packaging>pom</packaging>
+
     <properties>
         <github.path>${project.artifactId}</github.path>
     </properties>
 
-    <dependencies>
+    <modules>
+        <module>zohar-dao-api</module>
+        <module>zohar-dao-mybatis</module>
+        <module>zohar-dao-datasource</module>
+        <module>zohar-dao-jdbc</module>
+        <module>zohar-dao-starter</module>
+    </modules>
 
-        <dependency>
-            <groupId>com.xenoblade</groupId>
-            <artifactId>zohar-commons-utils</artifactId>
-        </dependency>
 
-
-    </dependencies>
 
 </project>
+
+
+

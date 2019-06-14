@@ -14,20 +14,65 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.api.enums;
+package com.xenoblade.zohar.framework.sample.agares.api.dto;
+
+import lombok.Data;
+
+import java.io.Serializable;
 
 /**
- * IEnum
+ * UserDTO
  * @author xenoblade
  * @since 1.0.0
  */
-// TODO 0 该接口实现一个伪enum，并使用 ENUM注解实现注解的继承
-public interface IEnum<T extends Comparable> {
+@Data
+public class UserDTO implements Serializable{
 
-    int ordinal();
+    private static final long serialVersionUID = 1064446383776436862L;
 
-    String name();
 
-    T value();
+    /**
+     * 用户ID
+     */
+    private String userId;
 
+    /**
+     * 用户名
+     */
+    private String username;
+
+    /**
+     * 密码
+     */
+    private String password;
+
+    /**
+     * 昵称
+     */
+    private String nickname;
+
+    /**
+     * 手机号
+     */
+    private String mobileNumber;
+
+    /**
+     * 头像
+     */
+    private String avatar;
+
+    /**
+     * 邮箱地址
+     */
+    private String email;
+
+    /**
+     * 创建时间
+     */
+    private Long createTime;
+
+    /**
+     * 更新时间
+     */
+    private Long updateTime;
 }
