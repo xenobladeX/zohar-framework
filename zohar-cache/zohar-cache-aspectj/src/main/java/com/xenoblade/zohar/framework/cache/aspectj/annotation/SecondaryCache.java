@@ -102,4 +102,9 @@ public @interface SecondaryCache {
      */
     EHashType keyHashType() default EHashType.MD5;
 
+    /**
+     * Value 的序列化方式
+     */
+    ERedisSerialType valueSerialType() default ERedisSerialType.JACKSON;
+
 }

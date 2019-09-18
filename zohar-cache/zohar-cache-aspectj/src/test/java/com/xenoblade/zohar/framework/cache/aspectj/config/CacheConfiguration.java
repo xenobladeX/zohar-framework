@@ -63,7 +63,7 @@ public class CacheConfiguration {
         // secondaryCacheConfig
         SecondaryCacheConfig secondaryCacheConfig = new SecondaryCacheConfig(10,
                 1, TimeUnit.SECONDS, false, false, 1, ERedisSerialType.JDK,
-                EEncodeType.NONE, EHashType.MD5);
+                EEncodeType.NONE, EHashType.MD5, ERedisSerialType.JACKSON);
         defaultMultiLayerCacheConfig.setSecondaryCacheConfig(secondaryCacheConfig);
 
         multiLayerCacheManager.setDefaultMultiLayerCacheConfig(defaultMultiLayerCacheConfig);

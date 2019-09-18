@@ -21,8 +21,9 @@ import com.xenoblade.zohar.framework.cache.core.cache.Cache;
 import com.xenoblade.zohar.framework.cache.core.cache.MultiLayerCache;
 import com.xenoblade.zohar.framework.cache.core.cache.caffeine.CaffeineCache;
 import com.xenoblade.zohar.framework.cache.core.cache.redis.RedisCache;
+import com.xenoblade.zohar.framework.cache.core.config.FirstCacheConfig;
 import com.xenoblade.zohar.framework.cache.core.config.MultiLayerCacheConfig;
-import lombok.Getter;
+import com.xenoblade.zohar.framework.cache.core.config.SecondaryCacheConfig;
 import lombok.Setter;
 import org.redisson.api.RedissonClient;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -35,7 +36,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 public class MultiLayerCacheManager extends AbstractCacheManager{
 
     @Setter
-    private MultiLayerCacheConfig defaultMultiLayerCacheConfig;
+    private MultiLayerCacheConfig defaultMultiLayerCacheConfig = new MultiLayerCacheConfig();
 
     /**
      * 缓存名
@@ -54,7 +55,8 @@ public class MultiLayerCacheManager extends AbstractCacheManager{
         // 创建一级缓存
         CaffeineCache caffeineCache = new CaffeineCache(name, multiLayerCacheConfig.getFirstCacheConfig(), isStats());
         // 创建二级缓存
-        RedisCache redisCache = new RedisCache(name, redisTemplate, redissonClient, multiLayerCacheConfig.getSecondaryCacheConfig(), isStats());
+        // TODO 2 创建 RedisMapCache
+        RedisCache redisCache = new RedisCache(name, redissonClient, multiLayerCacheConfig.getSecondaryCacheConfig(), isStats());
         return new MultiLayerCache(redisTemplate, caffeineCache, redisCache, super.isStats(), multiLayerCacheConfig);
     }
 

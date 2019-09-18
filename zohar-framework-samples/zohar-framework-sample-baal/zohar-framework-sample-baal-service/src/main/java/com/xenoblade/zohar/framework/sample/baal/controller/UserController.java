@@ -61,8 +61,8 @@ public class UserController {
 
     @PostMapping
     public ResponseMessage saveUser(@Validated @RequestBody SaveUserRequest saveUserRequest) {
-        userService.saveUser(saveUserRequest);
-        return ResponseMessage.ok();
+        UserDTO userDTO = userService.saveUser(saveUserRequest);
+        return ResponseMessage.ok(userDTO.getUserId());
     }
 
     @PutMapping("/{id}")

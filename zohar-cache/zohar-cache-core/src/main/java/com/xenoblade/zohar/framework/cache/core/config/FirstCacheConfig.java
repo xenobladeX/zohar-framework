@@ -19,6 +19,7 @@ package com.xenoblade.zohar.framework.cache.core.config;
 import com.xenoblade.zohar.framework.cache.core.support.EExpireMode;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
@@ -29,6 +30,7 @@ import java.util.concurrent.TimeUnit;
  * @since 1.0.0
  */
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class FirstCacheConfig implements Serializable{
 

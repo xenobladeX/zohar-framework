@@ -40,8 +40,9 @@ public class KryoStringRedisSerilaizer extends AbstractStringRedisSerializer{
         super();
     }
 
-    public KryoStringRedisSerilaizer(EEncodeType encodeType, EHashType hashType) {
+    public KryoStringRedisSerilaizer(EEncodeType encodeType, EHashType hashType, Class clazz) {
         super(encodeType, hashType);
+        this.clazz = clazz;
     }
 
     @Override protected byte[] objectToBytes(Object object) {

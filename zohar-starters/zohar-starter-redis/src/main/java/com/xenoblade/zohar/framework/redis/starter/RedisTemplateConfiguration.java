@@ -168,8 +168,8 @@ public class RedisTemplateConfiguration {
             }
             case KRYO:
             {
-                objectRedisTemplate.setKeySerializer(new KryoStringRedisSerilaizer(encodeType, hashType));
-                objectRedisTemplate.setHashKeySerializer(new KryoStringRedisSerilaizer(encodeType, hashType));
+                objectRedisTemplate.setKeySerializer(new KryoStringRedisSerilaizer(encodeType, hashType, Object.class));
+                objectRedisTemplate.setHashKeySerializer(new KryoStringRedisSerilaizer(encodeType, hashType, Object.class));
                 break;
             }
             case JDK:

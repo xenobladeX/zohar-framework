@@ -17,14 +17,18 @@
 package com.xenoblade.zohar.framework.cache.core.cache.redis;
 
 import cn.hutool.core.util.StrUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xenoblade.zohar.framework.cache.core.cache.AbstractValueAdaptingCache;
 import com.xenoblade.zohar.framework.cache.core.config.SecondaryCacheConfig;
 import com.xenoblade.zohar.framework.commons.redis.serial.ERedisSerialType;
+import com.xenoblade.zohar.framework.commons.redis.serial.SerializationUtils;
 import com.xenoblade.zohar.framework.commons.redis.serial.key.DefaultStringRedisSerializer;
 import com.xenoblade.zohar.framework.commons.redis.serial.key.FastJsonStringRedisSerilizer;
 import com.xenoblade.zohar.framework.commons.redis.serial.key.JacksonStringRedisSerilaizer;
 import com.xenoblade.zohar.framework.commons.redis.serial.key.JdkSerializationStringRedisSerializer;
 import com.xenoblade.zohar.framework.commons.redis.serial.key.KryoStringRedisSerilaizer;
+import com.xenoblade.zohar.framework.commons.redis.serial.value.FastJsonRedisSerializer;
+import com.xenoblade.zohar.framework.commons.redis.serial.value.KryoRedisSerializer;
 import com.xenoblade.zohar.framework.commons.redis.support.InvalidRedisSerializerException;
 import com.xenoblade.zohar.framework.commons.utils.support.EEncodeType;
 import com.xenoblade.zohar.framework.commons.utils.support.EHashType;
@@ -35,13 +39,13 @@ import com.xenoblade.zohar.framework.commons.utils.jackson.JacksonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
+import org.redisson.client.codec.ByteArrayCodec;
 import org.springframework.cache.support.NullValue;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.util.Assert;
-import org.springframework.util.CollectionUtils;
 
-import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
@@ -63,15 +67,13 @@ public class RedisCache extends AbstractValueAdaptingCache {
      */
     private static final long WAIT_TIME = 20;
 
+    private static ByteArrayCodec byteArrayCodec = new ByteArrayCodec();
+
     /**
      * 等待线程容器
      */
     private AwaitThreadContainer container = new AwaitThreadContainer();
 
-    /**
-     * redis 客户端
-     */
-    private RedisTemplate<String, Object> redisTemplate;
 
     /**
      * redisson 客户端
@@ -113,41 +115,29 @@ public class RedisCache extends AbstractValueAdaptingCache {
      */
     private final int magnification;
 
-    /**
-     * Key 的序列化方式
-     */
-    private ERedisSerialType keySerialType;
+    private RedisSerializer keyRedisSerializer;
 
-    /**
-     * key 编码类型
-     */
-    private EEncodeType keyEncodeType;
-
-    /**
-     * key 哈希类型
-     */
-    private EHashType keyHashType;
+    private RedisSerializer valueRedisSerializer;
 
     /**
      * @param name                  缓存名称
-     * @param redisTemplate         redis客户端 redis 客户端
+     * @param redissonClient         redisson客户端
      * @param secondaryCacheConfig 二级缓存配置{@link SecondaryCacheConfig}
      * @param stats                 是否开启统计模式
      */
-    public RedisCache(String name, RedisTemplate<String, Object> redisTemplate,
+    public RedisCache(String name,
                       RedissonClient redissonClient, SecondaryCacheConfig secondaryCacheConfig, boolean stats) {
 
-        this(name, redisTemplate, redissonClient, secondaryCacheConfig.getTimeUnit().toMillis(secondaryCacheConfig.getExpiration()),
+        this(name, redissonClient, secondaryCacheConfig.getTimeUnit().toMillis(secondaryCacheConfig.getExpiration()),
                 secondaryCacheConfig.getTimeUnit().toMillis(secondaryCacheConfig.getPreloadTime()),
                 secondaryCacheConfig.isForceRefresh(), secondaryCacheConfig.isUsePrefix(),
                 secondaryCacheConfig.isAllowNullValue(), secondaryCacheConfig.getMagnification(), stats,
                 secondaryCacheConfig.getKeySerialType(), secondaryCacheConfig.getKeyEncodeType(),
-                secondaryCacheConfig.getKeyHashType());
+                secondaryCacheConfig.getKeyHashType(), secondaryCacheConfig.getValueSerialType());
     }
 
     /**
      * @param name            缓存名称
-     * @param redisTemplate   redis客户端
      * @param redissonClient  redisson 客户端
      * @param expiration      key的有效时间
      * @param preloadTime     缓存主动在失效前强制刷新缓存的时间
@@ -157,13 +147,12 @@ public class RedisCache extends AbstractValueAdaptingCache {
      * @param magnification   非空值和null值之间的时间倍率
      * @param stats           是否开启统计模式
      */
-    public RedisCache(String name, RedisTemplate<String, Object> redisTemplate, RedissonClient redissonClient, long expiration, long preloadTime,
+    public RedisCache(String name, RedissonClient redissonClient, long expiration, long preloadTime,
                       boolean forceRefresh, boolean usePrefix, boolean allowNullValues, int magnification, boolean stats,
-                      ERedisSerialType keySerialType, EEncodeType encodeType, EHashType hashType) {
+                      ERedisSerialType keySerialType, EEncodeType keyEncodeType, EHashType keyHashType, ERedisSerialType valueSerialType) {
         super(stats, name);
 
-        Assert.notNull(redisTemplate, "RedisTemplate 不能为NULL");
-        this.redisTemplate = redisTemplate;
+        Assert.notNull(redissonClient, "RedissonClient 不能为NULL");
         this.redissonClient = redissonClient;
         this.expiration = expiration;
         this.preloadTime = preloadTime;
@@ -171,14 +160,13 @@ public class RedisCache extends AbstractValueAdaptingCache {
         this.usePrefix = usePrefix;
         this.allowNullValues = allowNullValues;
         this.magnification = magnification;
-        this.keySerialType = keySerialType;
-        this.keyEncodeType = encodeType;
-        this.keyHashType = hashType;
+        this.keyRedisSerializer = getKeyRedisSerializer(keySerialType, keyEncodeType, keyHashType);
+        this.valueRedisSerializer = getValueRedisSerializer(valueSerialType);
     }
 
     @Override
-    public RedisTemplate<String, Object> getNativeCache() {
-        return this.redisTemplate;
+    public RedissonClient getNativeCache() {
+        return this.redissonClient;
     }
 
     @Override
@@ -189,7 +177,8 @@ public class RedisCache extends AbstractValueAdaptingCache {
 
         RedisCacheKey redisCacheKey = getRedisCacheKey(key);
         log.debug("redis缓存 key= {} 查询redis缓存", redisCacheKey.getKey());
-        return redisTemplate.opsForValue().get(redisCacheKey.getKey());
+        byte[] bytes = redissonClient.<byte[]>getBucket(redisCacheKey.getKey(), byteArrayCodec).get();
+        return valueRedisSerializer.deserialize(bytes);
     }
 
     @Override
@@ -201,8 +190,9 @@ public class RedisCache extends AbstractValueAdaptingCache {
         RedisCacheKey redisCacheKey = getRedisCacheKey(key);
         log.debug("redis缓存 key= {} 查询redis缓存如果没有命中，从数据库获取数据", redisCacheKey.getKey());
         // 先获取缓存，如果有直接返回
-        Object result = redisTemplate.opsForValue().get(redisCacheKey.getKey());
-        if (result != null || redisTemplate.hasKey(redisCacheKey.getKey())) {
+        byte[] bytes = redissonClient.<byte[]>getBucket(redisCacheKey.getKey(), byteArrayCodec).get();
+        Object result = valueRedisSerializer.deserialize(bytes);
+        if (result != null || redissonClient.getBucket(redisCacheKey.getKey()).isExists()) {
             // 刷新缓存
             refreshCache(redisCacheKey, valueLoader, result);
             return (T) fromStoreValue(result);
@@ -233,7 +223,7 @@ public class RedisCache extends AbstractValueAdaptingCache {
     public void evict(Object key) {
         RedisCacheKey redisCacheKey = getRedisCacheKey(key);
         log.info("清除redis缓存 key= {} ", redisCacheKey.getKey());
-        redisTemplate.delete(redisCacheKey.getKey());
+        redissonClient.getBucket(redisCacheKey.getKey()).delete();
     }
 
     @Override
@@ -241,10 +231,7 @@ public class RedisCache extends AbstractValueAdaptingCache {
         // 必须开启了使用缓存名称作为前缀，clear才有效
         if (usePrefix) {
             log.info("清空redis缓存 ，缓存前缀为{}", getName());
-            Set<String> keys = redisTemplate.keys(getName() + "*");
-            if (!CollectionUtils.isEmpty(keys)) {
-                redisTemplate.delete(keys);
-            }
+            redissonClient.getKeys().deleteByPattern(getName() + "*");
         }
     }
 
@@ -257,46 +244,79 @@ public class RedisCache extends AbstractValueAdaptingCache {
      */
     public RedisCacheKey getRedisCacheKey(Object key) {
 
-        return new RedisCacheKey(key, getKeyRedisSerializer())
+        return new RedisCacheKey(key, keyRedisSerializer)
                 .cacheName(getName())
                 .usePrefix(usePrefix);
     }
 
-    private RedisSerializer getKeyRedisSerializer() throws InvalidRedisSerializerException {
+    private RedisSerializer getKeyRedisSerializer(ERedisSerialType keySerialType, EEncodeType keyEncodeType, EHashType keyHashType) throws InvalidRedisSerializerException {
         RedisSerializer keyRedisSerializer = null;
-        switch (this.keySerialType) {
+        switch (keySerialType) {
             case STRING:
             {
-                keyRedisSerializer = new DefaultStringRedisSerializer(this.keyEncodeType, this.keyHashType);
+                keyRedisSerializer = new DefaultStringRedisSerializer(keyEncodeType, keyHashType);
                 break;
             }
             case FASTJSON:
             {
-                keyRedisSerializer = new FastJsonStringRedisSerilizer(this.keyEncodeType, this.keyHashType);
+                keyRedisSerializer = new FastJsonStringRedisSerilizer(keyEncodeType, keyHashType);
                 break;
             }
             case JACKSON:
             {
-                keyRedisSerializer = new JacksonStringRedisSerilaizer(this.keyEncodeType, this.keyHashType);
+                keyRedisSerializer = new JacksonStringRedisSerilaizer(keyEncodeType, keyHashType);
                 break;
             }
             case KRYO:
             {
-                keyRedisSerializer = new KryoStringRedisSerilaizer(this.keyEncodeType, this.keyHashType);
+                keyRedisSerializer = new KryoStringRedisSerilaizer(keyEncodeType, keyHashType, Object.class);
                 break;
             }
             case JDK:
             {
-                keyRedisSerializer = new JdkSerializationStringRedisSerializer(this.keyEncodeType, this.keyHashType);
+                keyRedisSerializer = new JdkSerializationStringRedisSerializer(keyEncodeType, keyHashType);
                 break;
             }
             default:
             {
-                throw new InvalidRedisSerializerException(StrUtil.format("Invalid reids object serializer: {}", this.keySerialType));
+                throw new InvalidRedisSerializerException(StrUtil.format("Invalid reids object serializer: {}", keySerialType));
             }
         }
 
         return keyRedisSerializer;
+    }
+
+    private RedisSerializer getValueRedisSerializer(ERedisSerialType valueSerialType) throws InvalidRedisSerializerException {
+        RedisSerializer valueRedisSerializer = null;
+        switch (valueSerialType) {
+            case FASTJSON:
+            {
+                valueRedisSerializer = new FastJsonRedisSerializer<>(Object.class, null);
+                break;
+            }
+            case JACKSON:
+            {
+                ObjectMapper jsonRedisObjectMapper = SerializationUtils.jsonRedisObjectMapper();
+                valueRedisSerializer = new GenericJackson2JsonRedisSerializer(jsonRedisObjectMapper);
+                break;
+            }
+            case KRYO:
+            {
+                valueRedisSerializer = new KryoRedisSerializer(Object.class);
+                break;
+            }
+            case JDK:
+            {
+                valueRedisSerializer = new JdkSerializationRedisSerializer();
+                break;
+            }
+            default:
+            {
+                throw new InvalidRedisSerializerException(StrUtil.format("Invalid reids object serializer: {}", valueSerialType));
+            }
+        }
+
+        return valueRedisSerializer;
     }
 
     /**
@@ -308,7 +328,8 @@ public class RedisCache extends AbstractValueAdaptingCache {
         for (int i = 0; i < RETRY_COUNT; i++) {
             try {
                 // 先取缓存，如果有直接返回，没有再去做拿锁操作
-                Object result = redisTemplate.opsForValue().get(redisCacheKey.getKey());
+                byte[] bytes = redissonClient.<byte[]>getBucket(redisCacheKey.getKey(), byteArrayCodec).get();
+                Object result = valueRedisSerializer.deserialize(bytes);
                 if (result != null) {
                     log.debug("redis缓存 key= {} 获取到锁后查询查询缓存命中，不需要执行被缓存的方法", redisCacheKey.getKey());
                     return (T) fromStoreValue(result);
@@ -366,12 +387,12 @@ public class RedisCache extends AbstractValueAdaptingCache {
         Object result = toStoreValue(value);
         // redis 缓存不允许直接存NULL，如果结果返回NULL需要删除缓存
         if (result == null) {
-            redisTemplate.delete(key.getKey());
+            redissonClient.getBucket(key.getKey()).delete();
             return result;
         }
         // 不允许缓存NULL值，删除缓存
         if (!isAllowNullValues() && result instanceof NullValue) {
-            redisTemplate.delete(key.getKey());
+            redissonClient.getBucket(key.getKey()).delete();
             return result;
         }
 
@@ -382,7 +403,7 @@ public class RedisCache extends AbstractValueAdaptingCache {
             expirationTime = expirationTime / getMagnification();
         }
         // 将数据放到缓存
-        redisTemplate.opsForValue().set(key.getKey(), result, expirationTime, TimeUnit.MILLISECONDS);
+        redissonClient.getBucket(key.getKey(), byteArrayCodec).set(valueRedisSerializer.serialize(result), expirationTime, TimeUnit.MILLISECONDS);
         return result;
     }
 
@@ -390,7 +411,7 @@ public class RedisCache extends AbstractValueAdaptingCache {
      * 刷新缓存数据
      */
     private <T> void refreshCache(RedisCacheKey redisCacheKey, Callable<T> valueLoader, Object result) {
-        Long ttl = redisTemplate.getExpire(redisCacheKey.getKey());
+        Long ttl = redissonClient.getBucket(redisCacheKey.getKey()).remainTimeToLive();
         Long preload = preloadTime;
         // 允许缓存NULL值，则自动刷新时间也要除以倍数
         boolean flag = isAllowNullValues() && (result instanceof NullValue || result == null);
@@ -419,7 +440,7 @@ public class RedisCache extends AbstractValueAdaptingCache {
         RLock lock = RedisLockUtils.getRLock(redissonClient, redisCacheKey.getKey());
         try {
             if (lock.tryLock()) {
-                redisTemplate.expire(redisCacheKey.getKey(), this.expiration, TimeUnit.MILLISECONDS);
+                redissonClient.getBucket(redisCacheKey.getKey()).expire(this.expiration, TimeUnit.MILLISECONDS);
             }
         } catch (Exception e) {
             log.error(e.getMessage(), e);
@@ -442,7 +463,7 @@ public class RedisCache extends AbstractValueAdaptingCache {
             try {
                 lock.lock();
                 // 获取锁之后再判断一下过期时间，看是否需要加载数据
-                Long ttl = redisTemplate.getExpire(redisCacheKey.getKey());
+                Long ttl = redissonClient.getBucket(redisCacheKey.getKey()).remainTimeToLive();
                 if (null != ttl && ttl > 0 && TimeUnit.SECONDS.toMillis(ttl) <= preloadTime) {
                     // 加载数据并放到缓存
                     loaderAndPutValue(redisCacheKey, valueLoader, false);

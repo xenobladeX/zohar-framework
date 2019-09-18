@@ -20,6 +20,7 @@ import com.xenoblade.zohar.framework.commons.redis.serial.ERedisSerialType;
 import com.xenoblade.zohar.framework.commons.utils.support.EEncodeType;
 import com.xenoblade.zohar.framework.commons.utils.support.EHashType;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
@@ -32,6 +33,7 @@ import static com.xenoblade.zohar.framework.cache.core.support.ECacheConstants.C
  * @since 1.0.0
  */
 @Data
+@NoArgsConstructor
 public class SecondaryCacheConfig implements Serializable{
 
     private static final long serialVersionUID = 1435597244908000981L;
@@ -82,6 +84,11 @@ public class SecondaryCacheConfig implements Serializable{
      */
     private EHashType keyHashType = EHashType.MD5;
 
+    /**
+     * Value 的序列化方法
+     */
+    private ERedisSerialType valueSerialType = ERedisSerialType.JACKSON;
+
 
     /**
      * 非空值和null值之间的时间倍率，默认是1。allowNullValue=true才有效
@@ -94,11 +101,16 @@ public class SecondaryCacheConfig implements Serializable{
 
     public SecondaryCacheConfig(long expiration, long preloadTime, TimeUnit timeUnit, boolean forceRefresh,
                                 boolean allowNullValues, int magnification) {
-        this(expiration, preloadTime, timeUnit, forceRefresh, allowNullValues, magnification, ERedisSerialType.JDK, EEncodeType.NONE, EHashType.NONE);
+        this.expiration = expiration;
+        this.preloadTime = preloadTime;
+        this.timeUnit = timeUnit;
+        this.forceRefresh = forceRefresh;
+        this.allowNullValue = allowNullValues;
+        this.magnification = magnification;
     }
 
     public SecondaryCacheConfig(long expiration, long preloadTime, TimeUnit timeUnit, boolean forceRefresh,
-                                 boolean allowNullValues, int magnification, ERedisSerialType keySerialType, EEncodeType keyEncodeType, EHashType keyHashType) {
+                                 boolean allowNullValues, int magnification, ERedisSerialType keySerialType, EEncodeType keyEncodeType, EHashType keyHashType, ERedisSerialType valueSerialType) {
         this.expiration = expiration;
         this.preloadTime = preloadTime;
         this.timeUnit = timeUnit;
@@ -109,6 +121,7 @@ public class SecondaryCacheConfig implements Serializable{
         this.keySerialType = keySerialType;
         this.keyEncodeType = keyEncodeType;
         this.keyHashType = keyHashType;
+        this.valueSerialType = valueSerialType;
     }
 
 
@@ -123,6 +136,8 @@ public class SecondaryCacheConfig implements Serializable{
         stringBuilder.append("keyEncodeType=").append(keyEncodeType);
         stringBuilder.append(CONFIG_PROPERTY_SPLLIT);
         stringBuilder.append("keyHashType=").append(keyHashType);
+        stringBuilder.append(CONFIG_PROPERTY_SPLLIT);
+        stringBuilder.append("valueSerialType=").append(valueSerialType);
         return stringBuilder.toString();
     }
 

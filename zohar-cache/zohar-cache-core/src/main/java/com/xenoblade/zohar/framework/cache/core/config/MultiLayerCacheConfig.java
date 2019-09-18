@@ -41,17 +41,17 @@ public class MultiLayerCacheConfig implements Serializable{
     /**
      * 是否使用一级缓存
      */
-    private ECacheMode cacheMode;
+    private ECacheMode cacheMode = ECacheMode.ALL;
 
     /**
      * 一级缓存配置
      */
-    private FirstCacheConfig firstCacheConfig;
+    private FirstCacheConfig firstCacheConfig = new FirstCacheConfig();
 
     /**
      * 二级缓存配置
      */
-    private SecondaryCacheConfig secondaryCacheConfig;
+    private SecondaryCacheConfig secondaryCacheConfig = new SecondaryCacheConfig();
 
     public MultiLayerCacheConfig() {
     }

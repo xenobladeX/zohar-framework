@@ -80,6 +80,11 @@ public class SecnodaryCacheProperties implements Serializable {
      */
     private EHashType keyHashType = EHashType.MD5;
 
+    /**
+     * Value 序列化方法
+     */
+    private ERedisSerialType valueSerialType = ERedisSerialType.JACKSON;
+
 
     /**
      * 非空值和null值之间的时间倍率，默认是1。allowNullValue=true才有效

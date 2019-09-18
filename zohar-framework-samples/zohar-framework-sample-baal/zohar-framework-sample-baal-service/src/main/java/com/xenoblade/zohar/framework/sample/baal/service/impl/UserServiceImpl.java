@@ -54,7 +54,7 @@ import java.util.concurrent.TimeUnit;
 @Service
 @Slf4j
 @CacheConfig(cacheNames = "baal-user", secondaryCache = @SecondaryCache(keySerialType = ERedisSerialType.STRING,
-        keyHashType = EHashType.NONE, keyEncodeType = EEncodeType.NONE))
+        keyHashType = EHashType.NONE, keyEncodeType = EEncodeType.NONE, valueSerialType = ERedisSerialType.FASTJSON))
 public class UserServiceImpl implements IUserService{
 
     private static Map<String, UserEntity> localUsers = Maps.newConcurrentMap();

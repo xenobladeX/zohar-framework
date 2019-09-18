@@ -22,7 +22,6 @@ import com.xenoblade.zohar.framework.cache.core.listener.RedisPubSubMessage;
 import com.xenoblade.zohar.framework.cache.core.listener.RedisPublisher;
 import com.xenoblade.zohar.framework.cache.core.stats.CacheStats;
 import com.xenoblade.zohar.framework.cache.core.support.ECacheMode;
-import com.xenoblade.zohar.framework.commons.utils.jackson.JacksonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
