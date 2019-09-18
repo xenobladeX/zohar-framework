@@ -23,6 +23,9 @@ import com.xenoblade.zohar.framework.cache.core.listener.RedisPublisher;
 import com.xenoblade.zohar.framework.cache.core.stats.CacheStats;
 import com.xenoblade.zohar.framework.cache.core.support.ECacheMode;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RTopic;
+import org.redisson.api.RedissonClient;
+import org.redisson.codec.SerializationCodec;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 
@@ -37,9 +40,9 @@ import java.util.concurrent.Callable;
 public class MultiLayerCache extends AbstractValueAdaptingCache {
 
     /**
-     * redis 客户端
+     * redisson 客户端
      */
-    private RedisTemplate<String, Object> redisTemplate;
+    private RedissonClient redissonClient;
 
     /**
      * 一级缓存
@@ -67,19 +70,19 @@ public class MultiLayerCache extends AbstractValueAdaptingCache {
     /**
      * 创建一个多级缓存对象
      *
-     * @param redisTemplate        redisTemplate
+     * @param redissonClient       redisson客户端
      * @param firstCache           一级缓存
      * @param secondCache          二级缓存
      * @param stats                是否开启统计
      * @param multiLayerCacheConfig 多级缓存配置
      */
-    public MultiLayerCache(RedisTemplate<String, Object> redisTemplate, AbstractValueAdaptingCache firstCache,
+    public MultiLayerCache(RedissonClient redissonClient, AbstractValueAdaptingCache firstCache,
                          AbstractValueAdaptingCache secondCache, boolean stats, MultiLayerCacheConfig multiLayerCacheConfig) {
-        this(redisTemplate, firstCache, secondCache, true, stats, secondCache.getName(), multiLayerCacheConfig);
+        this(redissonClient, firstCache, secondCache, true, stats, secondCache.getName(), multiLayerCacheConfig);
     }
 
     /**
-     * @param redisTemplate        redisTemplate
+     * @param redissonClient       redisson客户端
      * @param firstCache           一级缓存
      * @param secondCache          二级缓存
      * @param useFirstCache        是否使用一级缓存，默认是
@@ -87,10 +90,10 @@ public class MultiLayerCache extends AbstractValueAdaptingCache {
      * @param name                 缓存名称
      * @param multiLayerCacheConfig 多级缓存配置
      */
-    public MultiLayerCache(RedisTemplate<String, Object> redisTemplate, AbstractValueAdaptingCache firstCache,
+    public MultiLayerCache(RedissonClient redissonClient, AbstractValueAdaptingCache firstCache,
                          AbstractValueAdaptingCache secondCache, boolean useFirstCache, boolean stats, String name, MultiLayerCacheConfig multiLayerCacheConfig) {
         super(stats, name);
-        this.redisTemplate = redisTemplate;
+        this.redissonClient = redissonClient;
         this.firstCache = firstCache;
         this.secondCache = secondCache;
         this.useFirstCache = useFirstCache;
@@ -349,7 +352,8 @@ public class MultiLayerCache extends AbstractValueAdaptingCache {
                 message.setCacheName(getName());
                 message.setMessageType(ERedisPubSubMessageType.CLEAR);
                 // 发布消息
-                RedisPublisher.publisher(redisTemplate, new ChannelTopic(getName()), message);
+                RTopic topic = redissonClient.getTopic(getName(), new SerializationCodec());
+                topic.publish(message);
                 break;
             }
             case ONLY_FIRST:
@@ -359,7 +363,8 @@ public class MultiLayerCache extends AbstractValueAdaptingCache {
                 message.setCacheName(getName());
                 message.setMessageType(ERedisPubSubMessageType.CLEAR);
                 // 发布消息
-                RedisPublisher.publisher(redisTemplate, new ChannelTopic(getName()), message);
+                RTopic topic = redissonClient.getTopic(getName(), new SerializationCodec());
+                topic.publish(message);
                 break;
             }
             case ONLY_SECOND:
@@ -382,7 +387,8 @@ public class MultiLayerCache extends AbstractValueAdaptingCache {
         message.setKey(key);
         message.setMessageType(ERedisPubSubMessageType.EVICT);
         // 发布消息
-        RedisPublisher.publisher(redisTemplate, new ChannelTopic(getName()), message);
+        RTopic topic = redissonClient.getTopic(getName(), new SerializationCodec());
+        topic.publish(message);
     }
 
     /**

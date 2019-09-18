@@ -28,6 +28,8 @@ import java.io.Serializable;
 @Data
 public class RedisPubSubMessage implements Serializable{
 
+    private static final long serialVersionUID = 254146223096550546L;
+
     /**
      * 缓存名称
      */

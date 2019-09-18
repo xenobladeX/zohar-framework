@@ -19,20 +19,20 @@ package com.xenoblade.zohar.framework.cache.core.manager;
 import com.xenoblade.zohar.framework.cache.core.cache.Cache;
 import com.xenoblade.zohar.framework.cache.core.config.MultiLayerCacheConfig;
 import com.xenoblade.zohar.framework.cache.core.listener.RedisMessageListener;
+import com.xenoblade.zohar.framework.cache.core.listener.RedisPubSubMessage;
 import com.xenoblade.zohar.framework.cache.core.stats.CacheStatsInfo;
 import com.xenoblade.zohar.framework.cache.core.stats.CacheStatsService;
 import com.xenoblade.zohar.framework.cache.core.util.BeanFactory;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RTopic;
 import org.redisson.api.RedissonClient;
+import org.redisson.codec.SerializationCodec;
 import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.context.SmartLifecycle;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.listener.ChannelTopic;
-import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Collection;
@@ -50,15 +50,10 @@ import java.util.concurrent.ConcurrentMap;
  */
 @Slf4j
 public abstract class AbstractCacheManager
-        implements CacheManager, InitializingBean, DisposableBean, BeanNameAware, SmartLifecycle {
+        implements CacheManager, InitializingBean, DisposableBean, BeanNameAware {
 
     /**
-     * redis pub/sub 容器
-     */
-    private final RedisMessageListenerContainer container = new RedisMessageListenerContainer();
-
-    /**
-     * redis pub/sub 监听器
+     * redisson pub/sub 监听器
      */
     private final RedisMessageListener messageListener = new RedisMessageListener();
 
@@ -213,16 +208,16 @@ public abstract class AbstractCacheManager
      * @param name 缓存名称
      */
     protected void addMessageListener(String name) {
-        container.addMessageListener(messageListener, new ChannelTopic(name));
+
+        RTopic topic = redissonClient.getTopic(name, new SerializationCodec());
+
+        topic.addListener(RedisPubSubMessage.class, messageListener);
     }
 
 
     @Override
     public void afterPropertiesSet() throws Exception {
         messageListener.setCacheManager(this);
-        container.setConnectionFactory(getRedisTemplate().getConnectionFactory());
-        container.afterPropertiesSet();
-        messageListener.afterPropertiesSet();
 
         BeanFactory.getBean(CacheStatsService.class).setCacheManager(this);
         if (isStats()) {
@@ -243,43 +238,13 @@ public abstract class AbstractCacheManager
 
     @Override
     public void setBeanName(String name) {
-        container.setBeanName("redisMessageListenerContainer");
+//        container.setBeanName("redisMessageListenerContainer");
     }
 
     @Override
     public void destroy() throws Exception {
-        container.destroy();
+//        container.destroy();
         BeanFactory.getBean(CacheStatsService.class).shutdownExecutor();
-    }
-
-    @Override
-    public boolean isAutoStartup() {
-        return container.isAutoStartup();
-    }
-
-    @Override
-    public void stop(Runnable callback) {
-        container.stop(callback);
-    }
-
-    @Override
-    public void start() {
-        container.start();
-    }
-
-    @Override
-    public void stop() {
-        container.stop();
-    }
-
-    @Override
-    public boolean isRunning() {
-        return container.isRunning();
-    }
-
-    @Override
-    public int getPhase() {
-        return container.getPhase();
     }
 
     @Override
@@ -291,6 +256,7 @@ public abstract class AbstractCacheManager
     public int hashCode() {
         return super.hashCode();
     }
+
 
 
 }

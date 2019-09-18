@@ -22,8 +22,7 @@ import com.xenoblade.zohar.framework.cache.core.manager.AbstractCacheManager;
 import com.xenoblade.zohar.framework.commons.utils.jackson.JacksonUtil;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.connection.Message;
-import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
+import org.redisson.api.listener.MessageListener;
 
 import java.util.Collection;
 
@@ -34,19 +33,16 @@ import java.util.Collection;
  */
 @Slf4j
 @Setter
-public class RedisMessageListener extends MessageListenerAdapter{
+public class RedisMessageListener implements MessageListener<RedisPubSubMessage> {
 
     /**
      * 缓存管理器
      */
     private AbstractCacheManager cacheManager;
 
-    @Override public void onMessage(Message message, byte[] pattern) {
-        super.onMessage(message, pattern);
-        // 解析订阅发布的信息，获取缓存的名称和缓存的key
-        RedisPubSubMessage redisPubSubMessage = (RedisPubSubMessage) cacheManager.getRedisTemplate()
-                .getValueSerializer().deserialize(message.getBody());
-        log.debug("redis subscriber： 接收到频道【{}】发布的消息。消息内容：{}", new String(message.getChannel()), JacksonUtil.toJson(redisPubSubMessage));
+    @Override
+    public void onMessage(CharSequence charSequence, RedisPubSubMessage redisPubSubMessage) {
+        log.debug("redis subscriber： 接收到频道【{}】发布的消息。消息内容：{}", charSequence, JacksonUtil.toJson(redisPubSubMessage));
 
         // 根据缓存名称获取多级缓存，可能有多个
         Collection<Cache> caches = cacheManager.getCache(redisPubSubMessage.getCacheName());
@@ -73,5 +69,6 @@ public class RedisMessageListener extends MessageListenerAdapter{
 
             }
         }
+
     }
 }

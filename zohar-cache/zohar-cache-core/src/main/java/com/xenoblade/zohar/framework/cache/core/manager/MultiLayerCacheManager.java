@@ -57,7 +57,7 @@ public class MultiLayerCacheManager extends AbstractCacheManager{
         // 创建二级缓存
         // TODO 2 创建 RedisMapCache
         RedisCache redisCache = new RedisCache(name, redissonClient, multiLayerCacheConfig.getSecondaryCacheConfig(), isStats());
-        return new MultiLayerCache(redisTemplate, caffeineCache, redisCache, super.isStats(), multiLayerCacheConfig);
+        return new MultiLayerCache(redissonClient, caffeineCache, redisCache, super.isStats(), multiLayerCacheConfig);
     }
 
     @Override protected void parseMultiLayerCacheConfig(
