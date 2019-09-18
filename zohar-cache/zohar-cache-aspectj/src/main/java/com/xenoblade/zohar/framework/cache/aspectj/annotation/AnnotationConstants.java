@@ -177,6 +177,11 @@ public class AnnotationConstants {
             @Override public EHashType keyHashType() {
                 return EHashType.MD5;
             }
+
+            @Override
+            public ERedisSerialType valueSerialType() {
+                return ERedisSerialType.FASTJSON;
+            }
         };
 
         return secondaryCache;

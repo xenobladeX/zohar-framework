@@ -154,6 +154,12 @@ public class MultiLayerAspect {
             return executeEvict(aopAllianceInvoker, cacheEvictOperation, method, joinPoint.getArgs(), joinPoint.getTarget());
         } catch (CacheOperationInvoker.ThrowableWrapperException e) {
             // 执行中出现错误
+
+            // 如果是序列化异常需要先删除原有缓存
+            String[] cacheNames = cacheEvictOperation.getCacheNames();
+            // 删除缓存
+            delete(cacheNames, cacheEvictOperation.getKey(), method, joinPoint.getArgs(), joinPoint.getTarget());
+
             throw e.getOriginal();
         } catch (Exception e) {
             // 忽略操作缓存过程中遇到的异常
@@ -179,6 +185,12 @@ public class MultiLayerAspect {
             return executePut(aopAllianceInvoker, cachePutOperation, method, joinPoint.getArgs(), joinPoint.getTarget());
         } catch (CacheOperationInvoker.ThrowableWrapperException e) {
             // 执行中出现错误
+
+            // 如果是序列化异常需要先删除原有缓存
+            String[] cacheNames = cachePutOperation.getCacheNames();
+            // 删除缓存
+            delete(cacheNames, cachePutOperation.getKey(), method, joinPoint.getArgs(), joinPoint.getTarget());
+
             throw e.getOriginal();
         } catch (Exception e) {
             // 忽略操作缓存过程中遇到的异常
