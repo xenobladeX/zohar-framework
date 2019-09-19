@@ -14,17 +14,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.log.api;
+package com.xenoblade.zohar.framework.cache.aspectj.log;
 
-import java.io.Serializable;
+import com.xenoblade.zohar.framework.cache.core.config.MultiLayerCacheConfig;
+import com.xenoblade.zohar.framework.commons.log.api.AccessLoggerContext;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
- * AccessLoggerContext
+ * AccessLoggerCacheContext
  * @author xenoblade
  * @since 1.0.0
  */
-public interface AccessLoggerContext extends Serializable {
+@Data
+@Accessors(chain = true)
+public class AccessLoggerCacheContext implements AccessLoggerContext {
 
-    String contextType();
+    private static final long serialVersionUID = 5330607456141748587L;
 
+    /**
+     * 是否被触发
+     */
+    private Boolean isTriggered = false;
+
+    private ECacheOperationType operationType;
+
+    private Object key;
+
+    private String name;
+
+    private MultiLayerCacheConfig multiLayerCacheConfig;
+
+
+    @Override public String contextType() {
+        return "ZOHAR-CACHE";
+    }
 }

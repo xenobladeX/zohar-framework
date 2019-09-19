@@ -21,12 +21,9 @@ import com.xenoblade.zohar.framework.cache.core.cache.Cache;
 import com.xenoblade.zohar.framework.cache.core.cache.MultiLayerCache;
 import com.xenoblade.zohar.framework.cache.core.cache.caffeine.CaffeineCache;
 import com.xenoblade.zohar.framework.cache.core.cache.redis.RedisCache;
-import com.xenoblade.zohar.framework.cache.core.config.FirstCacheConfig;
 import com.xenoblade.zohar.framework.cache.core.config.MultiLayerCacheConfig;
-import com.xenoblade.zohar.framework.cache.core.config.SecondaryCacheConfig;
 import lombok.Setter;
 import org.redisson.api.RedissonClient;
-import org.springframework.data.redis.core.RedisTemplate;
 
 /**
  * MultiLayerCacheManager
@@ -44,8 +41,7 @@ public class MultiLayerCacheManager extends AbstractCacheManager{
     @Setter
     private String cacheName;
 
-    public MultiLayerCacheManager(RedisTemplate<String, Object> redisTemplate, RedissonClient redissonClient) {
-        this.redisTemplate = redisTemplate;
+    public MultiLayerCacheManager(RedissonClient redissonClient) {
         this.redissonClient = redissonClient;
         cacheManagers.add(this);
     }

@@ -25,16 +25,17 @@ import com.xenoblade.zohar.framework.cache.core.manager.MultiLayerCacheManager;
 import com.xenoblade.zohar.framework.cache.starter.property.FirstCacheProperties;
 import com.xenoblade.zohar.framework.cache.starter.property.MultiLayerCacheProperties;
 import com.xenoblade.zohar.framework.cache.starter.property.SecnodaryCacheProperties;
-import com.xenoblade.zohar.framework.redis.starter.RedisTemplateConfiguration;
+import com.xenoblade.zohar.framework.commons.log.core.config.AccessLoggerConfigurer;
+import com.xenoblade.zohar.framework.redis.starter.RedissonAutoConfiguration;
 import org.redisson.api.RedissonClient;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.data.redis.core.RedisTemplate;
 
 /**
  * MultiLayerCacheAutoConfiguration
@@ -42,17 +43,17 @@ import org.springframework.data.redis.core.RedisTemplate;
  * @since 1.0.0
  */
 @Configuration
-@ConditionalOnBean( {RedisTemplate.class, RedissonClient.class} )
-@AutoConfigureAfter({RedisTemplateConfiguration.class})
+@ConditionalOnBean( {RedissonClient.class} )
+@AutoConfigureAfter({RedissonAutoConfiguration.class})
 @EnableAspectJAutoProxy
 @EnableConfigurationProperties({MultiLayerCacheProperties.class})
 public class MultiLayerCacheAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(CacheManager.class)
-    public CacheManager cacheManager(RedisTemplate<String, Object> redisTemplate, RedissonClient redissonClient,
+    public CacheManager cacheManager(RedissonClient redissonClient,
                                      MultiLayerCacheProperties multiLayerCacheProperties) {
-        MultiLayerCacheManager multiLayerCacheManager = new MultiLayerCacheManager(redisTemplate, redissonClient);
+        MultiLayerCacheManager multiLayerCacheManager = new MultiLayerCacheManager(redissonClient);
         // 开启统计功能
         multiLayerCacheManager.setStats(multiLayerCacheProperties.getStats());
         multiLayerCacheManager.setCacheName(multiLayerCacheProperties.getCacheName());
@@ -83,5 +84,10 @@ public class MultiLayerCacheAutoConfiguration {
         return new MultiLayerAspect(cacheManager);
     }
 
+    @Bean
+    @ConditionalOnProperty(prefix = "zohar.log.access.context.zohar-cache", name = "enable", havingValue = "true", matchIfMissing = true)
+    public AccessLoggerConfigurer accessLoggerCacheConfigurer() {
+        return new AccessLoggerCacheConfigurer();
+    }
 
 }

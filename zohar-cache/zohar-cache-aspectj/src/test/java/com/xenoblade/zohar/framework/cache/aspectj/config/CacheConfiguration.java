@@ -27,13 +27,11 @@ import com.xenoblade.zohar.framework.commons.redis.serial.ERedisSerialType;
 import com.xenoblade.zohar.framework.commons.utils.support.EEncodeType;
 import com.xenoblade.zohar.framework.cache.core.support.EExpireMode;
 import com.xenoblade.zohar.framework.commons.utils.support.EHashType;
-import com.xenoblade.zohar.framework.redis.starter.RedisTemplateConfiguration;
 import com.xenoblade.zohar.framework.redis.starter.RedissonAutoConfiguration;
 import org.redisson.api.RedissonClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.concurrent.TimeUnit;
 
@@ -43,12 +41,12 @@ import java.util.concurrent.TimeUnit;
  * @since 1.0.0
  */
 @Configuration
-@Import({RedissonAutoConfiguration.class, RedisTemplateConfiguration.class})
+@Import({RedissonAutoConfiguration.class})
 public class CacheConfiguration {
 
     @Bean
-    public CacheManager cacheManager(RedisTemplate<String, Object> redisTemplate, RedissonClient redissonClient) {
-        MultiLayerCacheManager multiLayerCacheManager = new MultiLayerCacheManager(redisTemplate, redissonClient);
+    public CacheManager cacheManager(RedissonClient redissonClient) {
+        MultiLayerCacheManager multiLayerCacheManager = new MultiLayerCacheManager(redissonClient);
         // 开启统计功能
         multiLayerCacheManager.setStats(true);
         multiLayerCacheManager.setCacheName("zohar-cache");

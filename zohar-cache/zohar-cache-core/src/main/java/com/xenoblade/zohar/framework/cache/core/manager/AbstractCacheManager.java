@@ -32,7 +32,6 @@ import org.redisson.codec.SerializationCodec;
 import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Collection;
@@ -80,13 +79,6 @@ public abstract class AbstractCacheManager
     @Setter
     @Getter
     private boolean stats = true;
-
-    /**
-     * redis 客户端
-     */
-    @Setter
-    @Getter
-    protected RedisTemplate<String, Object> redisTemplate;
 
     @Setter
     @Getter
@@ -243,7 +235,10 @@ public abstract class AbstractCacheManager
 
     @Override
     public void destroy() throws Exception {
-//        container.destroy();
+        for(String name : cacheContainer.keySet()) {
+            RTopic topic = redissonClient.getTopic(name, new SerializationCodec());
+            topic.removeAllListeners();
+        }
         BeanFactory.getBean(CacheStatsService.class).shutdownExecutor();
     }
 

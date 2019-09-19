@@ -19,15 +19,12 @@ package com.xenoblade.zohar.framework.cache.core.cache;
 import com.xenoblade.zohar.framework.cache.core.config.MultiLayerCacheConfig;
 import com.xenoblade.zohar.framework.cache.core.listener.ERedisPubSubMessageType;
 import com.xenoblade.zohar.framework.cache.core.listener.RedisPubSubMessage;
-import com.xenoblade.zohar.framework.cache.core.listener.RedisPublisher;
 import com.xenoblade.zohar.framework.cache.core.stats.CacheStats;
 import com.xenoblade.zohar.framework.cache.core.support.ECacheMode;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RTopic;
 import org.redisson.api.RedissonClient;
 import org.redisson.codec.SerializationCodec;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.listener.ChannelTopic;
 
 import java.util.concurrent.Callable;
 

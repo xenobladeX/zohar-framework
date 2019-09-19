@@ -47,7 +47,6 @@ import javax.validation.constraints.NotBlank;
 @RequestMapping("/user")
 @Validated
 @Slf4j
-@AccessLogger
 public class UserController {
 
     @Autowired

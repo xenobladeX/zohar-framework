@@ -44,9 +44,14 @@ public class AccessLoggerInterceptor implements MethodInterceptor {
     @Override
     public Object invoke(MethodInvocation invocation) throws Throwable {
         MethodInterceptorHolder.current().add(invocation);
-        AccessLoggerInfo info = createLogger(MethodInterceptorHolder.current().peek());
+        MethodInterceptorContext methodInterceptorContext =  MethodInterceptorHolder.current().peek();
+        AccessLoggerInfo info = createLogger(methodInterceptorContext);
         Object response;
         try {
+            // 链式调用
+            configuration.getLoggerParsers().stream()
+                    .filter(parser -> parser.support(ClassUtils.getUserClass(methodInterceptorContext.getTarget()), methodInterceptorContext.getMethod()))
+                    .forEach(parser -> parser.inAccess(methodInterceptorContext, info));
             eventPublisher.publishEvent(new AccessLoggerBeforeEvent(info));
             response = invocation.proceed();
             info.setResponse(response);
@@ -55,6 +60,12 @@ public class AccessLoggerInterceptor implements MethodInterceptor {
             throw e;
         } finally {
             info.setResponseTime(System.currentTimeMillis());
+
+            // 链式调用
+            configuration.getLoggerParsers().stream()
+                    .filter(parser -> parser.support(ClassUtils.getUserClass(methodInterceptorContext.getTarget()), methodInterceptorContext.getMethod()))
+                    .forEach(parser -> parser.outAccess(methodInterceptorContext, info));
+
             //触发监听
             eventPublisher.publishEvent(new AccessLoggerAfterEvent(info));
             MethodInterceptorHolder.current().poll();
@@ -74,10 +85,6 @@ public class AccessLoggerInterceptor implements MethodInterceptor {
         info.setParameters(methodInterceptorContext.getParams());
         info.setTarget(methodInterceptorContext.getTarget().getClass());
         info.setMethod(methodInterceptorContext.getMethod());
-        // 链式调用
-        configuration.getLoggerParsers().stream()
-                .filter(parser -> parser.support(ClassUtils.getUserClass(methodInterceptorContext.getTarget()), methodInterceptorContext.getMethod()))
-                .forEach(parser -> parser.parse(methodInterceptorContext, info));
 
         return info;
     }

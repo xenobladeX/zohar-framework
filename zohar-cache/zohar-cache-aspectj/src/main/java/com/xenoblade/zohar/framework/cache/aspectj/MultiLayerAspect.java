@@ -25,6 +25,9 @@ import com.xenoblade.zohar.framework.cache.aspectj.annotation.operation.Cacheabl
 import com.xenoblade.zohar.framework.cache.aspectj.annotation.parser.CacheAnnotationParser;
 import com.xenoblade.zohar.framework.cache.aspectj.annotation.parser.DefaultCacheAnnotationParser;
 import com.xenoblade.zohar.framework.cache.aspectj.expression.CacheOperationExpressionEvaluator;
+import com.xenoblade.zohar.framework.cache.aspectj.log.AccessLoggerCacheContext;
+import com.xenoblade.zohar.framework.cache.aspectj.log.AccessLoggerCacheUtils;
+import com.xenoblade.zohar.framework.cache.aspectj.log.ECacheOperationType;
 import com.xenoblade.zohar.framework.cache.aspectj.support.CacheOperationInvoker;
 import com.xenoblade.zohar.framework.cache.aspectj.support.KeyGenerator;
 import com.xenoblade.zohar.framework.cache.aspectj.support.SimpleKeyGenerator;
@@ -34,6 +37,7 @@ import com.xenoblade.zohar.framework.cache.core.config.FirstCacheConfig;
 import com.xenoblade.zohar.framework.cache.core.config.MultiLayerCacheConfig;
 import com.xenoblade.zohar.framework.cache.core.config.SecondaryCacheConfig;
 import com.xenoblade.zohar.framework.cache.core.manager.CacheManager;
+import com.xenoblade.zohar.framework.commons.utils.thread.ThreadLocalUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -43,7 +47,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.aop.framework.AopProxyUtils;
 import org.springframework.context.expression.AnnotatedElementKey;
 import org.springframework.core.BridgeMethodResolver;
-import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.data.redis.serializer.SerializationException;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.util.Assert;
@@ -66,7 +69,6 @@ public class MultiLayerAspect {
 
     private static final String CACHE_KEY_ERROR_MESSAGE = "缓存Key {} 不能为NULL";
     private static final String CACHE_NAME_ERROR_MESSAGE = "缓存名称不能为NULL";
-
 
     /**
      * SpEL表达式计算器
@@ -242,9 +244,16 @@ public class MultiLayerAspect {
             // 通过cacheName和缓存配置获取Cache
             Cache cache = cacheManager.getCache(cacheName, multiLayerCacheConfig);
 
-            // 通过Cache获取值
+            AccessLoggerCacheContext accessLoggerCacheContext = new AccessLoggerCacheContext().setOperationType(
+                    ECacheOperationType.CACHEABLE).setName(cacheName).setKey(key).setMultiLayerCacheConfig(multiLayerCacheConfig)
+                    .setIsTriggered(true);
+            AccessLoggerCacheUtils.setContext(accessLoggerCacheContext);
 
-            return cache.get(key, () -> invoker.invoke());
+            // 通过Cache获取值
+            return cache.get(key, () -> {
+                accessLoggerCacheContext.setIsTriggered(false);
+                return invoker.invoke();
+            });
         } else {
             return invoker.invoke();
         }
@@ -280,6 +289,11 @@ public class MultiLayerAspect {
                 // 删除指定key
                 delete(cacheNames, cacheEvictOperation.getKey(), method, args, target);
             }
+
+            AccessLoggerCacheContext accessLoggerCacheContext = new AccessLoggerCacheContext().setOperationType(
+                    ECacheOperationType.CACHEEVICT).setName(StrUtil.join(",", cacheNames)).setKey(cacheEvictOperation.getKey())
+                    .setIsTriggered(true);
+            AccessLoggerCacheUtils.setContext(accessLoggerCacheContext);
 
             // 执行方法
             return invoker.invoke();
@@ -318,6 +332,8 @@ public class MultiLayerAspect {
         MultiLayerCacheConfig multiLayerCacheConfig = new MultiLayerCacheConfig(firstCacheConfig, secondaryCacheConfig,
                 cachePutOperation.getDepict());
 
+
+
         // 指定调用方法获取缓存值
         Object result = invoker.invoke();
 
@@ -331,6 +347,12 @@ public class MultiLayerAspect {
                 Cache cache = cacheManager.getCache(cacheName, multiLayerCacheConfig);
                 cache.put(key, result);
             }
+
+            AccessLoggerCacheContext accessLoggerCacheContext = new AccessLoggerCacheContext().setOperationType(
+                    ECacheOperationType.CACHEPUT).setMultiLayerCacheConfig(multiLayerCacheConfig)
+                    .setName(StrUtil.join(",", cacheNames)).setKey(key)
+                    .setIsTriggered(true);
+            AccessLoggerCacheUtils.setContext(accessLoggerCacheContext);
         }
 
         return result;

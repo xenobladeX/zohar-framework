@@ -37,7 +37,7 @@ public class AccessLoggerHttpParser implements AccessLoggerParser {
     }
 
     @Override
-    public AccessLoggerInfo parse(MethodInterceptorContext methodInterceptorContext, AccessLoggerInfo loggerInfo) {
+    public AccessLoggerInfo inAccess(MethodInterceptorContext methodInterceptorContext, AccessLoggerInfo loggerInfo) {
         HttpServletRequest request = WebUtil.getHttpServletRequest();
         if (null != request) {
             AccessLoggerHttpContext context = new AccessLoggerHttpContext();
@@ -45,8 +45,15 @@ public class AccessLoggerHttpParser implements AccessLoggerParser {
             context.setIp(WebUtil.getIpAddr(request));
             context.setHttpMethod(request.getMethod());
             context.setUrl(request.getRequestURL().toString());
-            loggerInfo.getContexts().put(context.contextType(), context);
+            if (loggerInfo != null) {
+                loggerInfo.getContexts().put(context.contextType(), context);
+            }
         }
+        return loggerInfo;
+    }
+
+    @Override public AccessLoggerInfo outAccess(MethodInterceptorContext methodInterceptorContext,
+                                                AccessLoggerInfo loggerInfo) {
         return loggerInfo;
     }
 }

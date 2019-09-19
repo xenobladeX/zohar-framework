@@ -29,8 +29,29 @@ import java.lang.reflect.Method;
  */
 public interface AccessLoggerParser {
 
+    /**
+     * whether parser support thie method
+     * @param clazz
+     * @param method
+     * @return
+     */
     boolean support(Class clazz, Method method);
 
-    AccessLoggerInfo parse(MethodInterceptorContext methodInterceptorContext, AccessLoggerInfo loggerInfo);
+    /**
+     * enter access logger
+     * @param methodInterceptorContext
+     * @param loggerInfo
+     * @return
+     */
+    AccessLoggerInfo inAccess(MethodInterceptorContext methodInterceptorContext, AccessLoggerInfo loggerInfo);
+
+    /**
+     * out access logger
+     * @param methodInterceptorContext
+     * @param loggerInfo
+     * @return
+     */
+    AccessLoggerInfo outAccess(MethodInterceptorContext methodInterceptorContext, AccessLoggerInfo loggerInfo);
+
 
 }

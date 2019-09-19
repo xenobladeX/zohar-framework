@@ -20,6 +20,11 @@
             <artifactId>zohar-cache-core</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.xenoblade</groupId>
+            <artifactId>zohar-commons-log-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.aspectj</groupId>

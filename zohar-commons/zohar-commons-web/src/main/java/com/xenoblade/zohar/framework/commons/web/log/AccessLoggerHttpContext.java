@@ -29,6 +29,8 @@ import java.util.Map;
 @Data
 public class AccessLoggerHttpContext implements AccessLoggerContext {
 
+    private static final long serialVersionUID = 8444362832366322488L;
+
     /**
      * 请求者ip地址
      */

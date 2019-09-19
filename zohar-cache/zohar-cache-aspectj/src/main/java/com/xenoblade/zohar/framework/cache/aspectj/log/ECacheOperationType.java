@@ -14,17 +14,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.log.api;
-
-import java.io.Serializable;
+package com.xenoblade.zohar.framework.cache.aspectj.log;
 
 /**
- * AccessLoggerContext
+ * ECacheOperationType
  * @author xenoblade
  * @since 1.0.0
  */
-public interface AccessLoggerContext extends Serializable {
+public enum ECacheOperationType {
 
-    String contextType();
+    CACHEABLE,
+
+    CACHEEVICT,
+
+    CACHEPUT;
 
 }

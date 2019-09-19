@@ -14,25 +14,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.cache.core.listener;
+package com.xenoblade.zohar.framework.cache.aspectj.log;
 
+import com.xenoblade.zohar.framework.commons.utils.thread.ThreadLocalUtil;
 import lombok.experimental.UtilityClass;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.listener.ChannelTopic;
 
 /**
- * RedisPublisher
+ * AccessLoggerCacheUtils
  * @author xenoblade
  * @since 1.0.0
  */
 @UtilityClass
-@Slf4j
-public class RedisPublisher {
+public class AccessLoggerCacheUtils {
 
-    public static void publisher(RedisTemplate<String, Object> redisTemplate, ChannelTopic channelTopic, Object message) {
-        redisTemplate.convertAndSend(channelTopic.toString(), message);
-        log.debug("redis publisher： 向频道【{}】发布了【{}】消息", channelTopic.toString(), message.toString());
+    private static final String THREAD_LOCAL_KEY_ACCESS_LOGGER_CACHE_CONTEXT = "accessLoggerCacheContext";
+
+
+    public static AccessLoggerCacheContext getContext() {
+        return ThreadLocalUtil.get(THREAD_LOCAL_KEY_ACCESS_LOGGER_CACHE_CONTEXT);
     }
+
+    public static void setContext(AccessLoggerCacheContext accessLoggerCacheContext) {
+        ThreadLocalUtil.put(THREAD_LOCAL_KEY_ACCESS_LOGGER_CACHE_CONTEXT, accessLoggerCacheContext);
+    }
+
 
 }

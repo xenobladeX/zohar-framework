@@ -14,17 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.commons.log.api;
+package com.xenoblade.zohar.framework.cache.starter.config;
 
-import java.io.Serializable;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xenoblade.zohar.framework.cache.aspectj.log.AccessLoggerCacheParser;
+import com.xenoblade.zohar.framework.commons.log.core.config.AccessLoggerConfigurer;
+import com.xenoblade.zohar.framework.commons.log.core.config.AccessLoggerInterceptorConfiguration;
 
 /**
- * AccessLoggerContext
+ * AccessLoggerCacheConfigurer
  * @author xenoblade
  * @since 1.0.0
  */
-public interface AccessLoggerContext extends Serializable {
+public class AccessLoggerCacheConfigurer implements AccessLoggerConfigurer {
 
-    String contextType();
+    @Override public void configure(
+            AccessLoggerInterceptorConfiguration accessLoggerInterceptorConfiguration) {
+        accessLoggerInterceptorConfiguration.addParser(new AccessLoggerCacheParser());
+    }
 
+    @Override public void configure(ObjectMapper accessLoggerObjectMapper) {
+
+    }
 }

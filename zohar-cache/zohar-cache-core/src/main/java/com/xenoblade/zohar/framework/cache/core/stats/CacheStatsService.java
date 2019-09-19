@@ -28,7 +28,8 @@ import com.xenoblade.zohar.framework.commons.utils.jackson.JacksonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.redisson.client.codec.Codec;
+import org.redisson.codec.JsonJacksonCodec;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -48,6 +49,14 @@ import java.util.stream.Collectors;
 @Slf4j
 public class CacheStatsService {
 
+
+    /**
+     * {@link AbstractCacheManager }
+     */
+    private AbstractCacheManager cacheManager;
+
+    private Codec codec = new JsonJacksonCodec();
+
     /**
      * 缓存统计数据前缀
      */
@@ -61,11 +70,6 @@ public class CacheStatsService {
      * 定时任务线程池
      */
     private static ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(50);
-
-    /**
-     * {@link AbstractCacheManager }
-     */
-    private AbstractCacheManager cacheManager;
 
     /**
      * 获取缓存统计list
@@ -88,7 +92,7 @@ public class CacheStatsService {
                 MultiLayerCacheConfig multiLayerCacheConfig = multiLayerCache.getMultiLayerCacheConfig();
                 // 加锁并增量缓存统计数据，缓存key=固定前缀 + 缓存名称加 + 内部缓存名
                 String redisKey = getRedisStatsKey(cacheName, multiLayerCacheConfig.internalKey());
-                CacheStatsInfo cacheStats = (CacheStatsInfo) cacheManager.getRedisTemplate().opsForValue().get(redisKey);
+                CacheStatsInfo cacheStats = cacheManager.getRedissonClient().<CacheStatsInfo>getBucket(redisKey, codec).get();
                 if (!Objects.isNull(cacheStats)) {
                     statsList.add(cacheStats);
                 }
@@ -103,7 +107,6 @@ public class CacheStatsService {
      * 同步缓存统计list
      */
     public void syncCacheStats() {
-        RedisTemplate<String, Object> redisTemplate = cacheManager.getRedisTemplate();
         RedissonClient redissonClient = cacheManager.getRedissonClient();
         // 清空统计数据
         resetCacheStat();
@@ -125,7 +128,7 @@ public class CacheStatsService {
                         RLock lock = RedisLockUtils.getRLock(redissonClient, redisKey);
                         try {
                             if (lock.tryLock()) {
-                                CacheStatsInfo cacheStats = (CacheStatsInfo) redisTemplate.opsForValue().get(redisKey);
+                                CacheStatsInfo cacheStats = redissonClient.<CacheStatsInfo>getBucket(redisKey, codec).get();
                                 if (Objects.isNull(cacheStats)) {
                                     cacheStats = new CacheStatsInfo();
                                 }
@@ -159,7 +162,7 @@ public class CacheStatsService {
                                 cacheStats.setSecondCacheMissCount(cacheStats.getSecondCacheMissCount() + secondCacheStats.getAndResetCachedMethodRequestCount());
 
                                 // 将缓存统计数据写到redis
-                                redisTemplate.opsForValue().set(redisKey, cacheStats, 1, TimeUnit.HOURS);
+                                redissonClient.<CacheStatsInfo>getBucket(redisKey, codec).set(cacheStats, 1, TimeUnit.HOURS);
 
                                 log.info("Layering Cache 统计信息：{}", JacksonUtil.toJson(cacheStats));
                             }
@@ -197,9 +200,8 @@ public class CacheStatsService {
      * 重置缓存统计数据
      */
     public void resetCacheStat() {
-        RedisTemplate<String, Object> redisTemplate = cacheManager.getRedisTemplate();
-        Set<String> keys = redisTemplate.keys(CACHE_STATS_KEY_PREFIX + "*");
-        redisTemplate.delete(keys);
+        RedissonClient redissonClient = cacheManager.getRedissonClient();
+        redissonClient.getKeys().deleteByPattern(CACHE_STATS_KEY_PREFIX + "*");
     }
 
     public void setCacheManager(AbstractCacheManager cacheManager) {

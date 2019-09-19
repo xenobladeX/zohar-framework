@@ -26,6 +26,7 @@ import com.xenoblade.zohar.framework.cache.aspectj.annotation.Cacheable;
 import com.xenoblade.zohar.framework.cache.aspectj.annotation.SecondaryCache;
 import com.xenoblade.zohar.framework.commons.api.exception.NotFoundException;
 import com.xenoblade.zohar.framework.commons.api.exception.ZoharException;
+import com.xenoblade.zohar.framework.commons.log.api.annotation.AccessLogger;
 import com.xenoblade.zohar.framework.commons.redis.serial.ERedisSerialType;
 import com.xenoblade.zohar.framework.commons.utils.support.EEncodeType;
 import com.xenoblade.zohar.framework.commons.utils.support.EHashType;
@@ -44,7 +45,6 @@ import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 
 /**
  * UserServiceImpl
@@ -53,6 +53,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Service
 @Slf4j
+@AccessLogger
 @CacheConfig(cacheNames = "baal-user", secondaryCache = @SecondaryCache(keySerialType = ERedisSerialType.STRING,
         keyHashType = EHashType.NONE, keyEncodeType = EEncodeType.NONE, valueSerialType = ERedisSerialType.FASTJSON))
 public class UserServiceImpl implements IUserService{
