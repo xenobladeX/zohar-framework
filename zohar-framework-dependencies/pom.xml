@@ -123,7 +123,12 @@
             </dependency>
             <dependency>
                 <groupId>com.xenoblade</groupId>
-                <artifactId>zohar-dao-starter</artifactId>
+                <artifactId>zohar-dao-mybatis</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.xenoblade</groupId>
+                <artifactId>zohar-dao-datasource</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!--modules end-->
@@ -250,6 +255,12 @@
             <dependency>
                 <groupId>org.apache.shardingsphere</groupId>
                 <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
+                <version>${sharding-sphere.version}</version>
+            </dependency>
+            <!-- for spring namespace -->
+            <dependency>
+                <groupId>org.apache.shardingsphere</groupId>
+                <artifactId>sharding-jdbc-spring-namespace</artifactId>
                 <version>${sharding-sphere.version}</version>
             </dependency>
 

@@ -14,26 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.dao.datasource.config.druid;
+package com.xenoblade.zohar.framework.sample.baal.service;
 
-
-import com.xenoblade.zohar.framework.commons.utils.converter.DateConverter;
-import org.mapstruct.CollectionMappingStrategy;
-import org.mapstruct.Mapper;
-import org.mapstruct.NullValueCheckStrategy;
-import org.mapstruct.factory.Mappers;
+import com.xenoblade.zohar.framework.sample.baal.api.dto.OrderDTO;
+import com.xenoblade.zohar.framework.sample.baal.api.service.OrderService.GetOrderRequest;
+import com.xenoblade.zohar.framework.sample.baal.api.service.OrderService.SaveOrderRequest;
 
 /**
- * DruidConverter
+ * IOrderService
  * @author xenoblade
  * @since 1.0.0
  */
-@Mapper(uses = { DateConverter.class },
-        collectionMappingStrategy = CollectionMappingStrategy.ADDER_PREFERRED, nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
-public interface DruidConverter {
+public interface IOrderService {
 
-    DruidConverter INSTANCE = Mappers.getMapper(DruidConverter.class);
+    OrderDTO getOrder(GetOrderRequest getOrderRequest);
 
-
+    OrderDTO saveOrder(SaveOrderRequest saveOrderRequest);
 
 }

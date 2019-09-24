@@ -14,26 +14,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.dao.datasource.config.druid;
+package com.xenoblade.zohar.framework.sample.baal.converter;
 
-
-import lombok.Data;
-import lombok.experimental.Accessors;
-
-import java.io.Serializable;
+import com.xenoblade.zohar.framework.commons.utils.converter.DateConverter;
+import com.xenoblade.zohar.framework.sample.baal.api.dto.OrderDTO;
+import com.xenoblade.zohar.framework.sample.baal.dao.entity.OrderDO;
+import org.mapstruct.CollectionMappingStrategy;
+import org.mapstruct.Mapper;
+import org.mapstruct.NullValueCheckStrategy;
+import org.mapstruct.factory.Mappers;
 
 /**
- * DruidProperties
+ * OrderConverter
  * @author xenoblade
  * @since 1.0.0
  */
-@Data
-@Accessors(chain = true)
-public class DruidProperties implements Serializable {
+@Mapper(uses = { DateConverter.class },
+        collectionMappingStrategy = CollectionMappingStrategy.ADDER_PREFERRED, nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
+public interface OrderConverter {
 
-    private static final long serialVersionUID = -1526442235072822087L;
+    OrderConverter INSTANCE = Mappers.getMapper(OrderConverter.class);
 
-
-
+    OrderDTO orderDOToOrderDTO(OrderDO orderDO);
 
 }

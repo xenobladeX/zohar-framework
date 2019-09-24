@@ -64,7 +64,6 @@ public class UserServiceImpl implements IUserService{
     @Cacheable(key = "#getUserParam.userId")
     @Override
     public UserDTO getUser(GetUserParam getUserParam) throws ZoharException{
-        log.info("Get user: {}", getUserParam);
         UserEntity userEntity = localUsers.entrySet().stream().map(Map.Entry::getValue)
                 .filter(user -> getUserParam.getUserId().equals(user.getUserId()))
                 .findAny()
@@ -76,7 +75,6 @@ public class UserServiceImpl implements IUserService{
     @CachePut(key = "#result.userId")
     @Override
     public UserDTO saveUser(SaveUserRequest saveUserRequest) throws ZoharException{
-        log.info("Save user: {}", saveUserRequest);
         UserEntity userEntity = UserConverter.INSTANCE.saveUserRequestToUserEntity(saveUserRequest);
         userEntity.setUserId(IdUtil.simpleUUID());
         userEntity.setCreateTime(LocalDateTime.now());
@@ -97,7 +95,6 @@ public class UserServiceImpl implements IUserService{
     @CachePut(key = "#updateUserRequest.userId")
     @Override
     public UserDTO updateUser(UpdateUserRequest updateUserRequest) throws ZoharException{
-        log.info("Update user: {}", updateUserRequest);
         UserEntity userEntity = localUsers.entrySet().stream().map(Map.Entry::getValue)
                 .filter(user -> updateUserRequest.getUserId().equals(user.getUserId()))
                 .findAny().orElseThrow(NotFoundException::new);
@@ -124,7 +121,6 @@ public class UserServiceImpl implements IUserService{
     @CacheEvict(key = "#removeUserRequest.userId")
     @Override
     public void removeUser(RemoveUserRequest removeUserRequest) throws ZoharException{
-        log.info("Remove user: {}", removeUserRequest);
         Optional.ofNullable(localUsers.remove(removeUserRequest.getUserId()))
                 .orElseThrow(NotFoundException::new);
     }

@@ -21,7 +21,6 @@
         <module>zohar-dao-mybatis</module>
         <module>zohar-dao-datasource</module>
         <module>zohar-dao-tx</module>
-        <module>zohar-dao-starter</module>
     </modules>
 
 

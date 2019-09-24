@@ -14,26 +14,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.dao.datasource.config.druid;
+package com.xenoblade.zohar.framework.sample.baal.config;
 
-
-import lombok.Data;
-import lombok.experimental.Accessors;
+import cn.hutool.core.lang.Snowflake;
+import cn.hutool.core.util.IdUtil;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import java.io.Serializable;
 
 /**
- * DruidStatFilterProperties
+ * BaalConfiguration
  * @author xenoblade
  * @since 1.0.0
  */
-@Data
-@Accessors(chain = true)
-public class DruidStatFilterProperties implements Serializable {
+@Configuration
+public class BaalConfiguration implements Serializable{
 
-    private static final long serialVersionUID = -6066523825141538456L;
-
+    private static final long serialVersionUID = 575493964049474081L;
 
 
-
+    @Bean
+    public Snowflake snowflake() {
+        return IdUtil.createSnowflake(0, 0);
+    }
 }
