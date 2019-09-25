@@ -17,26 +17,35 @@
 
         <dependency>
             <groupId>com.xenoblade</groupId>
-            <artifactId>zohar-core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.xenoblade</groupId>
             <artifactId>zohar-framework-sample-agares-api</artifactId>
             <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.xenoblade</groupId>
+            <artifactId>zohar-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xenoblade</groupId>
             <artifactId>zohar-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.xenoblade</groupId>
+            <artifactId>zohar-dao-datasource</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xenoblade</groupId>
+            <artifactId>zohar-dao-mybatis</artifactId>
+        </dependency>
 
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+        </dependency>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
-
-
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
