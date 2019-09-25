@@ -32,11 +32,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.xenoblade</groupId>
-            <artifactId>zohar-dao-starter</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>

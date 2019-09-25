@@ -59,7 +59,7 @@ public class OrderController {
 
     @PostMapping
     public ResponseMessage saveOrder(@Validated @RequestBody SaveOrderRequest saveOrderRequest) {
-
+        String test = "38975190235781";
         OrderDTO orderDTO = orderService.saveOrder(saveOrderRequest);
         return ResponseMessage.ok(orderDTO.getOrderId());
     }
