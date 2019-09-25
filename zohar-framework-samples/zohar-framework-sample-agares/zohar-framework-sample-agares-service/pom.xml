@@ -38,6 +38,7 @@
             <artifactId>zohar-dao-mybatis</artifactId>
         </dependency>
 
+        <!--mysql-->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
@@ -55,8 +56,6 @@
             <artifactId>freemarker</artifactId>
         </dependency>
 
-
-
         <!--mapstruct-->
         <dependency>
             <groupId>org.mapstruct</groupId>
@@ -67,6 +66,14 @@
             <artifactId>mapstruct-processor</artifactId>
             <scope>provided</scope>
         </dependency>
+
+        <!--test-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
 
     </dependencies>
 
