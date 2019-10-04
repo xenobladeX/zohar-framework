@@ -1,6 +1,8 @@
 spring:
   application:
     name: &appName zohar-framework-sample-agares
+  profiles:
+    active: local
 
   shardingsphere:
     datasource:
@@ -28,6 +30,7 @@ spring:
       sql:
         show: true
 
+
 # Web
 server:
   port: 1867
@@ -49,3 +52,7 @@ management:
     web:
       exposure:
         include: '*'
+
+security:
+  basic:
+    enabled: false

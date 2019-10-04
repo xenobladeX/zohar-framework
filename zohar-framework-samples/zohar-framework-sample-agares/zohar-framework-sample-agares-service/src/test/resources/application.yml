@@ -1,6 +1,8 @@
 spring:
   application:
     name: &appName zohar-framework-sample-agares
+  profiles:
+    active: test
 
   shardingsphere:
     datasource:

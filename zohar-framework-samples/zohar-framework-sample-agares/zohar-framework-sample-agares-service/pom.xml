@@ -27,6 +27,10 @@
         </dependency>
         <dependency>
             <groupId>com.xenoblade</groupId>
+            <artifactId>zohar-starter-log</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xenoblade</groupId>
             <artifactId>zohar-starter-web</artifactId>
         </dependency>
         <dependency>
@@ -36,6 +40,11 @@
         <dependency>
             <groupId>com.xenoblade</groupId>
             <artifactId>zohar-dao-mybatis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xenoblade</groupId>
+            <artifactId>zohar-security-basic</artifactId>
+            <version>${project.version}</version>
         </dependency>
 
         <!--mysql-->

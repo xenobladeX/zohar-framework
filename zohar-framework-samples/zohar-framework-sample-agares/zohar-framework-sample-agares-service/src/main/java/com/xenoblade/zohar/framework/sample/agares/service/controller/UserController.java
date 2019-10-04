@@ -9,6 +9,7 @@ import com.xenoblade.zohar.framework.sample.agares.api.service.UserService.SaveU
 import com.xenoblade.zohar.framework.sample.agares.api.service.UserService.SaveUserResponse;
 import com.xenoblade.zohar.framework.sample.agares.api.service.UserService.UpdateUserRequest;
 import com.xenoblade.zohar.framework.sample.agares.service.service.IUserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -34,6 +36,7 @@ import javax.validation.constraints.NotNull;
 @RestController
 @RequestMapping("/user")
 @Validated
+@Slf4j
 public class UserController {
 
     @Autowired
@@ -41,7 +44,7 @@ public class UserController {
 
     @GetMapping("/{userId}")
     public ResponseMessage<UserDTO> getUserById(@NotNull(message = "用户 id 不能为空")
-                                                @PathVariable String userId) {
+                                                @PathVariable String userId, HttpServletRequest httpRequest) {
 
         UserDTO userDTO = userService.getUserById(userId);
         return ResponseMessage.ok(userDTO);

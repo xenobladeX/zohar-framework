@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xenoblade.zohar.framework.commons.api.enums.ZoharErrorCode;
 import com.xenoblade.zohar.framework.commons.api.exception.NotFoundException;
 import com.xenoblade.zohar.framework.commons.api.exception.ZoharException;
+import com.xenoblade.zohar.framework.commons.log.api.annotation.AccessLogger;
 import com.xenoblade.zohar.framework.sample.agares.api.dto.UserDTO;
 import com.xenoblade.zohar.framework.sample.agares.api.service.UserService.GetUserPageRequest;
 import com.xenoblade.zohar.framework.sample.agares.api.service.UserService.SaveUserRequest;
@@ -29,6 +30,7 @@ import org.springframework.stereotype.Service;
  * @since 2019-06-14
  */
 @Service
+@AccessLogger
 public class UserServiceImpl implements IUserService {
 
     @Autowired

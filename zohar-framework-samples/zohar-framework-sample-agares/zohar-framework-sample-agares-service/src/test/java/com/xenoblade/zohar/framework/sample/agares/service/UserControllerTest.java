@@ -59,9 +59,10 @@ public class UserControllerTest {
     @Test
     public void testGetUser() throws Exception{
 
-        mvc.perform(MockMvcRequestBuilders.get("/user/13eebf82df2a4752a8b3bac7c370990d")
+        mvc.perform(MockMvcRequestBuilders.get("/user/86274196bde14c00821826806f34c34a")
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("result.userId").exists());
 
     }
 
