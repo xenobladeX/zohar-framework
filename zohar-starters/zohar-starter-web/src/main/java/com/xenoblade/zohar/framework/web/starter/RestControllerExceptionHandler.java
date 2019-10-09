@@ -87,7 +87,7 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
     }
 
     @ExceptionHandler(UnauthorizedException.class)
-    public ResponseEntity<ResponseMessage> handleNotFoundException(HttpServletRequest request, final UnauthorizedException ex, HttpServletResponse response) {
+    public ResponseEntity<ResponseMessage> handleUnauthorizedException(HttpServletRequest request, final UnauthorizedException ex, HttpServletResponse response) {
         log.warn(ex.getMessage(), ex);
         ResponseMessage responseMessage = ResponseMessage.error(ex);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
