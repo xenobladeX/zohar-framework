@@ -52,7 +52,8 @@ management:
     web:
       exposure:
         include: '*'
-
-security:
-  basic:
-    enabled: false
+zohar:
+  security:
+    basic:
+      form-login:
+        login-type: body

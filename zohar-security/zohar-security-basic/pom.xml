@@ -18,6 +18,18 @@
 
         <dependency>
             <groupId>com.xenoblade</groupId>
+            <artifactId>zohar-commons-utils</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.xenoblade</groupId>
+            <artifactId>zohar-commons-web</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.xenoblade</groupId>
             <artifactId>zohar-security-api</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -47,6 +59,16 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
 

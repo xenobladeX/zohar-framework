@@ -14,32 +14,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.security.basic.config;
+package com.xenoblade.zohar.framework.commons.web.converter;
 
-import lombok.Data;
+import org.springframework.core.MethodParameter;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 
-import java.io.Serializable;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 /**
- * FormLoginProperties
+ * MessageConverterProcessor
  * @author xenoblade
  * @since 1.0.0
  */
-@Data
-public class FormLoginProperties implements Serializable{
+public interface MessageConverterProcessor {
 
-    private static final long serialVersionUID = 4204834708029245075L;
+    /**
+     * Whether the given {@linkplain MethodParameter method parameter} is
+     * supported by this resolver.
+     * @param parameter the method parameter to check
+     * @return {@code true} if this resolver supports the supplied parameter;
+     * {@code false} otherwise
+     */
+    boolean supportsParameter(MethodParameter parameter);
 
-    private String loginPage = "/login";
 
-    private String usernameParameter = "username";
+    Object resolveArgument(MethodParameter parameter,
+                                  HttpServletRequest request) throws IOException,
+            HttpMediaTypeNotSupportedException;
 
-    private String passwordParameter = "password";
-
-    private String failureUrl = "/login?error";
-
-    private String loginProcessingUrl = "/authentication/form";
-
-    private ELoginType loginType = ELoginType.BODY;
 
 }

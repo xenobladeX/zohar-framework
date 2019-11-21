@@ -14,32 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.security.basic.config;
+package com.xenoblade.zohar.framework.security.basic.handler;
 
-import lombok.Data;
+import com.xenoblade.zohar.framework.commons.web.msg.ResponseMessage;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 
-import java.io.Serializable;
+import java.util.Map;
 
 /**
- * FormLoginProperties
+ * LoginResponseConverter
  * @author xenoblade
  * @since 1.0.0
  */
-@Data
-public class FormLoginProperties implements Serializable{
+public interface LoginResponseConverter {
 
-    private static final long serialVersionUID = 4204834708029245075L;
-
-    private String loginPage = "/login";
-
-    private String usernameParameter = "username";
-
-    private String passwordParameter = "password";
-
-    private String failureUrl = "/login?error";
-
-    private String loginProcessingUrl = "/authentication/form";
-
-    private ELoginType loginType = ELoginType.BODY;
+    ResponseEntity<?> convert(Authentication authentication);
 
 }

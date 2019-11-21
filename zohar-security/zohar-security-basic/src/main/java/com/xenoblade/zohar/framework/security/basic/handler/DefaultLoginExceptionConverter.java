@@ -14,32 +14,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.security.basic.config;
+package com.xenoblade.zohar.framework.security.basic.handler;
 
-import lombok.Data;
+import cn.hutool.core.bean.BeanUtil;
+import com.xenoblade.zohar.framework.commons.web.msg.ResponseMessage;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
-import java.io.Serializable;
+import java.util.Map;
 
 /**
- * FormLoginProperties
+ * DefaultLoginExceptionConverter
  * @author xenoblade
  * @since 1.0.0
  */
-@Data
-public class FormLoginProperties implements Serializable{
+public class DefaultLoginExceptionConverter implements LoginExceptionConverter{
 
-    private static final long serialVersionUID = 4204834708029245075L;
-
-    private String loginPage = "/login";
-
-    private String usernameParameter = "username";
-
-    private String passwordParameter = "password";
-
-    private String failureUrl = "/login?error";
-
-    private String loginProcessingUrl = "/authentication/form";
-
-    private ELoginType loginType = ELoginType.BODY;
-
+    @Override public ResponseEntity<ResponseMessage<Map<?, ?>>> convert(Exception exception) {
+        Map bodyMap = BeanUtil.beanToMap(exception);
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ResponseMessage.ok(bodyMap));
+    }
 }

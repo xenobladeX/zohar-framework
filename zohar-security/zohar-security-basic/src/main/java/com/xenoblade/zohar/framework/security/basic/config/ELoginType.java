@@ -16,30 +16,15 @@
  */
 package com.xenoblade.zohar.framework.security.basic.config;
 
-import lombok.Data;
-
-import java.io.Serializable;
-
 /**
- * FormLoginProperties
+ * ELoginType
  * @author xenoblade
  * @since 1.0.0
  */
-@Data
-public class FormLoginProperties implements Serializable{
+public enum ELoginType {
 
-    private static final long serialVersionUID = 4204834708029245075L;
+    REDIRECT,
 
-    private String loginPage = "/login";
-
-    private String usernameParameter = "username";
-
-    private String passwordParameter = "password";
-
-    private String failureUrl = "/login?error";
-
-    private String loginProcessingUrl = "/authentication/form";
-
-    private ELoginType loginType = ELoginType.BODY;
+    BODY
 
 }

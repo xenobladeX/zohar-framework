@@ -16,16 +16,35 @@
  */
 package com.xenoblade.zohar.framework.security.basic.config;
 
+import com.xenoblade.zohar.framework.commons.web.converter.EntityMessageConverterProcessor;
+import com.xenoblade.zohar.framework.commons.web.converter.MessageConverterProcessor;
+import com.xenoblade.zohar.framework.commons.web.converter.MethodReturnValueHandler;
+import com.xenoblade.zohar.framework.commons.web.converter.ResponseBodyMessageConverterProcessor;
+import com.xenoblade.zohar.framework.security.basic.handler.BasicAuthenticationFailureHandler;
+import com.xenoblade.zohar.framework.security.basic.handler.BasicAuthenticationSuccessHandler;
+import com.xenoblade.zohar.framework.security.basic.handler.DefaultLoginExceptionConverter;
+import com.xenoblade.zohar.framework.security.basic.handler.DefaultLoginResponseConverter;
+import com.xenoblade.zohar.framework.security.basic.handler.LoginExceptionConverter;
+import com.xenoblade.zohar.framework.security.basic.handler.LoginResponseConverter;
 import com.xenoblade.zohar.framework.security.basic.support.BasicAuthenticationController;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter;
+import org.springframework.web.accept.ContentNegotiationManager;
+
+import java.util.List;
 
 /**
  * BasicSecurityAutoConfiguration
@@ -40,9 +59,21 @@ public class BasicSecurityAutoConfiguration {
     @Autowired
     private BasicSecurityProperties basicSecurityProperties;
 
+    @Autowired
+    private HttpMessageConverters httpMessageConverters;
+
+    @Autowired
+    private ContentNegotiationManager contentNegotiationManager;
+
+
+    @AllArgsConstructor
     @Configuration
     @Order(1)
     public class RootWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+        private AuthenticationSuccessHandler authenticationSuccessHandler;
+
+        private AuthenticationFailureHandler authenticationFailureHandler;
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
@@ -50,6 +81,8 @@ public class BasicSecurityAutoConfiguration {
                     .formLogin()
                     .loginPage("/authentication/require")
                     .loginProcessingUrl(basicSecurityProperties.getFormLogin().getLoginProcessingUrl())
+                    .successHandler(authenticationSuccessHandler)
+                    .failureHandler(authenticationFailureHandler)
                     .and()
                     .authorizeRequests()
                     .antMatchers("/authentication/require", basicSecurityProperties.getFormLogin().getLoginPage()).permitAll()
@@ -61,9 +94,12 @@ public class BasicSecurityAutoConfiguration {
             initDefaultLoginFilter(http);
         }
 
+        @Override public void configure(WebSecurity web) throws Exception {
+            web.ignoring().antMatchers("/css/**");
+        }
     }
 
-    private void initDefaultLoginFilter(HttpSecurity http) throws Exception{
+    private void initDefaultLoginFilter(HttpSecurity http) {
         DefaultLoginPageGeneratingFilter loginPageGeneratingFilter = new DefaultLoginPageGeneratingFilter();
         loginPageGeneratingFilter.setFormLoginEnabled(true);
         loginPageGeneratingFilter.setUsernameParameter(basicSecurityProperties.getFormLogin().getUsernameParameter());
@@ -72,6 +108,55 @@ public class BasicSecurityAutoConfiguration {
         loginPageGeneratingFilter.setFailureUrl(basicSecurityProperties.getFormLogin().getFailureUrl());
         loginPageGeneratingFilter.setAuthenticationUrl(basicSecurityProperties.getFormLogin().getLoginProcessingUrl());
         http.addFilter(loginPageGeneratingFilter);
+    }
+
+
+    @Bean
+    @ConditionalOnMissingBean(LoginResponseConverter.class)
+    public LoginResponseConverter defaultLoginResponseConverter() {
+        DefaultLoginResponseConverter defaultLoginResponseConverter = new DefaultLoginResponseConverter();
+
+        return defaultLoginResponseConverter;
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(LoginExceptionConverter.class)
+    public LoginExceptionConverter defaultLoginExceptionConverter() {
+        DefaultLoginExceptionConverter defaultLoginExceptionConverter = new DefaultLoginExceptionConverter();
+
+        return defaultLoginExceptionConverter;
+    }
+
+    @Bean
+    public MethodReturnValueHandler entityMessageConverterProcessor(HttpMessageConverters httpMessageConverters, ContentNegotiationManager contentNegotiationManager) {
+        MethodReturnValueHandler entityMessageConverterProcessor = new EntityMessageConverterProcessor(httpMessageConverters.getConverters(), contentNegotiationManager);
+        return entityMessageConverterProcessor;
+    }
+
+    @Bean
+    public MethodReturnValueHandler responseBodyMessageConverterProcessor(HttpMessageConverters httpMessageConverters, ContentNegotiationManager contentNegotiationManager) {
+        MethodReturnValueHandler entityMessageConverterProcessor = new ResponseBodyMessageConverterProcessor(httpMessageConverters.getConverters(), contentNegotiationManager);
+        return entityMessageConverterProcessor;
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(AuthenticationSuccessHandler.class)
+    public AuthenticationSuccessHandler authenticationSuccessHandler(LoginResponseConverter loginResponseConverter, List<MethodReturnValueHandler> methodReturnValueHandlerList) {
+        BasicAuthenticationSuccessHandler basicAuthenticationSuccessHandler = new BasicAuthenticationSuccessHandler();
+        basicAuthenticationSuccessHandler.setLoginType(basicSecurityProperties.getFormLogin().getLoginType());
+        basicAuthenticationSuccessHandler.setLoginResponseConverter(loginResponseConverter);
+        basicAuthenticationSuccessHandler.setMethodReturnValueHandlerList(methodReturnValueHandlerList);
+        return basicAuthenticationSuccessHandler;
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(AuthenticationFailureHandler.class)
+    public AuthenticationFailureHandler authenticationFailureHandler(LoginExceptionConverter loginResponseConverter, List<MethodReturnValueHandler> methodReturnValueHandlerList) {
+        BasicAuthenticationFailureHandler basicAuthenticationSuccessHandler = new BasicAuthenticationFailureHandler();
+        basicAuthenticationSuccessHandler.setLoginType(basicSecurityProperties.getFormLogin().getLoginType());
+        basicAuthenticationSuccessHandler.setLoginExceptionConverter(loginResponseConverter);
+        basicAuthenticationSuccessHandler.setMethodReturnValueHandlerList(methodReturnValueHandlerList);
+        return basicAuthenticationSuccessHandler;
     }
 
 
