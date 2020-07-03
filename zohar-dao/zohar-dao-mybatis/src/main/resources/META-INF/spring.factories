@@ -1,3 +1,0 @@
-# Auto Configure
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.xenoblade.zohar.framework.dao.mybatis.autoconfigure.MybatisPlusAutoConfiguration

@@ -16,18 +16,20 @@
  */
 package com.xenoblade.zohar.framework.commons.api.enums;
 
+import org.pf4j.ExtensionPoint;
+
+import java.io.Serializable;
+
 /**
- * IEnum
+ * IEnum, 该接口实现一个伪enum
  * @author xenoblade
  * @since 1.0.0
  */
-// TODO 0 该接口实现一个伪enum，并使用 ENUM注解实现注解的继承
-public interface IEnum<T extends Comparable> {
+public interface IEnum<T extends Comparable> extends ExtensionPoint, Serializable {
 
     int ordinal();
 
     String name();
 
     T value();
-
 }

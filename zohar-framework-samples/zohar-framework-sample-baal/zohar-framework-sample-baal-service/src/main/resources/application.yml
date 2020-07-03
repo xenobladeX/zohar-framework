@@ -2,6 +2,12 @@ spring:
   application:
     name: &appName zohar-framework-sample-baal
 
+  servlet:
+    multipart:
+      enabled: false
+      max-file-size: 500MB
+      max-request-size: 500MB
+
   # redis 配置
   redis:
     # Redis数据库索引（默认为0）
@@ -61,6 +67,7 @@ spring:
             inline:
               sharding-column: order_id
               algorithm-expression: t_order_000$->{order_id % 2}
+      default-data-source-name:
 
     props:
       sql:

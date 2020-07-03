@@ -1,3 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.xenoblade.zohar.framework.redis.starter.RedisTemplateConfiguration,\
-  com.xenoblade.zohar.framework.redis.starter.RedissonAutoConfiguration

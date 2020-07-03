@@ -16,8 +16,8 @@
  */
 package com.xenoblade.zohar.framework.commons.api.exception;
 
+import com.xenoblade.zohar.framework.commons.api.enums.BasicZoharErrorCode;
 import com.xenoblade.zohar.framework.commons.api.enums.IZoharErrorCode;
-import com.xenoblade.zohar.framework.commons.api.enums.ZoharErrorCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -36,20 +36,23 @@ public class ZoharException extends RuntimeException{
 
     private Integer status;
 
-
-    // TODO getHttpErrorCode
     public ZoharException(Throwable throwable) {
         super(throwable);
-        this.errorCode(ZoharErrorCode.INNER_ERROR);
+        this.errorCode(BasicZoharErrorCode.INNER_ERROR);
     }
 
     public ZoharException(String message) {
-        this(message, ZoharErrorCode.INNER_ERROR);
+        this(message, BasicZoharErrorCode.INNER_ERROR);
 
     }
 
     public ZoharException(String message, IZoharErrorCode errorCode) {
         super(message);
+        this.errorCode(errorCode);
+    }
+
+    public ZoharException(Throwable throwable, String message, IZoharErrorCode errorCode) {
+        super(message,throwable);
         this.errorCode(errorCode);
     }
 

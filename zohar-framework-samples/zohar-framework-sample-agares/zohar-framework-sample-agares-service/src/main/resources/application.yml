@@ -3,6 +3,10 @@ spring:
     name: &appName zohar-framework-sample-agares
   profiles:
     active: local
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 500MB
 
   shardingsphere:
     datasource:

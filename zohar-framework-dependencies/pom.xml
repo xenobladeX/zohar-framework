@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.xenoblade</groupId>
         <artifactId>zohar-framework</artifactId>
-        <version>1.1.0-SNAPSHOT</version>
+        <version>2.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -29,28 +29,48 @@
         <!-- Dependency Version -->
         <spring-boot.version>2.1.1.RELEASE</spring-boot.version>
         <spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
+
+        <!--base lib-->
+        <cglib.version>3.2.7</cglib.version>
+
+        <!--utils-->
+        <hutool.version>4.5.0</hutool.version>
+        <guava.version>27.0.1-jre</guava.version>
+        <!--apache commons-->
+        <commons-fileupload.version>1.4</commons-fileupload.version>
+        <commons-lang3.version>3.7</commons-lang3.version>
+        <commons-net.version>3.6</commons-net.version>
+        <commons-io.version>2.6</commons-io.version>
+        <commons-codec.version>1.11</commons-codec.version>
+        <commons-text.version>RELEASE</commons-text.version>
+        <!--JSON-->
+        <jackson-datatype-protobuf.version>0.9.10-jackson2.9-proto3</jackson-datatype-protobuf.version>
+        <fastjson.version>1.2.57</fastjson.version>
+
+        <protostuff.version>1.5.9</protostuff.version>
+        <pinyin4j.version>2.5.1</pinyin4j.version>
+        <ttl.version>2.10.1</ttl.version>
+        <mapstruct.version>1.3.0.Final</mapstruct.version>
+
+        <!--SPI-->
+        <pf4j.version>3.3.1</pf4j.version>
+
         <swagger.version>2.0.6</swagger.version>
         <mybatis-plus.version>3.1.0</mybatis-plus.version>
         <sharding-sphere.version>4.0.0-RC1</sharding-sphere.version>
         <dubbo.version>2.6.5</dubbo.version>
-        <protostuff.version>1.5.9</protostuff.version>
-        <pinyin4j.version>2.5.1</pinyin4j.version>
-        <hutool.version>4.5.0</hutool.version>
-        <guava.version>27.0.1-jre</guava.version>
-        <jackson-datatype-protobuf.version>0.9.10-jackson2.9-proto3</jackson-datatype-protobuf.version>
+
         <p6spy.version>3.8.0</p6spy.version>
         <dubbo-spring-boot-starter.version>0.2.1.RELEASE</dubbo-spring-boot-starter.version>
-        <grpc.version>1.18.0</grpc.version>
         <protobuf-java.version>3.5.1</protobuf-java.version>
-        <mapstruct.version>1.3.0.Final</mapstruct.version>
         <alibaba.spring-context-support.version>1.0.2</alibaba.spring-context-support.version>
-        <groovy.version>2.4.7</groovy.version>
-        <ttl.version>2.10.1</ttl.version>
         <redisson.version>3.10.6</redisson.version>
-        <fastjson.version>1.2.57</fastjson.version>
         <kryo.version>3.0.3</kryo.version>
         <caffeine.version>2.6.2</caffeine.version>
         <druid.version>1.1.10</druid.version>
+
+        <!--test-->
+        <powermock.version>2.0.2</powermock.version>
 
         <!-- Plugins Version -->
         <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
@@ -86,52 +106,111 @@
             </dependency>
             <dependency>
                 <groupId>com.xenoblade</groupId>
-                <artifactId>zohar-commons-spring</artifactId>
+                <artifactId>zohar-core-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.xenoblade</groupId>
-                <artifactId>zohar-commons-web</artifactId>
+                <artifactId>zohar-core-spring</artifactId>
                 <version>${project.version}</version>
-            </dependency>
+            </dependency><dependency>
+            <groupId>com.xenoblade</groupId>
+            <artifactId>zohar-core-starter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+            <!--modules end-->
+
             <dependency>
-                <groupId>com.xenoblade</groupId>
-                <artifactId>zohar-core</artifactId>
-                <version>${project.version}</version>
+                <groupId>com.belerweb</groupId>
+                <artifactId>pinyin4j</artifactId>
+                <version>${pinyin4j.version}</version>
             </dependency>
 
-            <!--zohar starters-->
+            <!--Hutool-->
             <dependency>
-                <groupId>com.xenoblade</groupId>
-                <artifactId>zohar-starter-web</artifactId>
-                <version>${project.version}</version>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-core</artifactId>
+                <version>${hutool.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.xenoblade</groupId>
-                <artifactId>zohar-starter-log</artifactId>
-                <version>${project.version}</version>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-aop</artifactId>
+                <version>${hutool.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.xenoblade</groupId>
-                <artifactId>zohar-starter-redis</artifactId>
-                <version>${project.version}</version>
+                <groupId>cglib</groupId>
+                <artifactId>cglib</artifactId>
+                <version>${cglib.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.xenoblade</groupId>
-                <artifactId>zohar-cache-starter</artifactId>
-                <version>${project.version}</version>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-crypto</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+
+            <!--apache commons-->
+<!--            <dependency>-->
+<!--                <groupId>commons-fileupload</groupId>-->
+<!--                <artifactId>commons-fileupload</artifactId>-->
+<!--                <version>${commons-fileupload.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>commons-io</groupId>-->
+<!--                <artifactId>commons-io</artifactId>-->
+<!--                <version>${commons-io.version}</version>-->
+<!--            </dependency>-->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>commons-codec</groupId>-->
+<!--                <artifactId>commons-codec</artifactId>-->
+<!--                <version>${commons-codec.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>commons-fileupload</groupId>-->
+<!--                <artifactId>commons-fileupload</artifactId>-->
+<!--                <version>${commons-fileupload.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>org.apache.commons</groupId>-->
+<!--                <artifactId>commons-text</artifactId>-->
+<!--                <version>${commons-text.version}</version>-->
+<!--            </dependency>-->
+
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.xenoblade</groupId>
-                <artifactId>zohar-dao-mybatis</artifactId>
-                <version>${project.version}</version>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
+                <version>${mapstruct.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <!--JSON-->
+            <dependency>
+                <groupId>com.hubspot.jackson</groupId>
+                <artifactId>jackson-datatype-protobuf</artifactId>
+                <version>${jackson-datatype-protobuf.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.xenoblade</groupId>
-                <artifactId>zohar-dao-datasource</artifactId>
-                <version>${project.version}</version>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
             </dependency>
-            <!--modules end-->
+
 
             <!--third party -->
 
@@ -152,11 +231,11 @@
                 <scope>import</scope>
             </dependency>
 
-            <dependency>
-                <groupId>io.swagger.core.v3</groupId>
-                <artifactId>swagger-core</artifactId>
-                <version>${swagger.version}</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>io.swagger.core.v3</groupId>-->
+<!--                <artifactId>swagger-core</artifactId>-->
+<!--                <version>${swagger.version}</version>-->
+<!--            </dependency>-->
 
             <dependency>
                 <groupId>com.baomidou</groupId>
@@ -174,65 +253,11 @@
                 <version>${mybatis-plus.version}</version>
             </dependency>
 
+            <!--SPI-->
             <dependency>
-                <groupId>com.belerweb</groupId>
-                <artifactId>pinyin4j</artifactId>
-                <version>${pinyin4j.version}</version>
-            </dependency>
-
-            <!--Hutool-->
-            <dependency>
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-core</artifactId>
-                <version>${hutool.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-system</artifactId>
-                <version>${hutool.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-crypto</artifactId>
-                <version>${hutool.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-extra</artifactId>
-                <version>${hutool.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-captcha</artifactId>
-                <version>${hutool.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-http</artifactId>
-                <version>${hutool.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-db</artifactId>
-                <version>${hutool.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>${guava.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.hubspot.jackson</groupId>
-                <artifactId>jackson-datatype-protobuf</artifactId>
-                <version>${jackson-datatype-protobuf.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>fastjson</artifactId>
-                <version>${fastjson.version}</version>
+                <groupId>org.pf4j</groupId>
+                <artifactId>pf4j</artifactId>
+                <version>${pf4j.version}</version>
             </dependency>
 
             <dependency>
@@ -247,6 +272,7 @@
                 <version>${caffeine.version}</version>
             </dependency>
 
+            <!--Sharding-JDBC-->
             <dependency>
                 <groupId>org.apache.shardingsphere</groupId>
                 <artifactId>sharding-jdbc-core</artifactId>
@@ -310,35 +336,6 @@
                 <version>${protobuf-java.version}</version>
             </dependency>
 
-            <!--Grpc-->
-            <dependency>
-                <groupId>io.grpc</groupId>
-                <artifactId>grpc-netty-shaded</artifactId>
-                <version>${grpc.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.grpc</groupId>
-                <artifactId>grpc-protobuf</artifactId>
-                <version>${grpc.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.grpc</groupId>
-                <artifactId>grpc-stub</artifactId>
-                <version>${grpc.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.mapstruct</groupId>
-                <artifactId>mapstruct</artifactId>
-                <version>${mapstruct.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.mapstruct</groupId>
-                <artifactId>mapstruct-processor</artifactId>
-                <version>${mapstruct.version}</version>
-                <scope>provided</scope>
-            </dependency>
-
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
@@ -373,6 +370,18 @@
 
             <!--for test -->
             <dependency>
+                <groupId>org.powermock</groupId>
+                <artifactId>powermock-module-junit4</artifactId>
+                <version>${powermock.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.powermock</groupId>
+                <artifactId>powermock-api-mockito2</artifactId>
+                <version>${powermock.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-test</artifactId>
                 <scope>test</scope>
@@ -383,13 +392,6 @@
                         <groupId>org.springframework.boot</groupId>
                     </exclusion>
                 </exclusions>
-            </dependency>
-
-            <dependency>
-                <groupId>org.codehaus.groovy</groupId>
-                <artifactId>groovy-all</artifactId>
-                <version>${groovy.version}</version>
-                <scope>test</scope>
             </dependency>
 
         </dependencies>

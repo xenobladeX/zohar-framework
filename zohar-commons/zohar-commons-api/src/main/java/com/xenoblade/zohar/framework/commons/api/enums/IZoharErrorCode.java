@@ -32,4 +32,5 @@ public interface IZoharErrorCode extends IEnum<Integer> {
     default Integer value() {
         return this.getCode();
     }
+
 }

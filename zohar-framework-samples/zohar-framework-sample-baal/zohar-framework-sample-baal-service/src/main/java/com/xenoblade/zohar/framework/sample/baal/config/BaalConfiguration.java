@@ -20,7 +20,11 @@ import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.IdUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 /**
@@ -38,4 +42,12 @@ public class BaalConfiguration implements Serializable{
     public Snowflake snowflake() {
         return IdUtil.createSnowflake(0, 0);
     }
+
+//    @Bean(name = "multipartResolver")
+//    public CommonsMultipartResolver multipartResolver() {
+//        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+//        multipartResolver.setMaxUploadSize(524288000);
+//        return multipartResolver;
+//    }
+
 }

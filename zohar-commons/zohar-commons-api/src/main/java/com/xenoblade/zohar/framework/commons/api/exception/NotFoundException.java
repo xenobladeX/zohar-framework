@@ -16,8 +16,8 @@
  */
 package com.xenoblade.zohar.framework.commons.api.exception;
 
+import com.xenoblade.zohar.framework.commons.api.enums.BasicZoharErrorCode;
 import com.xenoblade.zohar.framework.commons.api.enums.IZoharErrorCode;
-import com.xenoblade.zohar.framework.commons.api.enums.ZoharErrorCode;
 
 /**
  * NotFoundException
@@ -29,11 +29,11 @@ public class NotFoundException extends ZoharException{
     private static final long serialVersionUID = 4335447221487758513L;
 
     public NotFoundException() {
-        super(ZoharErrorCode.NOT_FOUND);
+        super(BasicZoharErrorCode.NOT_FOUND);
     }
 
     public NotFoundException(String message) {
-        super(message, ZoharErrorCode.NOT_FOUND);
+        super(message, BasicZoharErrorCode.NOT_FOUND);
     }
 
     public NotFoundException(String message, IZoharErrorCode errorCode) {

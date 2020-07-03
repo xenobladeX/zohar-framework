@@ -1,4 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.xenoblade.zohar.framework.web.starter.WebAutoConfiguration,\
-  com.xenoblade.zohar.framework.web.starter.CorsAutoConfiguration,\
-  com.xenoblade.zohar.framework.web.starter.controller.ZoharErrorController
