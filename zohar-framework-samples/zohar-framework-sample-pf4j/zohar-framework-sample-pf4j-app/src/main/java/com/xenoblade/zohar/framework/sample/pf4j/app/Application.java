@@ -16,8 +16,11 @@
  */
 package com.xenoblade.zohar.framework.sample.pf4j.app;
 
+import com.xenoblade.zohar.framework.commons.api.enums.IZoharErrorCode;
 import com.xenoblade.zohar.framework.core.common.pf4j.ZoharExtensionsManager;
+import com.xenoblade.zohar.framework.core.common.pf4j.enums.ZoharEnumFactory;
 import com.xenoblade.zohar.framework.sample.pf4j.app.service.Greetings;
+import lombok.extern.slf4j.Slf4j;
 import org.pf4j.PluginManager;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -27,6 +30,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  * @author xenoblade
  * @since 1.0.0
  */
+@Slf4j
 public class Application {
 
     public static void main(String[] args) {
@@ -36,6 +40,11 @@ public class Application {
         // retrieves automatically the extensions for the Greeting.class extension point
         Greetings greetings = applicationContext.getBean(Greetings.class);
         greetings.printGreetings();
+
+        // IEnum
+        IZoharErrorCode plugin1ErrorCode = ZoharEnumFactory.INSTANCE.valueOf(2000, IZoharErrorCode.class);
+        IZoharErrorCode plugin2ErrorCode = ZoharEnumFactory.INSTANCE.valueOf(3000, IZoharErrorCode.class);
+        log.info("plugin1ErrorCode: {}, plugin2ErrorCode: {}", plugin1ErrorCode, plugin2ErrorCode);
 
         // stop plugins
         ZoharExtensionsManager zoharExtensionsManager = applicationContext.getBean(ZoharExtensionsManager.class);
