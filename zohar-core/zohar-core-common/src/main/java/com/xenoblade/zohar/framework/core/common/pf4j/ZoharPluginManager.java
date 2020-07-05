@@ -25,6 +25,8 @@ import org.pf4j.DefaultPluginManager;
 import org.pf4j.ExtensionFactory;
 import org.pf4j.ExtensionFinder;
 
+import java.nio.file.Path;
+
 /**
  * ZoharPluginManager
  * @author xenoblade
@@ -36,6 +38,10 @@ public class ZoharPluginManager extends DefaultPluginManager {
     @Override
     protected ExtensionFactory createExtensionFactory() {
         return new ZoharExtensionFactory();
+    }
+
+    @Override public Path getPluginsRoot() {
+        return super.getPluginsRoot();
     }
 
     @Override

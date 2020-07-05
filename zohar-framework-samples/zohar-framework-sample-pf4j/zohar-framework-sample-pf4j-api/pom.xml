@@ -9,15 +9,19 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>zohar-framework-sample-pf4j-api</artifactId>
     <name>Zohar Framework Sample PF4J API</name>
-    <packaging>pom</packaging>
 
     <properties>
         <github.path>${project.artifactId}</github.path>
     </properties>
 
-    <modules>
+    <dependencies>
 
-    </modules>
+        <dependency>
+            <groupId>org.pf4j</groupId>
+            <artifactId>pf4j</artifactId>
+        </dependency>
+
+    </dependencies>
 
 </project>
 

@@ -52,6 +52,7 @@ public class SpringExtensionsManager extends ZoharExtensionsManager implements
     public void setApplicationContext(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
         this.beanFactory = (AbstractAutowireCapableBeanFactory) applicationContext.getAutowireCapableBeanFactory();
+        ((SpringPluginManager)pluginManager).setApplicationContext(applicationContext);
     }
 
     public ApplicationContext getApplicationContext() {

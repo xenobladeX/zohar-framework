@@ -13,10 +13,51 @@
 
     <properties>
         <github.path>${project.artifactId}</github.path>
+
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.xenoblade</groupId>
+            <artifactId>zohar-framework-sample-pf4j-api</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.xenoblade</groupId>
+            <artifactId>zohar-core-spring</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+
     <modules>
+        <module>zohar-framework-sample-pf4j-plugin1</module>
+        <module>zohar-framework-sample-pf4j-plugin2</module>
     </modules>
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/classes/lib</outputDirectory>
+                            <excludeScope>provided</excludeScope>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
 
 </project>
 

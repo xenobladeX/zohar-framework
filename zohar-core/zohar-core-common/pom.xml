@@ -20,12 +20,6 @@
             <artifactId>zohar-commons-utils</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.pf4j</groupId>
-            <artifactId>pf4j</artifactId>
-        </dependency>
-
-
         <!--test-->
         <dependency>
             <groupId>org.powermock</groupId>

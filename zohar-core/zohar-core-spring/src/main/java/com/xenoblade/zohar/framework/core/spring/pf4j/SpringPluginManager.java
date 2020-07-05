@@ -18,32 +18,28 @@ package com.xenoblade.zohar.framework.core.spring.pf4j;
 
 import com.xenoblade.zohar.framework.core.common.pf4j.ZoharPluginManager;
 import org.pf4j.ExtensionFactory;
-import org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-
-import javax.annotation.PostConstruct;
 
 /**
  * SpringPluginManager
  * @author xenoblade
  * @since 1.0.0
  */
-public class SpringPluginManager extends ZoharPluginManager implements ApplicationContextAware {
+public class SpringPluginManager extends ZoharPluginManager {
 
     private ApplicationContext applicationContext;
 
-    @PostConstruct
-    public void init() {
-        loadPlugins();
-        startPlugins();
+//    @PostConstruct
+//    public void init() {
+//        loadPlugins();
+//        startPlugins();
+//
+//        AbstractAutowireCapableBeanFactory beanFactory = (AbstractAutowireCapableBeanFactory) applicationContext.getAutowireCapableBeanFactory();
+//        ExtensionsInjector extensionsInjector = new ExtensionsInjector(this, beanFactory);
+//        extensionsInjector.injectExtensions();
+//    }
 
-        AbstractAutowireCapableBeanFactory beanFactory = (AbstractAutowireCapableBeanFactory) applicationContext.getAutowireCapableBeanFactory();
-        ExtensionsInjector extensionsInjector = new ExtensionsInjector(this, beanFactory);
-        extensionsInjector.injectExtensions();
-    }
-
-    @Override
     public void setApplicationContext(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }

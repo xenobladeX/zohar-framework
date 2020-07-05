@@ -32,6 +32,9 @@
 
         <!--base lib-->
         <cglib.version>3.2.7</cglib.version>
+        <lombok.version>1.18.4</lombok.version>
+        <!--SPI-->
+        <pf4j.version>3.3.1</pf4j.version>
 
         <!--utils-->
         <hutool.version>4.5.0</hutool.version>
@@ -51,9 +54,6 @@
         <pinyin4j.version>2.5.1</pinyin4j.version>
         <ttl.version>2.10.1</ttl.version>
         <mapstruct.version>1.3.0.Final</mapstruct.version>
-
-        <!--SPI-->
-        <pf4j.version>3.3.1</pf4j.version>
 
         <swagger.version>2.0.6</swagger.version>
         <mybatis-plus.version>3.1.0</mybatis-plus.version>
@@ -77,6 +77,7 @@
         <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
         <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
         <maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
+        <maven-dependency-plugin.version>3.1.1</maven-dependency-plugin.version>
         <maven-war-plugin.version>3.0.0</maven-war-plugin.version>
         <maven-install-plugin.version>2.5.2</maven-install-plugin.version>
         <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
@@ -122,6 +123,12 @@
             <!--modules end-->
 
             <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>com.belerweb</groupId>
                 <artifactId>pinyin4j</artifactId>
                 <version>${pinyin4j.version}</version>
@@ -155,11 +162,11 @@
 <!--                <artifactId>commons-fileupload</artifactId>-->
 <!--                <version>${commons-fileupload.version}</version>-->
 <!--            </dependency>-->
-<!--            <dependency>-->
-<!--                <groupId>commons-io</groupId>-->
-<!--                <artifactId>commons-io</artifactId>-->
-<!--                <version>${commons-io.version}</version>-->
-<!--            </dependency>-->
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
@@ -406,11 +413,6 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${maven-compiler-plugin.version}</version>
-                    <configuration>
-                        <source>${java.version}</source>
-                        <target>${java.version}</target>
-                        <encoding>${project.build.sourceEncoding}</encoding>
-                    </configuration>
                 </plugin>
                 <!--mvn test配置-->
                 <plugin>
@@ -446,6 +448,11 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
                     <version>${maven-jar-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>${maven-dependency-plugin.version}</version>
                 </plugin>
                 <!--javadoc配置-->
                 <plugin>

@@ -74,7 +74,7 @@ public class ZoharExtensionsManager implements ExtensionsManager {
         List<PluginWrapper> startedPlugins = pluginManager.getStartedPlugins();
         for (PluginWrapper plugin : startedPlugins) {
             log.debug("Registering extensions of the plugin '{}'", plugin.getPluginId());
-            List<ExtensionWrapper> pluginExtensionWrappers = extensionFinder.find(classPathPluginId);
+            List<ExtensionWrapper> pluginExtensionWrappers = extensionFinder.find(plugin.getPluginId());
             for (ExtensionWrapper extensionWrapper: pluginExtensionWrappers) {
                 handleExtension(extensionWrapper);
             }
