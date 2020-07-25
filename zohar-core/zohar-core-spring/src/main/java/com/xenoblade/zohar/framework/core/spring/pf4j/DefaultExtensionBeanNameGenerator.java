@@ -16,31 +16,13 @@
  */
 package com.xenoblade.zohar.framework.core.spring.pf4j;
 
-import com.xenoblade.zohar.framework.core.common.pf4j.ZoharPluginManager;
-import org.pf4j.ExtensionFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-
 /**
- * SpringPluginManager
+ * DefaultExtensionBeanNameGenerator
  * @author xenoblade
  * @since 1.0.0
  */
-public class SpringPluginManager extends ZoharPluginManager {
+public class DefaultExtensionBeanNameGenerator implements ExtensionBeanNameGenerator{
 
-    private ApplicationContext applicationContext;
 
-    public void setApplicationContext(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
-        addPluginStateListener(new SpringPluginStateListener(applicationContext, extensionFinder));
-    }
 
-    public ApplicationContext getApplicationContext() {
-        return applicationContext;
-    }
-
-    @Override
-    protected ExtensionFactory createExtensionFactory() {
-        return new SpringExtensionFactory(this);
-    }
 }

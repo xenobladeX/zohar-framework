@@ -19,11 +19,14 @@ package com.xenoblade.zohar.framework.sample.pf4j.app;
 import com.xenoblade.zohar.framework.commons.api.enums.IZoharErrorCode;
 import com.xenoblade.zohar.framework.core.common.pf4j.ZoharExtensionsManager;
 import com.xenoblade.zohar.framework.core.common.pf4j.enums.ZoharEnumFactory;
+import com.xenoblade.zohar.framework.sample.pf4j.api.Greeting;
 import com.xenoblade.zohar.framework.sample.pf4j.app.service.Greetings;
 import lombok.extern.slf4j.Slf4j;
 import org.pf4j.PluginManager;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import java.util.Map;
 
 /**
  * Application
@@ -37,7 +40,7 @@ public class Application {
         // retrieves the spring application context
         ApplicationContext applicationContext = new AnnotationConfigApplicationContext(Pf4jConfiguration.class);
 
-        // retrieves automatically the extensions for the Greeting.class extension point
+        // retrieves automatically the extensions for the Greeting.class extension point\
         Greetings greetings = applicationContext.getBean(Greetings.class);
         greetings.printGreetings();
 
@@ -56,6 +59,8 @@ public class Application {
         */
         pluginManager.stopPlugins();
 
+        greetings = applicationContext.getBean(Greetings.class);
+        greetings.printGreetings();
     }
 
 }

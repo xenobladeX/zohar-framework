@@ -24,7 +24,6 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 import org.pf4j.ExtensionFinder;
 import org.pf4j.ExtensionWrapper;
 import org.pf4j.PluginManager;
-import org.pf4j.PluginWrapper;
 
 import java.util.List;
 
@@ -49,8 +48,6 @@ public class ZoharExtensionsManager implements ExtensionsManager {
     @Override
     public void inject() {
         pluginManager.loadPlugins();
-        pluginManager.startPlugins();
-
         // get ExtensionFinder from pluginManager
         ExtensionFinder extensionFinder = null;
         try {
@@ -61,24 +58,16 @@ public class ZoharExtensionsManager implements ExtensionsManager {
                             pluginManager.getClass().getName()),
                     BasicZoharErrorCode.EXTENSIONS_INJECT_FAILED);
         }
-
-        // add extensions from classpath (non plugin)
+        // add extensions from classpath
         String classPathPluginId = null;
-        log.debug("Registering extensions of localPath");
+        log.debug("Registering extensions from localPath");
         List<ExtensionWrapper> classPathExtensionWrappers = extensionFinder.find(classPathPluginId);
         for (ExtensionWrapper extensionWrapper: classPathExtensionWrappers) {
             handleExtension(extensionWrapper);
         }
 
-        // add extensions for each started plugin
-        List<PluginWrapper> startedPlugins = pluginManager.getStartedPlugins();
-        for (PluginWrapper plugin : startedPlugins) {
-            log.debug("Registering extensions of the plugin '{}'", plugin.getPluginId());
-            List<ExtensionWrapper> pluginExtensionWrappers = extensionFinder.find(plugin.getPluginId());
-            for (ExtensionWrapper extensionWrapper: pluginExtensionWrappers) {
-                handleExtension(extensionWrapper);
-            }
-        }
+        // start plugins
+        pluginManager.startPlugins();
     }
 
     protected void handleExtension(ExtensionWrapper extensionWrapper) {

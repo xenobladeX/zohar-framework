@@ -36,11 +36,8 @@ public class SpringExtensionsManager extends ZoharExtensionsManager implements
 
     private ApplicationContext applicationContext;
 
-    private AbstractAutowireCapableBeanFactory beanFactory;
-
     public SpringExtensionsManager(SpringPluginManager pluginManager) {
         super(pluginManager);
-        pluginManager.setApplicationContext(applicationContext);
     }
 
     @PostConstruct
@@ -51,7 +48,6 @@ public class SpringExtensionsManager extends ZoharExtensionsManager implements
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
-        this.beanFactory = (AbstractAutowireCapableBeanFactory) applicationContext.getAutowireCapableBeanFactory();
         ((SpringPluginManager)pluginManager).setApplicationContext(applicationContext);
     }
 
@@ -64,6 +60,7 @@ public class SpringExtensionsManager extends ZoharExtensionsManager implements
         // Register an extension as bean
         Object extension = extensionWrapper.getExtension();
         if (extension != null) {
+            AbstractAutowireCapableBeanFactory beanFactory = (AbstractAutowireCapableBeanFactory) applicationContext.getAutowireCapableBeanFactory();
             beanFactory.registerSingleton(extension.getClass().getName(), extension);
         }
     }
