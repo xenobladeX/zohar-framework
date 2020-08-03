@@ -18,13 +18,11 @@ package com.xenoblade.zohar.framework.core.spring.pf4j;
 
 import com.xenoblade.zohar.framework.core.common.pf4j.ZoharExtensionsManager;
 import org.pf4j.ExtensionWrapper;
-import org.pf4j.PluginManager;
 import org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
 import javax.annotation.PostConstruct;
-import java.util.List;
 
 /**
  * SpringExtensionsManager

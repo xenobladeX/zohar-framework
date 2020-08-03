@@ -1,3 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.xenoblade.zohar.framework.core.config.ZoharAutoConfiguration,\
-  com.xenoblade.zohar.framework.core.config.ValidationAutoConfiguration
+  com.xenoblade.zohar.framework.core.starter.config.ZoharAutoConfiguration,\
+  com.xenoblade.zohar.framework.core.starter.config.ValidationAutoConfiguration,\
+  com.xenoblade.zohar.framework.core.starter.config.Pf4jAutoConfiguration,\
+  com.xenoblade.zohar.framework.core.starter.config.ZoharMvcPatchAutoConfiguration

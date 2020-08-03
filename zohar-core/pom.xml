@@ -20,6 +20,7 @@
     <modules>
         <module>zohar-core-common</module>
         <module>zohar-core-spring</module>
+        <module>zohar-core-boot</module>
         <module>zohar-core-starter</module>
     </modules>
 

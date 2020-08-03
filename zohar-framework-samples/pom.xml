@@ -19,9 +19,7 @@
 
     <modules>
         <module>zohar-framework-sample-pf4j</module>
-<!--        <module>zohar-framework-sample-agares</module>-->
-<!--        <module>zohar-framework-sample-baal</module>-->
-
+        <module>zohar-framework-sample-amon</module>
     </modules>
 
 

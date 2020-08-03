@@ -19,7 +19,6 @@ package com.xenoblade.zohar.framework.core.spring.pf4j;
 import com.xenoblade.zohar.framework.core.common.pf4j.ZoharPluginManager;
 import org.pf4j.ExtensionFactory;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 
 /**
  * SpringPluginManager

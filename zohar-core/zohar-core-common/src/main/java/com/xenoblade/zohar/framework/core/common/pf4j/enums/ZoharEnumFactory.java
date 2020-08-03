@@ -100,5 +100,4 @@ public class ZoharEnumFactory implements EnumFactory {
         }
         return enumClass;
     }
-
 }
