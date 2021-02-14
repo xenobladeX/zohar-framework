@@ -56,7 +56,7 @@ public class ZoharEnumExtensionFinderFilter implements ExtensionFinderFilter {
      * @param extensionWrapper
      * @return
      */
-    @Override public ExtensionWrapper filter(ExtensionWrapper extensionWrapper) {
+    @Override public ExtensionWrapper filter(ExtensionWrapper extensionWrapper, String pluginId) {
         Class extensionClass = extensionWrapper.getDescriptor().extensionClass;
         // get all enums
         try {
@@ -67,7 +67,7 @@ public class ZoharEnumExtensionFinderFilter implements ExtensionFinderFilter {
                 // add to enumFactory
                 List<IEnum> zoharEnums = Arrays.asList((IEnum[])result);
                 zoharEnums.stream().forEach(zoharEnum -> {
-                    enumFactory.add(zoharEnum);
+                    enumFactory.add(zoharEnum, pluginId);
                 });
             } else {
                 log.warn("No enum found in {}, will ignore", extensionClass.getName());

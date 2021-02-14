@@ -18,7 +18,7 @@ package com.xenoblade.zohar.framework.core.boot.pf4j.internal;
 
 import com.xenoblade.zohar.framework.core.boot.pf4j.SpringBootPlugin;
 import com.xenoblade.zohar.framework.core.boot.pf4j.SpringBootPluginManager;
-import com.xenoblade.zohar.framework.core.boot.pf4j.boot.ZoharMainAppReadyEvent;
+import com.xenoblade.zohar.framework.core.spring.pf4j.event.ZoharMainAppReadyEvent;
 import org.pf4j.PluginState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;

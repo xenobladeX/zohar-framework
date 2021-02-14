@@ -19,9 +19,7 @@ package com.xenoblade.zohar.framework.core.common.pf4j.extension.finder;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.pf4j.ExtensionWrapper;
-import org.pf4j.LegacyExtensionFinder;
 import org.pf4j.PluginManager;
-import org.pf4j.PluginStateEvent;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,23 +44,33 @@ public class ZoharExtensionFinder extends LegacyExtensionFinder {
     }
 
     @Override public List<ExtensionWrapper> find(String pluginId) {
-        return filterExtentionsWrappers(super.find(pluginId));
+        return filterExtentionsWrappers2(super.find(pluginId), pluginId);
     }
 
-    protected List<ExtensionWrapper> filterExtentionsWrappers(List<ExtensionWrapper> extensionWrappers) {
+    @Override public <T> List<ExtensionWrapper<T>> find(Class<T> type, String pluginId) {
+        return filterExtentionsWrappers(super.find(type, pluginId), pluginId);
+    }
+
+    protected <T> List<ExtensionWrapper<T>> filterExtentionsWrappers(List<ExtensionWrapper<T>> extensionWrappers, String pluginId) {
         return extensionWrappers.stream().map(tExtensionWrapper -> {
             for (ExtensionFinderFilter filter: filters) {
                 if (filter.match(tExtensionWrapper)) {
-                    tExtensionWrapper = filter.filter(tExtensionWrapper);
+                    tExtensionWrapper = filter.filter(tExtensionWrapper, pluginId);
                 }
             }
             return tExtensionWrapper;
         }).collect(Collectors.toList());
     }
 
-    @Override
-    public void pluginStateChanged(PluginStateEvent event) {
-        // TODO update enumFactory
-        super.pluginStateChanged(event);
+    protected List<ExtensionWrapper> filterExtentionsWrappers2(List<ExtensionWrapper> extensionWrappers, String pluginId) {
+        return extensionWrappers.stream().map(tExtensionWrapper -> {
+            for (ExtensionFinderFilter filter: filters) {
+                if (filter.match(tExtensionWrapper)) {
+                    tExtensionWrapper = filter.filter(tExtensionWrapper, pluginId);
+                }
+            }
+            return tExtensionWrapper;
+        }).collect(Collectors.toList());
     }
+
 }

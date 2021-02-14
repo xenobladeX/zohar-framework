@@ -16,7 +16,7 @@
  */
 package com.xenoblade.zohar.framework.core.starter.pf4j.model;
 
-import com.xenoblade.zohar.framework.core.boot.pf4j.boot.PluginStartingError;
+import com.xenoblade.zohar.framework.core.spring.pf4j.PluginStartingError;
 import lombok.Getter;
 import org.pf4j.PluginDependency;
 import org.pf4j.PluginDescriptor;

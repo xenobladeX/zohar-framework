@@ -37,5 +37,5 @@ public interface ExtensionFinderFilter {
      * @param extensionWrapper
      * @return
      */
-    ExtensionWrapper filter(ExtensionWrapper extensionWrapper);
+    ExtensionWrapper filter(ExtensionWrapper extensionWrapper, String pluginId);
 }

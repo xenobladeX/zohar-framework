@@ -19,7 +19,7 @@ package com.xenoblade.zohar.framework.core.boot.pf4j.boot;
 import com.xenoblade.zohar.framework.core.boot.pf4j.SpringBootPlugin;
 import com.xenoblade.zohar.framework.core.boot.pf4j.SpringBootPluginManager;
 import com.xenoblade.zohar.framework.core.boot.pf4j.internal.PluginListableBeanFactory;
-import com.xenoblade.zohar.framework.core.boot.pf4j.internal.SpringBootPluginClassLoader;
+import com.xenoblade.zohar.framework.core.spring.pf4j.SpringPluginClassLoader;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
@@ -322,12 +322,12 @@ import java.util.stream.Collectors;
     public ConfigurableApplicationContext createApplicationContext(){
         setWebApplicationType(WebApplicationType.NONE);
 
-        if (pluginClassLoader instanceof SpringBootPluginClassLoader) {
+        if (pluginClassLoader instanceof SpringPluginClassLoader) {
             if (pluginFirstClasses != null) {
-                ((SpringBootPluginClassLoader) pluginClassLoader).setPluginFirstClasses(pluginFirstClasses);
+                ((SpringPluginClassLoader) pluginClassLoader).setPluginFirstClasses(pluginFirstClasses);
             }
             if (pluginOnlyResources != null) {
-                ((SpringBootPluginClassLoader) pluginClassLoader).setPluginOnlyResources(pluginOnlyResources);
+                ((SpringPluginClassLoader) pluginClassLoader).setPluginOnlyResources(pluginOnlyResources);
             }
         }
         BeanFactory beanFactory = new PluginListableBeanFactory(pluginClassLoader);
@@ -360,12 +360,12 @@ import java.util.stream.Collectors;
     }
 
     private void hackBeanFactory(ApplicationContext applicationContext) {
-        if (pluginClassLoader instanceof SpringBootPluginClassLoader) {
+        if (pluginClassLoader instanceof SpringPluginClassLoader) {
             if (pluginFirstClasses != null) {
-                ((SpringBootPluginClassLoader) pluginClassLoader).setPluginFirstClasses(pluginFirstClasses);
+                ((SpringPluginClassLoader) pluginClassLoader).setPluginFirstClasses(pluginFirstClasses);
             }
             if (pluginOnlyResources != null) {
-                ((SpringBootPluginClassLoader) pluginClassLoader).setPluginOnlyResources(pluginOnlyResources);
+                ((SpringPluginClassLoader) pluginClassLoader).setPluginOnlyResources(pluginOnlyResources);
             }
         }
 

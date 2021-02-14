@@ -16,10 +16,12 @@
  */
 package com.xenoblade.zohar.framework.core.common.pf4j.extension.factory;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.pf4j.DefaultExtensionFactory;
 
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -48,6 +50,8 @@ public class ZoharExtensionFactory extends DefaultExtensionFactory {
 
     public void addCreator(ExtensionCreator extensionCreator) {
         extensionCreators.add(extensionCreator);
+        extensionCreators = CollectionUtil.sort(extensionCreators,
+                Comparator.comparingInt(ExtensionCreator::order));
     }
 
     protected <T> T defaultCreate(Class<T> extensionClass) {

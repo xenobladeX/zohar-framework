@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ZoharEnumFactory implements EnumFactory {
 
-    private Map<Class<IEnum<? extends Comparable>>, List<IEnum<? extends Comparable>>> enumMap = Maps
+    private Map<Class<IEnum<? extends Comparable>>, List<ZoharEnumWrapper>> enumMap = Maps
             .newConcurrentMap();
 
     public static final ZoharEnumFactory INSTANCE = new ZoharEnumFactory();
@@ -44,19 +44,20 @@ public class ZoharEnumFactory implements EnumFactory {
      * @param e
      * @return
      */
-    @Override public <T extends Comparable> Boolean add(IEnum<T> e) {
+    @Override
+    public <T extends Comparable> Boolean add(IEnum<T> e, String pluginId) {
         Class enumClass = findEnumClass(e.getClass());
         Boolean ret = false;
         if (enumClass != null) {
             synchronized (enumMap) {
-                List<IEnum<? extends Comparable>> enumList = enumMap.get(enumClass);
+                List<ZoharEnumWrapper> enumList = enumMap.get(enumClass);
                 if (enumList == null) {
-                    enumMap.put(enumClass, Lists.newArrayList(e));
+                    enumMap.put(enumClass, Lists.newArrayList(new ZoharEnumWrapper().setEnumValue(e).setPluginId(pluginId)));
                     ret = true;
                 } else {
-                    Boolean isExist = enumList.stream().anyMatch(x -> x.value().equals(e.value()));
+                    Boolean isExist = enumList.stream().anyMatch(x -> x.getEnumValue().value().equals(e.value()));
                     if (!isExist) {
-                        enumList.add(e);
+                        enumList.add(new ZoharEnumWrapper().setEnumValue(e).setPluginId(pluginId));
                         ret = true;
                     } else {
                         log.debug("zohar enum {}, name {}, value {} already exist, will ignore", enumClass.getName(), e.name(), e.value());
@@ -70,23 +71,48 @@ public class ZoharEnumFactory implements EnumFactory {
     }
 
     /**
+     * 删除对应插件的枚举扩展
+     * @param pluginId
+     * @return
+     */
+    @Override public void removeFromPlugin(String pluginId) {
+        enumMap.entrySet().stream().forEach(entry -> {
+            entry.getValue().removeIf(wrapper -> wrapper.getPluginId() != null && pluginId
+                    .equals(wrapper.getPluginId()));
+        });
+    }
+
+    /**
      * 通过 value 得到对应的{@link IEnum}
      * @param value
      * @return
      */
     @Override public <T extends Comparable, E extends IEnum<T>> E valueOf(T value, Class<E> enumClass) {
-        List<? extends IEnum> enumList = enumMap.get(enumClass);
+        ZoharEnumWrapper enumWrapper = wrapperOf(value, enumClass);
+        return enumWrapper == null ? null : (E)enumWrapper.getEnumValue();
+    }
+
+    /**
+     * 通过 value 和类型得到对应的{@link ZoharEnumWrapper}
+     * @param value
+     * @param enumClass
+     * @return
+     */
+    @Override public <T extends Comparable, E extends IEnum<T>> ZoharEnumWrapper<E> wrapperOf(
+            T value, Class<E> enumClass) {
+        List<ZoharEnumWrapper> enumList = enumMap.get(enumClass);
         if (enumList != null) {
-            IEnum<T> targetEnum = enumList.stream().collect(Collectors.toMap(IEnum::value, Function.identity())).get(value);
-            if (targetEnum == null) {
+            ZoharEnumWrapper<E> targetEnumWrapper = enumList.stream().collect(Collectors.toMap(e -> e.getEnumValue().value(), Function.identity())).get(value);
+            if (targetEnumWrapper == null) {
                 log.warn("Can't find value {} in enum {}", value, enumClass.getName());
             }
-            return (E)targetEnum;
+            return targetEnumWrapper;
         } else {
             log.warn("Can't find value {} in enum {}", value, enumClass.getName());
         }
         return null;
     }
+
 
     private Class<? extends IEnum> findEnumClass(Class<? extends IEnum> targetClass) {
         Class<?>[] interfaces = targetClass.getInterfaces();

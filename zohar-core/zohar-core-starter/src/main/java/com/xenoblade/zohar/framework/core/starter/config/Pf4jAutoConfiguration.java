@@ -16,11 +16,11 @@
  */
 package com.xenoblade.zohar.framework.core.starter.config;
 
+import com.xenoblade.zohar.framework.core.spring.pf4j.SpringPluginClassLoader;
 import com.xenoblade.zohar.framework.core.starter.pf4j.PropertyPluginStatusProvider;
 import com.xenoblade.zohar.framework.core.boot.pf4j.SpringBootPluginManager;
 import com.xenoblade.zohar.framework.core.boot.pf4j.internal.MainAppReadyListener;
 import com.xenoblade.zohar.framework.core.boot.pf4j.internal.MainAppStartedListener;
-import com.xenoblade.zohar.framework.core.boot.pf4j.internal.SpringBootPluginClassLoader;
 import com.xenoblade.zohar.framework.core.starter.pf4j.controller.PluginManagerController;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -47,7 +47,6 @@ import org.springframework.util.StringUtils;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
@@ -136,14 +135,14 @@ public class Pf4jAutoConfiguration {
                                             pluginClasspath.addJarsDirectories(libDirectory);
                                         }
                                     }
-                                    return new SpringBootPluginClassLoader(pluginManager,
+                                    return new SpringPluginClassLoader(pluginManager,
                                             pluginDescriptor, getClass().getClassLoader());
                                 }
                             }, this::isDevelopment)
                             .add(new JarPluginLoader(this) {
                                 @Override
                                 public ClassLoader loadPlugin(Path pluginPath, PluginDescriptor pluginDescriptor) {
-                                    PluginClassLoader pluginClassLoader = new SpringBootPluginClassLoader(pluginManager, pluginDescriptor, getClass().getClassLoader());
+                                    PluginClassLoader pluginClassLoader = new SpringPluginClassLoader(pluginManager, pluginDescriptor, getClass().getClassLoader());
                                     pluginClassLoader.addFile(pluginPath.toFile());
                                     return pluginClassLoader;
                                 }

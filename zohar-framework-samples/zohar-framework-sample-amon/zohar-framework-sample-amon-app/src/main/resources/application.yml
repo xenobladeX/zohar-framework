@@ -4,8 +4,6 @@ spring:
   profiles:
     active: debug
 
-
-
 zohar:
   pf4j:
     runtime-mode: development
@@ -13,3 +11,4 @@ zohar:
     pluginsRoot: zohar-framework-sample-amon-plugins
     controller:
       base-path: /pf4j
+

@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: &appName zohar-framework-sample-amon
+  profiles:
+    active: test
+
+zohar:
+  pf4j:
+    runtime-mode: development
+    enabled: true
+    pluginsRoot: ../../zohar-framework-samples/zohar-framework-sample-pf4j-starter/zohar-framework-sample-pf4j-starter-plugins
+    controller:
+      base-path: /pf4j
+

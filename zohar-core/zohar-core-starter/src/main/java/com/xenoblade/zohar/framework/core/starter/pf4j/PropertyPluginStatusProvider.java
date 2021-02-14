@@ -47,20 +47,26 @@ public class PropertyPluginStatusProvider implements PluginStatusProvider {
 
     @Override
     public boolean isPluginDisabled(String pluginId) {
-        if (disabledPlugins.contains(pluginId)) return true;
+        if (disabledPlugins.contains(pluginId)) {
+            return true;
+        }
         return !enabledPlugins.isEmpty() && !enabledPlugins.contains(pluginId);
     }
 
     @Override
     public void disablePlugin(String pluginId) {
-        if (isPluginDisabled(pluginId)) return;
+        if (isPluginDisabled(pluginId)) {
+            return;
+        }
         disabledPlugins.add(pluginId);
         enabledPlugins.remove(pluginId);
     }
 
     @Override
     public void enablePlugin(String pluginId) {
-        if (!isPluginDisabled(pluginId)) return;
+        if (!isPluginDisabled(pluginId)) {
+            return;
+        }
         enabledPlugins.add(pluginId);
         disabledPlugins.remove(pluginId);
     }

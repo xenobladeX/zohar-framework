@@ -17,7 +17,6 @@
 package com.xenoblade.zohar.framework.core.starter.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.xenoblade.zohar.framework.core.spring.ApplicationContextHolder;
 import com.xenoblade.zohar.framework.commons.utils.jackson.JacksonUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,16 +39,6 @@ public class ZoharAutoConfiguration {
         ObjectMapper defaultObjectMapper = new ObjectMapper();
 
         return JacksonUtil.initWrapperObjectMapper(defaultObjectMapper);
-    }
-
-
-    /**
-     * 注入ApplicationContextAware
-     * @return
-     */
-    @Bean
-    public ApplicationContextHolder applicationContextHolder() {
-        return new ApplicationContextHolder();
     }
 
 }

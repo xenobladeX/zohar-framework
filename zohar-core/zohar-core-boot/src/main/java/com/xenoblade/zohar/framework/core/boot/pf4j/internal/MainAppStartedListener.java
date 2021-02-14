@@ -18,7 +18,7 @@ package com.xenoblade.zohar.framework.core.boot.pf4j.internal;
 
 import com.xenoblade.zohar.framework.core.boot.pf4j.SpringBootPlugin;
 import com.xenoblade.zohar.framework.core.boot.pf4j.SpringBootPluginManager;
-import com.xenoblade.zohar.framework.core.boot.pf4j.boot.ZoharMainAppStartedEvent;
+import com.xenoblade.zohar.framework.core.spring.pf4j.event.ZoharMainAppStartedEvent;
 import org.pf4j.PluginState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
@@ -45,7 +45,6 @@ public class MainAppStartedListener implements ApplicationListener<ApplicationSt
         if (pluginManager.isAutoStartPlugin()) {
             pluginManager.startPlugins();
         }
-
         pluginManager.getPlugins(PluginState.STARTED).forEach(pluginWrapper -> {
             SpringBootPlugin springBootPlugin = (SpringBootPlugin) pluginWrapper.getPlugin();
             ApplicationContext pluginAppCtx = springBootPlugin.getApplicationContext();

@@ -18,10 +18,8 @@ package com.xenoblade.zohar.framework.core.spring.pf4j;
 
 import com.xenoblade.zohar.framework.core.common.pf4j.extension.factory.ZoharExtensionFactory;
 import lombok.extern.slf4j.Slf4j;
-import org.pf4j.Plugin;
-import org.pf4j.PluginManager;
 import org.pf4j.PluginWrapper;
-import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.GenericApplicationContext;
 
 /**
  * SpringExtensionFactory
@@ -31,39 +29,24 @@ import org.springframework.context.ApplicationContext;
 @Slf4j
 public class SpringExtensionFactory extends ZoharExtensionFactory {
 
-    private PluginManager pluginManager;
+    private SpringPluginManager pluginManager;
 
-    private boolean autowire;
+    private SpringExtensionCreator springExtensionCreator;
 
-    public SpringExtensionFactory(PluginManager pluginManager) {
-        this(pluginManager, true);
-    }
-
-    public SpringExtensionFactory(PluginManager pluginManager, boolean autowire) {
+    public SpringExtensionFactory(SpringPluginManager pluginManager) {
+        super();
         this.pluginManager = pluginManager;
-        this.autowire = autowire;
+        this.springExtensionCreator = new SpringExtensionCreator(pluginManager);
+        addCreator(springExtensionCreator);
     }
 
-    @Override
-    public <T> T create(Class<T> extensionClass) {
-        T extension =  super.create(extensionClass);
-        if (autowire && extension != null) {
-            // test for SpringBean
-            PluginWrapper pluginWrapper = pluginManager.whichPlugin(extensionClass);
-            if (pluginWrapper != null) { // is plugin extension
-                Plugin plugin = pluginWrapper.getPlugin();
-                if (plugin instanceof SpringPlugin) {
-                    // autowire
-                    ApplicationContext pluginContext = ((SpringPlugin) plugin).getApplicationContext();
-                    pluginContext.getAutowireCapableBeanFactory().autowireBean(extension);
-                } else if (this.pluginManager instanceof SpringPluginManager) { // is system extension and plugin manager is SpringPluginManager
-                    SpringPluginManager springPluginManager = (SpringPluginManager) this.pluginManager;
-                    ApplicationContext pluginContext = springPluginManager.getApplicationContext();
-                    pluginContext.getAutowireCapableBeanFactory().autowireBean(extension);
-                }
-            }
-        }
-        return extension;
+    public String getExtensionBeanName(Class<?> extensionClass) {
+        return springExtensionCreator.getExtensionBeanName(extensionClass);
     }
 
+    private GenericApplicationContext getApplicationContext(Class<?> extensionClass) {
+        PluginWrapper pluginWrapper = pluginManager.whichPlugin(extensionClass);
+        SpringPlugin plugin = (SpringPlugin) pluginWrapper.getPlugin();
+        return plugin.getApplicationContext();
+    }
 }

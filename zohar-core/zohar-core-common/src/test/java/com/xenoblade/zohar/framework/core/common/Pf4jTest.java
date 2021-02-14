@@ -20,7 +20,6 @@ import com.xenoblade.zohar.framework.commons.api.enums.BasicZoharErrorCode;
 import com.xenoblade.zohar.framework.commons.api.enums.IEnum;
 import com.xenoblade.zohar.framework.commons.api.enums.IZoharErrorCode;
 import com.xenoblade.zohar.framework.core.common.enums.AnotherZoharErrorCode;
-import com.xenoblade.zohar.framework.core.common.pf4j.ZoharExtensionsManager;
 import com.xenoblade.zohar.framework.core.common.pf4j.ZoharPluginManager;
 import com.xenoblade.zohar.framework.core.common.pf4j.enums.ZoharEnumFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -46,24 +45,36 @@ public class Pf4jTest {
 
     @Before
     public void init() {
+        // properties
+        System.setProperty("pf4j.mode", "development");
+        System.setProperty("pf4j.pluginsDir", "../../zohar-framework-samples/zohar-framework-sample-pf4j-core/zohar-framework-sample-pf4j-core-plugins");
+
+        // init
         pluginManager = new ZoharPluginManager();
-        ZoharExtensionsManager zoharExtensionsInjector = new ZoharExtensionsManager(pluginManager);
-        zoharExtensionsInjector.inject();
+        pluginManager.loadPlugins();
+        pluginManager.startPlugins();
+        pluginManager.getExtensions(IZoharErrorCode.class);
     }
 
     @Test
     public void testFindEnumClass() {
         List<Class<? extends IEnum>> zoharEnumClasses = pluginManager.getExtensionClasses(
                 IEnum.class);
-        Assert.assertEquals(zoharEnumClasses.size(), 2);
+        ZoharEnumFactory zoharEnumFactory = ZoharEnumFactory.INSTANCE;
+        Assert.assertEquals(zoharEnumClasses.size(), 5);
     }
 
     @Test
     public void testEnumValueOf() {
-
         Integer testValue = 1000;
         Assert.assertEquals(ZoharEnumFactory.INSTANCE.valueOf(testValue, IZoharErrorCode.class),
                 AnotherZoharErrorCode.ZOHAR_ERROR_TEST);
+        testValue = 1100;
+        Assert.assertEquals(ZoharEnumFactory.INSTANCE.valueOf(testValue, IZoharErrorCode.class).getCode(),
+                testValue);
+        testValue = 1200;
+        Assert.assertEquals(ZoharEnumFactory.INSTANCE.valueOf(testValue, IZoharErrorCode.class).getCode(),
+                testValue);
         testValue = 200;
         Assert.assertEquals(ZoharEnumFactory.INSTANCE.valueOf(testValue, IZoharErrorCode.class),
                  BasicZoharErrorCode.OK);

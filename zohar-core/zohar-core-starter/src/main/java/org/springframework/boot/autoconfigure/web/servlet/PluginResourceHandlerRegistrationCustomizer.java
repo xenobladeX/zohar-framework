@@ -16,7 +16,7 @@
  */
 package org.springframework.boot.autoconfigure.web.servlet;
 
-import com.xenoblade.zohar.framework.core.boot.pf4j.boot.ZoharPluginStateChangedEvent;
+import com.xenoblade.zohar.framework.core.spring.pf4j.event.ZoharPluginStateChangedEvent;
 import com.xenoblade.zohar.framework.core.boot.pf4j.internal.PluginResourceResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

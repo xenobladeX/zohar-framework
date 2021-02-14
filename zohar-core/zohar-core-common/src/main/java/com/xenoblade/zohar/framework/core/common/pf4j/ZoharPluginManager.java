@@ -17,7 +17,7 @@
 package com.xenoblade.zohar.framework.core.common.pf4j;
 
 import com.xenoblade.zohar.framework.core.common.pf4j.extension.factory.ZoharExtensionFactory;
-import com.xenoblade.zohar.framework.core.common.pf4j.extension.finder.DefaultExtensionFinder;
+import com.xenoblade.zohar.framework.core.common.pf4j.extension.finder.MultipleExtensionFinder;
 import com.xenoblade.zohar.framework.core.common.pf4j.extension.finder.ZoharExtensionFinder;
 import com.xenoblade.zohar.framework.core.common.pf4j.extension.finder.ZoharEnumExtensionFinderFilter;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +35,14 @@ import java.nio.file.Path;
 @Slf4j
 public class ZoharPluginManager extends DefaultPluginManager {
 
+    public ZoharPluginManager() {
+        super();
+    }
+
+    public ZoharPluginManager(Path pluginsRoot) {
+        super(pluginsRoot);
+    }
+
     @Override
     protected ExtensionFactory createExtensionFactory() {
         return new ZoharExtensionFactory();
@@ -47,11 +55,12 @@ public class ZoharPluginManager extends DefaultPluginManager {
     @Override
     protected ExtensionFinder createExtensionFinder() {
         ZoharExtensionFinder zoharExtensionFinder = new ZoharExtensionFinder(this);
+        // add enum extension finder filter
         zoharExtensionFinder.addFilter(new ZoharEnumExtensionFinderFilter());
-        DefaultExtensionFinder defaultExtensionFinder = new DefaultExtensionFinder(this);
-        defaultExtensionFinder.add(zoharExtensionFinder);
-        addPluginStateListener(zoharExtensionFinder);
-        return defaultExtensionFinder;
+        MultipleExtensionFinder multipleExtensionFinder = new MultipleExtensionFinder(this);
+        multipleExtensionFinder.add(zoharExtensionFinder);
+        addPluginStateListener(multipleExtensionFinder);
+        return multipleExtensionFinder;
     }
 
 }

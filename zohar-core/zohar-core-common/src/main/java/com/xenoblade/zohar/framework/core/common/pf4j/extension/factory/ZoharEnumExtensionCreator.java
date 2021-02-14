@@ -23,7 +23,7 @@ import com.xenoblade.zohar.framework.commons.api.enums.IEnum;
  * @author xenoblade
  * @since 1.0.0
  */
-public class ZoharEnumExtensionCreator implements ExtensionCreator {
+public class ZoharEnumExtensionCreator extends AbstractExtensionCreator {
 
     @Override
     public Boolean match(Class<?> extensionClass) {
@@ -33,5 +33,9 @@ public class ZoharEnumExtensionCreator implements ExtensionCreator {
     @Override
     public <T> T create(Class<T> extensionClass) {
         return null;
+    }
+
+    @Override public Integer order() {
+        return 0;
     }
 }

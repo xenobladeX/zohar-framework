@@ -18,7 +18,9 @@
 
 
     <modules>
-        <module>zohar-framework-sample-pf4j</module>
+        <module>zohar-framework-sample-pf4j-core</module>
+        <module>zohar-framework-sample-pf4j-spring</module>
+        <module>zohar-framework-sample-pf4j-starter</module>
         <module>zohar-framework-sample-amon</module>
     </modules>
 

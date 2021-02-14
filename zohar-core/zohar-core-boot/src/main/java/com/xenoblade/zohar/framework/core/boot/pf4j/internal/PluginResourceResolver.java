@@ -69,6 +69,6 @@ public class PluginResourceResolver extends PathResourceResolver {
                 }
             }
         }
-        return null;
+        return super.getResource(resourcePath, location);
     }
 }

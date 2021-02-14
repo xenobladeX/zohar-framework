@@ -26,4 +26,7 @@ public interface ExtensionCreator {
     Boolean match(Class<?> extensionClass);
 
     public <T> T create(Class<T> extensionClass);
+
+    Integer order();
+
 }
