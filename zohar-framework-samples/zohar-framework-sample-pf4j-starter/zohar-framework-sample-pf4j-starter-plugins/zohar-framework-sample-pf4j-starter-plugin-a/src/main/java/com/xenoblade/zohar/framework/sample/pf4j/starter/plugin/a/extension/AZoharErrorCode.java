@@ -14,24 +14,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.core.starter;
+package com.xenoblade.zohar.framework.sample.pf4j.starter.plugin.a.extension;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import com.xenoblade.zohar.framework.commons.api.enums.IZoharErrorCode;
+import lombok.Getter;
+import org.pf4j.Extension;
 
 /**
- * MainController
+ * AnotherZoharErrorCode
  * @author xenoblade
  * @since 1.0.0
  */
-@RestController
-@RequestMapping(value = "/main")
-public class MainController {
+@Extension
+public enum AZoharErrorCode implements IZoharErrorCode {
 
-    @RequestMapping(value = "/info", method = RequestMethod.GET)
-    public String info() {
-        return "I'm main app";
+    ZOHAR_ERROR_A(1100, "扩展枚举A");
+
+    @Getter
+    private Integer code;
+
+    @Getter
+    private String message;
+
+    AZoharErrorCode(Integer code, String message) {
+        this.code = code;
+        this.message = message;
     }
-
 }

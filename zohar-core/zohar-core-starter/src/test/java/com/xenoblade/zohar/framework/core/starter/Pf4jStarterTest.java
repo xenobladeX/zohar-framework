@@ -16,6 +16,10 @@
  */
 package com.xenoblade.zohar.framework.core.starter;
 
+import com.xenoblade.zohar.framework.commons.api.enums.BasicZoharErrorCode;
+import com.xenoblade.zohar.framework.commons.api.enums.IZoharErrorCode;
+import com.xenoblade.zohar.framework.core.common.pf4j.enums.ZoharEnumFactory;
+import com.xenoblade.zohar.framework.core.starter.extension.AnotherZoharErrorCode;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
@@ -79,6 +83,22 @@ public class Pf4jStarterTest {
         status = mvcResult.getResponse().getStatus();
         content = mvcResult.getResponse().getContentAsString();
         Assert.assertEquals(200, status);
+    }
+
+    @Test
+    public void testEnumValueOf() {
+        Integer testValue = 1000;
+        Assert.assertEquals(ZoharEnumFactory.INSTANCE.valueOf(testValue, IZoharErrorCode.class),
+                AnotherZoharErrorCode.ZOHAR_ERROR_TEST);
+        testValue = 1100;
+        Assert.assertEquals(ZoharEnumFactory.INSTANCE.valueOf(testValue, IZoharErrorCode.class).getCode(),
+                testValue);
+        testValue = 1200;
+        Assert.assertEquals(ZoharEnumFactory.INSTANCE.valueOf(testValue, IZoharErrorCode.class).getCode(),
+                testValue);
+        testValue = 200;
+        Assert.assertEquals(ZoharEnumFactory.INSTANCE.valueOf(testValue, IZoharErrorCode.class),
+                BasicZoharErrorCode.OK);
     }
 
 

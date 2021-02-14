@@ -18,6 +18,7 @@ package com.xenoblade.zohar.framework.core.spring.pf4j;
 
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
+import com.xenoblade.zohar.framework.core.common.pf4j.enums.ZoharEnumFactory;
 import com.xenoblade.zohar.framework.core.spring.pf4j.annotation.ExtensionBean;
 import com.xenoblade.zohar.framework.core.spring.pf4j.event.ZoharPluginRestartedEvent;
 import com.xenoblade.zohar.framework.core.spring.pf4j.event.ZoharPluginStartedEvent;
@@ -130,6 +131,8 @@ public abstract class SpringPlugin extends Plugin {
             log.debug("Unregister extension <{}> to main ApplicationContext", extensionName);
             unregisterBeanFromMainContext(extensionName);
         }
+        // unregister enums
+        ZoharEnumFactory.INSTANCE.removeFromPlugin(getWrapper().getPluginId());
         stopWatch.stop();
 
         // TODO unregister plugin request mapping
