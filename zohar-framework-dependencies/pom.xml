@@ -38,7 +38,7 @@
 
         <!--utils-->
         <hutool.version>4.5.0</hutool.version>
-        <guava.version>27.0.1-jre</guava.version>
+        <guava.version>29.0-jre</guava.version>
         <!--apache commons-->
         <commons-fileupload.version>1.4</commons-fileupload.version>
         <commons-lang3.version>3.7</commons-lang3.version>
