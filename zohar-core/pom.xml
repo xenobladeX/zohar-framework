@@ -17,7 +17,9 @@
     </properties>
 
     <modules>
+        <module>zohar-core-extension</module>
         <module>zohar-core-api</module>
+        <module>zohar-core-boot</module>
     </modules>
 
 </project>
