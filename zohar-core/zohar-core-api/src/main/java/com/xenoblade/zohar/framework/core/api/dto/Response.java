@@ -33,6 +33,8 @@ public class Response extends DTO {
 
     private String errMessage;
 
+    private String traceId;
+
     public static Response ok() {
         return Response.error(BasicErrorCode.OK);
     }

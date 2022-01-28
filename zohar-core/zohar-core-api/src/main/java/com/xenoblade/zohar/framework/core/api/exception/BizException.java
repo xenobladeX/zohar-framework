@@ -27,20 +27,20 @@ public class BizException extends BaseException {
 
     private static final long serialVersionUID = 4016385745135744846L;
 
-    public BizException(String errMessage) {
-        super(errMessage);
+    public BizException(IZoharErrorCode errCodeEnum) {
+        super(errCodeEnum);
     }
 
     public BizException(IZoharErrorCode errCodeEnum, String errMessage) {
-        super(errMessage);
+        super(errCodeEnum, errMessage);
     }
 
-    public BizException(String errMessage, Throwable e) {
-        super(errMessage, e);
+    public BizException(IZoharErrorCode errCodeEnum, Throwable e) {
+        super(errCodeEnum, e);
     }
 
     public BizException(IZoharErrorCode errCodeEnum, String errMessage, Throwable e) {
-        super(errMessage, e);
+        super(errCodeEnum, errMessage, e);
     }
 
 }

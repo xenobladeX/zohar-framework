@@ -17,9 +17,6 @@ package com.xenoblade.zohar.framework.tool;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.modules.junit4.PowerMockRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,8 +26,6 @@ import org.slf4j.LoggerFactory;
  * @author xenoblade
  * @since 0.0.1
  */
-@PowerMockIgnore({"javax.management.*", "javax.script.*"})
-@RunWith(PowerMockRunner.class)
 public class PinyinTest {
 
     private Logger logger = LoggerFactory.getLogger(PinyinTest.class);

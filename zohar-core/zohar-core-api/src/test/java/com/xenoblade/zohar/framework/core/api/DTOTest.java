@@ -41,7 +41,7 @@ public class DTOTest {
         objectMapper.setConfig(objectMapper.getSerializationConfig()
                 .with(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY));
         String json = objectMapper.writeValueAsString(response);
-        Assert.assertEquals("{\"data\":\"test\",\"errCode\":200,\"errMessage\":\"OK\"}", json);
+        Assert.assertEquals("{\"data\":\"test\",\"errCode\":100000,\"errMessage\":\"OK\"}", json);
     }
 
 
@@ -49,7 +49,7 @@ public class DTOTest {
     public void testSerialResponseByFastJson() {
         SingleResponse<String> response = SingleResponse.of("test");
         String json = JSON.toJSONString(response);
-        Assert.assertEquals("{\"data\":\"test\",\"errCode\":200,\"errMessage\":\"OK\"}", json);
+        Assert.assertEquals("{\"data\":\"test\",\"errCode\":100000,\"errMessage\":\"OK\"}", json);
     }
 
 }

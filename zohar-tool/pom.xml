@@ -106,13 +106,8 @@
 
         <!--test start-->
         <dependency>
-            <groupId>org.powermock</groupId>
-            <artifactId>powermock-module-junit4</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.powermock</groupId>
-            <artifactId>powermock-api-mockito2</artifactId>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
 
@@ -138,11 +133,11 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.jsmart</groupId>
-            <artifactId>zerocode-tdd</artifactId>
-            <scope>test</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.jsmart</groupId>-->
+<!--            <artifactId>zerocode-tdd</artifactId>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
         <!--test end-->
 
     </dependencies>

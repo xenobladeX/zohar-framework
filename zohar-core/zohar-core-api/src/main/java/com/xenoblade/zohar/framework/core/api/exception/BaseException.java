@@ -30,8 +30,9 @@ public abstract class BaseException extends RuntimeException {
 
     private IZoharErrorCode errCode = BasicErrorCode.INNER_ERROR;
 
-    public BaseException(String errMessage) {
-        super(errMessage);
+    public BaseException(IZoharErrorCode errCodeEnum) {
+        super(errCodeEnum.getMessage());
+        this.errCode = errCodeEnum;
     }
 
     public BaseException(IZoharErrorCode errCodeEnum, String errMessage) {
@@ -39,8 +40,9 @@ public abstract class BaseException extends RuntimeException {
         this.errCode = errCodeEnum;
     }
 
-    public BaseException(String errMessage, Throwable e) {
-        super(errMessage, e);
+    public BaseException(IZoharErrorCode errCodeEnum, Throwable e) {
+        super(errCodeEnum.getMessage(), e);
+        this.errCode = errCodeEnum;
     }
 
     public BaseException(IZoharErrorCode errCodeEnum, String errMessage, Throwable e) {

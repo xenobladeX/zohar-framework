@@ -26,9 +26,9 @@ import com.xenoblade.zohar.framework.core.extension.Extension;
 @Extension
 public enum BasicErrorCode implements IZoharErrorCode {
 
-    OK(200, "OK"),
-
-    INNER_ERROR(500, "Inner Error");
+    OK(100000, "OK"),
+    INNER_ERROR(100001, "Inner Error"),
+    FILE_READ_FAILED(10002, "File Read Failed");
 
 
     private Integer code;

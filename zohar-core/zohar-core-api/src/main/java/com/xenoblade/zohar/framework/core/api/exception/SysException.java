@@ -27,20 +27,20 @@ public class SysException  extends BaseException {
 
     private static final long serialVersionUID = 5861432397437275650L;
 
-    public SysException(String errMessage) {
-        super(errMessage);
+    public SysException(IZoharErrorCode errCodeEnum) {
+        super(errCodeEnum);
     }
 
     public SysException(IZoharErrorCode errCodeEnum, String errMessage) {
-        super(errMessage);
+        super(errCodeEnum, errMessage);
     }
 
-    public SysException(String errMessage, Throwable e) {
-        super(errMessage, e);
+    public SysException(IZoharErrorCode errCodeEnum, Throwable e) {
+        super(errCodeEnum, e);
     }
 
     public SysException(IZoharErrorCode errCodeEnum, String errMessage, Throwable e) {
-        super(errMessage, e);
+        super(errCodeEnum, errMessage, e);
     }
 
 }

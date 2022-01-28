@@ -28,7 +28,7 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
  * @author xenoblade
  * @since 0.0.1
  */
-public class PinyinUtil {
+public final class PinyinUtil {
 
     static final char CN_CHAR_START = '\u4e00';
     static final char CN_CHAR_END   = '\u9fa5';

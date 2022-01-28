@@ -65,7 +65,7 @@ public class ExtensionTest {
     @Test
     public void testZoharEnum() {
         extensionFinder.find();
-        IZoharErrorCode errorCode = ZoharEnumFactory.INSTANCE.valueOf(200, IZoharErrorCode.class);
+        IZoharErrorCode errorCode = ZoharEnumFactory.INSTANCE.valueOf(100000, IZoharErrorCode.class);
         Assert.assertEquals(BasicErrorCode.OK, errorCode);
         errorCode = ZoharEnumFactory.INSTANCE.valueOf(666, IZoharErrorCode.class);
         Assert.assertEquals(TestErrorCode.TEST_ERROR, errorCode);
