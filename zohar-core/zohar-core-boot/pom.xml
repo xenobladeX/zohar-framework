@@ -8,14 +8,44 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>zohar-core-boot</artifactId>
-    <name>Zohar Core Boot</name>
+    <name>Zohar Core For Spring Boot</name>
 
     <dependencies>
 
         <dependency>
+            <groupId>com.xenoblade</groupId>
+            <artifactId>zohar-tool</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
+
+        <!-- log -->
+        <dependency> <!-- 引入log4j2依赖 -->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
+
+        <!-- test -->
+         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+         </dependency>
 
     </dependencies>
 

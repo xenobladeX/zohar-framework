@@ -255,5 +255,7 @@ public abstract class AbstractExtensionFinder implements ExtensionFinder{
         }
     }
 
-
+    public ExtensionFactory getExtensionFactory() {
+        return extensionFactory;
+    }
 }

@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.xenoblade.zohar.framework.core.boot.config.ZoharAutoConfiguration

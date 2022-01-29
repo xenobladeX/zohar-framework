@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: &appName zohar-core-boot-test
+  profiles:
+    active: test
