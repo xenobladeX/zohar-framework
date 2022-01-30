@@ -15,16 +15,13 @@
  */
 package com.xenoblade.zohar.framework.core.boot;
 
-import cn.hutool.core.annotation.AnnotationUtil;
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.StrUtil;
-import com.xenoblade.zohar.framework.core.boot.extension.ExtensionComponent;
 import com.xenoblade.zohar.framework.core.boot.extension.SpringExtensionCreator;
 import com.xenoblade.zohar.framework.core.boot.launcher.ApplicationLauncher;
 import com.xenoblade.zohar.framework.core.extension.*;
 import com.xenoblade.zohar.framework.core.extension.enumeration.IEnum;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory;
 import org.springframework.boot.ConfigurableBootstrapContext;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringApplicationRunListener;
@@ -32,8 +29,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
 
 import java.time.Duration;
-import java.util.List;
-import java.util.Map;
 
 /**
  * ExtensionApplicationRunListener
