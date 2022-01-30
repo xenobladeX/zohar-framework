@@ -31,7 +31,6 @@ import org.springframework.context.annotation.Lazy;
 public class ZoharAutoConfiguration {
 
     @Bean
-    @Lazy
     public SpringExtensionLoader springExtensionLoader(ExtensionFinder extensionFinder) {
         return new SpringExtensionLoader(extensionFinder);
     }

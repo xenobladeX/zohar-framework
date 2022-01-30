@@ -30,7 +30,7 @@ import java.util.List;
  * @author xenoblade
  * @since 0.0.1
  */
-@SpringBootTest
+@SpringBootTest(classes = TestApplication.class)
 @Slf4j
 public class SpringExtensionTest {
 

@@ -15,6 +15,7 @@
  */
 package com.xenoblade.zohar.framework.core.boot;
 
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
@@ -27,7 +28,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class TestApplication {
 
     public static void main(String[] args) {
-        ZoharSpringApplication.run(TestApplication.class);
+        SpringApplication.run(TestApplication.class);
     }
+
+
 
 }

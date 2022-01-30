@@ -18,7 +18,7 @@ package com.xenoblade.zohar.framework.core.boot.extension;
 import com.xenoblade.zohar.framework.core.boot.launcher.ApplicationLauncher;
 import com.xenoblade.zohar.framework.core.extension.Extension;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ConfigurableApplicationContext;
 
 /**
  * TestApplicationLauncher
@@ -32,7 +32,7 @@ public class TestApplicationLauncher implements ApplicationLauncher {
 
 
     @Override
-    public void launcher(SpringApplicationBuilder builder) {
+    public void launcher(ConfigurableApplicationContext context) {
         log.info("Launch TestApplicationLauncher");
     }
 }

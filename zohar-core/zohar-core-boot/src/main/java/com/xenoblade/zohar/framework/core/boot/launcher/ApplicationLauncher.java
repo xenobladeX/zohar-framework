@@ -16,7 +16,7 @@
 package com.xenoblade.zohar.framework.core.boot.launcher;
 
 import com.xenoblade.zohar.framework.core.extension.ExtensionPoint;
-import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ConfigurableApplicationContext;
 
 /**
  * ApplicationLauncher
@@ -26,6 +26,6 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
  */
 public interface ApplicationLauncher extends ExtensionPoint {
 
-    void launcher(SpringApplicationBuilder builder);
+    void launcher(ConfigurableApplicationContext context);
 
 }
