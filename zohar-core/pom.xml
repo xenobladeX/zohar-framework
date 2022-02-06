@@ -20,6 +20,7 @@
         <module>zohar-core-extension</module>
         <module>zohar-core-api</module>
         <module>zohar-core-boot</module>
+        <module>zohar-core-web</module>
     </modules>
 
 </project>

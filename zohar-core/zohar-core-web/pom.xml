@@ -7,14 +7,14 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>zohar-core-boot</artifactId>
-    <name>Zohar Core For Spring Boot</name>
+    <artifactId>zohar-core-web</artifactId>
+    <name>Zohar Core For Spring Boot Webmvc</name>
 
     <dependencies>
 
         <dependency>
             <groupId>com.xenoblade</groupId>
-            <artifactId>zohar-tool</artifactId>
+            <artifactId>zohar-core-boot</artifactId>
         </dependency>
 
         <dependency>
@@ -23,15 +23,14 @@
             <scope>provided</scope>
         </dependency>
 
+        <!--Web dependencies-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-logging</artifactId>
-                </exclusion>
-            </exclusions>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-undertow</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -39,23 +38,13 @@
             <scope>compile</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-validation</artifactId>
-        </dependency>
-
-        <!-- log -->
-        <dependency> <!-- 引入log4j2依赖 -->
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-log4j2</artifactId>
-        </dependency>
 
         <!-- test -->
-         <dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-         </dependency>
+        </dependency>
 
     </dependencies>
 

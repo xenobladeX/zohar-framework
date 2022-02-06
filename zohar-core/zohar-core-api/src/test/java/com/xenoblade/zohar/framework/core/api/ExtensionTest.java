@@ -19,6 +19,7 @@ import com.xenoblade.zohar.framework.core.api.dto.BasicErrorCode;
 import com.xenoblade.zohar.framework.core.api.dto.IZoharErrorCode;
 import com.xenoblade.zohar.framework.core.api.extension.IExtension;
 import com.xenoblade.zohar.framework.core.api.extension.TestErrorCode;
+import com.xenoblade.zohar.framework.core.api.extension.TestExtensionFinderConfigurer;
 import com.xenoblade.zohar.framework.core.extension.*;
 import com.xenoblade.zohar.framework.core.extension.enumeration.ZoharEnumFactory;
 import org.junit.Assert;
@@ -43,13 +44,12 @@ public class ExtensionTest {
 
     @Before
     public void init() {
-        ExtensionFactory extensionFactory = new ZoharExtensionFactory();
-        ZoharExtensionFinder zoharExtensionFinder = new ZoharExtensionFinder(extensionFactory);
-        // add enum extension finder filter
-        zoharExtensionFinder.addFilter(new ZoharEnumExtensionFinderFilter());
-        MultipleExtensionFinder multipleExtensionFinder = new MultipleExtensionFinder();
-        multipleExtensionFinder.add(zoharExtensionFinder);
-        extensionFinder = zoharExtensionFinder;
+        extensionFinder = ExtensionFinderFactory.getExtensionFinder();
+    }
+
+    @Test
+    public void testExtensionFinderSPI() {
+        Assert.assertEquals(true, TestExtensionFinderConfigurer.isExecuted);
     }
 
     @Test

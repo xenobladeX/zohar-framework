@@ -29,7 +29,7 @@ import java.util.List;
  * @since 0.0.1
  */
 @ToString(callSuper = true)
-public class PageResponse<T> extends Response {
+public class PageResult<T> extends DTO {
 
     private static final long serialVersionUID = 6741837800137095266L;
 
@@ -39,41 +39,7 @@ public class PageResponse<T> extends Response {
 
     private int pageIndex = 1;
 
-    private Collection<T> data;
-
-    public static PageResponse ok() {
-        return PageResponse.error(BasicErrorCode.OK);
-    }
-
-    public static PageResponse error(IZoharErrorCode errorCodeEnum) {
-        PageResponse response = new PageResponse<>();
-        response.withErrorCodeEnum(errorCodeEnum);
-        return response;
-    }
-
-    public static PageResponse error(IZoharErrorCode errorCodeEnum, String errMessage) {
-        PageResponse response = PageResponse.error(errorCodeEnum);
-        response.setErrMessage(errMessage);
-        return response;
-    }
-
-    public static <T> PageResponse<T> of(int pageSize, int pageIndex) {
-        PageResponse<T> response = PageResponse.ok();
-        response.setData(Collections.emptyList());
-        response.setTotalCount(0);
-        response.setPageSize(pageSize);
-        response.setPageIndex(pageIndex);
-        return response;
-    }
-
-    public static <T> PageResponse<T> of(Collection<T> data, int totalCount, int pageSize, int pageIndex) {
-        PageResponse<T> response = PageResponse.ok();
-        response.setData(data);
-        response.setTotalCount(totalCount);
-        response.setPageSize(pageSize);
-        response.setPageIndex(pageIndex);
-        return response;
-    }
+    private Collection<T> result;
 
     public int getTotalCount() {
         return totalCount;
@@ -113,12 +79,12 @@ public class PageResponse<T> extends Response {
         }
     }
 
-    public List<T> getData() {
-        return null == data ? Collections.emptyList() : new ArrayList<>(data);
+    public List<T> getResult() {
+        return null == result ? Collections.emptyList() : new ArrayList<>(result);
     }
 
-    public void setData(Collection<T> data) {
-        this.data = data;
+    public void setResult(Collection<T> result) {
+        this.result = result;
     }
 
     public int getTotalPages() {
@@ -127,7 +93,7 @@ public class PageResponse<T> extends Response {
     }
 
     public boolean isEmpty() {
-        return data == null || data.isEmpty();
+        return result == null || result.isEmpty();
     }
 
     public boolean isNotEmpty() {

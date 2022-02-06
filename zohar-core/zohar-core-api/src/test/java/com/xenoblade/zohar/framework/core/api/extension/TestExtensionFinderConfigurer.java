@@ -13,28 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.core.boot.extension;
+package com.xenoblade.zohar.framework.core.api.extension;
 
-import com.xenoblade.zohar.framework.core.boot.launcher.ApplicationLauncher;
-import com.xenoblade.zohar.framework.core.extension.Extension;
 import com.xenoblade.zohar.framework.core.extension.ExtensionFinder;
-import com.xenoblade.zohar.framework.core.extension.ZoharExtensionFinder;
+import com.xenoblade.zohar.framework.core.extension.ExtensionFinderConfigurer;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ConfigurableApplicationContext;
 
 /**
- * TestApplicationLauncher
+ * TestExtensionFinderConfigurer
  *
  * @author xenoblade
  * @since 0.0.1
  */
-@Extension
 @Slf4j
-public class TestApplicationLauncher implements ApplicationLauncher {
+public class TestExtensionFinderConfigurer implements ExtensionFinderConfigurer {
 
+    public static Boolean isExecuted = false;
 
     @Override
-    public void launcher(ConfigurableApplicationContext context, ExtensionFinder extensionFinder) {
-        log.info("Launch TestApplicationLauncher");
+    public void customExtensionFinder(ExtensionFinder extensionFinder) {
+        log.info("custom extension finder {}", extensionFinder);
+        isExecuted = true;
+    }
+
+    @Override
+    public int order() {
+        return 1;
     }
 }

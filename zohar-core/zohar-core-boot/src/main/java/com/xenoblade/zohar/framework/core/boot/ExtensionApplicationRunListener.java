@@ -42,7 +42,7 @@ public class ExtensionApplicationRunListener implements SpringApplicationRunList
     private ExtensionFinder extensionFinder;
 
     public ExtensionApplicationRunListener(SpringApplication application, String[]  args){
-        this.extensionFinder = customExtensionFinder();
+        this.extensionFinder = ExtensionFinderFactory.getExtensionFinder();
     }
 
     @Override
@@ -70,34 +70,24 @@ public class ExtensionApplicationRunListener implements SpringApplicationRunList
         context.getBeanFactory().registerSingleton(extensionFinderBeanName, this.extensionFinder);
         // extension load launcher
         this.extensionFinder.find(ApplicationLauncher.class).forEach(extensionWrapper -> {
-            extensionWrapper.getExtension().launcher(context);
+            extensionWrapper.getExtension().launcher(context, this.extensionFinder);
         });
 
     }
 
     @Override
     public void contextLoaded(ConfigurableApplicationContext context) {
-        log.info("application contextLoaded");
+
     }
 
     @Override
     public void started(ConfigurableApplicationContext context, Duration timeTaken) {
-        log.info("application started");
+
     }
 
     @Override
     public void failed(ConfigurableApplicationContext context, Throwable exception) {
 
-    }
-
-    protected ExtensionFinder customExtensionFinder() {
-        ExtensionFactory zoharExtensionFactory = new ZoharExtensionFactory();
-        ZoharExtensionFinder zoharExtensionFinder = new ZoharExtensionFinder(zoharExtensionFactory);
-        // add enum extension finder filter
-        zoharExtensionFinder.addFilter(new ZoharEnumExtensionFinderFilter());
-        MultipleExtensionFinder multipleExtensionFinder = new MultipleExtensionFinder();
-        multipleExtensionFinder.add(zoharExtensionFinder);
-        return zoharExtensionFinder;
     }
     
 }

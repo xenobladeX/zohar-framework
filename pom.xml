@@ -41,6 +41,7 @@
         <module>zohar-framework-parent</module>
         <module>zohar-core</module>
         <module>zohar-tool</module>
+        <module>zohar-db</module>
     </modules>
 
     <build>

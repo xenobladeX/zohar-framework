@@ -13,20 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.core.boot.launcher;
+package com.xenoblade.zohar.framework.tool.bean;
 
-import com.xenoblade.zohar.framework.core.extension.ExtensionFinder;
-import com.xenoblade.zohar.framework.core.extension.ExtensionPoint;
-import org.springframework.context.ConfigurableApplicationContext;
+import java.io.Serializable;
 
 /**
- * ApplicationLauncher
+ * TestNull
  *
  * @author xenoblade
  * @since 0.0.1
  */
-public interface ApplicationLauncher extends ExtensionPoint {
+public class TestNullBean implements Serializable {
 
-    void launcher(ConfigurableApplicationContext context, ExtensionFinder extensionFinder);
+    private static final long serialVersionUID = -2658019832243816331L;
 
+    private String aNull;
+
+    private String aNotNull = "not null";
+
+    public String getaNotNull() {
+        return aNotNull;
+    }
+
+    public String getaNull() {
+        return aNull;
+    }
+
+    public void setaNotNull(String aNotNull) {
+        this.aNotNull = aNotNull;
+    }
+
+    public void setaNull(String aNull) {
+        this.aNull = aNull;
+    }
 }

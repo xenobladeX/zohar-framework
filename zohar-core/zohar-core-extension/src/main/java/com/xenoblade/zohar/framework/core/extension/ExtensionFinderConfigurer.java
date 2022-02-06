@@ -13,20 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.core.boot.launcher;
-
-import com.xenoblade.zohar.framework.core.extension.ExtensionFinder;
-import com.xenoblade.zohar.framework.core.extension.ExtensionPoint;
-import org.springframework.context.ConfigurableApplicationContext;
+package com.xenoblade.zohar.framework.core.extension;
 
 /**
- * ApplicationLauncher
+ * ExtensionFinderConfiguer
  *
  * @author xenoblade
  * @since 0.0.1
  */
-public interface ApplicationLauncher extends ExtensionPoint {
+public interface ExtensionFinderConfigurer {
 
-    void launcher(ConfigurableApplicationContext context, ExtensionFinder extensionFinder);
+    /**
+     *
+     * @param extensionFinder
+     * @return
+     */
+    void customExtensionFinder(ExtensionFinder extensionFinder);
+
+    int order();
+
 
 }

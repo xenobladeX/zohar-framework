@@ -1,5 +1,7 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.xenoblade.zohar.framework.core.boot.config.ZoharAutoConfiguration
+  com.xenoblade.zohar.framework.core.boot.config.ZoharAutoConfiguration,\
+  com.xenoblade.zohar.framework.core.boot.config.JacksonConfiguration,\
+  com.xenoblade.zohar.framework.core.boot.config.ValidationAutoConfiguration
 
 org.springframework.boot.SpringApplicationRunListener=\
  com.xenoblade.zohar.framework.core.boot.ExtensionApplicationRunListener

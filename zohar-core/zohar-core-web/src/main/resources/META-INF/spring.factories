@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.xenoblade.zohar.framework.core.web.config.WebJacksonConfiguration,\
+  com.xenoblade.zohar.framework.core.web.config.ZoharWebAutoConfiguration

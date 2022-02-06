@@ -18,7 +18,7 @@ package com.xenoblade.zohar.framework.core.api;
 import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.xenoblade.zohar.framework.core.api.dto.SingleResponse;
+import com.xenoblade.zohar.framework.core.api.dto.Response;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -36,7 +36,7 @@ public class DTOTest {
 
     @Test
     public void testSerialResponseByJackson() throws Exception{
-        SingleResponse<String> response = SingleResponse.of("test");
+        Response<String> response = Response.of("test");
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setConfig(objectMapper.getSerializationConfig()
                 .with(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY));
@@ -47,7 +47,7 @@ public class DTOTest {
 
     @Test
     public void testSerialResponseByFastJson() {
-        SingleResponse<String> response = SingleResponse.of("test");
+        Response<String> response = Response.of("test");
         String json = JSON.toJSONString(response);
         Assert.assertEquals("{\"data\":\"test\",\"errCode\":100000,\"errMessage\":\"OK\"}", json);
     }

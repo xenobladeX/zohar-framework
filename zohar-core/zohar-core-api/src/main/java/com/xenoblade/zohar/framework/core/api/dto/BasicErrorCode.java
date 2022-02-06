@@ -28,7 +28,23 @@ public enum BasicErrorCode implements IZoharErrorCode {
 
     OK(100000, "OK"),
     INNER_ERROR(100001, "Inner Error"),
-    FILE_READ_FAILED(10002, "File Read Failed");
+    FILE_READ_FAILED(100002, "File Read Failed"),
+    JASON_PROCESS_ERROR(100003, "Jason Processed Error"),
+    NOT_FOUND(100004, "Not Found"),
+    METHOD_NOT_ALLOWED(100005, "Method Not Allowd"),
+    MEDIA_TYPE_NOT_SUPPORTED(100006, "Media Type Not Supported"),
+    MEDIA_TYPE_NOT_ACCEPTABLE(100007, "Media Type Not acceptable"),
+    BAD_REQUEST(100008, "Bad Reqeust"),
+    TYPE_MISMATCH(100009, "Type Mismatch"),
+    SERVICE_UNAVAILABLE(100010, "Sevice Unavailable"),
+
+    PARAM_MISS(100100, "Param is missed"),
+    PARAM_NOT_VALID(100101, "Param Not Valid"),
+
+
+
+
+    BASIC_MAX(100999, "Basic Error Max");
 
 
     private Integer code;

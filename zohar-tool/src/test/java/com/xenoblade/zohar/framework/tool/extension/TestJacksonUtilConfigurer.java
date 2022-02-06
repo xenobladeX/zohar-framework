@@ -13,28 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xenoblade.zohar.framework.core.boot.extension;
+package com.xenoblade.zohar.framework.tool.extension;
 
-import com.xenoblade.zohar.framework.core.boot.launcher.ApplicationLauncher;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xenoblade.zohar.framework.core.extension.Extension;
-import com.xenoblade.zohar.framework.core.extension.ExtensionFinder;
-import com.xenoblade.zohar.framework.core.extension.ZoharExtensionFinder;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ConfigurableApplicationContext;
+import com.xenoblade.zohar.framework.tool.jackson.JacksonUtilConfigurer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * TestApplicationLauncher
+ * TestJacksonUtilConfigurer
  *
  * @author xenoblade
  * @since 0.0.1
  */
 @Extension
-@Slf4j
-public class TestApplicationLauncher implements ApplicationLauncher {
+public class TestJacksonUtilConfigurer implements JacksonUtilConfigurer {
 
+    private Logger logger = LoggerFactory.getLogger(TestJacksonUtilConfigurer.class);
+
+    public static Boolean isExecuted = false;
 
     @Override
-    public void launcher(ConfigurableApplicationContext context, ExtensionFinder extensionFinder) {
-        log.info("Launch TestApplicationLauncher");
+    public void customObjectMapper(ObjectMapper objectMapper) {
+        logger.info("custom objectMapper {}", objectMapper);
+        isExecuted = true;
+    }
+
+    @Override
+    public int order() {
+        return 1;
     }
 }
