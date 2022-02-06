@@ -1,5 +1,5 @@
 spring:
   application:
-    name: &appName zohar-core-web-test
+    name: &appName zohar-core-web
   profiles:
     active: test

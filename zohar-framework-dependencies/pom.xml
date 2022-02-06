@@ -54,6 +54,7 @@
 
         <!-- database lib-->
         <fluent-mybatis.version>1.8.7</fluent-mybatis.version>
+        <mybatis-spring-boot-starter.version>2.2.1</mybatis-spring-boot-starter.version>
 
         <!--test-->
         <powermock.version>2.0.2</powermock.version>
@@ -246,6 +247,23 @@
 
         <!-- database -->
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+            <version>${spring-boot.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.zaxxer</groupId>
+                    <artifactId>HikariCP</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>${mybatis-spring-boot-starter.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.github.atool</groupId>
             <artifactId>fluent-mybatis</artifactId>
             <version>${fluent-mybatis.version}</version>
@@ -253,7 +271,6 @@
         <dependency>
             <groupId>com.github.atool</groupId>
             <artifactId>fluent-mybatis-processor</artifactId>
-            <scope>provided</scope>
             <version>${fluent-mybatis.version}</version>
         </dependency>
 

@@ -15,12 +15,10 @@
  */
 package com.xenoblade.zohar.framework.core.web.bean;
 
-import cn.hutool.core.util.StrUtil;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
