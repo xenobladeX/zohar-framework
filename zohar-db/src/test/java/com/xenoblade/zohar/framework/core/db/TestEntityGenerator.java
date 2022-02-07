@@ -38,7 +38,8 @@ public class TestEntityGenerator {
 
     @Test
     public void generate() throws Exception {
-        // 引用配置类，build方法允许有多个配置类
+//        new FileGenerator().useJSR310Types()
+//                .with(Empty.class).generate();
         FileGenerator.build(Empty.class);
     }
 
@@ -51,6 +52,7 @@ public class TestEntityGenerator {
             basePack = "com.xenoblade.zohar.framework.core.db",
             // 设置dao接口和实现的src目录, 相对于 user.dir
             daoDir = "src/test/java",
+//            isLombok = false,
             // 设置哪些表要生成Entity文件
             tables = {@Table(value = {"hello_world"})}
     )

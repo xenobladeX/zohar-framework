@@ -16,7 +16,6 @@
 package com.xenoblade.zohar.framework.core.db;
 
 import cn.org.atool.fluent.mybatis.spring.MapperFactory;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -28,7 +27,6 @@ import org.springframework.context.annotation.Bean;
  * @since 0.0.1
  */
 @SpringBootApplication
-//@MapperScan({"com.xenoblade.zohar.framework.core.db.mapper"})
 public class TestApplication {
 
     public static void main(String[] args) {
