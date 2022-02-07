@@ -53,7 +53,7 @@
         <ttl.version>2.12.4</ttl.version>
 
         <!-- database lib-->
-        <fluent-mybatis.version>1.9.3</fluent-mybatis.version>
+        <fluent-mybatis.version>1.9.4</fluent-mybatis.version>
         <mybatis-spring-boot-starter.version>2.2.1</mybatis-spring-boot-starter.version>
 
         <!--test-->

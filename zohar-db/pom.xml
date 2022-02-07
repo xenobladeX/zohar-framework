@@ -26,7 +26,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-<!--            <version>1.18.20</version>-->
             <scope>provided</scope>
         </dependency>
 
@@ -83,7 +82,7 @@
                         <path>
                             <groupId>com.github.atool</groupId>
                             <artifactId>fluent-mybatis-processor</artifactId>
-                            <version>1.9.3</version>
+                            <version>1.9.4</version>
                         </path>
                         <path>
                             <groupId>com.xenoblade</groupId>

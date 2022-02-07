@@ -38,9 +38,8 @@ public class TestEntityGenerator {
 
     @Test
     public void generate() throws Exception {
-//        new FileGenerator().useJSR310Types()
-//                .with(Empty.class).generate();
-        FileGenerator.build(Empty.class);
+        new FileGenerator().useJSR310Types()
+                .with(Empty.class).generate();
     }
 
     @Tables(
