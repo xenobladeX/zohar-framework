@@ -5,13 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.xenoblade</groupId>
+        <groupId>org.zohar</groupId>
         <artifactId>zohar-framework-dependencies</artifactId>
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../zohar-framework-dependencies</relativePath>
     </parent>
 
-    <groupId>com.xenoblade</groupId>
+    <groupId>org.zohar</groupId>
     <artifactId>zohar-framework-parent</artifactId>
     <name>Zohar Framework Parent</name>
     <packaging>pom</packaging>

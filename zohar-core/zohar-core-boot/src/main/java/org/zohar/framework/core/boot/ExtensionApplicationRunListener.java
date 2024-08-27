@@ -1,0 +1,97 @@
+/*
+ * Copyright [2022] [xenoblade]
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.zohar.framework.core.boot;
+
+import cn.hutool.core.util.ClassUtil;
+import cn.hutool.core.util.StrUtil;
+import org.zohar.framework.core.boot.extension.SpringExtensionCreator;
+import org.zohar.framework.core.boot.launcher.ApplicationLauncher;
+import com.xenoblade.zohar.framework.core.extension.*;
+import org.zohar.framework.core.extension.plugin.finder.ExtensionFinder;
+import org.zohar.framework.core.extension.plugin.finder.ExtensionFinderFactory;
+import org.zohar.framework.core.extension.plugin.creator.CompoundCreatorExtensionFactory;
+import org.zohar.framework.core.extension.ZoharExtensionFinder;
+import org.zohar.framework.core.extension.api.IEnum;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.ConfigurableBootstrapContext;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.SpringApplicationRunListener;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.env.ConfigurableEnvironment;
+
+import java.time.Duration;
+
+/**
+ * ExtensionApplicationRunListener
+ *
+ * @author xenoblade
+ * @since 0.0.1
+ */
+@Slf4j
+public class ExtensionApplicationRunListener implements SpringApplicationRunListener {
+
+    private ExtensionFinder extensionFinder;
+
+    public ExtensionApplicationRunListener(SpringApplication application, String[]  args){
+        this.extensionFinder = ExtensionFinderFactory.getExtensionFinder();
+    }
+
+    @Override
+    public void starting(ConfigurableBootstrapContext bootstrapContext) {
+
+    }
+
+    @Override
+    public void environmentPrepared(ConfigurableBootstrapContext bootstrapContext, ConfigurableEnvironment environment) {
+        // extension load zohar enums
+        this.extensionFinder.find(IEnum.class);
+    }
+
+    @Override
+    public void contextPrepared(ConfigurableApplicationContext context) {
+        // add SpringExtensionCreator
+        if (!(this.extensionFinder instanceof ZoharExtensionFinder)) {
+            throw new RuntimeException("extensionFinder must be ZoharExtensionFinder");
+        }
+        ZoharExtensionFinder zoharExtensionFinder = (ZoharExtensionFinder)this.extensionFinder;
+        CompoundCreatorExtensionFactory zoharExtensionFactory = (CompoundCreatorExtensionFactory)zoharExtensionFinder.getExtensionFactory();
+        zoharExtensionFactory.addCreator(new SpringExtensionCreator(context));
+        // register extensionFinder to spring context
+        String extensionFinderBeanName = StrUtil.lowerFirst(ClassUtil.getClassName(this.extensionFinder.getClass(), true));
+        context.getBeanFactory().registerSingleton(extensionFinderBeanName, this.extensionFinder);
+        // extension load launcher
+        this.extensionFinder.find(ApplicationLauncher.class).forEach(extensionWrapper -> {
+            extensionWrapper.getExtension().launcher(context, this.extensionFinder);
+        });
+
+    }
+
+    @Override
+    public void contextLoaded(ConfigurableApplicationContext context) {
+
+    }
+
+    @Override
+    public void started(ConfigurableApplicationContext context, Duration timeTaken) {
+
+    }
+
+    @Override
+    public void failed(ConfigurableApplicationContext context, Throwable exception) {
+
+    }
+    
+}

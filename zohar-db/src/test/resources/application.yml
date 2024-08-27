@@ -1,11 +1,27 @@
 spring:
   application:
-    name: &appName zohar-core-db
+    name: &appName zohar-db
   profiles:
     active: test
 
-  datasource:
-    url: jdbc:mysql://localhost:3306/fluent_mybatis?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
-    username: root
-    password: 123456
-    driver-class-name: com.mysql.cj.jdbc.Driver
+# DataSource Config
+
+  shardingsphere:
+    datasource:
+      names: ds_0
+      ds_0:
+        type: com.zaxxer.hikari.HikariDataSource
+        driverClassName: org.h2.Driver
+        jdbcUrl: jdbc:h2:mem:test_01;MODE=MySQL;DB_CLOSE_DELAY=-1;NON_KEYWORDS=USER;INIT=RUNSCRIPT FROM 'classpath:/db/h2-test01.sql'
+        username: root
+        password: test
+
+#      ds_1:
+#        type: com.zaxxer.hikari.HikariDataSource
+#        driverClassName: com.mysql.cj.jdbc.Driver
+#        jdbcUrl: jdbc:mysql://localhost:3306/demo_ds_1?serverTimezone=UTC&useSSL=false&useUnicode=true&characterEncoding=UTF-8
+#        username: root
+#        password:
+#    rules:
+#      sharding:
+#        tables:

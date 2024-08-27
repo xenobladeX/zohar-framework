@@ -1,1 +1,1 @@
-com.xenoblade.zohar.framework.core.extension.processor.ExtensionAnnotationProcessor
+org.zohar.framework.core.extension.processor.ExtensionAnnotationProcessor
