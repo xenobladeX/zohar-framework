@@ -15,8 +15,8 @@
  */
 package org.zohar.framework.core.plugin.test;
 
-import org.zohar.framework.core.plugin.Plugin;
-import org.zohar.framework.core.plugin.PluginWrapper;
+import org.zohar.framework.core.plugin.api.Plugin;
+import org.zohar.framework.core.plugin.api.model.PluginWrapper;
 
 /**
  * A simple {@link Plugin}.

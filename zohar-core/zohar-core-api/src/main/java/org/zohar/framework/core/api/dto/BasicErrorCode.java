@@ -16,7 +16,7 @@
 package org.zohar.framework.core.api.dto;
 
 
-import org.zohar.framework.core.plugin.api.Extension;
+import org.zohar.framework.core.plugin.api.extension.Extension;
 
 /**
  * BasicErrorCode

@@ -19,7 +19,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.zohar.framework.core.plugin.PluginManager;
+import org.zohar.framework.core.plugin.api.extension.ExtensionFactory;
+import org.zohar.framework.core.plugin.api.PluginManager;
 
 /**
  * An {@link ExtensionFactory} that always returns a specific instance.

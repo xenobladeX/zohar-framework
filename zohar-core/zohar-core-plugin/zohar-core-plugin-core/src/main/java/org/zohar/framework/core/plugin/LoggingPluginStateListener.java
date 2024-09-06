@@ -17,6 +17,8 @@ package org.zohar.framework.core.plugin;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.zohar.framework.core.plugin.api.model.PluginStateEvent;
+import org.zohar.framework.core.plugin.api.PluginStateListener;
 
 /**
  * It's an implementation of {@link PluginStateListener} that writes all events to logger (DEBUG level).

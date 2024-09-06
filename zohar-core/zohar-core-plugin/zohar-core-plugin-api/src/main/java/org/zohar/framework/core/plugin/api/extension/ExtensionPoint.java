@@ -1,5 +1,5 @@
 /*
- * Copyright [2024] [xenoblade]
+ * Copyright [2022] [xenoblade]
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,22 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.zohar.framework.core.plugin;
+package org.zohar.framework.core.plugin.api.extension;
 
 /**
- * It's responsible for creating a plugin instance.
+ * An plugin point is a formal declaration in a plugin (or in application API) where customization is allowed.
+ * It's a place where custom code can be "plugged in".
+ * <p>
+ * An plugin point is defined by an interface or an abstract class.
+ * The plugin point is used by the application to discover and use the custom implementations.
+ *
  * @author Decebal Suiu
- * @Date 2024/8/27
- * @since 0.0.1-SNAPSHOT
+ * @since 0.0.1
  */
-public interface PluginFactory {
-
-    /**
-     * Create a plugin instance.
-     *
-     * @param pluginWrapper the plugin wrapper
-     * @return a plugin instance
-     */
-    Plugin create(PluginWrapper pluginWrapper);
-
+public interface ExtensionPoint {
 }

@@ -13,9 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.zohar.framework.core.plugin;
+package org.zohar.framework.core.plugin.api.model;
 
 import java.nio.file.Path;
+import org.zohar.framework.core.plugin.api.Plugin;
+import org.zohar.framework.core.plugin.api.PluginFactory;
+import org.zohar.framework.core.plugin.api.PluginManager;
 
 /**
  * @author Decebal Suiu

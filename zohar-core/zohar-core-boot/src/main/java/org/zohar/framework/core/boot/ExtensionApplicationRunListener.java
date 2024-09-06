@@ -23,7 +23,7 @@ import org.zohar.framework.core.plugin.finder.ExtensionFinder;
 import org.zohar.framework.core.plugin.finder.ExtensionFinderFactory;
 import org.zohar.framework.core.plugin.creator.CompoundCreatorExtensionFactory;
 import org.zohar.framework.core.plugin.ZoharExtensionFinder;
-import org.zohar.framework.core.plugin.api.IEnum;
+import org.zohar.framework.core.plugin.api.extension.IEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ConfigurableBootstrapContext;
 import org.springframework.boot.SpringApplication;

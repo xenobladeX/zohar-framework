@@ -20,8 +20,8 @@ import java.util.Set;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.zohar.framework.core.plugin.PluginManager;
-import org.zohar.framework.core.plugin.PluginWrapper;
+import org.zohar.framework.core.plugin.api.PluginManager;
+import org.zohar.framework.core.plugin.api.model.PluginWrapper;
 import org.zohar.framework.core.plugin.example.api.Greeting;
 
 /**

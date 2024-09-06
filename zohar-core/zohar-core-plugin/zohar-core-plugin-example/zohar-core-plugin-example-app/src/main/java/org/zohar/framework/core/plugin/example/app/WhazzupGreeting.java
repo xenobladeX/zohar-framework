@@ -15,7 +15,7 @@
  */
 package org.zohar.framework.core.plugin.example.app;
 
-import org.zohar.framework.core.plugin.api.Extension;
+import org.zohar.framework.core.plugin.api.extension.Extension;
 import org.zohar.framework.core.plugin.example.api.Greeting;
 
 /**

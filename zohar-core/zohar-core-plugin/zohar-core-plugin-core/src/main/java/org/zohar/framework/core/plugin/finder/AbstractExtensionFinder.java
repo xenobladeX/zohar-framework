@@ -15,13 +15,13 @@
  */
 package org.zohar.framework.core.plugin.finder;
 
-import org.zohar.framework.core.plugin.api.Extension;
-import org.zohar.framework.core.plugin.PluginDependency;
-import org.zohar.framework.core.plugin.PluginManager;
-import org.zohar.framework.core.plugin.PluginStateEvent;
-import org.zohar.framework.core.plugin.PluginStateListener;
-import org.zohar.framework.core.plugin.PluginWrapper;
-import org.zohar.framework.core.plugin.RuntimeMode;
+import org.zohar.framework.core.plugin.api.extension.Extension;
+import org.zohar.framework.core.plugin.api.model.PluginDependency;
+import org.zohar.framework.core.plugin.api.PluginManager;
+import org.zohar.framework.core.plugin.api.model.PluginStateEvent;
+import org.zohar.framework.core.plugin.api.PluginStateListener;
+import org.zohar.framework.core.plugin.api.model.PluginWrapper;
+import org.zohar.framework.core.plugin.api.model.RuntimeMode;
 import org.zohar.framework.core.plugin.asm.ExtensionInfo;
 import org.zohar.framework.core.plugin.util.ClassUtils;
 import org.slf4j.Logger;

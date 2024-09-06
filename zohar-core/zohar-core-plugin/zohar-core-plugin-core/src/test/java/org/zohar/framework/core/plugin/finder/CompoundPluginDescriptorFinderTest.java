@@ -32,7 +32,7 @@ import java.util.Properties;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.zohar.framework.core.plugin.exception.PluginRuntimeException;
-import org.zohar.framework.core.plugin.PluginDescriptor;
+import org.zohar.framework.core.plugin.api.model.PluginDescriptor;
 import org.zohar.framework.core.plugin.test.PluginJar;
 import org.zohar.framework.core.plugin.test.PluginZip;
 import org.zohar.framework.core.plugin.test.TestPlugin;

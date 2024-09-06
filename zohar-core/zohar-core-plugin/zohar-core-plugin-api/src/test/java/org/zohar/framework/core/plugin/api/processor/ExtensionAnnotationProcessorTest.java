@@ -42,7 +42,7 @@ public class ExtensionAnnotationProcessorTest {
 
     public static final JavaFileObject WhazzupGreeting_NoExtensionPoint = JavaFileObjects.forSourceLines("WhazzupGreeting",
             "package test;",
-            "import org.zohar.framework.core.plugin.api.Extension;",
+            "import org.zohar.framework.core.plugin.api.extension.Extension;",
             "",
             "@Extension",
             "public class WhazzupGreeting {",
@@ -55,7 +55,7 @@ public class ExtensionAnnotationProcessorTest {
     public static final JavaFileObject SpinnakerExtension = JavaFileObjects.forSourceLines("SpinnakerExtension",
             "package test;",
             "",
-            "import org.zohar.framework.core.plugin.api.Extension;",
+            "import org.zohar.framework.core.plugin.api.extension.Extension;",
             "import java.lang.annotation.Documented;",
             "import java.lang.annotation.ElementType;",
             "import java.lang.annotation.Retention;",

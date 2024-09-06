@@ -15,7 +15,7 @@
  */
 package org.zohar.framework.core.plugin.loader;
 
-import org.zohar.framework.core.plugin.PluginManager;
+import org.zohar.framework.core.plugin.api.PluginManager;
 
 /**
  * Load all information needed by a plugin from {@link DevelopmentPluginClasspath}.

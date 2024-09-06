@@ -19,8 +19,8 @@ import java.lang.reflect.Constructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.zohar.framework.core.plugin.DefaultPluginFactory;
-import org.zohar.framework.core.plugin.Plugin;
-import org.zohar.framework.core.plugin.PluginWrapper;
+import org.zohar.framework.core.plugin.api.Plugin;
+import org.zohar.framework.core.plugin.api.model.PluginWrapper;
 import org.zohar.framework.core.plugin.example.api.PluginContext;
 
 /**

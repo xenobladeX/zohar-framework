@@ -23,8 +23,7 @@ import java.nio.file.Path;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.zohar.framework.core.plugin.DefaultPluginManager;
-import org.zohar.framework.core.plugin.PluginDependency;
+import org.zohar.framework.core.plugin.api.model.PluginDependency;
 import org.zohar.framework.core.plugin.test.PluginZip;
 
 /**

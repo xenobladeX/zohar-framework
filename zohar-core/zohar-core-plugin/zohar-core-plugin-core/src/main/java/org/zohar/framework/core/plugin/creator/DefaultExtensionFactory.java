@@ -17,6 +17,7 @@ package org.zohar.framework.core.plugin.creator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.zohar.framework.core.plugin.api.extension.ExtensionFactory;
 import org.zohar.framework.core.plugin.exception.PluginRuntimeException;
 
 /**

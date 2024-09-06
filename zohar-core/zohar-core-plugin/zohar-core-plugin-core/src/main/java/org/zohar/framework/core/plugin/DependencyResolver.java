@@ -22,6 +22,9 @@ import java.util.List;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.zohar.framework.core.plugin.api.model.PluginDependency;
+import org.zohar.framework.core.plugin.api.model.PluginDescriptor;
+import org.zohar.framework.core.plugin.api.VersionManager;
 import org.zohar.framework.core.plugin.exception.PluginRuntimeException;
 import org.zohar.framework.core.plugin.util.DirectedGraph;
 

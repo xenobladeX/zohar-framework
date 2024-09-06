@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.io.TempDir;
 import org.zohar.framework.core.plugin.JarPluginManager;
-import org.zohar.framework.core.plugin.PluginManager;
+import org.zohar.framework.core.plugin.api.PluginManager;
 import org.zohar.framework.core.plugin.test.PluginJar;
 import org.zohar.framework.core.plugin.test.TestExtension;
 import org.zohar.framework.core.plugin.test.TestPlugin;

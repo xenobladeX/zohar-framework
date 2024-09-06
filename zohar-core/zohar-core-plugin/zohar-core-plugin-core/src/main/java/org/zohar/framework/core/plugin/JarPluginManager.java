@@ -16,6 +16,7 @@
 package org.zohar.framework.core.plugin;
 
 import java.nio.file.Path;
+import org.zohar.framework.core.plugin.api.PluginManager;
 import org.zohar.framework.core.plugin.finder.ManifestPluginDescriptorFinder;
 import org.zohar.framework.core.plugin.finder.PluginDescriptorFinder;
 import org.zohar.framework.core.plugin.loader.CompoundPluginLoader;

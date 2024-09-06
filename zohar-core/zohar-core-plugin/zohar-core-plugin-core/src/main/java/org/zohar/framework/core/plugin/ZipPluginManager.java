@@ -15,6 +15,7 @@
  */
 package org.zohar.framework.core.plugin;
 
+import org.zohar.framework.core.plugin.api.PluginManager;
 import org.zohar.framework.core.plugin.finder.PluginDescriptorFinder;
 import org.zohar.framework.core.plugin.finder.PropertiesPluginDescriptorFinder;
 import org.zohar.framework.core.plugin.loader.CompoundPluginLoader;

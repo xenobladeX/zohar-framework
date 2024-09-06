@@ -15,7 +15,7 @@
  */
 package org.zohar.framework.core.plugin.finder;
 
-import org.zohar.framework.core.plugin.creator.ExtensionFactory;
+import org.zohar.framework.core.plugin.api.extension.ExtensionFactory;
 
 /**
  * A wrapper over plugin instance.

@@ -15,6 +15,7 @@
  */
 package org.zohar.framework.core.plugin;
 
+import org.zohar.framework.core.plugin.api.model.PluginState;
 import org.zohar.framework.core.plugin.exception.PluginRuntimeException;
 
 /**

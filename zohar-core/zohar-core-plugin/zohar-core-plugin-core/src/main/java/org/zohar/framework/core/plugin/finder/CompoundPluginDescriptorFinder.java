@@ -21,7 +21,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.zohar.framework.core.plugin.exception.PluginRuntimeException;
-import org.zohar.framework.core.plugin.PluginDescriptor;
+import org.zohar.framework.core.plugin.api.model.PluginDescriptor;
 
 /**
  * @author Decebal Suiu

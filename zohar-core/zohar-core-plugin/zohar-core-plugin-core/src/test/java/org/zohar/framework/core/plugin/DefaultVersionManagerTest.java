@@ -24,8 +24,7 @@ import com.github.zafarkhaja.semver.ParseException;
 import com.github.zafarkhaja.semver.expr.LexerException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.zohar.framework.core.plugin.DefaultVersionManager;
-import org.zohar.framework.core.plugin.VersionManager;
+import org.zohar.framework.core.plugin.api.VersionManager;
 
 /**
  * @author Decebal Suiu

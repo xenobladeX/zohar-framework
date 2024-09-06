@@ -17,7 +17,7 @@ package org.zohar.framework.core.plugin.loader;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import org.zohar.framework.core.plugin.PluginManager;
+import org.zohar.framework.core.plugin.api.PluginManager;
 
 /**
  * Load all information needed by a plugin from {@link DefaultPluginClasspath}.

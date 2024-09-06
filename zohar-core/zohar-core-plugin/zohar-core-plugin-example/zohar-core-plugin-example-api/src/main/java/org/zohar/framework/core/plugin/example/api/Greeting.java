@@ -15,7 +15,7 @@
  */
 package org.zohar.framework.core.plugin.example.api;
 
-import org.zohar.framework.core.plugin.api.ExtensionPoint;
+import org.zohar.framework.core.plugin.api.extension.ExtensionPoint;
 
 /**
  * @author xenoblade

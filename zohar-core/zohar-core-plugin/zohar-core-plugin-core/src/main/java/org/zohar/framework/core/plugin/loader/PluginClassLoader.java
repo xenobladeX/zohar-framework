@@ -28,9 +28,9 @@ import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.zohar.framework.core.plugin.finder.LegacyExtensionFinder;
-import org.zohar.framework.core.plugin.PluginDependency;
-import org.zohar.framework.core.plugin.PluginDescriptor;
-import org.zohar.framework.core.plugin.PluginManager;
+import org.zohar.framework.core.plugin.api.model.PluginDependency;
+import org.zohar.framework.core.plugin.api.model.PluginDescriptor;
+import org.zohar.framework.core.plugin.api.PluginManager;
 
 /**
  * One instance of this class should be created for every available plug-in.

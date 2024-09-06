@@ -23,6 +23,7 @@ import javax.tools.JavaFileObject;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.zohar.framework.core.plugin.api.extension.ExtensionFactory;
 import org.zohar.framework.core.plugin.exception.PluginRuntimeException;
 import org.zohar.framework.core.plugin.test.JavaFileObjectClassLoader;
 import org.zohar.framework.core.plugin.test.JavaSources;
@@ -37,7 +38,7 @@ public class DefaultExtensionFactoryTest {
 
     public static final JavaFileObject FailTestExtension = JavaFileObjects.forSourceLines("FailTestExtension",
             "package test;",
-            "import org.zohar.framework.core.plugin.api.Extension;",
+            "import org.zohar.framework.core.plugin.api.extension.Extension;",
             "import org.zohar.framework.core.plugin.test.TestExtensionPoint;",
             "",
             "@Extension",

@@ -15,7 +15,7 @@
  */
 package org.zohar.framework.core.plugin.enumeration;
 
-import org.zohar.framework.core.plugin.api.IEnum;
+import org.zohar.framework.core.plugin.api.extension.IEnum;
 
 /**
  * EnumFactory

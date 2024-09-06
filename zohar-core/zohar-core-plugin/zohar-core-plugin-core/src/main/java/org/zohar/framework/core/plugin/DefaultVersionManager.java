@@ -16,6 +16,7 @@
 package org.zohar.framework.core.plugin;
 
 import com.github.zafarkhaja.semver.Version;
+import org.zohar.framework.core.plugin.api.VersionManager;
 import org.zohar.framework.core.plugin.util.StringUtils;
 
 /**

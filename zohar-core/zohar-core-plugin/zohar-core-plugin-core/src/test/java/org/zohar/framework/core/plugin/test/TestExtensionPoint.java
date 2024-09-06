@@ -15,7 +15,7 @@
  */
 package org.zohar.framework.core.plugin.test;
 
-import org.zohar.framework.core.plugin.api.ExtensionPoint;
+import org.zohar.framework.core.plugin.api.extension.ExtensionPoint;
 
 /**
  * A simple {@link ExtensionPoint} that contains one method ({@link #saySomething()}).

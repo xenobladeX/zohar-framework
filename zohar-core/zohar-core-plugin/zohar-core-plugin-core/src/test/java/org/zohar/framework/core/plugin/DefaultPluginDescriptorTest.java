@@ -20,8 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import org.zohar.framework.core.plugin.DefaultPluginDescriptor;
-import org.zohar.framework.core.plugin.PluginDependency;
+import org.zohar.framework.core.plugin.api.model.PluginDependency;
 
 /**
  * @author Decebal Suiu

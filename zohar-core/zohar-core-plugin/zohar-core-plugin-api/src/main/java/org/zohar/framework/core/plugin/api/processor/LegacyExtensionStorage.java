@@ -15,7 +15,7 @@
  */
 package org.zohar.framework.core.plugin.api.processor;
 
-import org.zohar.framework.core.plugin.api.Extension;
+import org.zohar.framework.core.plugin.api.extension.Extension;
 
 import javax.annotation.processing.FilerException;
 import javax.tools.FileObject;

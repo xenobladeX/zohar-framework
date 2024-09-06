@@ -15,7 +15,7 @@
  */
 package org.zohar.framework.core.api.extension;
 
-import org.zohar.framework.core.plugin.api.Extension;
+import org.zohar.framework.core.plugin.api.extension.Extension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -15,7 +15,7 @@
  */
 package org.zohar.framework.core.plugin.loader;
 
-import org.zohar.framework.core.plugin.RuntimeMode;
+import org.zohar.framework.core.plugin.api.model.RuntimeMode;
 
 /**
  * It's a compound {@link PluginClasspath} ({@link #MAVEN} + {@link #GRADLE} + {@link #KOTLIN})

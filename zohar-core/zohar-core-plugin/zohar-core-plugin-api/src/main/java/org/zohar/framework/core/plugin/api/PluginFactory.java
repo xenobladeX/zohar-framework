@@ -1,5 +1,5 @@
 /*
- * Copyright [2022] [xenoblade]
+ * Copyright [2024] [xenoblade]
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,19 +15,22 @@
  */
 package org.zohar.framework.core.plugin.api;
 
-import java.io.Serializable;
+import org.zohar.framework.core.plugin.api.model.PluginWrapper;
 
 /**
- * An interface to simulate enum
- *
+ * It's responsible for creating a plugin instance.
  * @author Decebal Suiu
- * @since 0.0.1
+ * @Date 2024/8/27
+ * @since 0.0.1-SNAPSHOT
  */
-public interface IEnum<T extends Comparable> extends ExtensionPoint, Serializable {
+public interface PluginFactory {
 
-    int ordinal();
+    /**
+     * Create a plugin instance.
+     *
+     * @param pluginWrapper the plugin wrapper
+     * @return a plugin instance
+     */
+    Plugin create(PluginWrapper pluginWrapper);
 
-    String name();
-
-    T value();
 }

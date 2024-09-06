@@ -13,16 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.zohar.framework.core.plugin.creator;
+package org.zohar.framework.core.plugin.api.extension;
+
+import java.io.Serializable;
+import org.zohar.framework.core.plugin.api.extension.ExtensionPoint;
 
 /**
- * Creates an plugin instance.
+ * An interface to simulate enum
  *
  * @author Decebal Suiu
  * @since 0.0.1
  */
-public interface ExtensionFactory {
+public interface IEnum<T extends Comparable> extends ExtensionPoint, Serializable {
 
-    <T> T create(Class<T> extensionClass);
+    int ordinal();
 
+    String name();
+
+    T value();
 }

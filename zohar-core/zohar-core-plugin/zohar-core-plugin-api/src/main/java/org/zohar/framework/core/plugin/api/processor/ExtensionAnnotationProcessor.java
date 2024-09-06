@@ -15,8 +15,8 @@
  */
 package org.zohar.framework.core.plugin.api.processor;
 
-import org.zohar.framework.core.plugin.api.Extension;
-import org.zohar.framework.core.plugin.api.ExtensionPoint;
+import org.zohar.framework.core.plugin.api.extension.Extension;
+import org.zohar.framework.core.plugin.api.extension.ExtensionPoint;
 
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
@@ -43,7 +43,7 @@ import org.zohar.framework.core.plugin.api.util.ClassUtils;
  */
 @SuppressWarnings({"rawtypes", "unchecked"})
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
-@SupportedAnnotationTypes("org.zohar.framework.core.plugin.api.Extension")
+@SupportedAnnotationTypes("org.zohar.framework.core.plugin.api.extension.Extension")
 public class ExtensionAnnotationProcessor extends AbstractProcessor {
 
     private static final String STORAGE_CLASS_NAME = "pf4j.storageClassName";

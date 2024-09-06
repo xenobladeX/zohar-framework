@@ -32,8 +32,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.zohar.framework.core.plugin.exception.PluginRuntimeException;
 import org.zohar.framework.core.plugin.DefaultVersionManager;
-import org.zohar.framework.core.plugin.PluginDescriptor;
-import org.zohar.framework.core.plugin.VersionManager;
+import org.zohar.framework.core.plugin.api.model.PluginDescriptor;
+import org.zohar.framework.core.plugin.api.VersionManager;
 import org.zohar.framework.core.plugin.test.PluginJar;
 
 /**

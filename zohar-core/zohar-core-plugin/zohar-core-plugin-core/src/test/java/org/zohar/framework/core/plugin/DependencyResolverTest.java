@@ -24,11 +24,8 @@ import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.zohar.framework.core.plugin.DefaultPluginDescriptor;
-import org.zohar.framework.core.plugin.DefaultVersionManager;
-import org.zohar.framework.core.plugin.DependencyResolver;
-import org.zohar.framework.core.plugin.PluginDescriptor;
-import org.zohar.framework.core.plugin.VersionManager;
+import org.zohar.framework.core.plugin.api.model.PluginDescriptor;
+import org.zohar.framework.core.plugin.api.VersionManager;
 
 /**
  * @author Decebal Suiu

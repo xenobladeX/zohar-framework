@@ -26,11 +26,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.google.testing.compile.JavaFileObjects;
 import javax.tools.JavaFileObject;
 import org.junit.jupiter.api.Test;
-import org.zohar.framework.core.plugin.DefaultPluginFactory;
-import org.zohar.framework.core.plugin.Plugin;
-import org.zohar.framework.core.plugin.PluginDescriptor;
-import org.zohar.framework.core.plugin.PluginFactory;
-import org.zohar.framework.core.plugin.PluginWrapper;
+import org.zohar.framework.core.plugin.api.Plugin;
+import org.zohar.framework.core.plugin.api.model.PluginDescriptor;
+import org.zohar.framework.core.plugin.api.PluginFactory;
+import org.zohar.framework.core.plugin.api.model.PluginWrapper;
 import org.zohar.framework.core.plugin.test.JavaFileObjectClassLoader;
 import org.zohar.framework.core.plugin.test.JavaFileObjectUtils;
 import org.zohar.framework.core.plugin.test.JavaSources;
@@ -46,14 +45,14 @@ public class DefaultPluginFactoryTest {
 
     public static final JavaFileObject FailTestPlugin = JavaFileObjects.forSourceLines("FailTestPlugin",
             "package test;",
-            "import org.zohar.framework.core.plugin.Plugin;",
+            "import org.zohar.framework.core.plugin.api.Plugin;",
             "",
             "public class FailTestPlugin {",
             "}");
 
     public static final JavaFileObject AnotherFailTestPlugin = JavaFileObjects.forSourceLines("AnotherFailTestPlugin",
             "package test;",
-            "import org.zohar.framework.core.plugin.Plugin;",
+            "import org.zohar.framework.core.plugin.api.Plugin;",
             "",
             "public class AnotherFailTestPlugin extends Plugin {",
             "     public AnotherFailTestPlugin() { super(null); }",
@@ -61,7 +60,7 @@ public class DefaultPluginFactoryTest {
 
     public static final JavaFileObject AnotherTestPlugin = JavaFileObjects.forSourceLines("AnotherTestPlugin",
             "package test;",
-            "import org.zohar.framework.core.plugin.Plugin;",
+            "import org.zohar.framework.core.plugin.api.Plugin;",
             "",
             "public class AnotherTestPlugin extends Plugin {",
             "     public AnotherTestPlugin() { super(); }",

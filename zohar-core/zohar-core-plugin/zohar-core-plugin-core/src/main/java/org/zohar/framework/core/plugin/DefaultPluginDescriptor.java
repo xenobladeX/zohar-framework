@@ -18,6 +18,9 @@ package org.zohar.framework.core.plugin;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import org.zohar.framework.core.plugin.api.Plugin;
+import org.zohar.framework.core.plugin.api.model.PluginDependency;
+import org.zohar.framework.core.plugin.api.model.PluginDescriptor;
 
 /**
  * @author Decebal Suiu

@@ -15,8 +15,8 @@
  */
 package org.zohar.framework.core.plugin.finder;
 
-import org.zohar.framework.core.plugin.PluginManager;
-import org.zohar.framework.core.plugin.PluginWrapper;
+import org.zohar.framework.core.plugin.api.PluginManager;
+import org.zohar.framework.core.plugin.api.model.PluginWrapper;
 import org.zohar.framework.core.plugin.api.processor.ExtensionStorage;
 import org.zohar.framework.core.plugin.api.processor.LegacyExtensionStorage;
 import org.slf4j.Logger;

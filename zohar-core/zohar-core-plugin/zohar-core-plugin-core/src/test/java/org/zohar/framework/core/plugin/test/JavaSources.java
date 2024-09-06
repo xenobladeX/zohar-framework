@@ -33,7 +33,7 @@ public class JavaSources {
 
     public static final JavaFileObject Greeting = JavaFileObjects.forSourceLines("Greeting",
             "package test;",
-            "import org.zohar.framework.core.plugin.api.ExtensionPoint;",
+            "import org.zohar.framework.core.plugin.api.extension.ExtensionPoint;",
             "",
             "public interface Greeting extends ExtensionPoint {",
             "   String getGreeting();",
@@ -41,7 +41,7 @@ public class JavaSources {
 
     public static final JavaFileObject WhazzupGreeting = JavaFileObjects.forSourceLines("WhazzupGreeting",
             "package test;",
-            "import org.zohar.framework.core.plugin.api.Extension;",
+            "import org.zohar.framework.core.plugin.api.extension.Extension;",
             "",
             "@Extension",
             "public class WhazzupGreeting implements Greeting {",

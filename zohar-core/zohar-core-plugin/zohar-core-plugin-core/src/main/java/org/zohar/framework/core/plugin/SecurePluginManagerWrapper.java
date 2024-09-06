@@ -22,7 +22,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import org.zohar.framework.core.plugin.creator.ExtensionFactory;
+import org.zohar.framework.core.plugin.api.Plugin;
+import org.zohar.framework.core.plugin.api.PluginManager;
+import org.zohar.framework.core.plugin.api.model.PluginState;
+import org.zohar.framework.core.plugin.api.model.PluginStateEvent;
+import org.zohar.framework.core.plugin.api.PluginStateListener;
+import org.zohar.framework.core.plugin.api.model.PluginWrapper;
+import org.zohar.framework.core.plugin.api.model.RuntimeMode;
+import org.zohar.framework.core.plugin.api.extension.ExtensionFactory;
+import org.zohar.framework.core.plugin.api.VersionManager;
 
 /**
  * Use this class to wrap the original plugin manager to prevent full access from within plugins.

@@ -15,7 +15,7 @@
  */
 package org.zohar.framework.core.plugin.example.api;
 
-import org.zohar.framework.core.plugin.Plugin;
+import org.zohar.framework.core.plugin.api.Plugin;
 
 /**
  * @author xenoblade

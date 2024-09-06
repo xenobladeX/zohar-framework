@@ -13,17 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.zohar.framework.core.plugin.api;
+package org.zohar.framework.core.plugin.api.extension;
 
 /**
- * An plugin point is a formal declaration in a plugin (or in application API) where customization is allowed.
- * It's a place where custom code can be "plugged in".
- * <p>
- * An plugin point is defined by an interface or an abstract class.
- * The plugin point is used by the application to discover and use the custom implementations.
+ * Creates an plugin instance.
  *
  * @author Decebal Suiu
  * @since 0.0.1
  */
-public interface ExtensionPoint {
+public interface ExtensionFactory {
+
+    <T> T create(Class<T> extensionClass);
+
 }

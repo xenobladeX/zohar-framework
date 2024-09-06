@@ -16,7 +16,7 @@
 package org.zohar.framework.tool.jackson;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.zohar.framework.core.plugin.api.ExtensionPoint;
+import org.zohar.framework.core.plugin.api.extension.ExtensionPoint;
 
 /**
  * JacksonUtilConfigurer

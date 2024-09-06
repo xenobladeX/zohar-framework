@@ -33,10 +33,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.zohar.framework.core.plugin.creator.DefaultExtensionFactoryTest;
-import org.zohar.framework.core.plugin.api.Extension;
-import org.zohar.framework.core.plugin.PluginManager;
-import org.zohar.framework.core.plugin.PluginState;
-import org.zohar.framework.core.plugin.PluginWrapper;
+import org.zohar.framework.core.plugin.api.extension.Extension;
+import org.zohar.framework.core.plugin.api.PluginManager;
+import org.zohar.framework.core.plugin.api.model.PluginState;
+import org.zohar.framework.core.plugin.api.model.PluginWrapper;
 import org.zohar.framework.core.plugin.creator.DefaultExtensionFactory;
 import org.zohar.framework.core.plugin.test.JavaFileObjectClassLoader;
 import org.zohar.framework.core.plugin.test.JavaFileObjectUtils;
@@ -57,7 +57,7 @@ public class AbstractExtensionFinderTest {
     public static final JavaFileObject SpinnakerExtension_NoExtension = JavaFileObjects.forSourceLines("SpinnakerExtension",
             "package test;",
             "",
-            "import org.zohar.framework.core.plugin.api.Extension;",
+            "import org.zohar.framework.core.plugin.api.extension.Extension;",
             "import java.lang.annotation.Documented;",
             "import java.lang.annotation.ElementType;",
             "import java.lang.annotation.Retention;",

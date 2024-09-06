@@ -16,7 +16,7 @@
 package org.zohar.framework.core.plugin.example.app;
 
 import org.zohar.framework.core.plugin.DefaultPluginManager;
-import org.zohar.framework.core.plugin.PluginFactory;
+import org.zohar.framework.core.plugin.api.PluginFactory;
 
 /**
  * @author xenoblade

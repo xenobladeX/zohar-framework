@@ -16,7 +16,7 @@
 package org.zohar.framework.core.plugin.finder;
 
 import java.nio.file.Path;
-import org.zohar.framework.core.plugin.PluginDescriptor;
+import org.zohar.framework.core.plugin.api.model.PluginDescriptor;
 
 /**
  * Find a plugin descriptor for a plugin path.

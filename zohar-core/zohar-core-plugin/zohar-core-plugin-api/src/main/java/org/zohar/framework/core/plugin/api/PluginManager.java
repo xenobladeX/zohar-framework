@@ -13,13 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.zohar.framework.core.plugin;
+package org.zohar.framework.core.plugin.api;
 
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Set;
-import org.zohar.framework.core.plugin.exception.PluginRuntimeException;
-import org.zohar.framework.core.plugin.creator.ExtensionFactory;
+import org.zohar.framework.core.plugin.api.extension.ExtensionFactory;
+import org.zohar.framework.core.plugin.api.model.PluginDescriptor;
+import org.zohar.framework.core.plugin.api.model.PluginState;
+import org.zohar.framework.core.plugin.api.model.PluginWrapper;
+import org.zohar.framework.core.plugin.api.model.RuntimeMode;
 
 /**
  * Provides the functionality for plugin management such as load,

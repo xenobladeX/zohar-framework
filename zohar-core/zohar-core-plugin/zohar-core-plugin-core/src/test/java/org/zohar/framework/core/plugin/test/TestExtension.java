@@ -15,7 +15,7 @@
  */
 package org.zohar.framework.core.plugin.test;
 
-import org.zohar.framework.core.plugin.api.Extension;
+import org.zohar.framework.core.plugin.api.extension.Extension;
 
 /**
  * A simple {@link Extension}. It implements {@link TestExtensionPoint}.

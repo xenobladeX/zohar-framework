@@ -15,7 +15,7 @@
  */
 package org.zohar.framework.core.plugin.example.api;
 
-import org.zohar.framework.core.plugin.RuntimeMode;
+import org.zohar.framework.core.plugin.api.model.RuntimeMode;
 
 /**
  * An instance of this class is provided to plugins in their constructor.

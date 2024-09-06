@@ -15,7 +15,7 @@
  */
 package org.zohar.framework.core.plugin.example.plugin2;
 
-import org.zohar.framework.core.plugin.api.Extension;
+import org.zohar.framework.core.plugin.api.extension.Extension;
 import org.zohar.framework.core.plugin.example.api.DemoPlugin;
 import org.zohar.framework.core.plugin.example.api.Greeting;
 import org.zohar.framework.core.plugin.example.api.PluginContext;
