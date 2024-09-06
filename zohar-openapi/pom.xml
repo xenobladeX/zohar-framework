@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
-    <groupId>com.xenoblade</groupId>
+    <groupId>org.zohar</groupId>
     <artifactId>zohar-framework-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <relativePath>../zohar-framework-parent</relativePath>
@@ -12,14 +12,13 @@
   <name>Zohar OpenAPI</name>
 
   <properties>
-    <github.path>${project.artifactId}</github.path>
   </properties>
 
 
   <dependencies>
 
     <dependency>
-      <groupId>com.xenoblade</groupId>
+      <groupId>org.zohar</groupId>
       <artifactId>zohar-core-web</artifactId>
     </dependency>
 
@@ -69,8 +68,8 @@
               <version>1.9.4</version>
             </path>
             <path>
-              <groupId>com.xenoblade</groupId>
-              <artifactId>zohar-core-extension</artifactId>
+              <groupId>org.zohar</groupId>
+              <artifactId>zohar-core-plugin-api</artifactId>
               <version>0.0.1-SNAPSHOT</version>
             </path>
           </annotationProcessorPaths>

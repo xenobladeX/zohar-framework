@@ -15,7 +15,7 @@
  */
 package org.zohar.framework.core.api.dto;
 
-import org.zohar.framework.core.extension.enumeration.ZoharEnumFactory;
+import org.zohar.framework.core.plugin.enumeration.ZoharEnumFactory;
 import lombok.ToString;
 
 /**

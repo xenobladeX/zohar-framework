@@ -13,11 +13,10 @@
     <packaging>pom</packaging>
 
     <properties>
-        <github.path>${project.artifactId}</github.path>
     </properties>
 
     <modules>
-        <module>zohar-core-extension</module>
+        <module>zohar-core-plugin</module>
         <module>zohar-core-api</module>
         <module>zohar-core-boot</module>
         <module>zohar-core-web</module>

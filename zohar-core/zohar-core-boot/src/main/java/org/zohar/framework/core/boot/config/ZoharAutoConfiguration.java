@@ -16,7 +16,7 @@
 package org.zohar.framework.core.boot.config;
 
 import org.zohar.framework.core.boot.extension.SpringExtensionLoader;
-import org.zohar.framework.core.extension.plugin.finder.ExtensionFinder;
+import org.zohar.framework.core.plugin.finder.ExtensionFinder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

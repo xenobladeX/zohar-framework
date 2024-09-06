@@ -20,11 +20,10 @@ import org.zohar.framework.core.api.dto.IZoharErrorCode;
 import org.zohar.framework.core.api.extension.IExtension;
 import org.zohar.framework.core.api.extension.TestErrorCode;
 import org.zohar.framework.core.api.extension.TestExtensionFinderConfigurer;
-import com.xenoblade.zohar.framework.core.extension.*;
-import org.zohar.framework.core.extension.plugin.finder.ExtensionFinder;
-import org.zohar.framework.core.extension.plugin.finder.ExtensionFinderFactory;
-import org.zohar.framework.core.extension.plugin.finder.ExtensionWrapper;
-import org.zohar.framework.core.extension.enumeration.ZoharEnumFactory;
+import org.zohar.framework.core.plugin.finder.ExtensionFinder;
+import org.zohar.framework.core.plugin.finder.ExtensionFinderFactory;
+import org.zohar.framework.core.plugin.finder.ExtensionWrapper;
+import org.zohar.framework.core.plugin.enumeration.ZoharEnumFactory;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -67,7 +66,7 @@ public class ExtensionTest {
 
     @Test
     public void testZoharEnum() {
-        extensionFinder.find();
+//        extensionFinder.find();
         IZoharErrorCode errorCode = ZoharEnumFactory.INSTANCE.valueOf(100000, IZoharErrorCode.class);
         Assert.assertEquals(BasicErrorCode.OK, errorCode);
         errorCode = ZoharEnumFactory.INSTANCE.valueOf(666, IZoharErrorCode.class);

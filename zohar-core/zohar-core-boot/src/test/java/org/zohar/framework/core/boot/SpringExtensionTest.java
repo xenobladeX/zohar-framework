@@ -19,7 +19,7 @@ import org.zohar.framework.core.api.dto.BasicErrorCode;
 import org.zohar.framework.core.api.dto.IZoharErrorCode;
 import org.zohar.framework.core.boot.extension.ITestExtension;
 import org.zohar.framework.core.boot.extension.TestErrorCode;
-import org.zohar.framework.core.extension.enumeration.ZoharEnumFactory;
+import org.zohar.framework.core.plugin.enumeration.ZoharEnumFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

@@ -15,8 +15,8 @@
  */
 package org.zohar.framework.core.boot.launcher;
 
-import org.zohar.framework.core.extension.plugin.finder.ExtensionFinder;
-import org.zohar.framework.core.extension.api.ExtensionPoint;
+import org.zohar.framework.core.plugin.finder.ExtensionFinder;
+import org.zohar.framework.core.plugin.api.ExtensionPoint;
 import org.springframework.context.ConfigurableApplicationContext;
 
 /**

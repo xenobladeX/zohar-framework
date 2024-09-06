@@ -16,7 +16,7 @@
 package org.zohar.framework.tool.extension;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.zohar.framework.core.extension.Extension;
+import org.zohar.framework.core.plugin.Extension;
 import org.zohar.framework.tool.jackson.JacksonUtilConfigurer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

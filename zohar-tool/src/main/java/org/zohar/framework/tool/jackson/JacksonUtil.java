@@ -29,7 +29,7 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import org.zohar.framework.core.api.dto.BasicErrorCode;
 import org.zohar.framework.core.api.exception.SysException;
-import org.zohar.framework.core.extension.plugin.finder.ExtensionFinderFactory;
+import org.zohar.framework.core.plugin.finder.ExtensionFinderFactory;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;

@@ -16,8 +16,8 @@
 package org.zohar.framework.core.boot.extension;
 
 import org.zohar.framework.core.boot.launcher.ApplicationLauncher;
-import org.zohar.framework.core.extension.api.Extension;
-import org.zohar.framework.core.extension.plugin.finder.ExtensionFinder;
+import org.zohar.framework.core.plugin.api.Extension;
+import org.zohar.framework.core.plugin.finder.ExtensionFinder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ConfigurableApplicationContext;
 

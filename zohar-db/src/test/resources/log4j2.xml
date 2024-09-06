@@ -7,7 +7,7 @@
     </Appenders>
 
     <Loggers>
-        <logger name="com.xenoblade.zohar.framework.core.db.mapper" level="debug"
+        <logger name="org.zohar.framework.core.db.mapper" level="debug"
                 additivity="false">
             <AppenderRef ref="Console" />
         </logger>

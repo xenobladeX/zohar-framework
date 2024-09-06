@@ -12,7 +12,6 @@
     <name>Zohar DateBase</name>
 
     <properties>
-        <github.path>${project.artifactId}</github.path>
     </properties>
 
 
@@ -96,7 +95,7 @@
                         </path>
                         <path>
                             <groupId>org.zohar</groupId>
-                            <artifactId>zohar-core-extension</artifactId>
+                            <artifactId>zohar-core-plugin-api</artifactId>
                             <version>0.0.1-SNAPSHOT</version>
                         </path>
                     </annotationProcessorPaths>

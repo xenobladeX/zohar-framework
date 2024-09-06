@@ -1,0 +1,23 @@
+<?xml version="1.0"  encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+    <groupId>org.zohar</groupId>
+    <artifactId>zohar-core-plugin</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>zohar-core-plugin-example</artifactId>
+  <name>Zohar Plugin Example</name>
+  <packaging>pom</packaging>
+
+  <properties>
+  </properties>
+
+  <modules>
+    <module>zohar-core-plugin-example-api</module>
+    <module>zohar-core-plugin-example-app</module>
+    <module>zohar-core-plugin-example-plugins</module>
+  </modules>
+
+</project>

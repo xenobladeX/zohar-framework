@@ -12,7 +12,6 @@
     <name>Zohar Tool</name>
 
     <properties>
-        <github.path>${project.artifactId}</github.path>
     </properties>
 
 

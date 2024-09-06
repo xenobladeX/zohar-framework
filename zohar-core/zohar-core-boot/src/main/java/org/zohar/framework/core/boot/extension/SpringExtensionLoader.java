@@ -18,8 +18,8 @@ package org.zohar.framework.core.boot.extension;
 import cn.hutool.core.annotation.AnnotationUtil;
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.StrUtil;
-import org.zohar.framework.core.extension.plugin.finder.ExtensionFinder;
-import org.zohar.framework.core.extension.plugin.finder.ExtensionWrapper;
+import org.zohar.framework.core.plugin.finder.ExtensionFinder;
+import org.zohar.framework.core.plugin.finder.ExtensionWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory;
@@ -59,7 +59,7 @@ public class SpringExtensionLoader implements ApplicationContextAware {
         for (ExtensionWrapper extensionWrapper : extensionWrappers) {
             Class<?> extensionClass = extensionWrapper.getDescriptor().extensionClass;
             if (AnnotationUtil.hasAnnotation(extensionClass, ExtensionComponent.class)) {
-                log.debug("Register extension '{}' as bean", extensionClass);
+                log.debug("Register plugin '{}' as bean", extensionClass);
                 Map<String, ?> extensionBeanMap = applicationContext.getBeansOfType(extensionClass);
                 if (extensionBeanMap.isEmpty()) {
                     Object extension = extensionWrapper.getExtension();

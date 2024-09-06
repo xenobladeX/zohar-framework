@@ -15,7 +15,7 @@
  */
 package org.zohar.framework.core.boot.extension;
 
-import org.zohar.framework.core.extension.api.ExtensionPoint;
+import org.zohar.framework.core.plugin.api.ExtensionPoint;
 
 /**
  * IExtension

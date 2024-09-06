@@ -8,6 +8,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>zohar-core-boot</artifactId>
+    <packaging>jar</packaging>
     <name>Zohar Core For Spring Boot</name>
 
     <dependencies>

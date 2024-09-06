@@ -19,12 +19,11 @@ import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.StrUtil;
 import org.zohar.framework.core.boot.extension.SpringExtensionCreator;
 import org.zohar.framework.core.boot.launcher.ApplicationLauncher;
-import com.xenoblade.zohar.framework.core.extension.*;
-import org.zohar.framework.core.extension.plugin.finder.ExtensionFinder;
-import org.zohar.framework.core.extension.plugin.finder.ExtensionFinderFactory;
-import org.zohar.framework.core.extension.plugin.creator.CompoundCreatorExtensionFactory;
-import org.zohar.framework.core.extension.ZoharExtensionFinder;
-import org.zohar.framework.core.extension.api.IEnum;
+import org.zohar.framework.core.plugin.finder.ExtensionFinder;
+import org.zohar.framework.core.plugin.finder.ExtensionFinderFactory;
+import org.zohar.framework.core.plugin.creator.CompoundCreatorExtensionFactory;
+import org.zohar.framework.core.plugin.ZoharExtensionFinder;
+import org.zohar.framework.core.plugin.api.IEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ConfigurableBootstrapContext;
 import org.springframework.boot.SpringApplication;
@@ -56,7 +55,7 @@ public class ExtensionApplicationRunListener implements SpringApplicationRunList
 
     @Override
     public void environmentPrepared(ConfigurableBootstrapContext bootstrapContext, ConfigurableEnvironment environment) {
-        // extension load zohar enums
+        // plugin load zohar enums
         this.extensionFinder.find(IEnum.class);
     }
 
@@ -72,7 +71,7 @@ public class ExtensionApplicationRunListener implements SpringApplicationRunList
         // register extensionFinder to spring context
         String extensionFinderBeanName = StrUtil.lowerFirst(ClassUtil.getClassName(this.extensionFinder.getClass(), true));
         context.getBeanFactory().registerSingleton(extensionFinderBeanName, this.extensionFinder);
-        // extension load launcher
+        // plugin load launcher
         this.extensionFinder.find(ApplicationLauncher.class).forEach(extensionWrapper -> {
             extensionWrapper.getExtension().launcher(context, this.extensionFinder);
         });

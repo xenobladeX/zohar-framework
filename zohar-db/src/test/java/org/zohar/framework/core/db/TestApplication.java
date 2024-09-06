@@ -26,7 +26,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @since 0.0.1
  */
 @SpringBootApplication
-@MapperScan("com.xenoblade.zohar.framework.core.db.mapper")
+@MapperScan("org.zohar.framework.core.db.mapper")
 public class TestApplication {
 
     public static void main(String[] args) {

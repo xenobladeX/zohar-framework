@@ -15,7 +15,7 @@
  */
 package org.zohar.framework.core.api.dto;
 
-import org.zohar.framework.core.extension.api.IEnum;
+import org.zohar.framework.core.plugin.api.IEnum;
 
 /**
  * error code for zohar framework

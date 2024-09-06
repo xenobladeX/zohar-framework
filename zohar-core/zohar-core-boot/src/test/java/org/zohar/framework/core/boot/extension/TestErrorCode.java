@@ -16,7 +16,7 @@
 package org.zohar.framework.core.boot.extension;
 
 import org.zohar.framework.core.api.dto.IZoharErrorCode;
-import org.zohar.framework.core.extension.api.Extension;
+import org.zohar.framework.core.plugin.api.Extension;
 
 /**
  * TestErrorCode

@@ -15,8 +15,8 @@
  */
 package org.zohar.framework.core.api.extension;
 
-import org.zohar.framework.core.extension.plugin.finder.ExtensionFinder;
-import org.zohar.framework.core.extension.plugin.finder.ExtensionFinderConfigurer;
+import org.zohar.framework.core.plugin.finder.ExtensionFinder;
+import org.zohar.framework.core.plugin.finder.ExtensionFinderConfigurer;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -32,7 +32,7 @@ public class TestExtensionFinderConfigurer implements ExtensionFinderConfigurer 
 
     @Override
     public void customExtensionFinder(ExtensionFinder extensionFinder) {
-        log.info("custom extension finder {}", extensionFinder);
+        log.info("custom plugin finder {}", extensionFinder);
         isExecuted = true;
     }
 
