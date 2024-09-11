@@ -52,7 +52,6 @@ import org.zohar.framework.core.plugin.test.JavaFileObjectUtils;
 import org.zohar.framework.core.plugin.test.JavaSources;
 import org.zohar.framework.core.plugin.test.PluginJar;
 import org.zohar.framework.core.plugin.test.PluginZip;
-import org.zohar.framework.core.plugin.util.Unzip;
 
 /**
  * @author Decebal Suiu
@@ -61,7 +60,7 @@ import org.zohar.framework.core.plugin.util.Unzip;
  */
 class DefaultPluginManagerTest {
 
-    private static final Logger log = LoggerFactory.getLogger(Unzip.class);
+    private static final Logger log = LoggerFactory.getLogger(DefaultPluginManagerTest.class);
 
     private DefaultPluginManager pluginManager;
     private DefaultPluginDescriptor pluginDescriptor;

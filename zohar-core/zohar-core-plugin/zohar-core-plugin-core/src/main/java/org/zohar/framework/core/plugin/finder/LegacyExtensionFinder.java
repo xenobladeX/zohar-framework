@@ -29,6 +29,7 @@ import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import org.zohar.framework.core.plugin.finder.filter.EnumExtensionFinderFilter;
 
 /**
  * All extensions declared in a plugin are indexed in a file {@code META-INF/extensions.idx}.
@@ -45,6 +46,7 @@ public class LegacyExtensionFinder extends AbstractExtensionFinder {
 
     public LegacyExtensionFinder(PluginManager pluginManager) {
         super(pluginManager);
+        addFilter(new EnumExtensionFinderFilter());
     }
 
     @Override

@@ -38,6 +38,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.zohar.framework.core.plugin.api.PluginManager;
 import org.zohar.framework.core.plugin.api.model.PluginWrapper;
+import org.zohar.framework.core.plugin.finder.filter.EnumExtensionFinderFilter;
 import org.zohar.framework.core.plugin.loader.PluginClassLoader;
 import org.zohar.framework.core.plugin.api.processor.ExtensionStorage;
 import org.zohar.framework.core.plugin.api.processor.ServiceProviderExtensionStorage;
@@ -59,6 +60,7 @@ public class ServiceProviderExtensionFinder extends AbstractExtensionFinder {
 
     public ServiceProviderExtensionFinder(PluginManager pluginManager) {
         super(pluginManager);
+        addFilter(new EnumExtensionFinderFilter());
     }
 
     @Override

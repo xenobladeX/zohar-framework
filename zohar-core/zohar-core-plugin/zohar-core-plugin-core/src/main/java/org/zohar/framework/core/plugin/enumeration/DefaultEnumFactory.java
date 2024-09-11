@@ -34,17 +34,17 @@ import org.zohar.framework.core.plugin.util.StringUtils;
 /**
  * ZoharEnumFactory
  *
- * @author Decebal Suiu
- * @since 0.0.1
+ * @author xenoblade
+ * @since 0.0.1-SNAPSHOT
  */
-public class ZoharEnumFactory implements EnumFactory {
+public class DefaultEnumFactory implements EnumFactory {
 
-    private static final Logger log = LoggerFactory.getLogger(ZoharEnumFactory.class);
+    private static final Logger log = LoggerFactory.getLogger(DefaultEnumFactory.class);
 
     private Map<Class<IEnum<? extends Comparable>>, List<IEnum>> enumMap = Maps
             .newConcurrentMap();
 
-    public static final ZoharEnumFactory INSTANCE = new ZoharEnumFactory();
+    public static final DefaultEnumFactory INSTANCE = new DefaultEnumFactory();
 
 
 

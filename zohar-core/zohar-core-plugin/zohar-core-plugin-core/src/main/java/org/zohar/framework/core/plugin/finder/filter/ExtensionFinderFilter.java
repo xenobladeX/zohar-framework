@@ -1,5 +1,5 @@
 /*
- * Copyright [2022] [xenoblade]
+ * Copyright [2024] [xenoblade]
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,32 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.zohar.framework.core.plugin.enumeration;
+package org.zohar.framework.core.plugin.finder.filter;
 
-import org.zohar.framework.core.plugin.api.extension.IEnum;
+import org.zohar.framework.core.plugin.finder.ExtensionWrapper;
 
 /**
- * EnumFactory
- *
+ * process {@link ExtensionWrapper} when find the class, for example {@link org.zohar.framework.core.plugin.api.extension.IEnum}
  * @author xenoblade
  * @since 0.0.1-SNAPSHOT
  */
-public interface EnumFactory {
+public interface ExtensionFinderFilter {
 
     /**
-     * 解析{@link IEnum}类型
-     * @param enumClass
+     * Whether the extension match the filter
+     * @param extensionWrapper
      * @return
      */
-    Boolean resolve(Class<? extends IEnum> enumClass);
-
+    <T> Boolean match(ExtensionWrapper<T> extensionWrapper);
 
     /**
-     * 通过 value 和类型得到对应的{@link IEnum}
-     * @param value
-     * @param <T>
+     * process extension
+     * @param extensionWrapper
      * @return
      */
-    <T extends Comparable, E extends IEnum<T>> E valueOf(T value, Class<E> enumClass);
-
+    <T> ExtensionWrapper<T> filter(ExtensionWrapper<T> extensionWrapper);
 }

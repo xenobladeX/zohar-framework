@@ -1,5 +1,5 @@
 /*
- * Copyright [2022] [xenoblade]
+ * Copyright [2024] [xenoblade]
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,32 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.zohar.framework.core.plugin.enumeration;
+package org.zohar.framework.core.plugin.test;
 
+import org.zohar.framework.core.plugin.api.extension.Extension;
 import org.zohar.framework.core.plugin.api.extension.IEnum;
 
 /**
- * EnumFactory
- *
  * @author xenoblade
+ * @Date 2024/9/11
  * @since 0.0.1-SNAPSHOT
  */
-public interface EnumFactory {
+@Extension
+public enum TestEnum implements IEnum<Integer> {
 
-    /**
-     * 解析{@link IEnum}类型
-     * @param enumClass
-     * @return
-     */
-    Boolean resolve(Class<? extends IEnum> enumClass);
+    TEST_ENUM_1,
+    TEST_ENUM_2,
+    ;
 
 
-    /**
-     * 通过 value 和类型得到对应的{@link IEnum}
-     * @param value
-     * @param <T>
-     * @return
-     */
-    <T extends Comparable, E extends IEnum<T>> E valueOf(T value, Class<E> enumClass);
-
+    @Override
+    public Integer value() {
+        return this.ordinal();
+    }
 }
